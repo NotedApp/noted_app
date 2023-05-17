@@ -1,0 +1,35 @@
+name: flutter tests
+
+on:
+  push:
+    branches: [master, release]
+  pull_request:
+    branches: [master, release]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: setup flutter
+        uses: subosito/flutter-action
+        with:
+          channel: 'stable'
+
+      - name: check version
+        run: flutter --version
+
+      - name: update dependencies
+        run: flutter pub get
+
+      - name: analyze
+        run: flutter analyze
+
+      - name: test
+        run: flutter test --coverage
+
+      - name: upload to codecov
+        uses: codecov/codecov-action@v3
