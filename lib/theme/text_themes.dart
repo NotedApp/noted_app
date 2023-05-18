@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
+enum NotedTextThemeName {
+  poppins,
+  roboto,
+  lora,
+  vollkorn,
+}
+
 class NotedTextThemes {
-  final TextTheme poppinsTextTheme = const TextTheme(
+  static const TextTheme poppinsTextTheme = TextTheme(
     displayLarge: TextStyle(fontFamily: 'Poppins', fontSize: 57, height: 64 / 57, fontWeight: FontWeight.normal),
     displayMedium: TextStyle(fontFamily: 'Poppins', fontSize: 45, height: 52 / 45, fontWeight: FontWeight.normal),
     displaySmall: TextStyle(fontFamily: 'Poppins', fontSize: 36, height: 44 / 36, fontWeight: FontWeight.normal),
@@ -19,7 +26,7 @@ class NotedTextThemes {
     bodySmall: TextStyle(fontFamily: 'Poppins', fontSize: 12, height: 16 / 12, fontWeight: FontWeight.normal),
   );
 
-  final TextTheme robotoTextTheme = const TextTheme(
+  static const TextTheme robotoTextTheme = TextTheme(
     displayLarge: TextStyle(fontFamily: 'Roboto', fontSize: 57, height: 64 / 57, fontWeight: FontWeight.normal),
     displayMedium: TextStyle(fontFamily: 'Roboto', fontSize: 45, height: 52 / 45, fontWeight: FontWeight.normal),
     displaySmall: TextStyle(fontFamily: 'Roboto', fontSize: 36, height: 44 / 36, fontWeight: FontWeight.normal),
@@ -37,7 +44,7 @@ class NotedTextThemes {
     bodySmall: TextStyle(fontFamily: 'Roboto', fontSize: 12, height: 16 / 12, fontWeight: FontWeight.normal),
   );
 
-  final TextTheme loraTextTheme = const TextTheme(
+  static const TextTheme loraTextTheme = TextTheme(
     displayLarge: TextStyle(fontFamily: 'Lora', fontSize: 57, height: 64 / 57, fontWeight: FontWeight.normal),
     displayMedium: TextStyle(fontFamily: 'Lora', fontSize: 45, height: 52 / 45, fontWeight: FontWeight.normal),
     displaySmall: TextStyle(fontFamily: 'Lora', fontSize: 36, height: 44 / 36, fontWeight: FontWeight.normal),
@@ -55,7 +62,7 @@ class NotedTextThemes {
     bodySmall: TextStyle(fontFamily: 'Lora', fontSize: 12, height: 16 / 12, fontWeight: FontWeight.normal),
   );
 
-  final TextTheme vollkornTextTheme = const TextTheme(
+  static const TextTheme vollkornTextTheme = TextTheme(
     displayLarge: TextStyle(fontFamily: 'Vollkorn', fontSize: 57, height: 64 / 57, fontWeight: FontWeight.normal),
     displayMedium: TextStyle(fontFamily: 'Vollkorn', fontSize: 45, height: 52 / 45, fontWeight: FontWeight.normal),
     displaySmall: TextStyle(fontFamily: 'Vollkorn', fontSize: 36, height: 44 / 36, fontWeight: FontWeight.normal),

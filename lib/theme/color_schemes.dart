@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 
+enum NotedColorSchemeName {
+  blue,
+  green,
+  dark,
+  oled,
+  light,
+  custom,
+}
+
 class NotedColorSchemes {
-  final ColorScheme blueColorScheme = const ColorScheme(
+  static const ColorScheme blueColorScheme = ColorScheme(
     brightness: Brightness.light,
     primary: Color(0xFF789395),
     onPrimary: Color(0xFF111111),
@@ -17,7 +26,7 @@ class NotedColorSchemes {
     onSurface: Color(0xFF111111),
   );
 
-  final ColorScheme greenColorScheme = const ColorScheme(
+  static const ColorScheme greenColorScheme = ColorScheme(
     brightness: Brightness.light,
     primary: Color(0xFF90A578),
     onPrimary: Color(0xFF111111),
@@ -33,7 +42,7 @@ class NotedColorSchemes {
     onSurface: Color(0xFF111111),
   );
 
-  final ColorScheme darkColorScheme = const ColorScheme(
+  static const ColorScheme darkColorScheme = ColorScheme(
     brightness: Brightness.dark,
     primary: Color(0xFF789395),
     onPrimary: Color(0xFF111111),
@@ -49,7 +58,7 @@ class NotedColorSchemes {
     onSurface: Color(0xFFEEEEEE),
   );
 
-  final ColorScheme oledColorScheme = const ColorScheme(
+  static const ColorScheme oledColorScheme = ColorScheme(
     brightness: Brightness.dark,
     primary: Color(0xFF789395),
     onPrimary: Color(0xFF000000),
@@ -66,7 +75,7 @@ class NotedColorSchemes {
   );
 
   // TODO: Ensure that the color scheme can be modified when implementing theme settings.
-  final ColorScheme customColorScheme = const ColorScheme(
+  static const ColorScheme customColorScheme = ColorScheme(
     brightness: Brightness.light,
     primary: Color(0xFF789395),
     onPrimary: Color(0xFF111111),
