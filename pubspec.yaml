@@ -26,25 +26,64 @@ flutter:
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
-
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: fonts/poppins/Poppins-Regular.ttf
+        - asset: fonts/poppins/Poppins-Italic.ttf
+          style: italic
+        - asset: fonts/poppins/Poppins-Medium.ttf
+          weight: 500
+        - asset: fonts/poppins/Poppins-MediumItalic.ttf
+          style: italic
+          weight: 500
+        - asset: fonts/poppins/Poppins-Bold.ttf
+          weight: 700
+        - asset: fonts/poppins/Poppins-BoldItalic.ttf
+          style: italic
+          weight: 700
+    - family: Roboto
+      fonts:
+        - asset: fonts/roboto/Roboto-Regular.ttf
+        - asset: fonts/roboto/Roboto-Italic.ttf
+          style: italic
+        - asset: fonts/roboto/Roboto-Medium.ttf
+          weight: 500
+        - asset: fonts/roboto/Roboto-MediumItalic.ttf
+          style: italic
+          weight: 500
+        - asset: fonts/roboto/Roboto-Bold.ttf
+          weight: 700
+        - asset: fonts/roboto/Roboto-BoldItalic.ttf
+          style: italic
+          weight: 700
+    - family: Lora
+      fonts:
+        - asset: fonts/lora/Lora-Regular.ttf
+        - asset: fonts/lora/Lora-Italic.ttf
+          style: italic
+        - asset: fonts/lora/Lora-Medium.ttf
+          weight: 500
+        - asset: fonts/lora/Lora-MediumItalic.ttf
+          style: italic
+          weight: 500
+        - asset: fonts/lora/Lora-Bold.ttf
+          weight: 700
+        - asset: fonts/lora/Lora-BoldItalic.ttf
+          style: italic
+          weight: 700
+    - family: Vollkorn
+      fonts:
+        - asset: fonts/vollkorn/Vollkorn-Regular.ttf
+        - asset: fonts/vollkorn/Vollkorn-Italic.ttf
+          style: italic
+        - asset: fonts/vollkorn/Vollkorn-Medium.ttf
+          weight: 500
+        - asset: fonts/vollkorn/Vollkorn-MediumItalic.ttf
+          style: italic
+          weight: 500
+        - asset: fonts/vollkorn/Vollkorn-Bold.ttf
+          weight: 700
+        - asset: fonts/vollkorn/Vollkorn-BoldItalic.ttf
+          style: italic
+          weight: 700
