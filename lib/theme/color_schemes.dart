@@ -10,6 +10,17 @@ enum NotedColorSchemeName {
 }
 
 class NotedColorSchemes {
+  static ColorScheme fromName(NotedColorSchemeName name) {
+    return switch (name) {
+      NotedColorSchemeName.blue => blueColorScheme,
+      NotedColorSchemeName.green => greenColorScheme,
+      NotedColorSchemeName.dark => darkColorScheme,
+      NotedColorSchemeName.oled => oledColorScheme,
+      NotedColorSchemeName.light => lightColorScheme,
+      NotedColorSchemeName.custom => customColorScheme,
+    };
+  }
+
   static const ColorScheme blueColorScheme = ColorScheme(
     brightness: Brightness.light,
     primary: Color(0xFF789395),
@@ -72,6 +83,22 @@ class NotedColorSchemes {
     onBackground: Color(0xFFEEEEEE),
     surface: Color(0xFF000000),
     onSurface: Color(0xFFEEEEEE),
+  );
+
+  static const ColorScheme lightColorScheme = ColorScheme(
+    brightness: Brightness.light,
+    primary: Color(0xFF90A578),
+    onPrimary: Color(0xFF111111),
+    secondary: Color(0xFFAEBE9D),
+    onSecondary: Color(0xFF111111),
+    tertiary: Color(0xFF526241),
+    onTertiary: Color(0xFFEEEEEE),
+    error: Color(0xFFB33951),
+    onError: Color(0xFFEEEEEE),
+    background: Color(0xFFFFFFFF),
+    onBackground: Color(0xFF111111),
+    surface: Color(0xFFFFFFFF),
+    onSurface: Color(0xFF111111),
   );
 
   // TODO: Ensure that the color scheme can be modified when implementing theme settings.

@@ -8,6 +8,13 @@ enum NotedTextThemeName {
 }
 
 class NotedTextThemes {
+  static TextTheme fromName(NotedTextThemeName name) => switch (name) {
+        NotedTextThemeName.poppins => poppinsTextTheme,
+        NotedTextThemeName.roboto => robotoTextTheme,
+        NotedTextThemeName.lora => loraTextTheme,
+        NotedTextThemeName.vollkorn => vollkornTextTheme,
+      };
+
   static const TextTheme poppinsTextTheme = TextTheme(
     displayLarge: TextStyle(fontFamily: 'Poppins', fontSize: 57, height: 64 / 57, fontWeight: FontWeight.normal),
     displayMedium: TextStyle(fontFamily: 'Poppins', fontSize: 45, height: 52 / 45, fontWeight: FontWeight.normal),
