@@ -6,7 +6,7 @@ class HelloWorldPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text("hello world"),
+      child: Text("hello world!"),
     );
   }
 }
