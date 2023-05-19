@@ -104,6 +104,10 @@ class NotedIconButton extends StatelessWidget {
         break;
     }
 
+    OutlinedBorder border = _strokeWidth > 0
+        ? CircleBorder(side: BorderSide(color: foreground, width: _strokeWidth))
+        : const CircleBorder();
+
     return IconButton(
       onPressed: _onPressed,
       icon: Icon(_icon),
@@ -114,6 +118,7 @@ class NotedIconButton extends StatelessWidget {
         foregroundColor: MaterialStateProperty.all<Color>(foreground),
         iconColor: MaterialStateProperty.all<Color>(foreground),
         elevation: MaterialStateProperty.all<double>(1),
+        shape: MaterialStateProperty.all<OutlinedBorder>(border),
       ),
     );
   }
