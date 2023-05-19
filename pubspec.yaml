@@ -31,6 +31,10 @@ flutter:
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
+  assets:
+    - assets/svg/woman_climbing.svg
+    - assets/svg/woman_reading.svg
+
   fonts:
     - family: NotedIcons
       fonts:

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:noted_app/catalog/pages/svg_image_page.dart';
 import 'package:noted_app/catalog/pages/text_style_page.dart';
 
 sealed class CatalogNode {
@@ -24,7 +25,7 @@ class CatalogContent {
     title: "catalog",
     children: <CatalogNode>[
       CatalogLeaf(title: "text styles", page: const TextStylePage()),
-      CatalogLeaf(title: "svg images", page: const TextStylePage()),
+      CatalogLeaf(title: "images", page: const SvgImagePage()),
     ],
   );
 }
