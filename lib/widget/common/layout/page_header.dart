@@ -5,7 +5,7 @@ import 'package:noted_app/widget/common/icon/noted_icons.dart';
 class PageHeader extends StatelessWidget {
   final String title;
   final bool showButton;
-  final Function()? onButtonPressed;
+  final VoidCallback? onButtonPressed;
   final IconData buttonIcon;
 
   const PageHeader({
