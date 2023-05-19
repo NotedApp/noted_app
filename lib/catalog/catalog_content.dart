@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:noted_app/catalog/pages/hello_world_page.dart';
+import 'package:noted_app/catalog/pages/text_style_page.dart';
 
 sealed class CatalogNode {
   final String title;
@@ -23,7 +23,8 @@ class CatalogContent {
   static final CatalogNode content = CatalogBranch(
     title: "catalog",
     children: <CatalogNode>[
-      CatalogLeaf(title: "hello world", page: const HelloWorldPage()),
+      CatalogLeaf(title: "text styles", page: const TextStylePage()),
+      CatalogLeaf(title: "svg images", page: const TextStylePage()),
     ],
   );
 }
