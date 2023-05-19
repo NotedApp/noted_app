@@ -12,7 +12,7 @@ enum NotedIconButtonSize {
 }
 
 class NotedIconButton extends StatelessWidget {
-  final Function() _onPressed;
+  final Function()? _onPressed;
   final IconData _icon;
   final NotedIconButtonType _type;
   final NotedIconButtonSize _size;
