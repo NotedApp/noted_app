@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:noted_app/catalog/catalog_content.dart';
 import 'package:noted_app/widget/common/icon/noted_icons.dart';
 import 'package:noted_app/widget/common/layout/page_header.dart';
+import 'package:noted_app/widget/common/layout/tappable_row.dart';
 
 class CatalogRenderer extends StatelessWidget {
-  final CatalogNode _node;
-  final bool _isRoot;
+  final CatalogNode node;
+  final bool isRoot;
 
-  const CatalogRenderer(this._node, {bool isRoot = false, super.key}) : _isRoot = isRoot;
+  const CatalogRenderer(this.node, {this.isRoot = false, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +17,12 @@ class CatalogRenderer extends StatelessWidget {
         child: Column(
           children: [
             PageHeader(
-              _node.title,
-              !_isRoot,
+              title: node.title,
+              showButton: !isRoot,
               onButtonPressed: () => _tryPop(context),
             ),
             Expanded(
-              child: switch (_node) {
+              child: switch (node) {
                 CatalogBranch branch => _buildBranch(branch, context),
                 CatalogLeaf leaf => _buildLeaf(leaf, context)
               },
@@ -51,17 +52,9 @@ class CatalogRenderer extends StatelessWidget {
       children.add(const Icon(NotedIcons.chevronRight));
     }
 
-    return SizedBox(
-      width: double.infinity,
-      height: 48,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(8),
-        onTap: () => _navigateTo(context, node),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: children,
-        ),
-      ),
+    return TappableRow(
+      onTap: () => _navigateTo(context, node),
+      children: children,
     );
   }
 

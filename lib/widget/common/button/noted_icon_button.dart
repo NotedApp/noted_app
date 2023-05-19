@@ -12,32 +12,28 @@ enum NotedIconButtonSize {
 }
 
 class NotedIconButton extends StatelessWidget {
-  final Function()? _onPressed;
-  final IconData _icon;
-  final NotedIconButtonType _type;
-  final NotedIconButtonSize _size;
-  final Color? _iconColor;
-  final Color? _backgroundColor;
-  final double _strokeWidth;
+  final Function()? onPressed;
+  final IconData icon;
+  final NotedIconButtonType type;
+  final NotedIconButtonSize size;
+  final Color? iconColor;
+  final Color? backgroundColor;
+  final double strokeWidth;
 
   const NotedIconButton(
-    this._onPressed,
-    this._icon, {
-    NotedIconButtonType type = NotedIconButtonType.standard,
-    NotedIconButtonSize size = NotedIconButtonSize.medium,
-    Color? iconColor,
-    Color? backgroundColor,
-    double strokeWidth = 0,
+    this.onPressed,
+    this.icon, {
+    this.type = NotedIconButtonType.standard,
+    this.size = NotedIconButtonSize.medium,
+    this.iconColor,
+    this.backgroundColor,
+    this.strokeWidth = 0,
     super.key,
-  })  : _type = type,
-        _size = size,
-        _iconColor = iconColor,
-        _backgroundColor = backgroundColor,
-        _strokeWidth = strokeWidth;
+  });
 
   @override
   Widget build(BuildContext context) {
-    switch (_type) {
+    switch (type) {
       case NotedIconButtonType.filled:
         return _buildFilledIconButton(context);
       case NotedIconButtonType.standard:
@@ -46,12 +42,12 @@ class NotedIconButton extends StatelessWidget {
   }
 
   Widget _buildFilledIconButton(BuildContext context) {
-    Color background = _backgroundColor ?? Theme.of(context).colorScheme.primary;
-    Color foreground = _iconColor ?? Theme.of(context).colorScheme.onPrimary;
+    Color background = backgroundColor ?? Theme.of(context).colorScheme.primary;
+    Color foreground = iconColor ?? Theme.of(context).colorScheme.onPrimary;
     double iconSize;
     double circleSize;
 
-    switch (_size) {
+    switch (size) {
       case NotedIconButtonSize.large:
         iconSize = 36;
         circleSize = 64;
@@ -66,30 +62,35 @@ class NotedIconButton extends StatelessWidget {
         break;
     }
 
-    ShapeBorder border = _strokeWidth > 0
-        ? CircleBorder(side: BorderSide(color: foreground, width: _strokeWidth))
+    ShapeBorder border = strokeWidth > 0
+        ? CircleBorder(
+            side: BorderSide(
+              color: foreground,
+              width: strokeWidth,
+            ),
+          )
         : const CircleBorder();
 
     return SizedBox(
       width: circleSize,
       height: circleSize,
       child: FloatingActionButton(
-        onPressed: _onPressed,
+        onPressed: onPressed,
         foregroundColor: foreground,
         backgroundColor: background,
         elevation: 3,
         shape: border,
-        child: Icon(_icon, size: iconSize),
+        child: Icon(icon, size: iconSize),
       ),
     );
   }
 
   Widget _buildStandardIconButton(BuildContext context) {
-    Color foreground = _iconColor ?? Theme.of(context).colorScheme.onPrimary;
+    Color foreground = iconColor ?? Theme.of(context).colorScheme.onPrimary;
     double iconSize;
     double circleSize;
 
-    switch (_size) {
+    switch (size) {
       case NotedIconButtonSize.large:
         iconSize = 36;
         circleSize = 54;
@@ -104,13 +105,12 @@ class NotedIconButton extends StatelessWidget {
         break;
     }
 
-    OutlinedBorder border = _strokeWidth > 0
-        ? CircleBorder(side: BorderSide(color: foreground, width: _strokeWidth))
-        : const CircleBorder();
+    OutlinedBorder border =
+        strokeWidth > 0 ? CircleBorder(side: BorderSide(color: foreground, width: strokeWidth)) : const CircleBorder();
 
     return IconButton(
-      onPressed: _onPressed,
-      icon: Icon(_icon),
+      onPressed: onPressed,
+      icon: Icon(icon),
       padding: EdgeInsets.all((circleSize - iconSize) / 2),
       style: ButtonStyle(
         fixedSize: MaterialStateProperty.all<Size>(Size(circleSize, circleSize)),
