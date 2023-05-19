@@ -79,11 +79,15 @@ class NotedIconButton extends StatelessWidget {
       shape: MaterialStateProperty.all(shape),
     );
 
-    return ElevatedButton(
-      onPressed: onPressed,
-      onLongPress: onLongPress,
-      style: style,
-      child: Center(child: Icon(icon)),
+    return SizedBox(
+      width: circleSize,
+      height: circleSize,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        onLongPress: onLongPress,
+        style: style,
+        child: Center(child: Icon(icon)),
+      ),
     );
   }
 
@@ -119,11 +123,15 @@ class NotedIconButton extends StatelessWidget {
       shape: MaterialStateProperty.all(shape),
     );
 
-    return TextButton(
-      onPressed: onPressed,
-      onLongPress: onLongPress,
-      style: style,
-      child: Center(child: Icon(icon)),
+    return SizedBox(
+      width: circleSize,
+      height: circleSize,
+      child: TextButton(
+        onPressed: onPressed,
+        onLongPress: onLongPress,
+        style: style,
+        child: Center(child: Icon(icon)),
+      ),
     );
   }
 }

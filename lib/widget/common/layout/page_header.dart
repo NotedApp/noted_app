@@ -39,9 +39,7 @@ class PageHeader extends StatelessWidget {
       margin: const EdgeInsets.fromLTRB(20, 16, 20, 16),
       width: double.infinity,
       height: 52,
-      child: Row(
-        children: children,
-      ),
+      child: Row(children: children),
     );
   }
 }
