@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/catalog/catalog_list_widget.dart';
 
-class TextStylePage extends StatelessWidget {
-  const TextStylePage({super.key});
+class CatalogTextStylePage extends StatelessWidget {
+  const CatalogTextStylePage({super.key});
 
   @override
   Widget build(BuildContext context) {

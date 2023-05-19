@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:noted_app/catalog/catalog_list_widget.dart';
 
-class SvgImagePage extends StatelessWidget {
-  const SvgImagePage({super.key});
+class CatalogSvgImagePage extends StatelessWidget {
+  const CatalogSvgImagePage({super.key});
 
   @override
   Widget build(BuildContext context) {

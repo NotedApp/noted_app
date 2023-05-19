@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noted_app/catalog/catalog_list_widget.dart';
 import 'package:noted_app/state/theme/theme_cubit.dart';
-import 'package:noted_app/theme/color_schemes.dart';
+import 'package:noted_app/theme/text_themes.dart';
 import 'package:noted_app/widget/common/icon/noted_icons.dart';
 import 'package:noted_app/widget/common/layout/tappable_row.dart';
 
-class ColorSchemePage extends StatelessWidget {
-  const ColorSchemePage({super.key});
+class CatalogTextThemePage extends StatelessWidget {
+  const CatalogTextThemePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,20 +15,18 @@ class ColorSchemePage extends StatelessWidget {
 
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) => CatalogListWidget(
-        NotedColorSchemeName.values
-            .map((value) => _buildThemeRow(context, value, state.colorSchemeName, cubit))
-            .toList(),
+        NotedTextThemeName.values.map((value) => _buildThemeRow(context, value, state.textThemeName, cubit)).toList(),
       ),
     );
   }
 
   Widget _buildThemeRow(
     BuildContext context,
-    NotedColorSchemeName name,
-    NotedColorSchemeName currentName,
+    NotedTextThemeName name,
+    NotedTextThemeName currentName,
     ThemeCubit cubit,
   ) {
-    String label = '${name.toString().replaceFirst('NotedColorSchemeName.', '')} theme';
+    String label = '${name.toString().replaceFirst('NotedTextThemeName.', '')} theme';
     List<Widget> children = [Text(label, style: Theme.of(context).textTheme.bodyLarge)];
 
     if (name == currentName) {
@@ -36,7 +34,7 @@ class ColorSchemePage extends StatelessWidget {
     }
 
     return TappableRow(
-      onTap: () => cubit.updateColorScheme(name),
+      onTap: () => cubit.updateTextTheme(name),
       children: children,
     );
   }
