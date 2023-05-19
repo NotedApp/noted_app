@@ -26,7 +26,7 @@ class CatalogAppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeCubit, ThemeState>(
-      builder: (_, state) => MaterialApp(
+      builder: (context, state) => MaterialApp(
         title: 'noted catalog',
         theme: ThemeData(colorScheme: state.colorScheme, textTheme: state.textTheme, useMaterial3: true),
         home: CatalogRenderer(CatalogContent.content, isRoot: true),

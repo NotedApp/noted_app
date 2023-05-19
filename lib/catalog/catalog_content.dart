@@ -25,7 +25,7 @@ class CatalogLeaf extends CatalogNode {
 class CatalogContent {
   static final CatalogNode content = CatalogBranch(
     title: "catalog",
-    children: <CatalogNode>[
+    children: [
       CatalogLeaf(title: "color", page: const ColorSchemePage()),
       CatalogLeaf(title: "text", page: const TextThemePage()),
       CatalogLeaf(title: "text styles", page: const TextStylePage()),
