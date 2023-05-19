@@ -19,6 +19,7 @@ class NotedIconButton extends StatelessWidget {
   final Color? iconColor;
   final Color? backgroundColor;
   final double strokeWidth;
+  final String? heroTag;
 
   const NotedIconButton(
     this.onPressed,
@@ -28,6 +29,7 @@ class NotedIconButton extends StatelessWidget {
     this.iconColor,
     this.backgroundColor,
     this.strokeWidth = 0,
+    this.heroTag,
     super.key,
   });
 
@@ -75,6 +77,7 @@ class NotedIconButton extends StatelessWidget {
       width: circleSize,
       height: circleSize,
       child: FloatingActionButton(
+        heroTag: heroTag,
         onPressed: onPressed,
         foregroundColor: foreground,
         backgroundColor: background,
