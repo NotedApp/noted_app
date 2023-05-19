@@ -18,7 +18,8 @@ class NotedIconButton extends StatelessWidget {
   final NotedIconButtonSize _size;
   final Color? _iconColor;
   final Color? _backgroundColor;
-  final double _strokeWidth;
+  // TODO: Implement icon button stroke width.
+  // final double _strokeWidth;
 
   const NotedIconButton(
     this._onPressed,
@@ -32,8 +33,7 @@ class NotedIconButton extends StatelessWidget {
   })  : _type = type,
         _size = size,
         _iconColor = iconColor,
-        _backgroundColor = backgroundColor,
-        _strokeWidth = strokeWidth;
+        _backgroundColor = backgroundColor;
 
   @override
   Widget build(BuildContext context) {
