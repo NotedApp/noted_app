@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/catalog/pages/buttons/catalog_icon_button_page.dart';
+import 'package:noted_app/catalog/pages/buttons/catalog_misc_button_page.dart';
 import 'package:noted_app/catalog/pages/buttons/catalog_text_button_page.dart';
 import 'package:noted_app/catalog/pages/catalog_color_scheme_page.dart';
 import 'package:noted_app/catalog/pages/catalog_icons_page.dart';
@@ -37,6 +38,7 @@ class CatalogContent {
       CatalogBranch(title: "buttons", children: [
         CatalogLeaf(title: "icon", page: const CatalogIconButtonPage()),
         CatalogLeaf(title: "text", page: const CatalogTextButtonPage()),
+        CatalogLeaf(title: "misc", page: const CatalogMiscButtonPage()),
       ])
     ],
   );
