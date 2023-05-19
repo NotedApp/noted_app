@@ -3,32 +3,31 @@ import 'package:noted_app/widget/common/button/noted_icon_button.dart';
 import 'package:noted_app/widget/common/icon/noted_icons.dart';
 
 class PageHeader extends StatelessWidget {
-  final String _title;
-  final bool _showButton;
-  final Function()? _onButtonPressed;
-  final IconData _buttonIcon;
+  final String title;
+  final bool showButton;
+  final Function()? onButtonPressed;
+  final IconData buttonIcon;
 
-  const PageHeader(
-    this._title,
-    this._showButton, {
-    Function()? onButtonPressed,
-    IconData buttonIcon = NotedIcons.chevronLeft,
+  const PageHeader({
+    required this.title,
+    this.showButton = false,
+    this.onButtonPressed,
+    this.buttonIcon = NotedIcons.chevronLeft,
     super.key,
-  })  : _onButtonPressed = onButtonPressed,
-        _buttonIcon = buttonIcon;
+  });
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> children = [Text(_title, style: Theme.of(context).textTheme.displayMedium)];
+    List<Widget> children = [Text(title, style: Theme.of(context).textTheme.displayMedium)];
 
-    if (_showButton) {
+    if (showButton) {
       children.insert(
         0,
         Padding(
           padding: const EdgeInsets.only(right: 16),
           child: NotedIconButton(
-            _onButtonPressed,
-            _buttonIcon,
+            onButtonPressed,
+            buttonIcon,
             type: NotedIconButtonType.filled,
             size: NotedIconButtonSize.small,
           ),

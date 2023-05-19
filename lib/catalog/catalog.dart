@@ -29,7 +29,7 @@ class CatalogAppView extends StatelessWidget {
       builder: (_, state) => MaterialApp(
         title: 'noted catalog',
         theme: ThemeData(colorScheme: state.colorScheme, textTheme: state.textTheme, useMaterial3: true),
-        home: Scaffold(body: SafeArea(child: CatalogRenderer(CatalogContent.content, isRoot: true))),
+        home: CatalogRenderer(CatalogContent.content, isRoot: true),
       ),
     );
   }
