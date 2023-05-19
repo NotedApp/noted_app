@@ -47,9 +47,9 @@ class NotedTextButton extends StatelessWidget {
   }
 
   Widget _buildFilledTextButton(BuildContext context) {
-    TextTheme textTheme = Theme.of(context).textTheme;
-    Color foreground = foregroundColor ?? Theme.of(context).colorScheme.onPrimary;
-    Color background = backgroundColor ?? Theme.of(context).colorScheme.primary;
+    ThemeData theme = Theme.of(context);
+    Color foreground = foregroundColor ?? theme.colorScheme.onPrimary;
+    Color background = backgroundColor ?? theme.colorScheme.primary;
 
     TextStyle? textStyle;
     EdgeInsetsGeometry padding;
@@ -58,19 +58,19 @@ class NotedTextButton extends StatelessWidget {
 
     switch (size) {
       case NotedTextButtonSize.large:
-        textStyle = textTheme.titleLarge?.copyWith(fontWeight: FontWeight.normal);
+        textStyle = theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.normal);
         padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 13);
         iconSize = 24;
         borderRadius = 10;
         break;
       case NotedTextButtonSize.medium:
-        textStyle = textTheme.titleMedium?.copyWith(fontWeight: FontWeight.normal);
+        textStyle = theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.normal);
         padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 10);
         iconSize = 20;
         borderRadius = 10;
         break;
       case NotedTextButtonSize.small:
-        textStyle = textTheme.titleSmall?.copyWith(fontWeight: FontWeight.normal);
+        textStyle = theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.normal);
         padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 10);
         iconSize = 16;
         borderRadius = 8;
@@ -109,8 +109,8 @@ class NotedTextButton extends StatelessWidget {
   }
 
   Widget _buildOutlinedTextButton(BuildContext context) {
-    TextTheme textTheme = Theme.of(context).textTheme;
-    Color foreground = foregroundColor ?? Theme.of(context).colorScheme.onBackground;
+    ThemeData theme = Theme.of(context);
+    Color foreground = foregroundColor ?? theme.colorScheme.onBackground;
 
     TextStyle? textStyle;
     EdgeInsetsGeometry padding;
@@ -119,19 +119,19 @@ class NotedTextButton extends StatelessWidget {
 
     switch (size) {
       case NotedTextButtonSize.large:
-        textStyle = textTheme.titleLarge?.copyWith(fontWeight: FontWeight.normal);
+        textStyle = theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.normal);
         padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 13);
         iconSize = 24;
         borderRadius = 10;
         break;
       case NotedTextButtonSize.medium:
-        textStyle = textTheme.titleMedium?.copyWith(fontWeight: FontWeight.normal);
+        textStyle = theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.normal);
         padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 10);
         iconSize = 20;
         borderRadius = 10;
         break;
       case NotedTextButtonSize.small:
-        textStyle = textTheme.titleSmall?.copyWith(fontWeight: FontWeight.normal);
+        textStyle = theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.normal);
         padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 10);
         iconSize = 16;
         borderRadius = 8;
@@ -171,8 +171,9 @@ class NotedTextButton extends StatelessWidget {
   }
 
   Widget _buildSimpleTextButton(BuildContext context) {
-    TextTheme textTheme = Theme.of(context).textTheme;
-    Color foreground = foregroundColor ?? Theme.of(context).colorScheme.tertiary;
+    ThemeData theme = Theme.of(context);
+    Color foreground = foregroundColor ??
+        (theme.brightness == Brightness.light ? theme.colorScheme.tertiary : theme.colorScheme.onBackground);
 
     TextStyle? textStyle;
     EdgeInsetsGeometry padding;
@@ -181,19 +182,19 @@ class NotedTextButton extends StatelessWidget {
 
     switch (size) {
       case NotedTextButtonSize.large:
-        textStyle = textTheme.titleLarge;
+        textStyle = theme.textTheme.titleLarge;
         padding = const EdgeInsets.symmetric(horizontal: 12, vertical: 10);
         iconSize = 24;
         borderRadius = 10;
         break;
       case NotedTextButtonSize.medium:
-        textStyle = textTheme.titleMedium;
+        textStyle = theme.textTheme.titleMedium;
         padding = const EdgeInsets.symmetric(horizontal: 12, vertical: 8);
         iconSize = 20;
         borderRadius = 10;
         break;
       case NotedTextButtonSize.small:
-        textStyle = textTheme.titleSmall;
+        textStyle = theme.textTheme.titleSmall;
         padding = const EdgeInsets.symmetric(horizontal: 12, vertical: 6);
         iconSize = 16;
         borderRadius = 8;

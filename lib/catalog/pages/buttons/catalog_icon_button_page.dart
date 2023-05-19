@@ -15,85 +15,85 @@ class CatalogIconButtonPage extends StatelessWidget {
         label: 'filled large',
         size: NotedIconButtonSize.large,
         type: NotedIconButtonType.filled,
-        iconColor: colors.onPrimary,
+        foregroundColor: colors.onPrimary,
         backgroundColor: colors.primary,
       ),
       IconButtonRow(
         label: 'filled medium',
         size: NotedIconButtonSize.medium,
         type: NotedIconButtonType.filled,
-        iconColor: colors.onSecondary,
+        foregroundColor: colors.onSecondary,
         backgroundColor: colors.secondary,
       ),
       IconButtonRow(
         label: 'filled small',
         size: NotedIconButtonSize.small,
         type: NotedIconButtonType.filled,
-        iconColor: colors.onTertiary,
+        foregroundColor: colors.onTertiary,
         backgroundColor: colors.tertiary,
       ),
       IconButtonRow(
         label: 'filled outline large',
         size: NotedIconButtonSize.large,
         type: NotedIconButtonType.filled,
-        iconColor: colors.onPrimary,
+        foregroundColor: colors.onPrimary,
         backgroundColor: colors.primary,
-        strokeWidth: 1,
+        hasOutline: true,
       ),
       IconButtonRow(
         label: 'filled outline medium',
         size: NotedIconButtonSize.medium,
         type: NotedIconButtonType.filled,
-        iconColor: colors.onSecondary,
+        foregroundColor: colors.onSecondary,
         backgroundColor: colors.secondary,
-        strokeWidth: 1,
+        hasOutline: true,
       ),
       IconButtonRow(
         label: 'filled outline small',
         size: NotedIconButtonSize.small,
         type: NotedIconButtonType.filled,
-        iconColor: colors.onTertiary,
+        foregroundColor: colors.onTertiary,
         backgroundColor: colors.tertiary,
-        strokeWidth: 1,
+        hasOutline: true,
       ),
       IconButtonRow(
-        label: 'standard large',
+        label: 'simple large',
         size: NotedIconButtonSize.large,
-        type: NotedIconButtonType.standard,
-        iconColor: colors.onBackground,
+        type: NotedIconButtonType.simple,
+        foregroundColor: colors.onBackground,
       ),
       IconButtonRow(
-        label: 'standard medium',
+        label: 'simple medium',
         size: NotedIconButtonSize.medium,
-        type: NotedIconButtonType.standard,
-        iconColor: colors.onBackground,
+        type: NotedIconButtonType.simple,
+        foregroundColor: colors.onBackground,
       ),
       IconButtonRow(
-        label: 'standard small',
+        label: 'simple small',
         size: NotedIconButtonSize.small,
-        type: NotedIconButtonType.standard,
-        iconColor: colors.onBackground,
+        type: NotedIconButtonType.simple,
+        foregroundColor: colors.onBackground,
       ),
       IconButtonRow(
-        label: 'standard outline large',
+        label: 'simple outline large',
         size: NotedIconButtonSize.large,
-        type: NotedIconButtonType.standard,
-        iconColor: colors.onBackground,
-        strokeWidth: 1,
+        type: NotedIconButtonType.simple,
+        foregroundColor: colors.onBackground,
+        hasOutline: true,
       ),
       IconButtonRow(
-        label: 'standard outline medium',
+        label: 'simple outline medium',
         size: NotedIconButtonSize.medium,
-        type: NotedIconButtonType.standard,
-        iconColor: colors.onBackground,
-        strokeWidth: 1,
+        type: NotedIconButtonType.simple,
+        foregroundColor: colors.onBackground,
+        hasOutline: true,
       ),
       IconButtonRow(
-        label: 'standard outline small',
+        label: 'simple outline small',
         size: NotedIconButtonSize.small,
-        type: NotedIconButtonType.standard,
-        iconColor: colors.onBackground,
-        strokeWidth: 1,
+        type: NotedIconButtonType.simple,
+        foregroundColor: colors.onBackground,
+        hasOutline: true,
       ),
     ];
 
@@ -102,20 +102,20 @@ class CatalogIconButtonPage extends StatelessWidget {
 }
 
 class IconButtonRow extends StatelessWidget {
-  final NotedIconButtonSize size;
-  final NotedIconButtonType type;
-  final Color iconColor;
-  final Color? backgroundColor;
   final String label;
-  final double strokeWidth;
+  final NotedIconButtonType type;
+  final NotedIconButtonSize size;
+  final Color? foregroundColor;
+  final Color? backgroundColor;
+  final bool hasOutline;
 
   const IconButtonRow({
     required this.label,
     required this.size,
     required this.type,
-    required this.iconColor,
+    this.foregroundColor,
     this.backgroundColor,
-    this.strokeWidth = 0,
+    this.hasOutline = false,
     super.key,
   });
 
@@ -125,14 +125,14 @@ class IconButtonRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         NotedIconButton(
-          () => null,
-          NotedIcons.pencil,
-          size: size,
+          icon: NotedIcons.pencil,
           type: type,
-          iconColor: iconColor,
+          size: size,
+          onPressed: () {},
+          onLongPress: () {},
+          iconColor: foregroundColor,
           backgroundColor: backgroundColor,
-          strokeWidth: strokeWidth,
-          heroTag: label,
+          hasOutline: hasOutline,
         ),
         Text(label, style: Theme.of(context).textTheme.bodyMedium),
       ],

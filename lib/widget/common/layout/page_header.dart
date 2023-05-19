@@ -26,10 +26,10 @@ class PageHeader extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(right: 16),
           child: NotedIconButton(
-            onButtonPressed,
-            buttonIcon,
+            icon: buttonIcon,
             type: NotedIconButtonType.filled,
             size: NotedIconButtonSize.small,
+            onPressed: onButtonPressed,
           ),
         ),
       );
