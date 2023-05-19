@@ -45,6 +45,12 @@ class CatalogRenderer extends StatelessWidget {
   }
 
   Widget _buildBranchRow(BuildContext context, CatalogNode node) {
+    List<Widget> children = [Text(node.title, style: Theme.of(context).textTheme.bodyLarge)];
+
+    if (node is CatalogBranch) {
+      children.add(const Icon(NotedIcons.chevronRight));
+    }
+
     return SizedBox(
       width: double.infinity,
       height: 48,
@@ -53,13 +59,7 @@ class CatalogRenderer extends StatelessWidget {
         onTap: () => _navigateTo(context, node),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              node.title,
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            const Icon(NotedIcons.chevronRight),
-          ],
+          children: children,
         ),
       ),
     );
