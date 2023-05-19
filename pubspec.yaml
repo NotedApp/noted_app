@@ -31,6 +31,9 @@ flutter:
   # https://flutter.dev/assets-and-images/#resolution-aware
 
   fonts:
+    - family: NotedIcons
+      fonts:
+        - asset: fonts/icons/NotedIcons.ttf
     - family: Poppins
       fonts:
         - asset: fonts/poppins/Poppins-Regular.ttf
