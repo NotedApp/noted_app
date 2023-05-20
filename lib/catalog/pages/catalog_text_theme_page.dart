@@ -4,7 +4,6 @@ import 'package:noted_app/catalog/catalog_list_widget.dart';
 import 'package:noted_app/state/theme/theme_cubit.dart';
 import 'package:noted_app/theme/text_themes.dart';
 import 'package:noted_app/widget/common/icon/noted_icons.dart';
-import 'package:noted_app/widget/common/layout/tappable_row.dart';
 
 class CatalogTextThemePage extends StatelessWidget {
   const CatalogTextThemePage({super.key});
@@ -27,15 +26,12 @@ class CatalogTextThemePage extends StatelessWidget {
     ThemeCubit cubit,
   ) {
     String label = '${name.toString().replaceFirst('NotedTextThemeName.', '')} theme';
-    List<Widget> children = [Text(label, style: Theme.of(context).textTheme.bodyLarge)];
 
-    if (name == currentName) {
-      children.add(const Icon(NotedIcons.check));
-    }
-
-    return TappableRow(
+    return ListTile(
       onTap: () => cubit.updateTextTheme(name),
-      children: children,
+      title: Text(label, style: Theme.of(context).textTheme.bodyLarge),
+      trailing: name == currentName ? const Icon(NotedIcons.check) : null,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 2, vertical: 0),
     );
   }
 }

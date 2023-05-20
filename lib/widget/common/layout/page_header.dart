@@ -5,7 +5,7 @@ import 'package:noted_app/widget/common/icon/noted_icons.dart';
 class PageHeader extends StatelessWidget {
   final String title;
   final bool showButton;
-  final Function()? onButtonPressed;
+  final VoidCallback? onButtonPressed;
   final IconData buttonIcon;
 
   const PageHeader({
@@ -26,10 +26,10 @@ class PageHeader extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(right: 16),
           child: NotedIconButton(
-            onButtonPressed,
-            buttonIcon,
+            icon: buttonIcon,
             type: NotedIconButtonType.filled,
             size: NotedIconButtonSize.small,
+            onPressed: onButtonPressed,
           ),
         ),
       );
@@ -39,9 +39,7 @@ class PageHeader extends StatelessWidget {
       margin: const EdgeInsets.fromLTRB(20, 16, 20, 16),
       width: double.infinity,
       height: 52,
-      child: Row(
-        children: children,
-      ),
+      child: Row(children: children),
     );
   }
 }

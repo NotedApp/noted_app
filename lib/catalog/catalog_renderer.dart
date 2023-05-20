@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:noted_app/catalog/catalog_content.dart';
 import 'package:noted_app/widget/common/icon/noted_icons.dart';
 import 'package:noted_app/widget/common/layout/page_header.dart';
-import 'package:noted_app/widget/common/layout/tappable_row.dart';
 
 class CatalogRenderer extends StatelessWidget {
   final CatalogNode node;
@@ -34,27 +33,19 @@ class CatalogRenderer extends StatelessWidget {
   }
 
   Widget _buildBranch(CatalogBranch branch, BuildContext context) {
-    return ListView.separated(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 20),
       itemBuilder: (context, index) => _buildBranchRow(context, branch.children[index]),
-      separatorBuilder: (context, index) => const Padding(
-        padding: EdgeInsets.symmetric(vertical: 2, horizontal: 0),
-        child: Divider(),
-      ),
       itemCount: branch.children.length,
     );
   }
 
   Widget _buildBranchRow(BuildContext context, CatalogNode node) {
-    List<Widget> children = [Text(node.title, style: Theme.of(context).textTheme.bodyLarge)];
-
-    if (node is CatalogBranch) {
-      children.add(const Icon(NotedIcons.chevronRight));
-    }
-
-    return TappableRow(
+    return ListTile(
       onTap: () => _navigateTo(context, node),
-      children: children,
+      title: Text(node.title, style: Theme.of(context).textTheme.bodyLarge),
+      trailing: node is CatalogBranch ? null : const Icon(NotedIcons.chevronRight),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
     );
   }
 

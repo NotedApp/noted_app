@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 enum NotedIconButtonType {
   filled,
-  standard,
+  simple,
 }
 
 enum NotedIconButtonSize {
@@ -12,22 +12,24 @@ enum NotedIconButtonSize {
 }
 
 class NotedIconButton extends StatelessWidget {
-  final Function()? onPressed;
   final IconData icon;
   final NotedIconButtonType type;
   final NotedIconButtonSize size;
+  final VoidCallback? onPressed;
+  final VoidCallback? onLongPress;
   final Color? iconColor;
   final Color? backgroundColor;
-  final double strokeWidth;
+  final bool hasOutline;
 
-  const NotedIconButton(
+  const NotedIconButton({
+    required this.icon,
+    required this.type,
+    required this.size,
     this.onPressed,
-    this.icon, {
-    this.type = NotedIconButtonType.standard,
-    this.size = NotedIconButtonSize.medium,
+    this.onLongPress,
     this.iconColor,
     this.backgroundColor,
-    this.strokeWidth = 0,
+    this.hasOutline = false,
     super.key,
   });
 
@@ -36,14 +38,16 @@ class NotedIconButton extends StatelessWidget {
     switch (type) {
       case NotedIconButtonType.filled:
         return _buildFilledIconButton(context);
-      case NotedIconButtonType.standard:
-        return _buildStandardIconButton(context);
+      case NotedIconButtonType.simple:
+        return _buildSimpleIconButton(context);
     }
   }
 
   Widget _buildFilledIconButton(BuildContext context) {
-    Color background = backgroundColor ?? Theme.of(context).colorScheme.primary;
-    Color foreground = iconColor ?? Theme.of(context).colorScheme.onPrimary;
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
+    Color foreground = iconColor ?? colorScheme.onPrimary;
+    Color background = backgroundColor ?? colorScheme.primary;
+
     double iconSize;
     double circleSize;
 
@@ -62,31 +66,34 @@ class NotedIconButton extends StatelessWidget {
         break;
     }
 
-    ShapeBorder border = strokeWidth > 0
-        ? CircleBorder(
-            side: BorderSide(
-              color: foreground,
-              width: strokeWidth,
-            ),
-          )
-        : const CircleBorder();
+    OutlinedBorder shape = CircleBorder(side: hasOutline ? BorderSide(color: foreground) : BorderSide.none);
+
+    ButtonStyle style = ButtonStyle(
+      backgroundColor: MaterialStateProperty.all(background),
+      foregroundColor: MaterialStateProperty.all(foreground),
+      padding: MaterialStateProperty.all(EdgeInsets.zero),
+      elevation: MaterialStateProperty.all(3),
+      fixedSize: MaterialStateProperty.all(Size.square(circleSize)),
+      iconColor: MaterialStateProperty.all(foreground),
+      iconSize: MaterialStateProperty.all(iconSize),
+      shape: MaterialStateProperty.all(shape),
+    );
 
     return SizedBox(
       width: circleSize,
       height: circleSize,
-      child: FloatingActionButton(
+      child: ElevatedButton(
         onPressed: onPressed,
-        foregroundColor: foreground,
-        backgroundColor: background,
-        elevation: 3,
-        shape: border,
-        child: Icon(icon, size: iconSize),
+        onLongPress: onLongPress,
+        style: style,
+        child: Center(child: Icon(icon)),
       ),
     );
   }
 
-  Widget _buildStandardIconButton(BuildContext context) {
+  Widget _buildSimpleIconButton(BuildContext context) {
     Color foreground = iconColor ?? Theme.of(context).colorScheme.onPrimary;
+
     double iconSize;
     double circleSize;
 
@@ -105,20 +112,25 @@ class NotedIconButton extends StatelessWidget {
         break;
     }
 
-    OutlinedBorder border =
-        strokeWidth > 0 ? CircleBorder(side: BorderSide(color: foreground, width: strokeWidth)) : const CircleBorder();
+    OutlinedBorder shape = CircleBorder(side: hasOutline ? BorderSide(color: foreground) : BorderSide.none);
 
-    return IconButton(
-      onPressed: onPressed,
-      icon: Icon(icon),
-      padding: EdgeInsets.all((circleSize - iconSize) / 2),
-      style: ButtonStyle(
-        fixedSize: MaterialStateProperty.all<Size>(Size(circleSize, circleSize)),
-        iconSize: MaterialStateProperty.all<double>(iconSize),
-        foregroundColor: MaterialStateProperty.all<Color>(foreground),
-        iconColor: MaterialStateProperty.all<Color>(foreground),
-        elevation: MaterialStateProperty.all<double>(1),
-        shape: MaterialStateProperty.all<OutlinedBorder>(border),
+    ButtonStyle style = ButtonStyle(
+      foregroundColor: MaterialStateProperty.all(foreground),
+      padding: MaterialStateProperty.all(EdgeInsets.zero),
+      fixedSize: MaterialStateProperty.all(Size.square(circleSize)),
+      iconColor: MaterialStateProperty.all(foreground),
+      iconSize: MaterialStateProperty.all(iconSize),
+      shape: MaterialStateProperty.all(shape),
+    );
+
+    return SizedBox(
+      width: circleSize,
+      height: circleSize,
+      child: TextButton(
+        onPressed: onPressed,
+        onLongPress: onLongPress,
+        style: style,
+        child: Center(child: Icon(icon)),
       ),
     );
   }
