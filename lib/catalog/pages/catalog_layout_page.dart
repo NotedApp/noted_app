@@ -5,15 +5,26 @@ import 'package:noted_app/widget/common/layout/noted_card.dart';
 import 'package:noted_app/widget/common/layout/noted_dialog.dart';
 import 'package:noted_app/widget/common/layout/noted_loading_indicator.dart';
 import 'package:noted_app/widget/common/layout/noted_snack_bar.dart';
+import 'package:noted_app/widget/common/layout/noted_tab_bar.dart';
 
 class CatalogLayoutPage extends StatefulWidget {
-  const CatalogLayoutPage({super.key});
+  final List<String> tabs = ['all (20)', 'notes', 'to-do', 'climbing', 'finances'];
+
+  CatalogLayoutPage({super.key});
 
   @override
   State<StatefulWidget> createState() => _CatalogLayoutPageState();
 }
 
-class _CatalogLayoutPageState extends State<CatalogLayoutPage> {
+class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProviderStateMixin {
+  late TabController tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(length: widget.tabs.length, vsync: this);
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Widget> children = [
@@ -27,6 +38,13 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> {
             SizedBox(width: 12),
             NotedLoadingIndicator(label: 'loading text'),
           ],
+        ),
+      ),
+      LayoutColumn(
+        label: 'tab bar',
+        child: NotedTabBar(
+          tabs: widget.tabs,
+          controller: tabController,
         ),
       ),
       const LayoutColumn(

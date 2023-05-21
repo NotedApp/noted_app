@@ -36,7 +36,7 @@ class CatalogContent {
       CatalogLeaf(title: "text styles", page: const CatalogTextStylePage()),
       CatalogLeaf(title: "images", page: const CatalogSvgImagePage()),
       CatalogLeaf(title: "icons", page: const CatalogIconsPage()),
-      CatalogLeaf(title: "layout", page: const CatalogLayoutPage()),
+      CatalogLeaf(title: "layout", page: CatalogLayoutPage()),
       CatalogBranch(title: "buttons", children: [
         CatalogLeaf(title: "icon", page: const CatalogIconButtonPage()),
         CatalogLeaf(title: "text", page: const CatalogTextButtonPage()),
