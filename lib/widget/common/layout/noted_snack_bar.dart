@@ -12,9 +12,9 @@ class NotedSnackBar {
       backgroundColor: colors.background,
       elevation: 3,
       padding: EdgeInsets.zero,
-      margin: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
+      margin: const EdgeInsets.symmetric(vertical: 32, horizontal: 20),
       shape: RoundedRectangleBorder(
-        side: BorderSide(color: colors.onBackground),
+        side: BorderSide(color: colors.onBackground, width: 2),
         borderRadius: BorderRadius.circular(12),
       ),
     );

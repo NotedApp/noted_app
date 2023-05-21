@@ -15,15 +15,15 @@ class NotedTabBar extends StatelessWidget {
       tabs: tabs.map((text) => _NotedTab(text: text, theme: theme)).toList(),
       controller: controller,
       isScrollable: true,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       labelPadding: EdgeInsets.zero,
       automaticIndicatorColorAdjustment: false,
       indicator: BoxDecoration(
         color: theme.colorScheme.primary,
         border: Border.all(color: theme.colorScheme.onBackground),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(18),
       ),
-      indicatorPadding: const EdgeInsets.symmetric(horizontal: 4),
+      indicatorPadding: const EdgeInsets.symmetric(horizontal: 5),
       indicatorSize: TabBarIndicatorSize.label,
       indicatorWeight: 0,
       onTap: onTap,
@@ -41,15 +41,15 @@ class _NotedTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Tab(
-      height: 32,
+      height: 36,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 5),
         child: Container(
-          height: 32,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+          height: 36,
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
           decoration: BoxDecoration(
             border: Border.all(color: theme.colorScheme.onBackground),
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(18),
           ),
           child: Center(child: Text(text, style: theme.textTheme.titleSmall)),
         ),

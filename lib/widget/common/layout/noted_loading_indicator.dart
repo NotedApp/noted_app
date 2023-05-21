@@ -7,11 +7,13 @@ class NotedLoadingIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     SizedBox progress = SizedBox(
       width: 24,
       height: 24,
       child: CircularProgressIndicator(
-        color: Theme.of(context).colorScheme.tertiary,
+        color: theme.colorScheme.tertiary,
         strokeWidth: 2,
         semanticsLabel: label,
       ),
