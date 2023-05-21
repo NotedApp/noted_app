@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:noted_app/catalog/catalog_list_widget.dart';
 import 'package:noted_app/widget/common/button/noted_text_button.dart';
 import 'package:noted_app/widget/common/layout/noted_card.dart';
+import 'package:noted_app/widget/common/layout/noted_loading_indicator.dart';
 import 'package:noted_app/widget/common/layout/noted_snack_bar.dart';
 
 class CatalogLayoutPage extends StatefulWidget {
@@ -15,6 +16,18 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> {
   @override
   Widget build(BuildContext context) {
     List<Widget> children = [
+      const LayoutColumn(
+        label: 'loading indicator',
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            NotedLoadingIndicator(),
+            SizedBox(width: 12),
+            NotedLoadingIndicator(label: 'loading text'),
+          ],
+        ),
+      ),
       const LayoutColumn(
         label: 'card large',
         child: NotedCard(
