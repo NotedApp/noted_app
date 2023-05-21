@@ -10,9 +10,17 @@ class NotedCard extends StatelessWidget {
   final NotedCardSize size;
   final double? width;
   final double? height;
+  final EdgeInsetsGeometry? margin;
   final Widget? child;
 
-  const NotedCard({required this.size, this.width, this.height, this.child, super.key});
+  const NotedCard({
+    required this.size,
+    this.width,
+    this.height,
+    this.margin,
+    this.child,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +45,7 @@ class NotedCard extends StatelessWidget {
         elevation: 4,
         shape: shape,
         borderOnForeground: true,
+        margin: margin,
         child: child,
       ),
     );
