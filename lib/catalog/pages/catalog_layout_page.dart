@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:noted_app/catalog/catalog_list_widget.dart';
 import 'package:noted_app/widget/common/button/noted_text_button.dart';
 import 'package:noted_app/widget/common/layout/noted_card.dart';
+import 'package:noted_app/widget/common/layout/noted_dialog.dart';
 import 'package:noted_app/widget/common/layout/noted_loading_indicator.dart';
 import 'package:noted_app/widget/common/layout/noted_snack_bar.dart';
 
@@ -92,6 +93,46 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> {
           ],
         ),
       ),
+      LayoutColumn(
+        label: 'dialog with title',
+        child: Row(
+          children: [
+            NotedTextButton(
+              label: 'left button',
+              type: NotedTextButtonType.filled,
+              size: NotedTextButtonSize.small,
+              onPressed: () => _showDialog(context, title: 'modal title', leftActionText: 'left action'),
+            ),
+            const SizedBox(width: 12),
+            NotedTextButton(
+              label: 'right button',
+              type: NotedTextButtonType.filled,
+              size: NotedTextButtonSize.small,
+              onPressed: () => _showDialog(context, title: 'modal title', rightActionText: 'right action'),
+            ),
+          ],
+        ),
+      ),
+      LayoutColumn(
+        label: 'dialog no title',
+        child: Row(
+          children: [
+            NotedTextButton(
+              label: 'both buttons',
+              type: NotedTextButtonType.filled,
+              size: NotedTextButtonSize.small,
+              onPressed: () => _showDialog(context, leftActionText: 'left action', rightActionText: 'right action'),
+            ),
+            const SizedBox(width: 12),
+            NotedTextButton(
+              label: 'no buttons',
+              type: NotedTextButtonType.filled,
+              size: NotedTextButtonSize.small,
+              onPressed: () => _showDialog(context),
+            ),
+          ],
+        ),
+      ),
     ];
 
     return CatalogListWidget(children);
@@ -123,6 +164,25 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> {
     );
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void _showDialog(
+    BuildContext context, {
+    String? title,
+    String? leftActionText,
+    String? rightActionText,
+  }) {
+    showDialog(
+      context: context,
+      builder: (context) => NotedDialog(
+        title: title,
+        leftActionText: leftActionText,
+        onLeftActionPressed: () => Navigator.of(context).pop(),
+        rightActionText: rightActionText,
+        onRightActionPressed: () => Navigator.of(context).pop(),
+        child: const Text('test dialog contents'),
+      ),
+    );
   }
 }
 
