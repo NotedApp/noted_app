@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:noted_app/widget/common/button/noted_icon_button.dart';
 import 'package:noted_app/widget/common/icon/noted_icons.dart';
 
-class PageHeader extends StatelessWidget {
+class NotedPageHeader extends StatelessWidget {
   final String title;
   final bool showButton;
   final VoidCallback? onButtonPressed;
   final IconData buttonIcon;
 
-  const PageHeader({
+  const NotedPageHeader({
     required this.title,
     this.showButton = false,
     this.onButtonPressed,

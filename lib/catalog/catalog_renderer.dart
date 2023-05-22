@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/catalog/catalog_content.dart';
 import 'package:noted_app/widget/common/icon/noted_icons.dart';
-import 'package:noted_app/widget/common/layout/page_header.dart';
+import 'package:noted_app/widget/common/layout/noted_page_header.dart';
 
 class CatalogRenderer extends StatelessWidget {
   final CatalogNode node;
@@ -15,7 +15,7 @@ class CatalogRenderer extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            PageHeader(
+            NotedPageHeader(
               title: node.title,
               showButton: !isRoot,
               onButtonPressed: () => _tryPop(context),

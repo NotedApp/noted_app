@@ -172,8 +172,7 @@ class NotedTextButton extends StatelessWidget {
 
   Widget _buildSimpleTextButton(BuildContext context) {
     ThemeData theme = Theme.of(context);
-    Color foreground = foregroundColor ??
-        (theme.brightness == Brightness.light ? theme.colorScheme.tertiary : theme.colorScheme.onBackground);
+    Color foreground = foregroundColor ?? theme.colorScheme.tertiary;
 
     TextStyle? textStyle;
     EdgeInsetsGeometry padding;

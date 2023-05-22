@@ -1,0 +1,223 @@
+import 'package:flutter/material.dart';
+import 'package:noted_app/catalog/catalog_list_widget.dart';
+import 'package:noted_app/widget/common/button/noted_text_button.dart';
+import 'package:noted_app/widget/common/layout/noted_card.dart';
+import 'package:noted_app/widget/common/layout/noted_dialog.dart';
+import 'package:noted_app/widget/common/layout/noted_loading_indicator.dart';
+import 'package:noted_app/widget/common/layout/noted_snack_bar.dart';
+import 'package:noted_app/widget/common/layout/noted_tab_bar.dart';
+
+class CatalogLayoutPage extends StatefulWidget {
+  final List<String> tabs = ['all (20)', 'notes', 'to-do', 'climbing', 'finances'];
+
+  CatalogLayoutPage({super.key});
+
+  @override
+  State<StatefulWidget> createState() => _CatalogLayoutPageState();
+}
+
+class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProviderStateMixin {
+  late TabController tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(length: widget.tabs.length, vsync: this);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> children = [
+      const LayoutColumn(
+        label: 'loading indicator',
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            NotedLoadingIndicator(),
+            SizedBox(width: 12),
+            NotedLoadingIndicator(label: 'loading text'),
+          ],
+        ),
+      ),
+      LayoutColumn(
+        label: 'tab bar',
+        child: NotedTabBar(
+          tabs: widget.tabs,
+          controller: tabController,
+        ),
+      ),
+      const LayoutColumn(
+        label: 'card large',
+        child: NotedCard(
+          size: NotedCardSize.large,
+          height: 128,
+          margin: EdgeInsets.zero,
+        ),
+      ),
+      const LayoutColumn(
+        label: 'card medium',
+        child: NotedCard(
+          size: NotedCardSize.medium,
+          height: 96,
+          margin: EdgeInsets.zero,
+        ),
+      ),
+      const LayoutColumn(
+        label: 'card small',
+        child: NotedCard(
+          size: NotedCardSize.small,
+          height: 64,
+          margin: EdgeInsets.zero,
+        ),
+      ),
+      LayoutColumn(
+        label: 'snackbar no close',
+        child: Row(
+          children: [
+            NotedTextButton(
+              label: 'open snackbar',
+              type: NotedTextButtonType.filled,
+              size: NotedTextButtonSize.small,
+              onPressed: () => _showSnackBar(context),
+            ),
+            const SizedBox(width: 12),
+            NotedTextButton(
+              label: 'text snackbar',
+              type: NotedTextButtonType.filled,
+              size: NotedTextButtonSize.small,
+              onPressed: () => _showTextSnackBar(context),
+            ),
+          ],
+        ),
+      ),
+      LayoutColumn(
+        label: 'snackbar with close',
+        child: Row(
+          children: [
+            NotedTextButton(
+              label: 'open snackbar',
+              type: NotedTextButtonType.filled,
+              size: NotedTextButtonSize.small,
+              onPressed: () => _showSnackBar(context, hasClose: true),
+            ),
+            const SizedBox(width: 12),
+            NotedTextButton(
+              label: 'text snackbar',
+              type: NotedTextButtonType.filled,
+              size: NotedTextButtonSize.small,
+              onPressed: () => _showTextSnackBar(context, hasClose: true),
+            ),
+          ],
+        ),
+      ),
+      LayoutColumn(
+        label: 'dialog with title',
+        child: Row(
+          children: [
+            NotedTextButton(
+              label: 'left button',
+              type: NotedTextButtonType.filled,
+              size: NotedTextButtonSize.small,
+              onPressed: () => _showDialog(context, title: 'modal title', leftActionText: 'left action'),
+            ),
+            const SizedBox(width: 12),
+            NotedTextButton(
+              label: 'right button',
+              type: NotedTextButtonType.filled,
+              size: NotedTextButtonSize.small,
+              onPressed: () => _showDialog(context, title: 'modal title', rightActionText: 'right action'),
+            ),
+          ],
+        ),
+      ),
+      LayoutColumn(
+        label: 'dialog no title',
+        child: Row(
+          children: [
+            NotedTextButton(
+              label: 'both buttons',
+              type: NotedTextButtonType.filled,
+              size: NotedTextButtonSize.small,
+              onPressed: () => _showDialog(context, leftActionText: 'left action', rightActionText: 'right action'),
+            ),
+            const SizedBox(width: 12),
+            NotedTextButton(
+              label: 'no buttons',
+              type: NotedTextButtonType.filled,
+              size: NotedTextButtonSize.small,
+              onPressed: () => _showDialog(context),
+            ),
+          ],
+        ),
+      ),
+    ];
+
+    return CatalogListWidget(children);
+  }
+
+  void _showSnackBar(BuildContext context, {bool hasClose = false}) {
+    ThemeData theme = Theme.of(context);
+
+    Widget content = Padding(
+      padding: const EdgeInsets.all(16),
+      child: Text(
+        'test snackbar text',
+        style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurface),
+      ),
+    );
+
+    SnackBar snackBar = hasClose
+        ? NotedSnackBar.createWithClose(context: context, content: content)
+        : NotedSnackBar.create(context: context, content: content);
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void _showTextSnackBar(BuildContext context, {bool hasClose = false}) {
+    SnackBar snackBar = NotedSnackBar.createWithText(
+      context: context,
+      text: 'test snackbar with text',
+      hasClose: hasClose,
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void _showDialog(
+    BuildContext context, {
+    String? title,
+    String? leftActionText,
+    String? rightActionText,
+  }) {
+    showDialog(
+      context: context,
+      builder: (context) => NotedDialog(
+        title: title,
+        leftActionText: leftActionText,
+        onLeftActionPressed: () => Navigator.of(context).pop(),
+        rightActionText: rightActionText,
+        onRightActionPressed: () => Navigator.of(context).pop(),
+        child: const Text('test dialog contents'),
+      ),
+    );
+  }
+}
+
+class LayoutColumn extends StatelessWidget {
+  final String label;
+  final Widget child;
+
+  const LayoutColumn({required this.label, required this.child, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(width: double.infinity, height: 36, child: Text(label)),
+        child,
+      ],
+    );
+  }
+}

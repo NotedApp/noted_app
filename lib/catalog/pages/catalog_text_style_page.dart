@@ -49,7 +49,7 @@ class TextRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text('noted.', style: style),
+        Text('noted.', style: style ?? defaultStyle),
         Text(label, style: Theme.of(context).textTheme.bodyMedium),
       ],
     );

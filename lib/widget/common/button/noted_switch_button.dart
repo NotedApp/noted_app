@@ -13,11 +13,12 @@ class NotedSwitchButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ColorScheme colors = Theme.of(context).colorScheme;
+    ThemeData theme = Theme.of(context);
+    ColorScheme colors = theme.colorScheme;
 
     final MaterialStateProperty<Icon?> thumbIcon = MaterialStateProperty.resolveWith<Icon?>(
       (Set<MaterialState> states) => states.contains(MaterialState.selected)
-          ? Icon(NotedIcons.check, color: colors.tertiary)
+          ? Icon(NotedIcons.check, color: theme.brightness == Brightness.dark ? colors.primary : colors.tertiary)
           : Icon(NotedIcons.close, color: colors.secondary),
     );
 
@@ -26,8 +27,8 @@ class NotedSwitchButton extends StatelessWidget {
       onChanged: onChanged,
       thumbIcon: thumbIcon,
       thumbColor: MaterialStateProperty.all(colors.background),
-      activeTrackColor: colors.tertiary,
-      inactiveTrackColor: colors.secondary,
+      activeTrackColor: theme.brightness == Brightness.dark ? colors.onBackground : colors.tertiary,
+      inactiveTrackColor: theme.brightness == Brightness.dark ? colors.primary : colors.secondary,
       trackOutlineColor: MaterialStateProperty.all(Colors.transparent),
     );
   }
