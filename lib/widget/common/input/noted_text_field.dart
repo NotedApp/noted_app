@@ -57,7 +57,7 @@ class NotedTextField extends StatelessWidget {
             : ''
         : null;
 
-    TextStyle? errorStyle = hasError
+    TextStyle? errorStyle = showErrorText
         ? theme.textTheme.labelSmall?.copyWith(height: 1, color: theme.colorScheme.error)
         : const TextStyle(height: 0);
 
@@ -83,7 +83,16 @@ class NotedTextField extends StatelessWidget {
         break;
       case NotedTextFieldType.title:
         style = theme.textTheme.displaySmall;
-        decoration = const InputDecoration(border: OutlineInputBorder());
+        decoration = InputDecoration(
+          isDense: true,
+          hintText: hint,
+          errorText: resolvedErrorText,
+          errorStyle: errorStyle,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 5),
+          border: const OutlineInputBorder(
+            borderSide: BorderSide.none,
+          ),
+        );
         break;
     }
 

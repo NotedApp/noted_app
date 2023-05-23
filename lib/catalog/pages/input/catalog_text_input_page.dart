@@ -13,27 +13,52 @@ class CatalogTextInputPage extends StatefulWidget {
 class _CatalogTextInputPageState extends State<CatalogTextInputPage> {
   final TextEditingController controller0 = TextEditingController();
   String? error0;
-  bool hide0 = false;
+
+  final TextEditingController controller1 = TextEditingController();
+  String? error1;
+  bool hide1 = false;
+
+  final TextEditingController controller3 = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     List<Widget> children = [
       InputColumn(
-        label: 'text field show/hide',
+        label: 'text field plain',
         child: NotedTextField(
           type: NotedTextFieldType.standard,
           name: 'email',
           errorText: error0,
-          showErrorText: true,
           controller: controller0,
-          obscureText: hide0,
           onSubmitted: (_) => setState(() {
             error0 = validateText(controller0.text);
           }),
-          icon: hide0 ? NotedIcons.eye : NotedIcons.eyeClosed,
-          onIconPressed: () => setState(() {
-            hide0 = !hide0;
+        ),
+      ),
+      InputColumn(
+        label: 'text field show/hide',
+        child: NotedTextField(
+          type: NotedTextFieldType.standard,
+          name: 'email',
+          errorText: error1,
+          showErrorText: true,
+          controller: controller1,
+          obscureText: hide1,
+          onSubmitted: (_) => setState(() {
+            error1 = validateText(controller1.text);
           }),
+          icon: hide1 ? NotedIcons.eye : NotedIcons.eyeClosed,
+          onIconPressed: () => setState(() {
+            hide1 = !hide1;
+          }),
+        ),
+      ),
+      InputColumn(
+        label: 'title text field',
+        child: NotedTextField(
+          type: NotedTextFieldType.title,
+          hint: 'title',
+          controller: controller3,
         ),
       ),
     ];
