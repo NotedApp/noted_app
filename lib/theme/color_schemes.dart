@@ -23,9 +23,9 @@ class NotedColorSchemes {
 
   static const ColorScheme blueColorScheme = ColorScheme(
     brightness: Brightness.light,
-    primary: Color(0xFF789395),
+    primary: Color(0xFF8DA5A5),
     onPrimary: Color(0xFF111111),
-    secondary: Color(0xFF98ADAE),
+    secondary: Color(0xFFAFC0C0),
     onSecondary: Color(0xFF111111),
     tertiary: Color(0xFF2A324B),
     onTertiary: Color(0xFFE5E3C9),

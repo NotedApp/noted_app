@@ -31,22 +31,22 @@ class CatalogLeaf extends CatalogNode {
 
 class CatalogContent {
   static final CatalogNode content = CatalogBranch(
-    title: "catalog",
+    title: 'catalog',
     children: [
-      CatalogLeaf(title: "color", page: const CatalogColorSchemePage()),
-      CatalogLeaf(title: "text", page: const CatalogTextThemePage()),
-      CatalogLeaf(title: "text styles", page: const CatalogTextStylePage()),
-      CatalogLeaf(title: "images", page: const CatalogSvgImagePage()),
-      CatalogLeaf(title: "icons", page: const CatalogIconsPage()),
-      CatalogLeaf(title: "layout", page: CatalogLayoutPage()),
-      CatalogBranch(title: "buttons", children: [
-        CatalogLeaf(title: "icon", page: const CatalogIconButtonPage()),
-        CatalogLeaf(title: "text", page: const CatalogTextButtonPage()),
-        CatalogLeaf(title: "misc", page: const CatalogMiscButtonPage()),
+      CatalogLeaf(title: 'color', page: const CatalogColorSchemePage()),
+      CatalogLeaf(title: 'text', page: const CatalogTextThemePage()),
+      CatalogLeaf(title: 'text styles', page: const CatalogTextStylePage()),
+      CatalogLeaf(title: 'images', page: const CatalogSvgImagePage()),
+      CatalogLeaf(title: 'icons', page: const CatalogIconsPage()),
+      CatalogLeaf(title: 'layout', page: CatalogLayoutPage()),
+      CatalogBranch(title: 'buttons', children: [
+        CatalogLeaf(title: 'icon', page: const CatalogIconButtonPage()),
+        CatalogLeaf(title: 'text', page: const CatalogTextButtonPage()),
+        CatalogLeaf(title: 'misc', page: const CatalogMiscButtonPage()),
       ]),
-      CatalogBranch(title: "input", children: [
-        CatalogLeaf(title: "text", page: CatalogTextInputPage()),
-        CatalogLeaf(title: "quill", page: CatalogQuillInputPage()),
+      CatalogBranch(title: 'input', children: [
+        CatalogLeaf(title: 'text', page: const CatalogTextInputPage()),
+        CatalogLeaf(title: 'quill', page: const CatalogQuillInputPage()),
       ])
     ],
   );

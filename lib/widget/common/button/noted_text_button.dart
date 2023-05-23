@@ -203,6 +203,7 @@ class NotedTextButton extends StatelessWidget {
     OutlinedBorder shape = RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius));
 
     ButtonStyle style = ButtonStyle(
+      backgroundColor: MaterialStateProperty.all(Colors.transparent),
       textStyle: MaterialStateProperty.all(textStyle),
       foregroundColor: MaterialStateProperty.all(foreground),
       padding: MaterialStateProperty.all(padding),

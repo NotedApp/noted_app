@@ -28,9 +28,19 @@ class CatalogAppView extends StatelessWidget {
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) => MaterialApp(
         title: 'noted catalog',
-        theme: ThemeData(colorScheme: state.colorScheme, textTheme: state.textTheme, useMaterial3: true),
+        theme: ThemeData(
+          brightness: state.colorScheme.brightness,
+          colorScheme: state.colorScheme,
+          textTheme: state.textTheme,
+          textButtonTheme: _createTextButtonTheme(state.textTheme, state.colorScheme),
+          useMaterial3: true,
+        ),
         home: CatalogRenderer(CatalogContent.content, isRoot: true),
       ),
     );
+  }
+
+  TextButtonThemeData _createTextButtonTheme(TextTheme text, ColorScheme colors) {
+    return TextButtonThemeData(style: ButtonStyle(backgroundColor: MaterialStateProperty.all(colors.primary)));
   }
 }
