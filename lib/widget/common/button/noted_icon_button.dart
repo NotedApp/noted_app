@@ -115,6 +115,7 @@ class NotedIconButton extends StatelessWidget {
     OutlinedBorder shape = CircleBorder(side: hasOutline ? BorderSide(color: foreground) : BorderSide.none);
 
     ButtonStyle style = ButtonStyle(
+      backgroundColor: MaterialStateProperty.all(Colors.transparent),
       foregroundColor: MaterialStateProperty.all(foreground),
       padding: MaterialStateProperty.all(EdgeInsets.zero),
       fixedSize: MaterialStateProperty.all(Size.square(circleSize)),

@@ -1,6 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:noted_app/state/theme/theme_cubit.dart';
+import 'package:noted_app/state/theme/theme_state.dart';
 import 'package:noted_app/theme/color_schemes.dart';
 import 'package:noted_app/theme/text_themes.dart';
 import 'package:noted_app/util/noted_error.dart';
