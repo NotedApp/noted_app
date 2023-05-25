@@ -22,8 +22,9 @@ class _CatalogTextInputPageState extends State<CatalogTextInputPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> children = [
-      InputColumn(
+    List<CatalogListItem> children = [
+      CatalogListItem(
+        type: CatalogListItemType.column,
         label: 'text field plain',
         child: NotedTextField(
           type: NotedTextFieldType.standard,
@@ -35,7 +36,8 @@ class _CatalogTextInputPageState extends State<CatalogTextInputPage> {
           }),
         ),
       ),
-      InputColumn(
+      CatalogListItem(
+        type: CatalogListItemType.column,
         label: 'text field show/hide',
         child: NotedTextField(
           type: NotedTextFieldType.standard,
@@ -53,7 +55,8 @@ class _CatalogTextInputPageState extends State<CatalogTextInputPage> {
           }),
         ),
       ),
-      InputColumn(
+      CatalogListItem(
+        type: CatalogListItemType.column,
         label: 'title text field',
         child: NotedTextField(
           type: NotedTextFieldType.title,
@@ -82,23 +85,5 @@ class _CatalogTextInputPageState extends State<CatalogTextInputPage> {
     }
 
     return null;
-  }
-}
-
-class InputColumn extends StatelessWidget {
-  final String label;
-  final Widget child;
-
-  const InputColumn({required this.label, required this.child, super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(width: double.infinity, height: 36, child: Text(label)),
-        child,
-      ],
-    );
   }
 }

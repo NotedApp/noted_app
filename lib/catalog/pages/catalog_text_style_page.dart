@@ -2,38 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:noted_app/catalog/catalog_list_widget.dart';
 
 class CatalogTextStylePage extends StatelessWidget {
-  const CatalogTextStylePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    TextTheme theme = Theme.of(context).textTheme;
-
-    List<Widget> children = [
-      TextRow(theme.displayLarge, 'display large'),
-      TextRow(theme.displayMedium, 'display medium'),
-      TextRow(theme.displaySmall, 'display small'),
-      TextRow(theme.headlineLarge, 'headline large'),
-      TextRow(theme.headlineMedium, 'headline medium'),
-      TextRow(theme.headlineSmall, 'headline small'),
-      TextRow(theme.titleLarge, 'title large'),
-      TextRow(theme.titleMedium, 'title medium'),
-      TextRow(theme.titleSmall, 'title small'),
-      TextRow(theme.labelLarge, 'label large'),
-      TextRow(theme.labelMedium, 'label medium'),
-      TextRow(theme.labelSmall, 'label small'),
-      TextRow(theme.bodyLarge, 'body large'),
-      TextRow(theme.bodyMedium, 'body medium'),
-      TextRow(theme.bodySmall, 'body small'),
-    ];
-
-    return CatalogListWidget(children);
-  }
-}
-
-class TextRow extends StatelessWidget {
-  final TextStyle? style;
-  final String label;
-
   final TextStyle defaultStyle = const TextStyle(
     fontFamily: 'Poppins',
     fontSize: 12,
@@ -42,16 +10,40 @@ class TextRow extends StatelessWidget {
     color: Colors.red,
   );
 
-  const TextRow(this.style, this.label, {super.key});
+  const CatalogTextStylePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text('noted.', style: style ?? defaultStyle),
-        Text(label, style: Theme.of(context).textTheme.bodyMedium),
-      ],
+    TextTheme theme = Theme.of(context).textTheme;
+
+    List<CatalogListItem> children = [
+      _buildItem(style: theme.displayLarge, label: 'display large'),
+      _buildItem(style: theme.displayMedium, label: 'display medium'),
+      _buildItem(style: theme.displaySmall, label: 'display small'),
+      _buildItem(style: theme.headlineLarge, label: 'headline large'),
+      _buildItem(style: theme.headlineMedium, label: 'headline medium'),
+      _buildItem(style: theme.headlineSmall, label: 'headline small'),
+      _buildItem(style: theme.titleLarge, label: 'title large'),
+      _buildItem(style: theme.titleMedium, label: 'title medium'),
+      _buildItem(style: theme.titleSmall, label: 'title small'),
+      _buildItem(style: theme.labelLarge, label: 'label large'),
+      _buildItem(style: theme.labelMedium, label: 'label medium'),
+      _buildItem(style: theme.labelSmall, label: 'label small'),
+      _buildItem(style: theme.bodyLarge, label: 'body large'),
+      _buildItem(style: theme.bodyMedium, label: 'body medium'),
+      _buildItem(style: theme.bodySmall, label: 'body small'),
+    ];
+
+    return CatalogListWidget(children);
+  }
+
+  CatalogListItem _buildItem({
+    required String label,
+    required TextStyle? style,
+  }) {
+    return CatalogListItem(
+      label: label,
+      child: Text('noted.', style: style ?? defaultStyle),
     );
   }
 }
