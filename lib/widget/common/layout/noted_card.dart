@@ -11,6 +11,8 @@ class NotedCard extends StatelessWidget {
   final double? width;
   final double? height;
   final EdgeInsetsGeometry? margin;
+  final Color? color;
+  final VoidCallback? onTap;
   final Widget? child;
 
   const NotedCard({
@@ -18,6 +20,8 @@ class NotedCard extends StatelessWidget {
     this.width,
     this.height,
     this.margin,
+    this.color,
+    this.onTap,
     this.child,
     super.key,
   });
@@ -38,15 +42,18 @@ class NotedCard extends StatelessWidget {
     );
 
     return SizedBox(
-      width: width ?? double.infinity,
-      height: height ?? double.infinity,
-      child: Card(
-        color: colors.surface,
-        elevation: 4,
-        shape: shape,
-        borderOnForeground: true,
-        margin: margin,
-        child: child,
+      width: width,
+      height: height,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Card(
+          color: color ?? colors.surface,
+          elevation: 4,
+          shape: shape,
+          borderOnForeground: true,
+          margin: margin,
+          child: child,
+        ),
       ),
     );
   }
