@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noted_app/catalog/catalog_content.dart';
 import 'package:noted_app/catalog/catalog_renderer.dart';
 import 'package:noted_app/state/theme/theme_cubit.dart';
+import 'package:noted_app/state/theme/theme_state.dart';
 
 void main() {
   runApp(const CatalogApp());

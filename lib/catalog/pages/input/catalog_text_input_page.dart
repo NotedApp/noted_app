@@ -39,7 +39,7 @@ class _CatalogTextInputPageState extends State<CatalogTextInputPage> {
         label: 'text field show/hide',
         child: NotedTextField(
           type: NotedTextFieldType.standard,
-          name: 'email',
+          name: 'password',
           errorText: error1,
           showErrorText: true,
           controller: controller1,

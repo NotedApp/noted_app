@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noted_app/catalog/catalog_list_widget.dart';
 import 'package:noted_app/state/theme/theme_cubit.dart';
+import 'package:noted_app/state/theme/theme_state.dart';
 import 'package:noted_app/theme/color_schemes.dart';
 import 'package:noted_app/widget/common/icon/noted_icons.dart';
 
