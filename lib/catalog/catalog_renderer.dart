@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/catalog/catalog_content.dart';
+import 'package:noted_app/widget/common/button/noted_icon_button.dart';
 import 'package:noted_app/widget/common/icon/noted_icons.dart';
 import 'package:noted_app/widget/common/layout/noted_page_header.dart';
 
@@ -17,8 +18,14 @@ class CatalogRenderer extends StatelessWidget {
           children: [
             NotedPageHeader(
               title: node.title,
-              showButton: !isRoot,
-              onButtonPressed: () => _tryPop(context),
+              leadingAction: isRoot
+                  ? null
+                  : NotedIconButton(
+                      icon: NotedIcons.chevronLeft,
+                      type: NotedIconButtonType.filled,
+                      size: NotedIconButtonSize.small,
+                      onPressed: () => _tryPop(context),
+                    ),
             ),
             Expanded(
               child: switch (node) {

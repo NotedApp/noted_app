@@ -1,45 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/widget/common/button/noted_icon_button.dart';
-import 'package:noted_app/widget/common/icon/noted_icons.dart';
 
 class NotedPageHeader extends StatelessWidget {
-  final String title;
-  final bool showButton;
-  final VoidCallback? onButtonPressed;
-  final IconData buttonIcon;
+  final NotedIconButton? leadingAction;
+  final String? title;
+  final List<NotedIconButton> trailingActions;
 
   const NotedPageHeader({
-    required this.title,
-    this.showButton = false,
-    this.onButtonPressed,
-    this.buttonIcon = NotedIcons.chevronLeft,
+    this.leadingAction,
+    this.title,
+    this.trailingActions = const [],
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> children = [Text(title, style: Theme.of(context).textTheme.displayMedium)];
+    List<Widget> children = [];
 
-    if (showButton) {
-      children.insert(
-        0,
-        Padding(
-          padding: const EdgeInsets.only(right: 16),
-          child: NotedIconButton(
-            icon: buttonIcon,
-            type: NotedIconButtonType.filled,
-            size: NotedIconButtonSize.small,
-            onPressed: onButtonPressed,
+    if (leadingAction != null) {
+      children.add(leadingAction!);
+      children.add(const SizedBox(width: 16));
+    }
+
+    if (title?.isNotEmpty == true) {
+      children.add(
+        Expanded(
+          child: Text(
+            title!,
+            style: Theme.of(context).textTheme.displayMedium,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       );
+    } else {
+      children.add(const Spacer());
+    }
+
+    for (NotedIconButton action in trailingActions) {
+      children.add(const SizedBox(width: 12));
+      children.add(action);
     }
 
     return Container(
-      margin: const EdgeInsets.fromLTRB(20, 16, 20, 16),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       width: double.infinity,
       height: 52,
-      child: Row(children: children),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: children,
+      ),
     );
   }
 }
