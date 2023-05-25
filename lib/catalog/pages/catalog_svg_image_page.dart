@@ -9,9 +9,17 @@ class CatalogSvgImagePage extends StatelessWidget {
   Widget build(BuildContext context) {
     ColorFilter filter = ColorFilter.mode(Theme.of(context).colorScheme.tertiary, BlendMode.srcIn);
 
-    List<Widget> children = [
-      SvgPicture.asset('assets/svg/woman_reading.svg', colorFilter: filter, fit: BoxFit.fitWidth),
-      SvgPicture.asset('assets/svg/woman_climbing.svg', colorFilter: filter, fit: BoxFit.fitWidth),
+    List<CatalogListItem> children = [
+      CatalogListItem(
+        type: CatalogListItemType.column,
+        label: 'woman reading',
+        child: SvgPicture.asset('assets/svg/woman_reading.svg', colorFilter: filter, fit: BoxFit.fitWidth),
+      ),
+      CatalogListItem(
+        type: CatalogListItemType.column,
+        label: 'woman climbing',
+        child: SvgPicture.asset('assets/svg/woman_climbing.svg', colorFilter: filter, fit: BoxFit.fitWidth),
+      ),
     ];
 
     return CatalogListWidget(children);

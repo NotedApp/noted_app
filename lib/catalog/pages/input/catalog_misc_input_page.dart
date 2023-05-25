@@ -18,8 +18,9 @@ class _CatalogMiscInputPageState extends State<CatalogMiscInputPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> children = [
-      InputColumn(
+    List<CatalogListItem> children = [
+      CatalogListItem(
+        type: CatalogListItemType.column,
         label: 'dropdown value',
         child: NotedDropdownButton(
           width: 200,
@@ -30,7 +31,8 @@ class _CatalogMiscInputPageState extends State<CatalogMiscInputPage> {
           }),
         ),
       ),
-      InputColumn(
+      CatalogListItem(
+        type: CatalogListItemType.column,
         label: 'dropdown no value',
         child: NotedDropdownButton(
           value: dropdownValue1,
@@ -43,23 +45,5 @@ class _CatalogMiscInputPageState extends State<CatalogMiscInputPage> {
     ];
 
     return CatalogListWidget(children);
-  }
-}
-
-class InputColumn extends StatelessWidget {
-  final String label;
-  final Widget child;
-
-  const InputColumn({required this.label, required this.child, super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(width: double.infinity, height: 36, child: Text(label)),
-        child,
-      ],
-    );
   }
 }

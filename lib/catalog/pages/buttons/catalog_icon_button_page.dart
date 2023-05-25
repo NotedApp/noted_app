@@ -10,132 +10,115 @@ class CatalogIconButtonPage extends StatelessWidget {
   Widget build(BuildContext context) {
     ColorScheme colors = Theme.of(context).colorScheme;
 
-    List<Widget> children = [
-      IconButtonRow(
+    List<CatalogListItem> children = [
+      _buildItem(
         label: 'filled large',
         size: NotedIconButtonSize.large,
         type: NotedIconButtonType.filled,
-        foregroundColor: colors.onPrimary,
-        backgroundColor: colors.primary,
+        foreground: colors.onPrimary,
+        background: colors.primary,
       ),
-      IconButtonRow(
+      _buildItem(
         label: 'filled medium',
         size: NotedIconButtonSize.medium,
         type: NotedIconButtonType.filled,
-        foregroundColor: colors.onSecondary,
-        backgroundColor: colors.secondary,
+        foreground: colors.onSecondary,
+        background: colors.secondary,
       ),
-      IconButtonRow(
+      _buildItem(
         label: 'filled small',
         size: NotedIconButtonSize.small,
         type: NotedIconButtonType.filled,
-        foregroundColor: colors.onTertiary,
-        backgroundColor: colors.tertiary,
+        foreground: colors.onTertiary,
+        background: colors.tertiary,
       ),
-      IconButtonRow(
+      _buildItem(
         label: 'filled outline large',
         size: NotedIconButtonSize.large,
         type: NotedIconButtonType.filled,
-        foregroundColor: colors.onPrimary,
-        backgroundColor: colors.primary,
+        foreground: colors.onPrimary,
+        background: colors.primary,
         hasOutline: true,
       ),
-      IconButtonRow(
+      _buildItem(
         label: 'filled outline medium',
         size: NotedIconButtonSize.medium,
         type: NotedIconButtonType.filled,
-        foregroundColor: colors.onSecondary,
-        backgroundColor: colors.secondary,
+        foreground: colors.onSecondary,
+        background: colors.secondary,
         hasOutline: true,
       ),
-      IconButtonRow(
+      _buildItem(
         label: 'filled outline small',
         size: NotedIconButtonSize.small,
         type: NotedIconButtonType.filled,
-        foregroundColor: colors.onTertiary,
-        backgroundColor: colors.tertiary,
+        foreground: colors.onTertiary,
+        background: colors.tertiary,
         hasOutline: true,
       ),
-      IconButtonRow(
+      _buildItem(
         label: 'simple large',
         size: NotedIconButtonSize.large,
         type: NotedIconButtonType.simple,
-        foregroundColor: colors.onBackground,
+        foreground: colors.onBackground,
       ),
-      IconButtonRow(
+      _buildItem(
         label: 'simple medium',
         size: NotedIconButtonSize.medium,
         type: NotedIconButtonType.simple,
-        foregroundColor: colors.onBackground,
+        foreground: colors.onBackground,
       ),
-      IconButtonRow(
+      _buildItem(
         label: 'simple small',
         size: NotedIconButtonSize.small,
         type: NotedIconButtonType.simple,
-        foregroundColor: colors.onBackground,
+        foreground: colors.onBackground,
       ),
-      IconButtonRow(
+      _buildItem(
         label: 'simple outline large',
         size: NotedIconButtonSize.large,
         type: NotedIconButtonType.simple,
-        foregroundColor: colors.onBackground,
+        foreground: colors.onBackground,
         hasOutline: true,
       ),
-      IconButtonRow(
+      _buildItem(
         label: 'simple outline medium',
         size: NotedIconButtonSize.medium,
         type: NotedIconButtonType.simple,
-        foregroundColor: colors.onBackground,
+        foreground: colors.onBackground,
         hasOutline: true,
       ),
-      IconButtonRow(
+      _buildItem(
         label: 'simple outline small',
         size: NotedIconButtonSize.small,
         type: NotedIconButtonType.simple,
-        foregroundColor: colors.onBackground,
+        foreground: colors.onBackground,
         hasOutline: true,
       ),
     ];
 
     return CatalogListWidget(children);
   }
-}
 
-class IconButtonRow extends StatelessWidget {
-  final String label;
-  final NotedIconButtonType type;
-  final NotedIconButtonSize size;
-  final Color? foregroundColor;
-  final Color? backgroundColor;
-  final bool hasOutline;
-
-  const IconButtonRow({
-    required this.label,
-    required this.size,
-    required this.type,
-    this.foregroundColor,
-    this.backgroundColor,
-    this.hasOutline = false,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        NotedIconButton(
-          icon: NotedIcons.pencil,
-          type: type,
-          size: size,
-          onPressed: () {},
-          onLongPress: () {},
-          iconColor: foregroundColor,
-          backgroundColor: backgroundColor,
-          hasOutline: hasOutline,
-        ),
-        Text(label, style: Theme.of(context).textTheme.bodyMedium),
-      ],
+  CatalogListItem _buildItem({
+    required String label,
+    required NotedIconButtonType type,
+    required NotedIconButtonSize size,
+    Color? foreground,
+    Color? background,
+    bool hasOutline = false,
+  }) {
+    return CatalogListItem(
+      label: label,
+      child: NotedIconButton(
+        icon: NotedIcons.pencil,
+        type: type,
+        size: size,
+        onPressed: () => {},
+        iconColor: foreground,
+        backgroundColor: background,
+        hasOutline: hasOutline,
+      ),
     );
   }
 }

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:noted_app/catalog/catalog_list_widget.dart';
 import 'package:noted_app/state/theme/theme_cubit.dart';
 import 'package:noted_app/state/theme/theme_state.dart';
 import 'package:noted_app/theme/text_themes.dart';
 import 'package:noted_app/widget/common/icon/noted_icons.dart';
 
 class CatalogTextThemePage extends StatelessWidget {
+  final List<NotedTextThemeName> names = NotedTextThemeName.values;
+
   const CatalogTextThemePage({super.key});
 
   @override
@@ -14,8 +15,10 @@ class CatalogTextThemePage extends StatelessWidget {
     ThemeCubit cubit = context.read<ThemeCubit>();
 
     return BlocBuilder<ThemeCubit, ThemeState>(
-      builder: (context, state) => CatalogListWidget(
-        NotedTextThemeName.values.map((value) => _buildThemeRow(context, value, state.textThemeName, cubit)).toList(),
+      builder: (context, state) => ListView.separated(
+        itemBuilder: (context, index) => _buildThemeRow(context, names[index], state.textThemeName, cubit),
+        separatorBuilder: (context, index) => const SizedBox(height: 12),
+        itemCount: names.length,
       ),
     );
   }

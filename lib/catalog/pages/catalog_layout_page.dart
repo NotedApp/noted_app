@@ -27,8 +27,9 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProvid
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> children = [
-      const LayoutColumn(
+    List<CatalogListItem> children = [
+      const CatalogListItem(
+        type: CatalogListItemType.column,
         label: 'loading indicator',
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -40,14 +41,16 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProvid
           ],
         ),
       ),
-      LayoutColumn(
+      CatalogListItem(
+        type: CatalogListItemType.column,
         label: 'tab bar',
         child: NotedTabBar(
           tabs: widget.tabs,
           controller: tabController,
         ),
       ),
-      const LayoutColumn(
+      const CatalogListItem(
+        type: CatalogListItemType.column,
         label: 'card large',
         child: NotedCard(
           size: NotedCardSize.large,
@@ -55,7 +58,8 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProvid
           margin: EdgeInsets.zero,
         ),
       ),
-      const LayoutColumn(
+      const CatalogListItem(
+        type: CatalogListItemType.column,
         label: 'card medium',
         child: NotedCard(
           size: NotedCardSize.medium,
@@ -63,7 +67,8 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProvid
           margin: EdgeInsets.zero,
         ),
       ),
-      const LayoutColumn(
+      const CatalogListItem(
+        type: CatalogListItemType.column,
         label: 'card small',
         child: NotedCard(
           size: NotedCardSize.small,
@@ -71,7 +76,8 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProvid
           margin: EdgeInsets.zero,
         ),
       ),
-      LayoutColumn(
+      CatalogListItem(
+        type: CatalogListItemType.column,
         label: 'snackbar no close',
         child: Row(
           children: [
@@ -91,7 +97,8 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProvid
           ],
         ),
       ),
-      LayoutColumn(
+      CatalogListItem(
+        type: CatalogListItemType.column,
         label: 'snackbar with close',
         child: Row(
           children: [
@@ -111,7 +118,8 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProvid
           ],
         ),
       ),
-      LayoutColumn(
+      CatalogListItem(
+        type: CatalogListItemType.column,
         label: 'dialog with title',
         child: Row(
           children: [
@@ -131,7 +139,8 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProvid
           ],
         ),
       ),
-      LayoutColumn(
+      CatalogListItem(
+        type: CatalogListItemType.column,
         label: 'dialog no title',
         child: Row(
           children: [
@@ -200,24 +209,6 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProvid
         onRightActionPressed: () => Navigator.of(context).pop(),
         child: const Text('test dialog contents'),
       ),
-    );
-  }
-}
-
-class LayoutColumn extends StatelessWidget {
-  final String label;
-  final Widget child;
-
-  const LayoutColumn({required this.label, required this.child, super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(width: double.infinity, height: 36, child: Text(label)),
-        child,
-      ],
     );
   }
 }
