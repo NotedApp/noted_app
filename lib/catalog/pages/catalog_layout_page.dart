@@ -54,6 +54,7 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProvid
         label: 'card large',
         child: NotedCard(
           size: NotedCardSize.large,
+          width: double.infinity,
           height: 128,
           margin: EdgeInsets.zero,
         ),
@@ -63,6 +64,7 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProvid
         label: 'card medium',
         child: NotedCard(
           size: NotedCardSize.medium,
+          width: double.infinity,
           height: 96,
           margin: EdgeInsets.zero,
         ),
@@ -72,6 +74,7 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProvid
         label: 'card small',
         child: NotedCard(
           size: NotedCardSize.small,
+          width: double.infinity,
           height: 64,
           margin: EdgeInsets.zero,
         ),
