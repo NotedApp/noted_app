@@ -8,6 +8,11 @@ class NotedStrings {
     'NotedColorSchemeName.oled': 'oled',
     'NotedColorSchemeName.light': 'light',
     'NotedColorSchemeName.custom': 'custom',
+    'fontTitle': 'fonts',
+    'NotedTextThemeName.poppins': 'poppins',
+    'NotedTextThemeName.roboto': 'roboto',
+    'NotedTextThemeName.lora': 'lora',
+    'NotedTextThemeName.vollkorn': 'vollkorn',
   };
 
   static final Map<String, String> common = {

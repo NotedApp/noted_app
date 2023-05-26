@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/widget/common/button/noted_icon_button.dart';
 
-class NotedPageHeader extends StatelessWidget {
+class NotedHeader extends StatelessWidget {
   final NotedIconButton? leadingAction;
   final String? title;
   final List<NotedIconButton> trailingActions;
 
-  const NotedPageHeader({
+  const NotedHeader({
     this.leadingAction,
     this.title,
     this.trailingActions = const [],
