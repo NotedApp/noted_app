@@ -1,12 +1,60 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:noted_app/state/theme/theme_cubit.dart';
+import 'package:noted_app/state/theme/theme_state.dart';
+import 'package:noted_app/theme/color_schemes.dart';
+import 'package:noted_app/util/noted_strings.dart';
+import 'package:noted_app/widget/common/button/noted_icon_button.dart';
 import 'package:noted_app/widget/common/icon/noted_icons.dart';
 import 'package:noted_app/widget/common/layout/noted_card.dart';
+import 'package:noted_app/widget/common/layout/noted_page_header.dart';
 
 class ColorSwitcher extends StatelessWidget {
+  final List<NotedColorSchemeName> names = NotedColorSchemeName.values;
+
+  const ColorSwitcher({super.key});
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    ThemeCubit cubit = context.read<ThemeCubit>();
+
+    return Scaffold(
+      body: SafeArea(
+        child: BlocBuilder<ThemeCubit, ThemeState>(
+          builder: (context, state) => Column(
+            children: [
+              NotedPageHeader(
+                leadingAction: NotedIconButton(
+                  icon: NotedIcons.chevronLeft,
+                  type: NotedIconButtonType.filled,
+                  size: NotedIconButtonSize.small,
+                  // TODO: Update with routing.
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+                title: NotedStrings.settings['themeTitle'],
+              ),
+              Expanded(
+                child: ListView.separated(
+                  physics: const BouncingScrollPhysics(),
+                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 128),
+                  itemBuilder: (context, index) {
+                    ColorScheme colors = NotedColorSchemes.fromName(names[index]);
+                    return ColorSwitcherItem(
+                      title: NotedStrings.settings[names[index].toString()] ?? 'unknown',
+                      colors: colors,
+                      isSelected: state.colorSchemeName == names[index],
+                      onTap: () => cubit.updateColorScheme(names[index]),
+                    );
+                  },
+                  separatorBuilder: (context, index) => const SizedBox(height: 12),
+                  itemCount: names.length,
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 

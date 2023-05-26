@@ -13,6 +13,14 @@ final class ThemeState extends Equatable {
   ColorScheme get colorScheme => NotedColorSchemes.fromName(colorSchemeName);
   TextTheme get textTheme => NotedTextThemes.fromName(textThemeName);
 
+  ThemeData get themeData => ThemeData(
+        brightness: colorScheme.brightness,
+        colorScheme: colorScheme,
+        textTheme: textTheme,
+        textButtonTheme: _createTextButtonTheme(textTheme, colorScheme),
+        useMaterial3: true,
+      );
+
   const ThemeState(this.colorSchemeName, this.textThemeName, this.customColorScheme, {this.error});
 
   ThemeState.initial()
@@ -33,6 +41,10 @@ final class ThemeState extends Equatable {
       customColorScheme ?? this.customColorScheme,
       error: error,
     );
+  }
+
+  TextButtonThemeData _createTextButtonTheme(TextTheme text, ColorScheme colors) {
+    return TextButtonThemeData(style: ButtonStyle(backgroundColor: MaterialStateProperty.all(colors.primary)));
   }
 
   @override

@@ -3,6 +3,7 @@ import 'package:noted_app/catalog/catalog_content.dart';
 import 'package:noted_app/widget/common/button/noted_icon_button.dart';
 import 'package:noted_app/widget/common/icon/noted_icons.dart';
 import 'package:noted_app/widget/common/layout/noted_page_header.dart';
+import 'package:noted_app/widget/settings/style/color_switcher.dart';
 
 class CatalogRenderer extends StatelessWidget {
   final CatalogNode node;
@@ -12,6 +13,8 @@ class CatalogRenderer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colors = Theme.of(context).colorScheme;
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -26,6 +29,16 @@ class CatalogRenderer extends StatelessWidget {
                       size: NotedIconButtonSize.small,
                       onPressed: () => _tryPop(context),
                     ),
+              trailingActions: [
+                NotedIconButton(
+                  icon: NotedIcons.settings,
+                  type: NotedIconButtonType.filled,
+                  size: NotedIconButtonSize.small,
+                  iconColor: colors.onSecondary,
+                  backgroundColor: colors.secondary,
+                  onPressed: () => _navigateToSettings(context),
+                ),
+              ],
             ),
             Expanded(
               child: switch (node) {
@@ -49,7 +62,7 @@ class CatalogRenderer extends StatelessWidget {
 
   Widget _buildBranchRow(BuildContext context, CatalogNode node) {
     return ListTile(
-      onTap: () => _navigateTo(context, node),
+      onTap: () => _navigateToNode(context, node),
       title: Text(node.title, style: Theme.of(context).textTheme.bodyLarge),
       trailing: node is CatalogBranch ? null : const Icon(NotedIcons.chevronRight),
       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
@@ -60,8 +73,12 @@ class CatalogRenderer extends StatelessWidget {
     return leaf.page;
   }
 
-  void _navigateTo(BuildContext context, CatalogNode node) {
+  void _navigateToNode(BuildContext context, CatalogNode node) {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) => CatalogRenderer(node)));
+  }
+
+  void _navigateToSettings(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ColorSwitcher()));
   }
 
   void _tryPop(BuildContext context) {
