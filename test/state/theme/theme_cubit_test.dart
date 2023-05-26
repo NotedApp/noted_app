@@ -65,5 +65,26 @@ void main() {
         ),
       ],
     );
+
+    blocTest(
+      'updates theme data',
+      build: ThemeCubit.new,
+      act: (bloc) {
+        bloc.updateColorScheme(NotedColorSchemeName.green);
+        bloc.updateTextTheme(NotedTextThemeName.lora);
+      },
+      expect: () => [
+        const TypeMatcher<ThemeState>().having(
+          (state) => state.themeData.colorScheme.primary.value,
+          'theme primary color',
+          equals(NotedColorSchemes.greenColorScheme.primary.value),
+        ),
+        const TypeMatcher<ThemeState>().having(
+          (state) => state.themeData.textTheme.bodyMedium?.fontFamily ?? 'actual error',
+          'theme font family',
+          equals(NotedTextThemes.loraTextTheme.bodyMedium?.fontFamily ?? 'expected error'),
+        ),
+      ],
+    );
   });
 }
