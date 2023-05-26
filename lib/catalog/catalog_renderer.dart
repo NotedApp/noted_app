@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/catalog/catalog_content.dart';
+import 'package:noted_app/catalog/catalog_settings.dart';
 import 'package:noted_app/widget/common/button/noted_icon_button.dart';
 import 'package:noted_app/widget/common/icon/noted_icons.dart';
 import 'package:noted_app/widget/common/layout/noted_header_page.dart';
-import 'package:noted_app/widget/settings/style/color_switcher.dart';
-import 'package:noted_app/widget/settings/style/font_switcher.dart';
 
 class CatalogRenderer extends StatelessWidget {
   final CatalogNode node;
@@ -62,6 +61,6 @@ class CatalogRenderer extends StatelessWidget {
   }
 
   void _navigateToSettings(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const FontSwitcher()));
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const CatalogSettings()));
   }
 }

@@ -1,7 +1,7 @@
 // TODO: update this to use i18n.
 class NotedStrings {
   static final Map<String, String> settings = {
-    'themeTitle': 'theme',
+    'colorTitle': 'colors',
     'NotedColorSchemeName.blue': 'blue',
     'NotedColorSchemeName.green': 'green',
     'NotedColorSchemeName.dark': 'dark',

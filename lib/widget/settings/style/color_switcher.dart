@@ -18,7 +18,7 @@ class ColorSwitcher extends StatelessWidget {
     ThemeCubit cubit = context.read<ThemeCubit>();
 
     return NotedHeaderPage(
-      title: NotedStrings.settings['themeTitle'],
+      title: NotedStrings.settings['colorTitle'],
       hasBackButton: true,
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) => ListView.separated(
