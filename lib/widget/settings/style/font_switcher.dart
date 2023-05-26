@@ -23,7 +23,7 @@ class FontSwitcher extends StatelessWidget {
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) => ListView.separated(
           physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.fromLTRB(20, 20, 20, 128),
+          padding: const EdgeInsets.fromLTRB(12, 20, 12, 128),
           itemBuilder: (context, index) {
             TextTheme font = NotedTextThemes.fromName(names[index]);
             return FontSwitcherItem(
@@ -33,7 +33,7 @@ class FontSwitcher extends StatelessWidget {
               onTap: () => cubit.updateTextTheme(names[index]),
             );
           },
-          separatorBuilder: (context, index) => const SizedBox(height: 12),
+          separatorBuilder: (context, index) => const SizedBox(height: 8),
           itemCount: names.length,
         ),
       ),
