@@ -32,7 +32,7 @@ class CatalogContent {
   static final CatalogNode content = CatalogBranch(
     title: 'catalog',
     children: [
-      CatalogLeaf(title: 'text styles', page: const CatalogTextStylePage()),
+      CatalogLeaf(title: 'text', page: const CatalogTextStylePage()),
       CatalogLeaf(title: 'images', page: const CatalogSvgImagePage()),
       CatalogLeaf(title: 'icons', page: const CatalogIconsPage()),
       CatalogLeaf(title: 'layout', page: CatalogLayoutPage()),
