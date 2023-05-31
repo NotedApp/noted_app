@@ -13,8 +13,6 @@ class CatalogRenderer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ColorScheme colors = Theme.of(context).colorScheme;
-
     return NotedHeaderPage(
       title: node.title,
       hasBackButton: !isRoot,
@@ -23,8 +21,6 @@ class CatalogRenderer extends StatelessWidget {
           icon: NotedIcons.settings,
           type: NotedIconButtonType.filled,
           size: NotedIconButtonSize.small,
-          iconColor: colors.onPrimary,
-          backgroundColor: colors.primary,
           onPressed: () => _navigateToSettings(context),
         ),
       ],

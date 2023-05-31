@@ -76,8 +76,9 @@ class NotedIconButton extends StatelessWidget {
     );
 
     ButtonStyle style = ButtonStyle(
-      backgroundColor: MaterialStatePropertyAll(background),
-      iconColor: MaterialStatePropertyAll(foreground),
+      iconColor: MaterialStatePropertyAll(iconColor ?? foreground),
+      backgroundColor: MaterialStatePropertyAll(backgroundColor ?? background),
+      overlayColor: MaterialStatePropertyAll((iconColor ?? foreground).withOpacity(0.1)),
       padding: const MaterialStatePropertyAll(EdgeInsets.zero),
       elevation: MaterialStatePropertyAll(elevation),
       minimumSize: const MaterialStatePropertyAll(Size.zero),
@@ -86,11 +87,15 @@ class NotedIconButton extends StatelessWidget {
       shape: MaterialStatePropertyAll(shape),
     );
 
-    return TextButton(
-      onPressed: onPressed,
-      onLongPress: onLongPress,
-      style: style,
-      child: Icon(icon), // Center(child: Icon(icon)),
+    return SizedBox(
+      width: widgetSize,
+      height: widgetSize,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        onLongPress: onLongPress,
+        style: style,
+        child: Icon(icon), // Center(child: Icon(icon)),
+      ),
     );
   }
 }
@@ -163,6 +168,6 @@ class _FilledIconButtonBuilder extends _NotedIconButtonBuilder {
 
   @override
   double elevation() {
-    return 0;
+    return 2;
   }
 }

@@ -124,7 +124,6 @@ class NotedTextField extends StatelessWidget {
               size: NotedIconButtonSize.small,
               icon: icon!,
               onPressed: onIconPressed,
-              iconColor: theme.colorScheme.onBackground,
             ),
           ),
         ),
