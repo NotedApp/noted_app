@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:noted_app/theme/color_schemes.dart';
 import 'package:noted_app/theme/text_themes.dart';
+import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/util/noted_error.dart';
 
 final class ThemeState extends Equatable {
@@ -44,7 +45,7 @@ final class ThemeState extends Equatable {
   }
 
   TextButtonThemeData _createTextButtonTheme(TextTheme text, ColorScheme colors) {
-    return TextButtonThemeData(style: ButtonStyle(backgroundColor: MaterialStateProperty.all(colors.primary)));
+    return TextButtonThemeData(style: ButtonStyle(backgroundColor: colors.primary.materialState()));
   }
 
   @override

@@ -9,3 +9,5 @@ enum NotedWidgetColor {
   secondary,
   tertiary,
 }
+
+const double buttonOverlayOpacity = 0.1;

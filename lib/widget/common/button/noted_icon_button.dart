@@ -27,13 +27,14 @@ class NotedIconButton extends StatelessWidget {
   /// [size] defines the size of button.
   ///  - The size differs depending on the type of button.
   ///
-  /// [color] defines the color scheme of the butten.
+  /// [color] defines the color scheme of the button.
   ///  - The default differs depending on the type of button.
+  ///  - The colors can be override with [iconColor] and [backgroundColor].
   const NotedIconButton({
+    required this.icon,
     required this.type,
     this.size = NotedWidgetSize.medium,
     this.color,
-    required this.icon,
     required this.onPressed,
     this.onLongPress,
     this.iconColor,
@@ -46,22 +47,22 @@ class NotedIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
 
-    OutlinedBorder shape = CircleBorder(
-      side: outlineColor != null ? BorderSide(color: outlineColor!) : BorderSide.none,
-    );
-
     _NotedIconButtonBuilder builder = switch (type) {
       NotedIconButtonType.simple => _SimpleIconButtonBuilder(this),
       NotedIconButtonType.filled => _FilledIconButtonBuilder(this),
     };
 
+    OutlinedBorder shape = CircleBorder(
+      side: outlineColor != null ? BorderSide(color: outlineColor!) : BorderSide.none,
+    );
+
     ButtonStyle style = builder.styleOf(colorScheme).copyWith(
           iconColor: iconColor?.materialState(),
           backgroundColor: backgroundColor?.materialState(),
-          overlayColor: iconColor?.materialState(),
-          padding: const MaterialStatePropertyAll(EdgeInsets.zero),
-          minimumSize: const MaterialStatePropertyAll(Size.zero),
-          shape: MaterialStatePropertyAll(shape),
+          overlayColor: iconColor?.withOpacity(buttonOverlayOpacity).materialState(),
+          padding: EdgeInsets.zero.materialState(),
+          minimumSize: Size.zero.materialState(),
+          shape: shape.materialState(),
         );
 
     double widgetSize = builder.sizeOf();
@@ -79,7 +80,6 @@ class NotedIconButton extends StatelessWidget {
   }
 }
 
-/// Provides a set of methods to define the appearance of a certain type of icon button.
 abstract class _NotedIconButtonBuilder {
   final NotedIconButton source;
 
@@ -111,10 +111,10 @@ class _SimpleIconButtonBuilder extends _NotedIconButtonBuilder {
     return ButtonStyle(
       iconColor: buttonColors.$1.materialState(),
       backgroundColor: buttonColors.$2.materialState(),
-      overlayColor: buttonColors.$1.withOpacity(0.1).materialState(),
-      iconSize: MaterialStatePropertyAll(iconSize),
-      fixedSize: MaterialStatePropertyAll(Size.square(sizeOf())),
-      elevation: const MaterialStatePropertyAll(0),
+      overlayColor: buttonColors.$1.withOpacity(buttonOverlayOpacity).materialState(),
+      iconSize: iconSize.materialState(),
+      fixedSize: Size.square(sizeOf()).materialState(),
+      elevation: 0.toDouble().materialState(),
     );
   }
 
@@ -149,10 +149,10 @@ class _FilledIconButtonBuilder extends _NotedIconButtonBuilder {
     return ButtonStyle(
       iconColor: buttonColors.$1.materialState(),
       backgroundColor: buttonColors.$2.materialState(),
-      overlayColor: buttonColors.$1.withOpacity(0.1).materialState(),
-      iconSize: MaterialStatePropertyAll(iconSize),
-      fixedSize: MaterialStatePropertyAll(Size.square(sizeOf())),
-      elevation: const MaterialStatePropertyAll(2),
+      overlayColor: buttonColors.$1.withOpacity(buttonOverlayOpacity).materialState(),
+      iconSize: iconSize.materialState(),
+      fixedSize: Size.square(sizeOf()).materialState(),
+      elevation: 2.toDouble().materialState(),
     );
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/widget/common/icon/noted_icons.dart';
 
 class NotedSwitchButton extends StatelessWidget {
@@ -29,10 +30,10 @@ class NotedSwitchButton extends StatelessWidget {
       value: value,
       onChanged: onChanged,
       thumbIcon: thumbIcon,
-      thumbColor: MaterialStatePropertyAll(colors.background),
+      thumbColor: colors.background.materialState(),
       activeTrackColor: activeColor,
       inactiveTrackColor: inactiveColor,
-      trackOutlineColor: const MaterialStatePropertyAll(Colors.transparent),
+      trackOutlineColor: Colors.transparent.materialState(),
     );
   }
 }
