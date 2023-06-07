@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:noted_app/catalog/catalog_list_widget.dart';
 import 'package:noted_app/widget/common/button/noted_icon_button.dart';
 import 'package:noted_app/widget/common/icon/noted_icons.dart';
+import 'package:noted_app/widget/common/noted_widget_config.dart';
 
 class CatalogIconButtonPage extends StatelessWidget {
   const CatalogIconButtonPage({super.key});
@@ -18,19 +19,19 @@ class CatalogIconButtonPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _buildItem(
-              size: NotedIconButtonSize.large,
+              size: NotedWidgetSize.large,
               type: NotedIconButtonType.filled,
-              color: NotedIconButtonColor.primary,
+              color: NotedWidgetColor.primary,
             ),
             _buildItem(
-              size: NotedIconButtonSize.medium,
+              size: NotedWidgetSize.medium,
               type: NotedIconButtonType.filled,
-              color: NotedIconButtonColor.secondary,
+              color: NotedWidgetColor.secondary,
             ),
             _buildItem(
-              size: NotedIconButtonSize.small,
+              size: NotedWidgetSize.small,
               type: NotedIconButtonType.filled,
-              color: NotedIconButtonColor.tertiary,
+              color: NotedWidgetColor.tertiary,
             ),
           ],
         ),
@@ -42,21 +43,21 @@ class CatalogIconButtonPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _buildItem(
-              size: NotedIconButtonSize.large,
+              size: NotedWidgetSize.large,
               type: NotedIconButtonType.filled,
-              color: NotedIconButtonColor.primary,
+              color: NotedWidgetColor.primary,
               outlineColor: colors.onBackground,
             ),
             _buildItem(
-              size: NotedIconButtonSize.medium,
+              size: NotedWidgetSize.medium,
               type: NotedIconButtonType.filled,
-              color: NotedIconButtonColor.secondary,
+              color: NotedWidgetColor.secondary,
               outlineColor: colors.onBackground,
             ),
             _buildItem(
-              size: NotedIconButtonSize.small,
+              size: NotedWidgetSize.small,
               type: NotedIconButtonType.filled,
-              color: NotedIconButtonColor.tertiary,
+              color: NotedWidgetColor.tertiary,
               outlineColor: colors.onBackground,
             ),
           ],
@@ -69,15 +70,15 @@ class CatalogIconButtonPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _buildItem(
-              size: NotedIconButtonSize.large,
+              size: NotedWidgetSize.large,
               type: NotedIconButtonType.simple,
             ),
             _buildItem(
-              size: NotedIconButtonSize.medium,
+              size: NotedWidgetSize.medium,
               type: NotedIconButtonType.simple,
             ),
             _buildItem(
-              size: NotedIconButtonSize.small,
+              size: NotedWidgetSize.small,
               type: NotedIconButtonType.simple,
             ),
           ],
@@ -90,17 +91,17 @@ class CatalogIconButtonPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _buildItem(
-              size: NotedIconButtonSize.large,
+              size: NotedWidgetSize.large,
               type: NotedIconButtonType.simple,
               outlineColor: colors.onBackground,
             ),
             _buildItem(
-              size: NotedIconButtonSize.medium,
+              size: NotedWidgetSize.medium,
               type: NotedIconButtonType.simple,
               outlineColor: colors.onBackground,
             ),
             _buildItem(
-              size: NotedIconButtonSize.small,
+              size: NotedWidgetSize.small,
               type: NotedIconButtonType.simple,
               outlineColor: colors.onBackground,
             ),
@@ -114,8 +115,8 @@ class CatalogIconButtonPage extends StatelessWidget {
 
   NotedIconButton _buildItem({
     required NotedIconButtonType type,
-    required NotedIconButtonSize size,
-    NotedIconButtonColor? color,
+    required NotedWidgetSize size,
+    NotedWidgetColor? color,
     Color? outlineColor,
   }) {
     return NotedIconButton(

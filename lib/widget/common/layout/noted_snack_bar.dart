@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/widget/common/button/noted_icon_button.dart';
 import 'package:noted_app/widget/common/icon/noted_icons.dart';
+import 'package:noted_app/widget/common/noted_widget_config.dart';
 
 class NotedSnackBar {
   static SnackBar create({required BuildContext context, required Widget content}) {
@@ -24,7 +25,7 @@ class NotedSnackBar {
     NotedIconButton closeButton = NotedIconButton(
       icon: NotedIcons.close,
       type: NotedIconButtonType.simple,
-      size: NotedIconButtonSize.small,
+      size: NotedWidgetSize.small,
       onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar(),
     );
 

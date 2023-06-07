@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/widget/common/button/noted_icon_button.dart';
+import 'package:noted_app/widget/common/noted_widget_config.dart';
 
 enum NotedTextFieldType {
   standard,
@@ -121,7 +122,7 @@ class NotedTextField extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             child: NotedIconButton(
               type: NotedIconButtonType.simple,
-              size: NotedIconButtonSize.small,
+              size: NotedWidgetSize.small,
               icon: icon!,
               onPressed: onIconPressed,
             ),

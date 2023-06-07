@@ -1,27 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:noted_app/widget/common/noted_widget_config.dart';
 
 enum NotedIconButtonType {
   simple,
   filled,
 }
 
-enum NotedIconButtonSize {
-  large,
-  medium,
-  small,
-}
-
-enum NotedIconButtonColor {
-  primary,
-  secondary,
-  tertiary,
-}
-
 class NotedIconButton extends StatelessWidget {
   final IconData icon;
   final NotedIconButtonType type;
-  final NotedIconButtonSize size;
-  final NotedIconButtonColor? color;
+  final NotedWidgetSize size;
+  final NotedWidgetColor? color;
   final VoidCallback? onPressed;
   final VoidCallback? onLongPress;
   final Color? iconColor;
@@ -41,7 +30,7 @@ class NotedIconButton extends StatelessWidget {
   ///  - The default differs depending on the type of button.
   const NotedIconButton({
     required this.type,
-    this.size = NotedIconButtonSize.medium,
+    this.size = NotedWidgetSize.medium,
     this.color,
     required this.icon,
     required this.onPressed,
@@ -122,9 +111,9 @@ class _SimpleIconButtonBuilder extends _NotedIconButtonBuilder {
   @override
   (Color, Color) colorsOf(ColorScheme colors) {
     return switch (source.color) {
-      NotedIconButtonColor.primary => (colors.primary, Colors.transparent),
-      NotedIconButtonColor.secondary => (colors.secondary, Colors.transparent),
-      NotedIconButtonColor.tertiary => (colors.tertiary, Colors.transparent),
+      NotedWidgetColor.primary => (colors.primary, Colors.transparent),
+      NotedWidgetColor.secondary => (colors.secondary, Colors.transparent),
+      NotedWidgetColor.tertiary => (colors.tertiary, Colors.transparent),
       _ => (colors.onBackground, Colors.transparent),
     };
   }
@@ -132,9 +121,9 @@ class _SimpleIconButtonBuilder extends _NotedIconButtonBuilder {
   @override
   (double, double) sizeOf() {
     return switch (source.size) {
-      NotedIconButtonSize.large => (36, 54),
-      NotedIconButtonSize.medium => (30, 44),
-      NotedIconButtonSize.small => (22, 36),
+      NotedWidgetSize.large => (36, 54),
+      NotedWidgetSize.medium => (30, 44),
+      NotedWidgetSize.small => (22, 36),
     };
   }
 
@@ -150,9 +139,9 @@ class _FilledIconButtonBuilder extends _NotedIconButtonBuilder {
   @override
   (Color, Color) colorsOf(ColorScheme colors) {
     return switch (source.color) {
-      NotedIconButtonColor.primary => (colors.onPrimary, colors.primary),
-      NotedIconButtonColor.secondary => (colors.onSecondary, colors.secondary),
-      NotedIconButtonColor.tertiary => (colors.onTertiary, colors.tertiary),
+      NotedWidgetColor.primary => (colors.onPrimary, colors.primary),
+      NotedWidgetColor.secondary => (colors.onSecondary, colors.secondary),
+      NotedWidgetColor.tertiary => (colors.onTertiary, colors.tertiary),
       _ => (colors.onPrimary, colors.primary),
     };
   }
@@ -160,9 +149,9 @@ class _FilledIconButtonBuilder extends _NotedIconButtonBuilder {
   @override
   (double, double) sizeOf() {
     return switch (source.size) {
-      NotedIconButtonSize.large => (36, 64),
-      NotedIconButtonSize.medium => (30, 54),
-      NotedIconButtonSize.small => (24, 44),
+      NotedWidgetSize.large => (36, 64),
+      NotedWidgetSize.medium => (30, 54),
+      NotedWidgetSize.small => (24, 44),
     };
   }
 
