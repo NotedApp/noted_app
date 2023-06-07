@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-
-enum NotedCardSize {
-  large,
-  medium,
-  small,
-}
+import 'package:noted_app/widget/common/noted_widget_config.dart';
 
 class NotedCard extends StatelessWidget {
-  final NotedCardSize size;
+  final NotedWidgetSize size;
   final double? width;
   final double? height;
   final EdgeInsetsGeometry? margin;
@@ -31,9 +26,9 @@ class NotedCard extends StatelessWidget {
     ColorScheme colors = Theme.of(context).colorScheme;
 
     double borderRadius = switch (size) {
-      NotedCardSize.large => 24,
-      NotedCardSize.medium => 16,
-      NotedCardSize.small => 12,
+      NotedWidgetSize.large => 24,
+      NotedWidgetSize.medium => 16,
+      NotedWidgetSize.small => 12,
     };
 
     ShapeBorder shape = RoundedRectangleBorder(
