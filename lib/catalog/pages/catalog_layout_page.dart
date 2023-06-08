@@ -6,6 +6,7 @@ import 'package:noted_app/widget/common/layout/noted_dialog.dart';
 import 'package:noted_app/widget/common/layout/noted_loading_indicator.dart';
 import 'package:noted_app/widget/common/layout/noted_snack_bar.dart';
 import 'package:noted_app/widget/common/layout/noted_tab_bar.dart';
+import 'package:noted_app/widget/common/noted_widget_config.dart';
 
 class CatalogLayoutPage extends StatefulWidget {
   final List<String> tabs = ['all (20)', 'notes', 'to-do', 'climbing', 'finances'];
@@ -53,7 +54,7 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProvid
         type: CatalogListItemType.column,
         label: 'card large',
         child: NotedCard(
-          size: NotedCardSize.large,
+          size: NotedWidgetSize.large,
           width: double.infinity,
           height: 128,
           margin: EdgeInsets.zero,
@@ -63,7 +64,7 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProvid
         type: CatalogListItemType.column,
         label: 'card medium',
         child: NotedCard(
-          size: NotedCardSize.medium,
+          size: NotedWidgetSize.medium,
           width: double.infinity,
           height: 96,
           margin: EdgeInsets.zero,
@@ -73,7 +74,7 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProvid
         type: CatalogListItemType.column,
         label: 'card small',
         child: NotedCard(
-          size: NotedCardSize.small,
+          size: NotedWidgetSize.small,
           width: double.infinity,
           height: 64,
           margin: EdgeInsets.zero,
@@ -87,14 +88,14 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProvid
             NotedTextButton(
               label: 'open snackbar',
               type: NotedTextButtonType.filled,
-              size: NotedTextButtonSize.small,
+              size: NotedWidgetSize.small,
               onPressed: () => _showSnackBar(context),
             ),
             const SizedBox(width: 12),
             NotedTextButton(
               label: 'text snackbar',
               type: NotedTextButtonType.filled,
-              size: NotedTextButtonSize.small,
+              size: NotedWidgetSize.small,
               onPressed: () => _showTextSnackBar(context),
             ),
           ],
@@ -108,14 +109,14 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProvid
             NotedTextButton(
               label: 'open snackbar',
               type: NotedTextButtonType.filled,
-              size: NotedTextButtonSize.small,
+              size: NotedWidgetSize.small,
               onPressed: () => _showSnackBar(context, hasClose: true),
             ),
             const SizedBox(width: 12),
             NotedTextButton(
               label: 'text snackbar',
               type: NotedTextButtonType.filled,
-              size: NotedTextButtonSize.small,
+              size: NotedWidgetSize.small,
               onPressed: () => _showTextSnackBar(context, hasClose: true),
             ),
           ],
@@ -129,14 +130,14 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProvid
             NotedTextButton(
               label: 'left button',
               type: NotedTextButtonType.filled,
-              size: NotedTextButtonSize.small,
+              size: NotedWidgetSize.small,
               onPressed: () => _showDialog(context, title: 'modal title', leftActionText: 'left action'),
             ),
             const SizedBox(width: 12),
             NotedTextButton(
               label: 'right button',
               type: NotedTextButtonType.filled,
-              size: NotedTextButtonSize.small,
+              size: NotedWidgetSize.small,
               onPressed: () => _showDialog(context, title: 'modal title', rightActionText: 'right action'),
             ),
           ],
@@ -150,14 +151,14 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProvid
             NotedTextButton(
               label: 'both buttons',
               type: NotedTextButtonType.filled,
-              size: NotedTextButtonSize.small,
+              size: NotedWidgetSize.small,
               onPressed: () => _showDialog(context, leftActionText: 'left action', rightActionText: 'right action'),
             ),
             const SizedBox(width: 12),
             NotedTextButton(
               label: 'no buttons',
               type: NotedTextButtonType.filled,
-              size: NotedTextButtonSize.small,
+              size: NotedWidgetSize.small,
               onPressed: () => _showDialog(context),
             ),
           ],

@@ -7,6 +7,7 @@ import 'package:noted_app/util/noted_strings.dart';
 import 'package:noted_app/widget/common/icon/noted_icons.dart';
 import 'package:noted_app/widget/common/layout/noted_card.dart';
 import 'package:noted_app/widget/common/layout/noted_header_page.dart';
+import 'package:noted_app/widget/common/noted_widget_config.dart';
 
 class FontSwitcher extends StatelessWidget {
   final List<NotedTextThemeName> names = NotedTextThemeName.values;
@@ -83,7 +84,7 @@ class FontSwitcherItem extends StatelessWidget {
     }
 
     return NotedCard(
-      size: NotedCardSize.medium,
+      size: NotedWidgetSize.medium,
       onTap: onTap,
       child: Padding(padding: const EdgeInsets.fromLTRB(20, 12, 16, 18), child: Stack(children: children)),
     );

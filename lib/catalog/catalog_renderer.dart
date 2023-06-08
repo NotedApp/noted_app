@@ -4,6 +4,7 @@ import 'package:noted_app/catalog/catalog_settings.dart';
 import 'package:noted_app/widget/common/button/noted_icon_button.dart';
 import 'package:noted_app/widget/common/icon/noted_icons.dart';
 import 'package:noted_app/widget/common/layout/noted_header_page.dart';
+import 'package:noted_app/widget/common/noted_widget_config.dart';
 
 class CatalogRenderer extends StatelessWidget {
   final CatalogNode node;
@@ -13,8 +14,6 @@ class CatalogRenderer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ColorScheme colors = Theme.of(context).colorScheme;
-
     return NotedHeaderPage(
       title: node.title,
       hasBackButton: !isRoot,
@@ -22,9 +21,7 @@ class CatalogRenderer extends StatelessWidget {
         NotedIconButton(
           icon: NotedIcons.settings,
           type: NotedIconButtonType.filled,
-          size: NotedIconButtonSize.small,
-          iconColor: colors.onPrimary,
-          backgroundColor: colors.primary,
+          size: NotedWidgetSize.small,
           onPressed: () => _navigateToSettings(context),
         ),
       ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:noted_app/catalog/catalog_list_widget.dart';
 import 'package:noted_app/widget/common/button/noted_icon_button.dart';
 import 'package:noted_app/widget/common/icon/noted_icons.dart';
+import 'package:noted_app/widget/common/noted_widget_config.dart';
 
 class CatalogIconButtonPage extends StatelessWidget {
   const CatalogIconButtonPage({super.key});
@@ -11,114 +12,120 @@ class CatalogIconButtonPage extends StatelessWidget {
     ColorScheme colors = Theme.of(context).colorScheme;
 
     List<CatalogListItem> children = [
-      _buildItem(
-        label: 'filled large',
-        size: NotedIconButtonSize.large,
-        type: NotedIconButtonType.filled,
-        foreground: colors.onPrimary,
-        background: colors.primary,
+      CatalogListItem(
+        label: 'filled',
+        type: CatalogListItemType.column,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _buildItem(
+              size: NotedWidgetSize.large,
+              type: NotedIconButtonType.filled,
+              color: NotedWidgetColor.primary,
+            ),
+            _buildItem(
+              size: NotedWidgetSize.medium,
+              type: NotedIconButtonType.filled,
+              color: NotedWidgetColor.secondary,
+            ),
+            _buildItem(
+              size: NotedWidgetSize.small,
+              type: NotedIconButtonType.filled,
+              color: NotedWidgetColor.tertiary,
+            ),
+          ],
+        ),
       ),
-      _buildItem(
-        label: 'filled medium',
-        size: NotedIconButtonSize.medium,
-        type: NotedIconButtonType.filled,
-        foreground: colors.onSecondary,
-        background: colors.secondary,
+      CatalogListItem(
+        label: 'filled outlined',
+        type: CatalogListItemType.column,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _buildItem(
+              size: NotedWidgetSize.large,
+              type: NotedIconButtonType.filled,
+              color: NotedWidgetColor.primary,
+              outlineColor: colors.onBackground,
+            ),
+            _buildItem(
+              size: NotedWidgetSize.medium,
+              type: NotedIconButtonType.filled,
+              color: NotedWidgetColor.secondary,
+              outlineColor: colors.onBackground,
+            ),
+            _buildItem(
+              size: NotedWidgetSize.small,
+              type: NotedIconButtonType.filled,
+              color: NotedWidgetColor.tertiary,
+              outlineColor: colors.onBackground,
+            ),
+          ],
+        ),
       ),
-      _buildItem(
-        label: 'filled small',
-        size: NotedIconButtonSize.small,
-        type: NotedIconButtonType.filled,
-        foreground: colors.onTertiary,
-        background: colors.tertiary,
+      CatalogListItem(
+        label: 'simple',
+        type: CatalogListItemType.column,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _buildItem(
+              size: NotedWidgetSize.large,
+              type: NotedIconButtonType.simple,
+            ),
+            _buildItem(
+              size: NotedWidgetSize.medium,
+              type: NotedIconButtonType.simple,
+            ),
+            _buildItem(
+              size: NotedWidgetSize.small,
+              type: NotedIconButtonType.simple,
+            ),
+          ],
+        ),
       ),
-      _buildItem(
-        label: 'filled outline large',
-        size: NotedIconButtonSize.large,
-        type: NotedIconButtonType.filled,
-        foreground: colors.onPrimary,
-        background: colors.primary,
-        hasOutline: true,
-      ),
-      _buildItem(
-        label: 'filled outline medium',
-        size: NotedIconButtonSize.medium,
-        type: NotedIconButtonType.filled,
-        foreground: colors.onSecondary,
-        background: colors.secondary,
-        hasOutline: true,
-      ),
-      _buildItem(
-        label: 'filled outline small',
-        size: NotedIconButtonSize.small,
-        type: NotedIconButtonType.filled,
-        foreground: colors.onTertiary,
-        background: colors.tertiary,
-        hasOutline: true,
-      ),
-      _buildItem(
-        label: 'simple large',
-        size: NotedIconButtonSize.large,
-        type: NotedIconButtonType.simple,
-        foreground: colors.onBackground,
-      ),
-      _buildItem(
-        label: 'simple medium',
-        size: NotedIconButtonSize.medium,
-        type: NotedIconButtonType.simple,
-        foreground: colors.onBackground,
-      ),
-      _buildItem(
-        label: 'simple small',
-        size: NotedIconButtonSize.small,
-        type: NotedIconButtonType.simple,
-        foreground: colors.onBackground,
-      ),
-      _buildItem(
-        label: 'simple outline large',
-        size: NotedIconButtonSize.large,
-        type: NotedIconButtonType.simple,
-        foreground: colors.onBackground,
-        hasOutline: true,
-      ),
-      _buildItem(
-        label: 'simple outline medium',
-        size: NotedIconButtonSize.medium,
-        type: NotedIconButtonType.simple,
-        foreground: colors.onBackground,
-        hasOutline: true,
-      ),
-      _buildItem(
-        label: 'simple outline small',
-        size: NotedIconButtonSize.small,
-        type: NotedIconButtonType.simple,
-        foreground: colors.onBackground,
-        hasOutline: true,
+      CatalogListItem(
+        label: 'simple outline',
+        type: CatalogListItemType.column,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _buildItem(
+              size: NotedWidgetSize.large,
+              type: NotedIconButtonType.simple,
+              outlineColor: colors.onBackground,
+            ),
+            _buildItem(
+              size: NotedWidgetSize.medium,
+              type: NotedIconButtonType.simple,
+              outlineColor: colors.onBackground,
+            ),
+            _buildItem(
+              size: NotedWidgetSize.small,
+              type: NotedIconButtonType.simple,
+              outlineColor: colors.onBackground,
+            ),
+          ],
+        ),
       ),
     ];
 
     return CatalogListWidget(children);
   }
 
-  CatalogListItem _buildItem({
-    required String label,
+  NotedIconButton _buildItem({
     required NotedIconButtonType type,
-    required NotedIconButtonSize size,
-    Color? foreground,
-    Color? background,
-    bool hasOutline = false,
+    required NotedWidgetSize size,
+    NotedWidgetColor? color,
+    Color? outlineColor,
   }) {
-    return CatalogListItem(
-      label: label,
-      child: NotedIconButton(
-        icon: NotedIcons.pencil,
-        type: type,
-        size: size,
-        onPressed: () => {},
-        iconColor: foreground,
-        backgroundColor: background,
-        hasOutline: hasOutline,
-      ),
+    return NotedIconButton(
+      icon: NotedIcons.pencil,
+      type: type,
+      size: size,
+      color: color,
+      onPressed: () => {},
+      outlineColor: outlineColor,
     );
   }
 }

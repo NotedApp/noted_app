@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/widget/common/icon/noted_icons.dart';
 
 class NotedSwitchButton extends StatelessWidget {
@@ -16,20 +17,23 @@ class NotedSwitchButton extends StatelessWidget {
     ThemeData theme = Theme.of(context);
     ColorScheme colors = theme.colorScheme;
 
+    Color activeColor = theme.brightness == Brightness.dark ? colors.onBackground : colors.tertiary;
+    Color inactiveColor = theme.brightness == Brightness.dark ? colors.primary : colors.secondary;
+
     final MaterialStateProperty<Icon?> thumbIcon = MaterialStateProperty.resolveWith<Icon?>(
       (Set<MaterialState> states) => states.contains(MaterialState.selected)
-          ? Icon(NotedIcons.check, color: theme.brightness == Brightness.dark ? colors.primary : colors.tertiary)
-          : Icon(NotedIcons.close, color: colors.secondary),
+          ? Icon(NotedIcons.check, color: activeColor)
+          : Icon(NotedIcons.close, color: inactiveColor),
     );
 
     return Switch(
       value: value,
       onChanged: onChanged,
       thumbIcon: thumbIcon,
-      thumbColor: MaterialStateProperty.all(colors.background),
-      activeTrackColor: theme.brightness == Brightness.dark ? colors.onBackground : colors.tertiary,
-      inactiveTrackColor: theme.brightness == Brightness.dark ? colors.primary : colors.secondary,
-      trackOutlineColor: MaterialStateProperty.all(Colors.transparent),
+      thumbColor: colors.background.materialState(),
+      activeTrackColor: activeColor,
+      inactiveTrackColor: inactiveColor,
+      trackOutlineColor: Colors.transparent.materialState(),
     );
   }
 }

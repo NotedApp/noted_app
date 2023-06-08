@@ -1,138 +1,167 @@
 import 'package:flutter/material.dart';
+import 'package:noted_app/util/extensions.dart';
+import 'package:noted_app/widget/common/noted_widget_config.dart';
 
 enum NotedIconButtonType {
-  filled,
   simple,
-}
-
-enum NotedIconButtonSize {
-  large,
-  medium,
-  small,
+  filled,
 }
 
 class NotedIconButton extends StatelessWidget {
   final IconData icon;
   final NotedIconButtonType type;
-  final NotedIconButtonSize size;
+  final NotedWidgetSize size;
+  final NotedWidgetColor? color;
   final VoidCallback? onPressed;
   final VoidCallback? onLongPress;
   final Color? iconColor;
   final Color? backgroundColor;
-  final bool hasOutline;
+  final Color? outlineColor;
 
+  /// Create a new noted icon button.
+  ///
+  /// [type] defines the style of button.
+  ///  - [NotedIconButtonType.simple] results in a plain icon button with no background.
+  ///  - [NotedIconButtonType.filled] results in a filled icon button with a colored background.
+  ///
+  /// [size] defines the size of button.
+  ///  - The size differs depending on the type of button.
+  ///
+  /// [color] defines the color scheme of the button.
+  ///  - The default differs depending on the type of button.
+  ///  - The colors can be override with [iconColor] and [backgroundColor].
   const NotedIconButton({
     required this.icon,
     required this.type,
-    required this.size,
-    this.onPressed,
+    this.size = NotedWidgetSize.medium,
+    this.color,
+    required this.onPressed,
     this.onLongPress,
     this.iconColor,
     this.backgroundColor,
-    this.hasOutline = false,
+    this.outlineColor,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    switch (type) {
-      case NotedIconButtonType.filled:
-        return _buildFilledIconButton(context);
-      case NotedIconButtonType.simple:
-        return _buildSimpleIconButton(context);
-    }
-  }
-
-  Widget _buildFilledIconButton(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
-    Color foreground = iconColor ?? colorScheme.onPrimary;
-    Color background = backgroundColor ?? colorScheme.primary;
 
-    double iconSize;
-    double circleSize;
+    _NotedIconButtonBuilder builder = switch (type) {
+      NotedIconButtonType.simple => _SimpleIconButtonBuilder(this),
+      NotedIconButtonType.filled => _FilledIconButtonBuilder(this),
+    };
 
-    switch (size) {
-      case NotedIconButtonSize.large:
-        iconSize = 36;
-        circleSize = 64;
-        break;
-      case NotedIconButtonSize.medium:
-        iconSize = 30;
-        circleSize = 54;
-        break;
-      case NotedIconButtonSize.small:
-        iconSize = 24;
-        circleSize = 44;
-        break;
-    }
-
-    OutlinedBorder shape = CircleBorder(side: hasOutline ? BorderSide(color: foreground) : BorderSide.none);
-
-    ButtonStyle style = ButtonStyle(
-      backgroundColor: MaterialStateProperty.all(background),
-      foregroundColor: MaterialStateProperty.all(foreground),
-      padding: MaterialStateProperty.all(EdgeInsets.zero),
-      elevation: MaterialStateProperty.all(3),
-      fixedSize: MaterialStateProperty.all(Size.square(circleSize)),
-      iconColor: MaterialStateProperty.all(foreground),
-      iconSize: MaterialStateProperty.all(iconSize),
-      shape: MaterialStateProperty.all(shape),
+    OutlinedBorder shape = CircleBorder(
+      side: outlineColor != null ? BorderSide(color: outlineColor!) : BorderSide.none,
     );
 
+    ButtonStyle style = builder.styleOf(colorScheme).copyWith(
+          iconColor: iconColor?.materialState(),
+          backgroundColor: backgroundColor?.materialState(),
+          overlayColor: iconColor?.withOpacity(buttonOverlayOpacity).materialState(),
+          padding: EdgeInsets.zero.materialState(),
+          minimumSize: Size.zero.materialState(),
+          shape: shape.materialState(),
+        );
+
+    double widgetSize = builder.sizeOf();
+
     return SizedBox(
-      width: circleSize,
-      height: circleSize,
+      width: widgetSize,
+      height: widgetSize,
       child: ElevatedButton(
         onPressed: onPressed,
         onLongPress: onLongPress,
         style: style,
-        child: Center(child: Icon(icon)),
+        child: Icon(icon),
       ),
     );
   }
+}
 
-  Widget _buildSimpleIconButton(BuildContext context) {
-    Color foreground = iconColor ?? Theme.of(context).colorScheme.onPrimary;
+abstract class _NotedIconButtonBuilder {
+  final NotedIconButton source;
 
-    double iconSize;
-    double circleSize;
+  const _NotedIconButtonBuilder(this.source);
 
-    switch (size) {
-      case NotedIconButtonSize.large:
-        iconSize = 36;
-        circleSize = 54;
-        break;
-      case NotedIconButtonSize.medium:
-        iconSize = 30;
-        circleSize = 44;
-        break;
-      case NotedIconButtonSize.small:
-        iconSize = 22;
-        circleSize = 36;
-        break;
-    }
+  ButtonStyle styleOf(ColorScheme colors);
 
-    OutlinedBorder shape = CircleBorder(side: hasOutline ? BorderSide(color: foreground) : BorderSide.none);
+  double sizeOf();
+}
 
-    ButtonStyle style = ButtonStyle(
-      backgroundColor: MaterialStateProperty.all(Colors.transparent),
-      foregroundColor: MaterialStateProperty.all(foreground),
-      padding: MaterialStateProperty.all(EdgeInsets.zero),
-      fixedSize: MaterialStateProperty.all(Size.square(circleSize)),
-      iconColor: MaterialStateProperty.all(foreground),
-      iconSize: MaterialStateProperty.all(iconSize),
-      shape: MaterialStateProperty.all(shape),
+class _SimpleIconButtonBuilder extends _NotedIconButtonBuilder {
+  const _SimpleIconButtonBuilder(super.source);
+
+  @override
+  ButtonStyle styleOf(ColorScheme colors) {
+    (Color, Color) buttonColors = switch (source.color) {
+      NotedWidgetColor.primary => (colors.primary, Colors.transparent),
+      NotedWidgetColor.secondary => (colors.secondary, Colors.transparent),
+      NotedWidgetColor.tertiary => (colors.tertiary, Colors.transparent),
+      _ => (colors.onBackground, Colors.transparent),
+    };
+
+    double iconSize = switch (source.size) {
+      NotedWidgetSize.large => 36,
+      NotedWidgetSize.medium => 30,
+      NotedWidgetSize.small => 22,
+    };
+
+    return ButtonStyle(
+      iconColor: buttonColors.$1.materialState(),
+      backgroundColor: buttonColors.$2.materialState(),
+      overlayColor: buttonColors.$1.withOpacity(buttonOverlayOpacity).materialState(),
+      iconSize: iconSize.materialState(),
+      fixedSize: Size.square(sizeOf()).materialState(),
+      elevation: 0.toDouble().materialState(),
     );
+  }
 
-    return SizedBox(
-      width: circleSize,
-      height: circleSize,
-      child: TextButton(
-        onPressed: onPressed,
-        onLongPress: onLongPress,
-        style: style,
-        child: Center(child: Icon(icon)),
-      ),
+  @override
+  double sizeOf() {
+    return switch (source.size) {
+      NotedWidgetSize.large => 54,
+      NotedWidgetSize.medium => 44,
+      NotedWidgetSize.small => 36,
+    };
+  }
+}
+
+class _FilledIconButtonBuilder extends _NotedIconButtonBuilder {
+  const _FilledIconButtonBuilder(super.source);
+
+  @override
+  ButtonStyle styleOf(ColorScheme colors) {
+    (Color, Color) buttonColors = switch (source.color) {
+      NotedWidgetColor.primary => (colors.onPrimary, colors.primary),
+      NotedWidgetColor.secondary => (colors.onSecondary, colors.secondary),
+      NotedWidgetColor.tertiary => (colors.onTertiary, colors.tertiary),
+      _ => (colors.onPrimary, colors.primary),
+    };
+
+    double iconSize = switch (source.size) {
+      NotedWidgetSize.large => 36,
+      NotedWidgetSize.medium => 30,
+      NotedWidgetSize.small => 24,
+    };
+
+    return ButtonStyle(
+      iconColor: buttonColors.$1.materialState(),
+      backgroundColor: buttonColors.$2.materialState(),
+      overlayColor: buttonColors.$1.withOpacity(buttonOverlayOpacity).materialState(),
+      iconSize: iconSize.materialState(),
+      fixedSize: Size.square(sizeOf()).materialState(),
+      elevation: 2.toDouble().materialState(),
     );
+  }
+
+  @override
+  double sizeOf() {
+    return switch (source.size) {
+      NotedWidgetSize.large => 64,
+      NotedWidgetSize.medium => 54,
+      NotedWidgetSize.small => 44,
+    };
   }
 }

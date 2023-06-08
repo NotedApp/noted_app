@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:noted_app/widget/common/button/noted_icon_button.dart';
 import 'package:noted_app/widget/common/icon/noted_icons.dart';
 import 'package:noted_app/widget/common/layout/noted_header.dart';
+import 'package:noted_app/widget/common/noted_widget_config.dart';
 
 class NotedHeaderPage extends StatelessWidget {
   final Widget child;
@@ -28,7 +29,7 @@ class NotedHeaderPage extends StatelessWidget {
                   ? NotedIconButton(
                       icon: NotedIcons.chevronLeft,
                       type: NotedIconButtonType.filled,
-                      size: NotedIconButtonSize.small,
+                      size: NotedWidgetSize.small,
                       // TODO: Update with routing.
                       onPressed: () => Navigator.of(context).pop(),
                     )

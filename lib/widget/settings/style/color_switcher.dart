@@ -7,6 +7,7 @@ import 'package:noted_app/util/noted_strings.dart';
 import 'package:noted_app/widget/common/icon/noted_icons.dart';
 import 'package:noted_app/widget/common/layout/noted_card.dart';
 import 'package:noted_app/widget/common/layout/noted_header_page.dart';
+import 'package:noted_app/widget/common/noted_widget_config.dart';
 
 class ColorSwitcher extends StatelessWidget {
   final List<NotedColorSchemeName> names = NotedColorSchemeName.values;
@@ -70,7 +71,7 @@ class ColorSwitcherItem extends StatelessWidget {
     }
 
     return NotedCard(
-      size: NotedCardSize.medium,
+      size: NotedWidgetSize.medium,
       onTap: onTap,
       color: colors.background,
       child: Padding(
