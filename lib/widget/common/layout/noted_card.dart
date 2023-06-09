@@ -42,7 +42,7 @@ class NotedCard extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Card(
-          color: color ?? colors.surface,
+          color: color ?? colors.background,
           elevation: 4,
           shape: shape,
           borderOnForeground: true,

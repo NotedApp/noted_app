@@ -33,7 +33,7 @@ class NotedColorSchemes {
     onError: Color(0xFFEEEEEE),
     background: Color(0xFFE5E3C9),
     onBackground: Color(0xFF111111),
-    surface: Color(0xFFE5E3C9),
+    surface: Color(0xFFCECCB5),
     onSurface: Color(0xFF111111),
   );
 
@@ -49,7 +49,7 @@ class NotedColorSchemes {
     onError: Color(0xFFEEEEEE),
     background: Color(0xFFE5E3C9),
     onBackground: Color(0xFF111111),
-    surface: Color(0xFFE5E3C9),
+    surface: Color(0xFFCECCB5),
     onSurface: Color(0xFF111111),
   );
 
@@ -65,7 +65,7 @@ class NotedColorSchemes {
     onError: Color(0xFFEEEEEE),
     background: Color(0xFF121212),
     onBackground: Color(0xFFEEEEEE),
-    surface: Color(0xFF121212),
+    surface: Color(0xFF1A1A1A),
     onSurface: Color(0xFFEEEEEE),
   );
 
@@ -81,7 +81,7 @@ class NotedColorSchemes {
     onError: Color(0xFFEEEEEE),
     background: Color(0xFF000000),
     onBackground: Color(0xFFEEEEEE),
-    surface: Color(0xFF000000),
+    surface: Color(0xFF181818),
     onSurface: Color(0xFFEEEEEE),
   );
 
@@ -97,7 +97,7 @@ class NotedColorSchemes {
     onError: Color(0xFFEEEEEE),
     background: Color(0xFFFFFFFF),
     onBackground: Color(0xFF111111),
-    surface: Color(0xFFFFFFFF),
+    surface: Color(0xFFE6E6E6),
     onSurface: Color(0xFF111111),
   );
 
@@ -114,7 +114,7 @@ class NotedColorSchemes {
     onError: Color(0xFFEEEEEE),
     background: Color(0xFFE5E3C9),
     onBackground: Color(0xFF111111),
-    surface: Color(0xFFE5E3C9),
+    surface: Color(0xFFCECCB5),
     onSurface: Color(0xFF111111),
   );
 }
