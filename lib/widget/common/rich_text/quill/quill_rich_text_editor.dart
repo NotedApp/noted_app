@@ -4,7 +4,12 @@ import 'package:noted_app/widget/common/rich_text/noted_rich_text_editor.dart';
 import 'package:noted_app/widget/common/rich_text/quill/quill_rich_text_controller.dart';
 
 class QuillRichTextEditor extends NotedRichTextEditor {
-  const QuillRichTextEditor({required super.controller, super.readonly, super.key});
+  const QuillRichTextEditor({
+    required super.controller,
+    required super.focusNode,
+    super.readonly,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +18,15 @@ class QuillRichTextEditor extends NotedRichTextEditor {
     }
 
     QuillController controller = (super.controller as QuillRichTextController).controller;
-    return QuillEditor.basic(controller: controller, readOnly: super.readonly);
+    return QuillEditor(
+      controller: controller,
+      focusNode: super.focusNode,
+      scrollController: ScrollController(),
+      scrollable: true,
+      padding: EdgeInsets.zero,
+      autoFocus: false,
+      readOnly: super.readonly,
+      expands: true,
+    );
   }
 }

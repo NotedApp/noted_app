@@ -3,4 +3,9 @@ import 'package:noted_app/widget/common/rich_text/noted_rich_text_controller.dar
 
 class QuillRichTextController extends NotedRichTextController {
   QuillController controller = QuillController.basic();
+
+  @override
+  void dispose() {
+    controller.dispose();
+  }
 }

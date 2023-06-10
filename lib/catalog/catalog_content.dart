@@ -7,8 +7,8 @@ import 'package:noted_app/catalog/pages/catalog_layout_page.dart';
 import 'package:noted_app/catalog/pages/catalog_svg_image_page.dart';
 import 'package:noted_app/catalog/pages/catalog_text_style_page.dart';
 import 'package:noted_app/catalog/pages/input/catalog_misc_input_page.dart';
-import 'package:noted_app/catalog/pages/input/catalog_quill_input_page.dart';
 import 'package:noted_app/catalog/pages/input/catalog_text_input_page.dart';
+import 'package:noted_app/catalog/pages/rich_text/catalog_quill_rich_text.dart';
 
 sealed class CatalogNode {
   final String title;
@@ -43,9 +43,11 @@ class CatalogContent {
       ]),
       CatalogBranch(title: 'input', children: [
         CatalogLeaf(title: 'text', page: const CatalogTextInputPage()),
-        CatalogLeaf(title: 'quill', page: const CatalogQuillInputPage()),
         CatalogLeaf(title: 'misc', page: const CatalogMiscInputPage()),
-      ])
+      ]),
+      CatalogBranch(title: 'rich text', children: [
+        CatalogLeaf(title: 'quill', page: const CatalogQuillRichText()),
+      ]),
     ],
   );
 }
