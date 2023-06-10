@@ -1,19 +1,22 @@
 name: noted_app
 description: A new Flutter project.
-publish_to: 'none'
+publish_to: "none"
 
-version: 1.0.0+1
+version: 0.0.1+1
 
 environment:
-  sdk: '>=3.0.1 <4.0.0'
+  sdk: ">=3.0.1 <4.0.0"
 
 dependencies:
-  equatable: ^2.0.5
   flutter:
     sdk: flutter
 
   flutter_bloc: ^8.1.2
   flutter_svg: ^2.0.6
+  equatable: ^2.0.5
+  flutter_quill: ^7.2.3
+  fleather: ^1.8.0
+  super_editor: ^0.2.6
 
 dev_dependencies:
   flutter_test:
