@@ -103,9 +103,9 @@ class _SimpleIconButtonBuilder extends _NotedIconButtonBuilder {
     };
 
     double iconSize = switch (source.size) {
-      NotedWidgetSize.large => 36,
-      NotedWidgetSize.medium => 30,
-      NotedWidgetSize.small => 22,
+      NotedWidgetSize.large => 32,
+      NotedWidgetSize.medium => 26,
+      NotedWidgetSize.small => 18,
     };
 
     return ButtonStyle(
