@@ -1,7 +1,4 @@
-import 'package:appflowy_editor/appflowy_editor.dart';
 import 'package:flutter/material.dart';
-import 'package:noted_app/widget/common/button/noted_icon_button.dart';
-import 'package:noted_app/widget/common/icon/noted_icons.dart';
 import 'package:noted_app/widget/common/rich_text/appflowy/appflowy_rich_text_controller.dart';
 import 'package:noted_app/widget/common/rich_text/noted_rich_text_toolbar.dart';
 
@@ -14,8 +11,8 @@ class AppflowyRichTextToolbar extends NotedRichTextToolbar {
       throw ArgumentError("An appflowy rich text toolbar must have a AppflowyController as its controller.");
     }
 
-    EditorState editorState = (controller as AppflowyRichTextController).editorState;
-    ColorScheme colors = Theme.of(context).colorScheme;
+    // EditorState editorState = (controller as AppflowyRichTextController).editorState;
+    // ColorScheme colors = Theme.of(context).colorScheme;
 
     return const SizedBox(
       height: 1,
