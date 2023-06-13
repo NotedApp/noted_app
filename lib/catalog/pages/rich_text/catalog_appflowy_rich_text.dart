@@ -4,14 +4,14 @@ import 'package:noted_app/widget/common/rich_text/noted_rich_text_controller.dar
 import 'package:noted_app/widget/common/rich_text/noted_rich_text_editor.dart';
 import 'package:noted_app/widget/common/rich_text/noted_rich_text_toolbar.dart';
 
-class CatalogFleatherRichText extends StatefulWidget {
-  const CatalogFleatherRichText({super.key});
+class CatalogAppflowyRichText extends StatefulWidget {
+  const CatalogAppflowyRichText({super.key});
 
   @override
-  State<StatefulWidget> createState() => _CatalogFleatherRichTextState();
+  State<StatefulWidget> createState() => _CatalogAppflowyRichTextState();
 }
 
-class _CatalogFleatherRichTextState extends State<CatalogFleatherRichText> {
+class _CatalogAppflowyRichTextState extends State<CatalogAppflowyRichText> {
   late NotedRichTextController _textController;
   late FocusNode _focusNode;
   PersistentBottomSheetController? _toolbarController;
@@ -20,7 +20,7 @@ class _CatalogFleatherRichTextState extends State<CatalogFleatherRichText> {
   void initState() {
     super.initState();
 
-    _textController = NotedRichTextController.fleather();
+    _textController = NotedRichTextController.appflowy();
     _focusNode = FocusNode();
     _focusNode.addListener(showToolbar);
   }
@@ -33,7 +33,7 @@ class _CatalogFleatherRichTextState extends State<CatalogFleatherRichText> {
         label: "editor large",
         child: SizedBox(
           height: 320,
-          child: NotedRichTextEditor.fleather(
+          child: NotedRichTextEditor.appflowy(
             _textController,
             _focusNode,
           ),
@@ -45,18 +45,18 @@ class _CatalogFleatherRichTextState extends State<CatalogFleatherRichText> {
   }
 
   void showToolbar() {
-    if (_focusNode.context == null) {
+    /*if (_focusNode.context == null) {
       return;
     }
 
     ScaffoldState scaffoldState = Scaffold.of(_focusNode.context!);
 
     if (_focusNode.hasFocus && _toolbarController == null) {
-      _toolbarController = scaffoldState.showBottomSheet((context) => NotedRichTextToolbar.fleather(_textController));
+      _toolbarController = scaffoldState.showBottomSheet((context) => NotedRichTextToolbar.appflowy(_textController));
     } else if (!_focusNode.hasFocus && _toolbarController != null) {
       _toolbarController!.close();
       _toolbarController = null;
-    }
+    }*/
   }
 
   @override

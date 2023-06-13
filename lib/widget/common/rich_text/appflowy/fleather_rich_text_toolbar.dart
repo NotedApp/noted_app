@@ -1,22 +1,27 @@
-import 'package:fleather/fleather.dart';
+import 'package:appflowy_editor/appflowy_editor.dart';
 import 'package:flutter/material.dart';
 import 'package:noted_app/widget/common/button/noted_icon_button.dart';
 import 'package:noted_app/widget/common/icon/noted_icons.dart';
-import 'package:noted_app/widget/common/rich_text/fleather/fleather_rich_text_controller.dart';
+import 'package:noted_app/widget/common/rich_text/appflowy/appflowy_rich_text_controller.dart';
 import 'package:noted_app/widget/common/rich_text/noted_rich_text_toolbar.dart';
 
-class FleatherRichTextToolbar extends NotedRichTextToolbar {
-  const FleatherRichTextToolbar({required super.controller, super.key});
+class AppflowyRichTextToolbar extends NotedRichTextToolbar {
+  const AppflowyRichTextToolbar({required super.controller, super.key});
 
   @override
   Widget build(BuildContext context) {
-    if (super.controller is! FleatherRichTextController) {
-      throw ArgumentError("A fleather rich text toolbar must have a FleatherController as its controller.");
+    if (super.controller is! AppflowyRichTextController) {
+      throw ArgumentError("An appflowy rich text toolbar must have a AppflowyController as its controller.");
     }
 
-    FleatherController controller = (super.controller as FleatherRichTextController).controller;
+    EditorState editorState = (controller as AppflowyRichTextController).editorState;
     ColorScheme colors = Theme.of(context).colorScheme;
 
+    return const SizedBox(
+      height: 1,
+      width: 1,
+    );
+/*
     return FleatherToolbar(
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 14),
       children: [
@@ -123,10 +128,11 @@ class FleatherRichTextToolbar extends NotedRichTextToolbar {
           icon: NotedIcons.link,
         ),
       ],
-    );
+    );*/
   }
 }
 
+/*
 class FleatherToggleButton extends StatelessWidget {
   final FleatherController controller;
   final ParchmentAttribute attribute;
@@ -164,3 +170,4 @@ class FleatherToggleButton extends StatelessWidget {
     );
   }
 }
+*/

@@ -13,19 +13,19 @@ class QuillRichTextEditor extends NotedRichTextEditor {
 
   @override
   Widget build(BuildContext context) {
-    if (super.controller is! QuillRichTextController) {
+    if (controller is! QuillRichTextController) {
       throw ArgumentError("A quill rich text editor must have a QuillController as its controller.");
     }
 
-    QuillController controller = (super.controller as QuillRichTextController).controller;
+    QuillController quillController = (controller as QuillRichTextController).controller;
     return QuillEditor(
-      controller: controller,
-      focusNode: super.focusNode,
+      controller: quillController,
+      focusNode: focusNode,
       scrollController: ScrollController(),
       scrollable: true,
       padding: EdgeInsets.zero,
       autoFocus: false,
-      readOnly: super.readonly,
+      readOnly: readonly,
       expands: true,
     );
   }
