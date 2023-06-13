@@ -1,9 +1,37 @@
+import 'dart:async';
+
 import 'package:appflowy_editor/appflowy_editor.dart';
+import 'package:noted_app/widget/common/rich_text/noted_rich_text_attributes.dart';
 import 'package:noted_app/widget/common/rich_text/noted_rich_text_controller.dart';
 
 class AppflowyRichTextController extends NotedRichTextController {
-  EditorState editorState = EditorState.blank();
+  final EditorState editorState = EditorState.blank();
+  StreamSubscription? _editorSubscription;
+
+  AppflowyRichTextController() {
+    _editorSubscription = editorState.transactionStream.listen((_) => notifyListeners());
+  }
 
   @override
-  void dispose() {}
+  bool isAttributeToggled(NotedRichTextAttribute attribute) {
+    // TODO: implement isAttributeToggled
+    throw UnimplementedError();
+  }
+
+  @override
+  void toggleAttribute(NotedRichTextAttribute attribute) {
+    // TODO: implement toggleAttribute
+  }
+
+  @override
+  void insertEmbed(NotedRichTextEmbed embed) {
+    // TODO: implement insertEmbed
+  }
+
+  @override
+  void dispose() {
+    _editorSubscription?.cancel();
+    editorState.cancelSubscription();
+    super.dispose();
+  }
 }
