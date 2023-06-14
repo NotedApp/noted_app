@@ -14,7 +14,7 @@ abstract class NotedRichTextController extends ChangeNotifier {
     return AppflowyRichTextController();
   }
 
-  void toggleAttribute(NotedRichTextAttribute attribute);
+  void setAttribute(NotedRichTextAttribute attribute, bool value);
 
   bool isAttributeToggled(NotedRichTextAttribute attribute);
 

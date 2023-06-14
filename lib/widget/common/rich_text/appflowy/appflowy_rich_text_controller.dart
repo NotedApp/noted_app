@@ -19,7 +19,7 @@ class AppflowyRichTextController extends NotedRichTextController {
   }
 
   @override
-  void toggleAttribute(NotedRichTextAttribute attribute) {
+  void setAttribute(NotedRichTextAttribute attribute, bool value) {
     // TODO: implement toggleAttribute
   }
 
