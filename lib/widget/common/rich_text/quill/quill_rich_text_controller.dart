@@ -2,21 +2,23 @@ import 'package:flutter_quill/flutter_quill.dart';
 import 'package:noted_app/widget/common/rich_text/noted_rich_text_attributes.dart';
 import 'package:noted_app/widget/common/rich_text/noted_rich_text_controller.dart';
 
-Map<NotedRichTextAttribute, Attribute> _attributeMap = {
-  NotedRichTextAttribute.bold: Attribute.bold,
-  NotedRichTextAttribute.italic: Attribute.italic,
-  NotedRichTextAttribute.underline: Attribute.underline,
-  NotedRichTextAttribute.strikethrough: Attribute.strikeThrough,
-  NotedRichTextAttribute.h1: Attribute.h1,
-  NotedRichTextAttribute.h2: Attribute.h2,
-  NotedRichTextAttribute.h3: Attribute.h3,
-  NotedRichTextAttribute.textColor: Attribute.color,
-  NotedRichTextAttribute.textBackground: Attribute.background,
-  NotedRichTextAttribute.ul: Attribute.ul,
-  NotedRichTextAttribute.ol: Attribute.ol,
-  NotedRichTextAttribute.taskList: Attribute.list,
-  NotedRichTextAttribute.link: Attribute.link,
-};
+Attribute _getQuillAttribute(NotedRichTextAttribute attribute) {
+  return switch (attribute) {
+    NotedRichTextAttribute.bold => Attribute.bold,
+    NotedRichTextAttribute.italic => Attribute.italic,
+    NotedRichTextAttribute.underline => Attribute.underline,
+    NotedRichTextAttribute.strikethrough => Attribute.strikeThrough,
+    NotedRichTextAttribute.h1 => Attribute.h1,
+    NotedRichTextAttribute.h2 => Attribute.h2,
+    NotedRichTextAttribute.h3 => Attribute.h3,
+    NotedRichTextAttribute.textColor => Attribute.color,
+    NotedRichTextAttribute.textBackground => Attribute.background,
+    NotedRichTextAttribute.ul => Attribute.ul,
+    NotedRichTextAttribute.ol => Attribute.ol,
+    NotedRichTextAttribute.taskList => Attribute.unchecked,
+    NotedRichTextAttribute.link => Attribute.link,
+  };
+}
 
 class QuillRichTextController extends NotedRichTextController {
   QuillController controller = QuillController.basic();
@@ -27,14 +29,14 @@ class QuillRichTextController extends NotedRichTextController {
 
   @override
   bool isAttributeToggled(NotedRichTextAttribute attribute) {
-    Attribute quillAttribute = _attributeMap[attribute] ?? Attribute.bold;
+    Attribute quillAttribute = _getQuillAttribute(attribute);
     Style style = controller.getSelectionStyle();
     return style.containsKey(quillAttribute.key);
   }
 
   @override
   void setAttribute(NotedRichTextAttribute attribute, bool value) {
-    Attribute quillAttribute = _attributeMap[attribute] ?? Attribute.bold;
+    Attribute quillAttribute = _getQuillAttribute(attribute);
     controller.formatSelection(!value ? Attribute.clone(quillAttribute, null) : quillAttribute);
   }
 

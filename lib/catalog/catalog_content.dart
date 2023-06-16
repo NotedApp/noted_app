@@ -8,7 +8,6 @@ import 'package:noted_app/catalog/pages/catalog_svg_image_page.dart';
 import 'package:noted_app/catalog/pages/catalog_text_style_page.dart';
 import 'package:noted_app/catalog/pages/input/catalog_misc_input_page.dart';
 import 'package:noted_app/catalog/pages/input/catalog_text_input_page.dart';
-import 'package:noted_app/catalog/pages/rich_text/catalog_appflowy_rich_text.dart';
 import 'package:noted_app/catalog/pages/rich_text/catalog_quill_rich_text.dart';
 
 sealed class CatalogNode {
@@ -37,6 +36,7 @@ class CatalogContent {
       CatalogLeaf(title: 'images', page: const CatalogSvgImagePage()),
       CatalogLeaf(title: 'icons', page: const CatalogIconsPage()),
       CatalogLeaf(title: 'layout', page: CatalogLayoutPage()),
+      CatalogLeaf(title: 'rich text', page: const CatalogQuillRichText()),
       CatalogBranch(title: 'buttons', children: [
         CatalogLeaf(title: 'icon', page: const CatalogIconButtonPage()),
         CatalogLeaf(title: 'text', page: const CatalogTextButtonPage()),
@@ -45,11 +45,7 @@ class CatalogContent {
       CatalogBranch(title: 'input', children: [
         CatalogLeaf(title: 'text', page: const CatalogTextInputPage()),
         CatalogLeaf(title: 'misc', page: const CatalogMiscInputPage()),
-      ]),
-      CatalogBranch(title: 'rich text', children: [
-        CatalogLeaf(title: 'quill', page: const CatalogQuillRichText()),
-        CatalogLeaf(title: 'appflowy', page: const CatalogAppflowyRichText()),
-      ]),
+      ])
     ],
   );
 }

@@ -13,6 +13,7 @@ class NotedRichTextToolbar extends StatelessWidget {
     ColorScheme colors = Theme.of(context).colorScheme;
 
     return Container(
+      width: double.infinity,
       padding: const EdgeInsets.fromLTRB(14, 12, 14, 10),
       decoration: BoxDecoration(
         color: colors.secondary,
@@ -63,6 +64,21 @@ class NotedRichTextToolbar extends StatelessWidget {
           NotedRichTextToggleButton(
             controller: controller,
             attribute: NotedRichTextAttribute.h3,
+            colors: colors,
+          ),
+          NotedRichTextToggleButton(
+            controller: controller,
+            attribute: NotedRichTextAttribute.ul,
+            colors: colors,
+          ),
+          NotedRichTextToggleButton(
+            controller: controller,
+            attribute: NotedRichTextAttribute.ol,
+            colors: colors,
+          ),
+          NotedRichTextToggleButton(
+            controller: controller,
+            attribute: NotedRichTextAttribute.taskList,
             colors: colors,
           ),
         ],
