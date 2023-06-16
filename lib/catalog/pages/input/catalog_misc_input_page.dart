@@ -61,7 +61,7 @@ class _CatalogMiscInputPageState extends State<CatalogMiscInputPage> {
   }
 
   Future<void> launchColorPicker() async {
-    Color? updated = await showColorPicker(context, selectedColor);
+    Color? updated = await showColorPicker(context, selectedColor, () => setState(() => selectedColor = black));
 
     if (updated != null) {
       setState(() => selectedColor = updated);

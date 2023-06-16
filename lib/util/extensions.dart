@@ -11,6 +11,31 @@ extension NotedColorExtensions on Color {
   Color getBW() {
     return (red * 0.3 + green * 0.6 + blue * 0.1) > 186 ? black : white;
   }
+
+  static Color fromHex(String hexString) {
+    StringBuffer buffer = StringBuffer();
+
+    if (hexString.length == 6 || hexString.length == 7) {
+      buffer.write('ff');
+    }
+
+    buffer.write(hexString.replaceFirst('#', ''));
+    return Color(int.parse(buffer.toString(), radix: 16));
+  }
+
+  String toHex({bool withTag = true}) {
+    StringBuffer buffer = StringBuffer();
+
+    if (withTag) {
+      buffer.write('#');
+    }
+
+    buffer.write(alpha.toRadixString(16).padLeft(2, '0'));
+    buffer.write(red.toRadixString(16).padLeft(2, '0'));
+    buffer.write(green.toRadixString(16).padLeft(2, '0'));
+    buffer.write(blue.toRadixString(16).padLeft(2, '0'));
+    return buffer.toString();
+  }
 }
 
 extension NotedDoubleExtensions on double {

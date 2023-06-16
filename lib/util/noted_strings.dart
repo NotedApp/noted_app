@@ -1,5 +1,7 @@
 // TODO: update this to use i18n.
 class NotedStrings {
+  static const String unknown = 'unknown';
+
   static final Map<String, String> settings = {
     'colorTitle': 'colors',
     'NotedColorSchemeName.blue': 'blue',
@@ -8,6 +10,7 @@ class NotedStrings {
     'NotedColorSchemeName.oled': 'oled',
     'NotedColorSchemeName.light': 'light',
     'NotedColorSchemeName.custom': 'custom',
+    'colorDefault': 'default color',
     'fontTitle': 'fonts',
     'NotedTextThemeName.poppins': 'poppins',
     'NotedTextThemeName.roboto': 'roboto',
@@ -16,7 +19,6 @@ class NotedStrings {
   };
 
   static final Map<String, String> common = {
-    'unknown': 'unknown',
     'confirm': 'confirm',
     'cancel': 'cancel',
   };

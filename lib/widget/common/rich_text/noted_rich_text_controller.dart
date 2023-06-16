@@ -9,9 +9,13 @@ abstract class NotedRichTextController extends ChangeNotifier {
     return QuillRichTextController();
   }
 
+  bool isAttributeToggled(NotedRichTextAttribute attribute);
+
   void setAttribute(NotedRichTextAttribute attribute, bool value);
 
-  bool isAttributeToggled(NotedRichTextAttribute attribute);
+  Color? getColor(NotedRichTextAttribute attribute);
+
+  void setColor(NotedRichTextAttribute attribute, Color? value);
 
   void insertEmbed(NotedRichTextEmbed embed);
 }

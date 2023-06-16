@@ -1,4 +1,8 @@
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
+import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/widget/common/rich_text/noted_rich_text_attributes.dart';
 import 'package:noted_app/widget/common/rich_text/noted_rich_text_controller.dart';
 
@@ -73,6 +77,25 @@ class QuillRichTextController extends NotedRichTextController {
   void setAttribute(NotedRichTextAttribute attribute, bool value) {
     Attribute quillAttribute = _getQuillAttribute(attribute);
     controller.formatSelection(!value ? Attribute.clone(quillAttribute, null) : quillAttribute);
+  }
+
+  @override
+  Color? getColor(NotedRichTextAttribute attribute) {
+    Style style = controller.getSelectionStyle();
+    Attribute quillAttribute = _getQuillAttribute(attribute);
+    dynamic currentValue = style.attributes[quillAttribute.key]?.value;
+
+    if (currentValue == null || currentValue is! String) {
+      return null;
+    }
+
+    return NotedColorExtensions.fromHex(currentValue);
+  }
+
+  @override
+  void setColor(NotedRichTextAttribute attribute, Color? value) {
+    Attribute quillAttribute = _getQuillAttribute(attribute);
+    controller.formatSelection(Attribute.clone(quillAttribute, value?.toHex()));
   }
 
   @override

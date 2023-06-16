@@ -28,7 +28,7 @@ class ColorSwitcher extends StatelessWidget {
           itemBuilder: (context, index) {
             ColorScheme colors = NotedColorSchemes.fromName(names[index]);
             return ColorSwitcherItem(
-              title: NotedStrings.settings[names[index].toString()] ?? 'unknown',
+              title: NotedStrings.settings[names[index].toString()] ?? NotedStrings.unknown,
               colors: colors,
               isSelected: state.colorSchemeName == names[index],
               onTap: () => cubit.updateColorScheme(names[index]),

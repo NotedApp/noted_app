@@ -28,7 +28,7 @@ class FontSwitcher extends StatelessWidget {
           itemBuilder: (context, index) {
             TextTheme font = NotedTextThemes.fromName(names[index]);
             return FontSwitcherItem(
-              title: NotedStrings.settings[names[index].toString()] ?? 'unknown',
+              title: NotedStrings.settings[names[index].toString()] ?? NotedStrings.unknown,
               font: font,
               isSelected: state.textThemeName == names[index],
               onTap: () => cubit.updateTextTheme(names[index]),
