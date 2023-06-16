@@ -89,7 +89,7 @@ class NotedDialog extends StatelessWidget {
 
       contents.add(
         Padding(
-          padding: const EdgeInsets.fromLTRB(12, 6, 12, 14),
+          padding: const EdgeInsets.fromLTRB(14, 6, 14, 14),
           child: Row(mainAxisAlignment: alignment, children: actions),
         ),
       );

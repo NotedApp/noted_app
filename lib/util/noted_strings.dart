@@ -17,5 +17,7 @@ class NotedStrings {
 
   static final Map<String, String> common = {
     'unknown': 'unknown',
+    'confirm': 'confirm',
+    'cancel': 'cancel',
   };
 }
