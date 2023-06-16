@@ -35,22 +35,38 @@ class QuillRichTextController extends NotedRichTextController {
       case NotedRichTextAttribute.h1:
       case NotedRichTextAttribute.h2:
       case NotedRichTextAttribute.h3:
-        return _isHeaderToggled(quillAttribute);
+        return _isMultiAttributeToggled(quillAttribute, Attribute.header.key);
+      case NotedRichTextAttribute.ol:
+      case NotedRichTextAttribute.ul:
+        return _isMultiAttributeToggled(quillAttribute, Attribute.list.key);
+      case NotedRichTextAttribute.taskList:
+        return _isTaskListToggled();
       default:
         Style style = controller.getSelectionStyle();
         return style.containsKey(quillAttribute.key);
     }
   }
 
-  bool _isHeaderToggled(Attribute headerAttribute) {
+  bool _isMultiAttributeToggled(Attribute toCheck, String key) {
     Style style = controller.getSelectionStyle();
-    Attribute? attribute = style.attributes[headerAttribute.key];
+    Attribute? attribute = style.attributes[key];
 
-    if (attribute == null || attribute.key != Attribute.header.key) {
+    if (attribute == null) {
       return false;
     }
 
-    return attribute.value == headerAttribute.value;
+    return attribute.value == toCheck.value;
+  }
+
+  bool _isTaskListToggled() {
+    Style style = controller.getSelectionStyle();
+    Attribute? attribute = style.attributes[Attribute.list.key];
+
+    if (attribute == null) {
+      return false;
+    }
+
+    return attribute.value == Attribute.unchecked.value || attribute.value == Attribute.checked.value;
   }
 
   @override
