@@ -45,7 +45,7 @@ class CatalogContent {
       CatalogBranch(title: 'input', children: [
         CatalogLeaf(title: 'text', page: const CatalogTextInputPage()),
         CatalogLeaf(title: 'misc', page: const CatalogMiscInputPage()),
-      ])
+      ]),
     ],
   );
 }
