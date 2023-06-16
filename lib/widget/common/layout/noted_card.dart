@@ -45,7 +45,6 @@ class NotedCard extends StatelessWidget {
           color: color ?? colors.background,
           elevation: 4,
           shape: shape,
-          borderOnForeground: true,
           margin: margin,
           child: child,
         ),

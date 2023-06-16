@@ -22,7 +22,7 @@ class NotedHeader extends StatelessWidget {
       children.add(const SizedBox(width: 16));
     }
 
-    if (title?.isNotEmpty == true) {
+    if (title?.isNotEmpty ?? false) {
       children.add(
         Expanded(
           child: Text(
@@ -45,10 +45,7 @@ class NotedHeader extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       width: double.infinity,
       height: 52,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: children,
-      ),
+      child: Row(children: children),
     );
   }
 }

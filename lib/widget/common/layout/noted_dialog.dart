@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/widget/common/button/noted_text_button.dart';
-import 'package:noted_app/widget/common/noted_widget_config.dart';
 
 class NotedDialog extends StatelessWidget {
   final String? title;
@@ -56,7 +55,6 @@ class NotedDialog extends StatelessWidget {
             label: leftActionText!,
             onPressed: onLeftActionPressed,
             type: NotedTextButtonType.simple,
-            size: NotedWidgetSize.medium,
           ),
         );
 
@@ -65,7 +63,6 @@ class NotedDialog extends StatelessWidget {
             label: rightActionText!,
             onPressed: onRightActionPressed,
             type: NotedTextButtonType.simple,
-            size: NotedWidgetSize.medium,
           ),
         );
       } else if (leftActionText != null) {
@@ -76,7 +73,6 @@ class NotedDialog extends StatelessWidget {
             label: leftActionText!,
             onPressed: onLeftActionPressed,
             type: NotedTextButtonType.simple,
-            size: NotedWidgetSize.medium,
           ),
         );
       } else {
@@ -87,7 +83,6 @@ class NotedDialog extends StatelessWidget {
             label: rightActionText!,
             onPressed: onRightActionPressed,
             type: NotedTextButtonType.simple,
-            size: NotedWidgetSize.medium,
           ),
         );
       }

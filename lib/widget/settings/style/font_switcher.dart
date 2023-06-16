@@ -10,7 +10,7 @@ import 'package:noted_app/widget/common/layout/noted_header_page.dart';
 import 'package:noted_app/widget/common/noted_widget_config.dart';
 
 class FontSwitcher extends StatelessWidget {
-  final List<NotedTextThemeName> names = NotedTextThemeName.values;
+  List<NotedTextThemeName> get names => NotedTextThemeName.values;
 
   const FontSwitcher({super.key});
 

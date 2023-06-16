@@ -11,7 +11,7 @@ class CatalogIconsPage extends StatelessWidget {
       crossAxisSpacing: 16,
       mainAxisSpacing: 16,
       crossAxisCount: 6,
-      children: NotedIcons.iconList.map((icon) => _buildIconSquare(icon)).toList(),
+      children: NotedIcons.iconList.map(_buildIconSquare).toList(),
     );
   }
 

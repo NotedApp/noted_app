@@ -37,10 +37,7 @@ class SettingsRow extends StatelessWidget {
         height: 54,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: children,
-          ),
+          child: Row(children: children),
         ),
       ),
     );

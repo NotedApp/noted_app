@@ -22,7 +22,7 @@ class NotedDropdownButton extends StatelessWidget {
       width: width,
       height: 32,
       child: DropdownButtonFormField<String>(
-        items: items?.map<DropdownMenuItem<String>>((e) => _buildMenuItem(e)).toList(),
+        items: items?.map<DropdownMenuItem<String>>(_buildMenuItem).toList(),
         dropdownColor: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         onChanged: onChanged,

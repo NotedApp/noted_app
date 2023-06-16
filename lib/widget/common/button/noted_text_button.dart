@@ -110,19 +110,16 @@ class _FilledTextButtonBuilder extends _NotedTextButtonBuilder {
         padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 13);
         iconSize = 24;
         borderRadius = 10;
-        break;
       case NotedWidgetSize.medium:
         textStyle = fonts.titleMedium?.copyWith(fontWeight: FontWeight.normal);
         padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 10);
         iconSize = 20;
         borderRadius = 10;
-        break;
       case NotedWidgetSize.small:
         textStyle = fonts.titleSmall?.copyWith(fontWeight: FontWeight.normal);
         padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 10);
         iconSize = 16;
         borderRadius = 8;
-        break;
     }
 
     OutlinedBorder shape = RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius));
@@ -164,19 +161,16 @@ class _OutlinedTextButtonBuilder extends _NotedTextButtonBuilder {
         padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 13);
         iconSize = 24;
         borderRadius = 10;
-        break;
       case NotedWidgetSize.medium:
         textStyle = fonts.titleMedium?.copyWith(fontWeight: FontWeight.normal);
         padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 10);
         iconSize = 20;
         borderRadius = 10;
-        break;
       case NotedWidgetSize.small:
         textStyle = fonts.titleSmall?.copyWith(fontWeight: FontWeight.normal);
         padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 10);
         iconSize = 16;
         borderRadius = 8;
-        break;
     }
 
     OutlinedBorder shape = RoundedRectangleBorder(
@@ -221,19 +215,16 @@ class _SimpleTextButtonBuilder extends _NotedTextButtonBuilder {
         padding = const EdgeInsets.symmetric(horizontal: 12, vertical: 10);
         iconSize = 24;
         borderRadius = 10;
-        break;
       case NotedWidgetSize.medium:
         textStyle = fonts.titleMedium;
         padding = const EdgeInsets.symmetric(horizontal: 12, vertical: 8);
         iconSize = 20;
         borderRadius = 10;
-        break;
       case NotedWidgetSize.small:
         textStyle = fonts.titleSmall;
         padding = const EdgeInsets.symmetric(horizontal: 12, vertical: 6);
         iconSize = 16;
         borderRadius = 8;
-        break;
     }
 
     OutlinedBorder shape = RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius));

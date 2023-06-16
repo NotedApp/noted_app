@@ -34,7 +34,7 @@ class CatalogRenderer extends StatelessWidget {
 
   Widget _buildBranch(CatalogBranch branch, BuildContext context) {
     return ListView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 20),
+      padding: const EdgeInsets.symmetric(vertical: 20),
       itemBuilder: (context, index) => _buildBranchRow(context, branch.children[index]),
       itemCount: branch.children.length,
     );
@@ -45,7 +45,7 @@ class CatalogRenderer extends StatelessWidget {
       onTap: () => _navigateToNode(context, node),
       title: Text(node.title, style: Theme.of(context).textTheme.bodyLarge),
       trailing: node is CatalogBranch ? null : const Icon(NotedIcons.chevronRight),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20),
     );
   }
 

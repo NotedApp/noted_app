@@ -10,7 +10,7 @@ import 'package:noted_app/widget/common/layout/noted_header_page.dart';
 import 'package:noted_app/widget/common/noted_widget_config.dart';
 
 class ColorSwitcher extends StatelessWidget {
-  final List<NotedColorSchemeName> names = NotedColorSchemeName.values;
+  List<NotedColorSchemeName> get names => NotedColorSchemeName.values;
 
   const ColorSwitcher({super.key});
 

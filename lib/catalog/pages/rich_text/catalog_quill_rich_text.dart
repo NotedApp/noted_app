@@ -30,7 +30,7 @@ class _CatalogQuillRichTextState extends State<CatalogQuillRichText> {
     List<CatalogListItem> children = [
       CatalogListItem(
         type: CatalogListItemType.column,
-        label: "editor large",
+        label: 'editor large',
         child: SizedBox(
           height: 320,
           child: NotedRichTextEditor.quill(
