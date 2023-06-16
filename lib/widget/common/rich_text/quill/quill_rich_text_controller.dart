@@ -30,8 +30,27 @@ class QuillRichTextController extends NotedRichTextController {
   @override
   bool isAttributeToggled(NotedRichTextAttribute attribute) {
     Attribute quillAttribute = _getQuillAttribute(attribute);
+
+    switch (attribute) {
+      case NotedRichTextAttribute.h1:
+      case NotedRichTextAttribute.h2:
+      case NotedRichTextAttribute.h3:
+        return _isHeaderToggled(quillAttribute);
+      default:
+        Style style = controller.getSelectionStyle();
+        return style.containsKey(quillAttribute.key);
+    }
+  }
+
+  bool _isHeaderToggled(Attribute headerAttribute) {
     Style style = controller.getSelectionStyle();
-    return style.containsKey(quillAttribute.key);
+    Attribute? attribute = style.attributes[headerAttribute.key];
+
+    if (attribute == null || attribute.key != Attribute.header.key) {
+      return false;
+    }
+
+    return attribute.value == headerAttribute.value;
   }
 
   @override

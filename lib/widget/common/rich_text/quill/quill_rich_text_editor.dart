@@ -20,12 +20,12 @@ class QuillRichTextEditor extends NotedRichTextEditor {
     QuillController quillController = (controller as QuillRichTextController).controller;
     return QuillEditor(
       controller: quillController,
-      focusNode: focusNode,
+      focusNode: super.focusNode,
       scrollController: ScrollController(),
       scrollable: true,
       padding: EdgeInsets.zero,
       autoFocus: false,
-      readOnly: readonly,
+      readOnly: super.readonly,
       expands: true,
     );
   }
