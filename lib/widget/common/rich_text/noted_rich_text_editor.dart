@@ -4,20 +4,29 @@ import 'package:noted_app/widget/common/rich_text/quill/quill_rich_text_editor.d
 
 abstract class NotedRichTextEditor extends StatelessWidget {
   final NotedRichTextController controller;
-  final FocusNode focusNode;
+  final FocusNode? focusNode;
+  final String? placeholder;
   final bool readonly;
 
   const NotedRichTextEditor({
     required this.controller,
-    required this.focusNode,
+    this.focusNode,
+    this.placeholder,
     this.readonly = false,
     super.key,
   });
 
-  factory NotedRichTextEditor.quill(NotedRichTextController controller, FocusNode focusNode) {
+  factory NotedRichTextEditor.quill({
+    required NotedRichTextController controller,
+    FocusNode? focusNode,
+    String? placeholder,
+    bool readonly = false,
+  }) {
     return QuillRichTextEditor(
       controller: controller,
       focusNode: focusNode,
+      placeholder: placeholder,
+      readonly: readonly,
     );
   }
 }

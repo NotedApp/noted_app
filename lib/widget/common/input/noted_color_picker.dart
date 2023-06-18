@@ -9,9 +9,15 @@ import 'package:noted_app/widget/common/noted_widget_config.dart';
 
 class NotedColorPicker extends StatefulWidget {
   final Color initialColor;
+  final String? title;
   final VoidCallback? onResetDefault;
 
-  const NotedColorPicker({required this.initialColor, this.onResetDefault, super.key});
+  const NotedColorPicker({
+    required this.initialColor,
+    this.title,
+    this.onResetDefault,
+    super.key,
+  });
 
   @override
   State<StatefulWidget> createState() => _NotedColorPickerState();
@@ -71,6 +77,7 @@ class _NotedColorPickerState extends State<NotedColorPicker> {
     }
 
     return NotedDialog(
+      title: widget.title,
       leftActionText: NotedStrings.getString(NotedStringDomain.common, 'confirm'),
       onLeftActionPressed: () => Navigator.of(context).pop(selectedColor),
       rightActionText: NotedStrings.getString(NotedStringDomain.common, 'cancel'),

@@ -99,6 +99,25 @@ class QuillRichTextController extends NotedRichTextController {
   }
 
   @override
+  String? getLink() {
+    Style style = controller.getSelectionStyle();
+    Attribute quillAttribute = _getQuillAttribute(NotedRichTextAttribute.link);
+    dynamic currentValue = style.attributes[quillAttribute.key]?.value;
+
+    if (currentValue == null || currentValue is! String) {
+      return null;
+    }
+
+    return currentValue;
+  }
+
+  @override
+  void setLink(String? value) {
+    Attribute quillAttribute = _getQuillAttribute(NotedRichTextAttribute.link);
+    controller.formatSelection(Attribute.clone(quillAttribute, value?.isNotEmpty ?? false ? value : null));
+  }
+
+  @override
   void insertEmbed(NotedRichTextEmbed embed) {
     // TODO: implement insertEmbed
   }

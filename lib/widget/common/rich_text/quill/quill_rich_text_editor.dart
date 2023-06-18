@@ -6,7 +6,8 @@ import 'package:noted_app/widget/common/rich_text/quill/quill_rich_text_controll
 class QuillRichTextEditor extends NotedRichTextEditor {
   const QuillRichTextEditor({
     required super.controller,
-    required super.focusNode,
+    super.focusNode,
+    super.placeholder,
     super.readonly,
     super.key,
   });
@@ -17,16 +18,21 @@ class QuillRichTextEditor extends NotedRichTextEditor {
       throw ArgumentError('A quill rich text editor must have a QuillController as its controller.');
     }
 
+    ThemeData theme = Theme.of(context);
     QuillController quillController = (controller as QuillRichTextController).controller;
+
     return QuillEditor(
       controller: quillController,
-      focusNode: focusNode,
+      focusNode: focusNode ?? FocusNode(),
       scrollController: ScrollController(),
       scrollable: true,
       padding: EdgeInsets.zero,
       autoFocus: false,
       readOnly: readonly,
       expands: true,
+      placeholder: placeholder,
+      showCursor: !readonly,
+      keyboardAppearance: theme.brightness,
     );
   }
 }

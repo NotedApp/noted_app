@@ -34,8 +34,20 @@ class _CatalogQuillRichTextState extends State<CatalogQuillRichText> {
         child: SizedBox(
           height: 320,
           child: NotedRichTextEditor.quill(
-            _textController,
-            _focusNode,
+            controller: _textController,
+            focusNode: _focusNode,
+            placeholder: 'enter some rich text',
+          ),
+        ),
+      ),
+      CatalogListItem(
+        type: CatalogListItemType.column,
+        label: 'editor readonly',
+        child: SizedBox(
+          height: 320,
+          child: NotedRichTextEditor.quill(
+            controller: _textController,
+            readonly: true,
           ),
         ),
       ),
