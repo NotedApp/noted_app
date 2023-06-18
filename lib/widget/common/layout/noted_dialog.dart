@@ -52,7 +52,7 @@ class NotedDialog extends StatelessWidget {
 
         actions.add(
           NotedTextButton(
-            label: leftActionText!,
+            label: leftActionText,
             onPressed: onLeftActionPressed,
             type: NotedTextButtonType.simple,
           ),
@@ -60,7 +60,7 @@ class NotedDialog extends StatelessWidget {
 
         actions.add(
           NotedTextButton(
-            label: rightActionText!,
+            label: rightActionText,
             onPressed: onRightActionPressed,
             type: NotedTextButtonType.simple,
           ),
@@ -70,7 +70,7 @@ class NotedDialog extends StatelessWidget {
 
         actions.add(
           NotedTextButton(
-            label: leftActionText!,
+            label: leftActionText,
             onPressed: onLeftActionPressed,
             type: NotedTextButtonType.simple,
           ),
@@ -80,7 +80,7 @@ class NotedDialog extends StatelessWidget {
 
         actions.add(
           NotedTextButton(
-            label: rightActionText!,
+            label: rightActionText,
             onPressed: onRightActionPressed,
             type: NotedTextButtonType.simple,
           ),

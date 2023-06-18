@@ -9,7 +9,7 @@ enum NotedTextButtonType {
 }
 
 class NotedTextButton extends StatelessWidget {
-  final String label;
+  final String? label;
   final NotedTextButtonType type;
   final NotedWidgetSize size;
   final NotedWidgetColor? color;
@@ -66,14 +66,14 @@ class NotedTextButton extends StatelessWidget {
         onLongPress: onLongPress,
         style: style,
         icon: Icon(icon),
-        label: Text(label),
+        label: Text(label ?? ''),
       );
     } else {
       return ElevatedButton(
         onPressed: onPressed,
         onLongPress: onLongPress,
         style: style,
-        child: Text(label),
+        child: Text(label ?? ''),
       );
     }
   }

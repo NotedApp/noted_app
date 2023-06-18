@@ -29,6 +29,7 @@ class _NotedColorPickerState extends State<NotedColorPicker> {
   @override
   Widget build(BuildContext context) {
     ColorScheme colors = Theme.of(context).colorScheme;
+    VoidCallback? resetDefault = widget.onResetDefault;
 
     List<Widget> children = [
       GridView.count(
@@ -49,7 +50,7 @@ class _NotedColorPickerState extends State<NotedColorPicker> {
       ),
     ];
 
-    if (widget.onResetDefault != null) {
+    if (resetDefault != null) {
       children.add(
         Padding(
           padding: const EdgeInsets.only(top: 12),
@@ -60,7 +61,7 @@ class _NotedColorPickerState extends State<NotedColorPicker> {
               type: NotedTextButtonType.outlined,
               size: NotedWidgetSize.small,
               onPressed: () {
-                widget.onResetDefault!();
+                resetDefault();
                 Navigator.of(context).pop();
               },
             ),

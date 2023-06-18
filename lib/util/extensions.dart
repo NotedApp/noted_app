@@ -20,7 +20,13 @@ extension NotedColorExtensions on Color {
     }
 
     buffer.write(hexString.replaceFirst('#', ''));
-    return Color(int.parse(buffer.toString(), radix: 16));
+    int? value = int.tryParse(buffer.toString(), radix: 16);
+
+    if (value == null) {
+      return black;
+    }
+
+    return Color(value);
   }
 
   String toHex({bool withTag = true}) {
