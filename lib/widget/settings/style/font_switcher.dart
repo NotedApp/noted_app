@@ -10,7 +10,7 @@ import 'package:noted_app/widget/common/layout/noted_header_page.dart';
 import 'package:noted_app/widget/common/noted_widget_config.dart';
 
 class FontSwitcher extends StatelessWidget {
-  final List<NotedTextThemeName> names = NotedTextThemeName.values;
+  List<NotedTextThemeName> get names => NotedTextThemeName.values;
 
   const FontSwitcher({super.key});
 
@@ -19,7 +19,7 @@ class FontSwitcher extends StatelessWidget {
     ThemeCubit cubit = context.read<ThemeCubit>();
 
     return NotedHeaderPage(
-      title: NotedStrings.settings['fontTitle'],
+      title: NotedStrings.getString(NotedStringDomain.settings, 'fontTitle'),
       hasBackButton: true,
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) => ListView.separated(
@@ -28,7 +28,7 @@ class FontSwitcher extends StatelessWidget {
           itemBuilder: (context, index) {
             TextTheme font = NotedTextThemes.fromName(names[index]);
             return FontSwitcherItem(
-              title: NotedStrings.settings[names[index].toString()] ?? 'unknown',
+              title: NotedStrings.getString(NotedStringDomain.settings, names[index].toString()),
               font: font,
               isSelected: state.textThemeName == names[index],
               onTap: () => cubit.updateTextTheme(names[index]),

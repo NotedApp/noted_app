@@ -29,7 +29,6 @@ class NotedLoadingIndicator extends StatelessWidget {
     );
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         labelText,
         const SizedBox(height: 16),

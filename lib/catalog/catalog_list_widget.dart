@@ -13,10 +13,10 @@ class CatalogListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 20),
+      padding: const EdgeInsets.symmetric(vertical: 20),
       itemBuilder: (context, index) => children[index],
       separatorBuilder: (context, index) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
+        padding: const EdgeInsets.symmetric(vertical: 16),
         child: Divider(color: Theme.of(context).colorScheme.tertiary),
       ),
       itemCount: children.length,
@@ -33,7 +33,7 @@ class CatalogListItem extends StatelessWidget {
   const CatalogListItem({
     this.type = CatalogListItemType.row,
     required this.label,
-    this.padding = const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+    this.padding = const EdgeInsets.symmetric(horizontal: 20),
     required this.child,
     super.key,
   });

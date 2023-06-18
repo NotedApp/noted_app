@@ -1,29 +1,52 @@
-# This file configures the analyzer, which statically analyzes Dart code to
-# check for errors, warnings, and lints.
-#
-# The issues identified by the analyzer are surfaced in the UI of Dart-enabled
-# IDEs (https://dart.dev/tools#ides-and-editors). The analyzer can also be
-# invoked from the command line by running `flutter analyze`.
-
-# The following line activates a set of recommended lints for Flutter apps,
-# packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
 
 linter:
-  # The lint rules applied to this project can be customized in the
-  # section below to disable rules from the `package:flutter_lints/flutter.yaml`
-  # included above or to enable additional rules. A list of all available lints
-  # and their documentation is published at
-  # https://dart-lang.github.io/linter/lints/index.html.
-  #
-  # Instead of disabling a lint rule for the entire project in the
-  # section below, it can also be suppressed for a single line of code
-  # or a specific dart file by using the `// ignore: name_of_lint` and
-  # `// ignore_for_file: name_of_lint` syntax on the line or in the file
-  # producing the lint.
   rules:
-    # avoid_print: false  # Uncomment to disable the `avoid_print` rule
-    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
+    - always_use_package_imports
+    - cancel_subscriptions
+    - close_sinks
+    - invalid_case_patterns
+    - literal_only_boolean_expressions
+    - no_adjacent_strings_in_list
+    - prefer_single_quotes
+    - test_types_in_equals
+    - throw_in_finally
+    - unnecessary_statements
 
-# Additional information about this file can be found at
-# https://dart.dev/guides/language/analysis-options
+    - always_declare_return_types
+    - always_put_control_body_on_new_line
+    - avoid_annotating_with_dynamic
+    - avoid_double_and_int_checks
+    - avoid_equals_and_hash_code_on_mutable_classes
+    - avoid_field_initializers_in_const_classes
+    - avoid_final_parameters
+    - avoid_multiple_declarations_per_line
+    - avoid_redundant_argument_values
+    - cast_nullable_to_non_nullable
+    - conditional_uri_does_not_exist
+    - deprecated_consistency
+    - do_not_use_environment
+    - join_return_with_assignment
+    - matching_super_parameters
+    - missing_whitespace_between_adjacent_strings
+    - no_literal_bool_comparisons
+    - noop_primitive_operations
+    - only_throw_errors
+    - parameter_assignments
+    - prefer_foreach
+    - prefer_null_aware_method_calls
+    - sized_box_shrink_expand
+    - sort_unnamed_constructors_first
+    - unnecessary_await_in_return
+    - unnecessary_breaks
+    - unnecessary_lambdas
+    - unnecessary_null_aware_operator_on_extension_on_nullable
+    - unnecessary_null_checks
+    - unnecessary_parenthesis
+    - unnecessary_to_list_in_spreads
+    - use_colored_box
+    - use_decorated_box
+    - use_enums
+    - use_if_null_to_convert_nulls_to_bools
+    - use_is_even_rather_than_modulo
+    - use_named_constants

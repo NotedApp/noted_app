@@ -160,7 +160,7 @@ class _TitleTextFieldBuilder extends _NotedTextFieldBuilder {
   @override
   InputDecoration decorationOf(ColorScheme scheme) {
     return const InputDecoration(
-      contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 5),
+      contentPadding: EdgeInsets.symmetric(vertical: 5),
       border: OutlineInputBorder(
         borderSide: BorderSide.none,
       ),

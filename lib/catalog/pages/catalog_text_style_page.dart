@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:noted_app/catalog/catalog_list_widget.dart';
 
 class CatalogTextStylePage extends StatelessWidget {
-  final TextStyle defaultStyle = const TextStyle(
-    fontFamily: 'Poppins',
-    fontSize: 12,
-    height: 16 / 12,
-    fontWeight: FontWeight.normal,
-    color: Colors.red,
-  );
+  TextStyle get defaultStyle => const TextStyle(
+        fontFamily: 'Poppins',
+        fontSize: 12,
+        height: 16 / 12,
+        fontWeight: FontWeight.normal,
+        color: Colors.red,
+      );
 
   const CatalogTextStylePage({super.key});
 

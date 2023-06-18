@@ -31,7 +31,6 @@ class NotedSnackBar {
 
     Row contentRow = Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         content,
         Padding(

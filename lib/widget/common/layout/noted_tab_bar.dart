@@ -46,7 +46,7 @@ class _NotedTab extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 5),
         child: Container(
           height: 36,
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           decoration: BoxDecoration(
             border: Border.all(color: theme.colorScheme.onBackground),
             borderRadius: BorderRadius.circular(18),

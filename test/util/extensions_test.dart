@@ -1,8 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:noted_app/theme/custom_colors.dart';
 import 'package:noted_app/util/extensions.dart';
 
 void main() {
+  group('Color Extensions', () {
+    test('color get black and white returns an appropriate surface color', () {
+      expect(black.getBW(), white);
+      expect(white.getBW(), black);
+      expect(red800.getBW(), white);
+      expect(yellow200.getBW(), black);
+    });
+
+    test('color can be built from a hex string', () {
+      expect(NotedColorExtensions.fromHex('#FF000000'), black);
+      expect(NotedColorExtensions.fromHex('#FFFFFFFF'), white);
+      expect(NotedColorExtensions.fromHex('80000000'), black.withOpacity(0.5));
+      expect(NotedColorExtensions.fromHex('F5F5F5'), grey100);
+    });
+
+    test('color can converted to a hex string', () {
+      expect(black.toHex(), '#ff000000');
+      expect(white.toHex(withTag: false), 'ffffffff');
+      expect(black.withOpacity(0.5).toHex(), '#80000000');
+      expect(grey100.toHex(withTag: false), 'fff5f5f5');
+    });
+  });
+
   group('MaterialState Extensions', () {
     test('color material state resolves in all cases', () {
       MaterialStateProperty property = Colors.red.materialState();

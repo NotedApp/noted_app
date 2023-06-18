@@ -1,8 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:noted_app/theme/custom_colors.dart';
 
 extension NotedColorExtensions on Color {
   MaterialStateProperty<Color> materialState() {
     return MaterialStatePropertyAll(this);
+  }
+
+  /// Returns black or white, depending on the intensity of the color. This value can be used to generate a dynamic on
+  /// surface color for the given color.
+  Color getBW() {
+    return (red * 0.3 + green * 0.6 + blue * 0.1) > 186 ? black : white;
+  }
+
+  static Color fromHex(String hexString) {
+    StringBuffer buffer = StringBuffer();
+
+    if (hexString.length == 6 || hexString.length == 7) {
+      buffer.write('ff');
+    }
+
+    buffer.write(hexString.replaceFirst('#', ''));
+    int? value = int.tryParse(buffer.toString(), radix: 16);
+
+    if (value == null) {
+      return black;
+    }
+
+    return Color(value);
+  }
+
+  String toHex({bool withTag = true}) {
+    StringBuffer buffer = StringBuffer();
+
+    if (withTag) {
+      buffer.write('#');
+    }
+
+    buffer.write(alpha.toRadixString(16).padLeft(2, '0'));
+    buffer.write(red.toRadixString(16).padLeft(2, '0'));
+    buffer.write(green.toRadixString(16).padLeft(2, '0'));
+    buffer.write(blue.toRadixString(16).padLeft(2, '0'));
+    return buffer.toString();
   }
 }
 
