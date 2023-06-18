@@ -19,7 +19,7 @@ class ColorSwitcher extends StatelessWidget {
     ThemeCubit cubit = context.read<ThemeCubit>();
 
     return NotedHeaderPage(
-      title: NotedStrings.settings['colorTitle'],
+      title: NotedStrings.getString(NotedStringDomain.settings, 'colorTitle'),
       hasBackButton: true,
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) => ListView.separated(
@@ -28,7 +28,7 @@ class ColorSwitcher extends StatelessWidget {
           itemBuilder: (context, index) {
             ColorScheme colors = NotedColorSchemes.fromName(names[index]);
             return ColorSwitcherItem(
-              title: NotedStrings.settings[names[index].toString()] ?? NotedStrings.unknown,
+              title: NotedStrings.getString(NotedStringDomain.settings, names[index].toString()),
               colors: colors,
               isSelected: state.colorSchemeName == names[index],
               onTap: () => cubit.updateColorScheme(names[index]),

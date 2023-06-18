@@ -57,7 +57,7 @@ class _NotedColorPickerState extends State<NotedColorPicker> {
           child: SizedBox(
             width: double.infinity,
             child: NotedTextButton(
-              label: NotedStrings.settings['colorDefault'] ?? NotedStrings.unknown,
+              label: NotedStrings.getString(NotedStringDomain.settings, 'colorDefault'),
               type: NotedTextButtonType.outlined,
               size: NotedWidgetSize.small,
               onPressed: () {
@@ -71,9 +71,9 @@ class _NotedColorPickerState extends State<NotedColorPicker> {
     }
 
     return NotedDialog(
-      leftActionText: NotedStrings.common['confirm'],
+      leftActionText: NotedStrings.getString(NotedStringDomain.common, 'confirm'),
       onLeftActionPressed: () => Navigator.of(context).pop(selectedColor),
-      rightActionText: NotedStrings.common['cancel'],
+      rightActionText: NotedStrings.getString(NotedStringDomain.common, 'cancel'),
       onRightActionPressed: () => Navigator.of(context).pop(),
       child: Column(children: children),
     );

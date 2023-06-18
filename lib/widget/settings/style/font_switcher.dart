@@ -19,7 +19,7 @@ class FontSwitcher extends StatelessWidget {
     ThemeCubit cubit = context.read<ThemeCubit>();
 
     return NotedHeaderPage(
-      title: NotedStrings.settings['fontTitle'],
+      title: NotedStrings.getString(NotedStringDomain.settings, 'fontTitle'),
       hasBackButton: true,
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) => ListView.separated(
@@ -28,7 +28,7 @@ class FontSwitcher extends StatelessWidget {
           itemBuilder: (context, index) {
             TextTheme font = NotedTextThemes.fromName(names[index]);
             return FontSwitcherItem(
-              title: NotedStrings.settings[names[index].toString()] ?? NotedStrings.unknown,
+              title: NotedStrings.getString(NotedStringDomain.settings, names[index].toString()),
               font: font,
               isSelected: state.textThemeName == names[index],
               onTap: () => cubit.updateTextTheme(names[index]),

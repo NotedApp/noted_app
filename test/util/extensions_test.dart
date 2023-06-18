@@ -3,6 +3,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:noted_app/util/extensions.dart';
 
 void main() {
+  group('Color Extensions', () {
+    test('color get black and white returns an appropriate surface color', () {});
+  });
+
   group('MaterialState Extensions', () {
     test('color material state resolves in all cases', () {
       MaterialStateProperty property = Colors.red.materialState();
