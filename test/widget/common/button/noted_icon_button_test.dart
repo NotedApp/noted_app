@@ -3,7 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:noted_app/widget/common/noted_library.dart';
 
-import '../../../mocks/common.dart';
+import '../../../helpers/common.dart';
+import '../../../helpers/test_wrapper.dart';
 
 void main() {
   group('Noted Icon Button', () {
@@ -14,8 +15,7 @@ void main() {
       const Key largeKey = Key('large');
 
       await tester.pumpWidget(
-        Directionality(
-          textDirection: TextDirection.ltr,
+        TestWrapper(
           child: Column(
             children: [
               NotedIconButton(
@@ -69,8 +69,7 @@ void main() {
       const Key largeKey = Key('large');
 
       await tester.pumpWidget(
-        Directionality(
-          textDirection: TextDirection.ltr,
+        TestWrapper(
           child: Column(
             children: [
               NotedIconButton(
