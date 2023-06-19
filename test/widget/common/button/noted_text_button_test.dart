@@ -23,13 +23,11 @@ void main() {
                 onPressed: onPressed,
               ),
               NotedTextButton(
-                icon: NotedIcons.h2,
                 label: 'simple medium',
                 type: NotedTextButtonType.simple,
                 onPressed: onPressed,
               ),
               NotedTextButton(
-                icon: NotedIcons.h3,
                 label: 'simple large',
                 type: NotedTextButtonType.simple,
                 size: NotedWidgetSize.large,
@@ -47,6 +45,7 @@ void main() {
       expect(smallFinder, findsOneWidget);
       expect(mediumFinder, findsOneWidget);
       expect(largeFinder, findsOneWidget);
+      expect(find.byIcon(NotedIcons.h1), findsOneWidget);
 
       await tester.tap(smallFinder);
       await tester.tap(mediumFinder);
@@ -63,7 +62,6 @@ void main() {
           child: Column(
             children: [
               NotedTextButton(
-                icon: NotedIcons.h1,
                 label: 'filled small',
                 type: NotedTextButtonType.filled,
                 size: NotedWidgetSize.small,
@@ -76,7 +74,6 @@ void main() {
                 onPressed: onPressed,
               ),
               NotedTextButton(
-                icon: NotedIcons.h3,
                 label: 'filled large',
                 type: NotedTextButtonType.filled,
                 size: NotedWidgetSize.large,
@@ -94,6 +91,7 @@ void main() {
       expect(smallFinder, findsOneWidget);
       expect(mediumFinder, findsOneWidget);
       expect(largeFinder, findsOneWidget);
+      expect(find.byIcon(NotedIcons.h2), findsOneWidget);
 
       await tester.tap(smallFinder);
       await tester.tap(mediumFinder);
@@ -110,14 +108,12 @@ void main() {
           child: Column(
             children: [
               NotedTextButton(
-                icon: NotedIcons.h1,
                 label: 'outlined small',
                 type: NotedTextButtonType.outlined,
                 size: NotedWidgetSize.small,
                 onPressed: onPressed,
               ),
               NotedTextButton(
-                icon: NotedIcons.h2,
                 label: 'outlined medium',
                 type: NotedTextButtonType.outlined,
                 onPressed: onPressed,
@@ -141,6 +137,7 @@ void main() {
       expect(smallFinder, findsOneWidget);
       expect(mediumFinder, findsOneWidget);
       expect(largeFinder, findsOneWidget);
+      expect(find.byIcon(NotedIcons.h3), findsOneWidget);
 
       await tester.tap(smallFinder);
       await tester.tap(mediumFinder);
