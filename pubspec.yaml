@@ -22,6 +22,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  noted_lints:
+    path: ../noted_lints
+
   flutter_lints: ^2.0.0
   bloc_test: ^9.1.1
 
