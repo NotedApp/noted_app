@@ -477,6 +477,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.2"
+  noted_lints:
+    dependency: "direct dev"
+    description:
+      path: "."
+      ref: master
+      resolved-ref: "18456db1668349e6ffc7a2b551edfb856c1754c2"
+      url: "https://github.com/NotedApp/noted_lints.git"
+    source: git
+    version: "1.0.0"
   package_config:
     dependency: transitive
     description:
