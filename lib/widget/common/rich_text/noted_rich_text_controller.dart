@@ -17,5 +17,9 @@ abstract class NotedRichTextController extends ChangeNotifier {
 
   void setColor(NotedRichTextAttribute attribute, Color? value);
 
+  String? getLink();
+
+  void setLink(String? value);
+
   void insertEmbed(NotedRichTextEmbed embed);
 }

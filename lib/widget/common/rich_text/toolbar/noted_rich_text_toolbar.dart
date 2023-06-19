@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:noted_app/widget/common/rich_text/noted_rich_text_attributes.dart';
 import 'package:noted_app/widget/common/rich_text/noted_rich_text_controller.dart';
 import 'package:noted_app/widget/common/rich_text/toolbar/noted_rich_text_color_button.dart';
+import 'package:noted_app/widget/common/rich_text/toolbar/noted_rich_text_link_button.dart';
 import 'package:noted_app/widget/common/rich_text/toolbar/noted_rich_text_toggle_button.dart';
 
 class NotedRichTextToolbar extends StatelessWidget {
@@ -90,6 +91,10 @@ class NotedRichTextToolbar extends StatelessWidget {
           NotedRichTextColorButton(
             controller: controller,
             attribute: NotedRichTextAttribute.textBackground,
+            colors: colors,
+          ),
+          NotedRichTextLinkButton(
+            controller: controller,
             colors: colors,
           ),
         ],

@@ -9,6 +9,8 @@ void main() {
       expect(NotedStrings.getString(NotedStringDomain.common, 'random'), 'unknown');
 
       expect(NotedStrings.getString(NotedStringDomain.settings, 'colorTitle'), 'colors');
+
+      expect(NotedStrings.getString(NotedStringDomain.editor, 'linkPickerTitle'), 'link to');
     });
   });
 }

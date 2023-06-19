@@ -1,6 +1,7 @@
 enum NotedStringDomain {
-  settings,
   common,
+  settings,
+  editor,
 }
 
 // TODO: update this to use i18n.
@@ -26,12 +27,19 @@ class NotedStrings {
     'NotedTextThemeName.roboto': 'roboto',
     'NotedTextThemeName.lora': 'lora',
     'NotedTextThemeName.vollkorn': 'vollkorn',
+    'linkPickerHint': ''
+  };
+
+  static final Map<String, String> _editor = {
+    'linkPickerTitle': 'link to',
   };
 
   static String getString(NotedStringDomain domain, String key) {
     return switch (domain) {
-      NotedStringDomain.common => _common[key] ?? _unknown,
-      NotedStringDomain.settings => _settings[key] ?? _unknown,
-    };
+          NotedStringDomain.common => _common[key],
+          NotedStringDomain.settings => _settings[key],
+          NotedStringDomain.editor => _editor[key],
+        } ??
+        _unknown;
   }
 }
