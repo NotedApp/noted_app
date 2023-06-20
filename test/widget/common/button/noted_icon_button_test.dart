@@ -51,6 +51,10 @@ void main() {
       expect(mediumFinder, findsOneWidget);
       expect(largeFinder, findsOneWidget);
 
+      expect(find.byIcon(NotedIcons.h1), findsOneWidget);
+      expect(find.byIcon(NotedIcons.h2), findsOneWidget);
+      expect(find.byIcon(NotedIcons.h3), findsOneWidget);
+
       expect(tester.getSize(smallFinder), equals(const Size.square(36)));
       expect(tester.getSize(mediumFinder), equals(const Size.square(44)));
       expect(tester.getSize(largeFinder), equals(const Size.square(54)));
@@ -104,6 +108,10 @@ void main() {
       expect(smallFinder, findsOneWidget);
       expect(mediumFinder, findsOneWidget);
       expect(largeFinder, findsOneWidget);
+
+      expect(find.byIcon(NotedIcons.h1), findsOneWidget);
+      expect(find.byIcon(NotedIcons.h2), findsOneWidget);
+      expect(find.byIcon(NotedIcons.h3), findsOneWidget);
 
       expect(tester.getSize(smallFinder), equals(const Size.square(44)));
       expect(tester.getSize(mediumFinder), equals(const Size.square(54)));
