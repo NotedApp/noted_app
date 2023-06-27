@@ -27,7 +27,7 @@ class _NotedStringPickerState extends State<NotedStringPicker> {
     return NotedDialog(
       title: widget.title,
       leftActionText: NotedStrings.getString(NotedStringDomain.common, 'confirm'),
-      onLeftActionPressed: () => Navigator.of(context).pop(controller.text.isNotEmpty ? controller.text : null),
+      onLeftActionPressed: () => Navigator.of(context).pop(controller.text),
       rightActionText: NotedStrings.getString(NotedStringDomain.common, 'cancel'),
       onRightActionPressed: () => Navigator.of(context).pop(),
       child: NotedTextField(

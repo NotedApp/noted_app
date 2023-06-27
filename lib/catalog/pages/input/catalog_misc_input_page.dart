@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:noted_app/catalog/catalog_list_widget.dart';
 import 'package:noted_app/theme/custom_colors.dart';
 import 'package:noted_app/widget/common/button/noted_text_button.dart';
-import 'package:noted_app/widget/common/input/noted_color_picker.dart';
-import 'package:noted_app/widget/common/input/noted_dropdown_button.dart';
+import 'package:noted_app/widget/common/input/input.dart';
 
 class CatalogMiscInputPage extends StatefulWidget {
   const CatalogMiscInputPage({super.key});
@@ -20,6 +19,8 @@ class _CatalogMiscInputPageState extends State<CatalogMiscInputPage> {
   String? dropdownValue1;
 
   Color selectedColor = black;
+
+  String selectedString = '';
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +56,14 @@ class _CatalogMiscInputPageState extends State<CatalogMiscInputPage> {
           onPressed: launchColorPicker,
         ),
       ),
+      CatalogListItem(
+        label: 'string picker',
+        child: NotedTextButton(
+          label: 'launch',
+          type: NotedTextButtonType.filled,
+          onPressed: launchStringPicker,
+        ),
+      ),
     ];
 
     return CatalogListWidget(children);
@@ -65,6 +74,14 @@ class _CatalogMiscInputPageState extends State<CatalogMiscInputPage> {
 
     if (updated != null) {
       setState(() => selectedColor = updated);
+    }
+  }
+
+  Future<void> launchStringPicker() async {
+    String? updated = await showStringPicker(context, selectedString, title: 'string picker');
+
+    if (updated != null) {
+      setState(() => selectedString = updated);
     }
   }
 }
