@@ -4,7 +4,7 @@ import 'package:mockito/mockito.dart';
 import 'package:noted_app/widget/common/noted_library.dart';
 
 import '../../../helpers/common.dart';
-import '../../../helpers/test_wrapper.dart';
+import '../../test_wrapper.dart';
 
 void main() {
   group('Noted Icon Button', () {

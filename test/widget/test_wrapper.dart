@@ -7,9 +7,8 @@ class TestWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.ltr,
-      child: Material(
+    return MaterialApp(
+      home: Material(
         child: child,
       ),
     );
