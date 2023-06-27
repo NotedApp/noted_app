@@ -42,7 +42,7 @@ void main() {
       expect(result, completion(equals('test')));
     });
 
-    testWidgets('color picker cancels selecting a color', (tester) async {
+    testWidgets('string picker cancels selecting a color', (tester) async {
       Future<String?> result = Future.value('');
 
       await tester.pumpWidget(

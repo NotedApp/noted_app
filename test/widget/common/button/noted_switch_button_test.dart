@@ -12,8 +12,8 @@ void main() {
       const Key trueKey = Key('true');
       const Key falseKey = Key('false');
 
-      MockCallback<bool> trueCallback = MockCallback<bool>();
-      MockCallback<bool> falseCallback = MockCallback<bool>();
+      MockCallback<bool> trueCallback = MockCallback();
+      MockCallback<bool> falseCallback = MockCallback();
 
       await tester.pumpWidget(
         TestWrapper(

@@ -9,7 +9,7 @@ import '../../test_wrapper.dart';
 void main() {
   group('Noted Dropdown Button', () {
     testWidgets('dropdown button renders all items and selects one', (tester) async {
-      MockCallback<String> onSelect = MockCallback<String>();
+      MockCallback<String> onSelect = MockCallback();
       String initial = '1';
       List<String> values = ['0', '1', '2', '3', '4'];
 
