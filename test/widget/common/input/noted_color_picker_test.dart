@@ -130,11 +130,11 @@ void main() {
       expect(color, findsOneWidget);
       await tester.tap(color);
 
-      Finder confirm = find.byWidgetPredicate(
+      Finder cancel = find.byWidgetPredicate(
         (widget) => widget is NotedTextButton && widget.type == NotedTextButtonType.simple,
       );
 
-      await tester.tap(confirm.last);
+      await tester.tap(cancel.last);
       await tester.pump(const Duration(seconds: 1));
 
       expect(result, completion(equals(null)));
