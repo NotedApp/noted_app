@@ -31,7 +31,7 @@ class NotedDialog extends StatelessWidget {
       contents.add(
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
-          child: Text(title!, style: theme.textTheme.headlineLarge),
+          child: Text(title!, style: theme.textTheme.headlineMedium),
         ),
       );
     }
