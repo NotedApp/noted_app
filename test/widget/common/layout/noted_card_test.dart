@@ -8,7 +8,7 @@ import '../../test_wrapper.dart';
 
 void main() {
   group('Noted Card', () {
-    testWidgets('simple icon button functions as expected', (tester) async {
+    testWidgets('card renders as expected', (tester) async {
       MockVoidCallback onPressed = MockVoidCallback();
       const Key smallKey = Key('small');
       const Key mediumKey = Key('medium');
