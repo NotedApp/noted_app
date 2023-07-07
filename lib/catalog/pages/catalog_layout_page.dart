@@ -60,7 +60,7 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProvid
           margin: EdgeInsets.zero,
         ),
       ),
-      const CatalogListItem(
+      CatalogListItem(
         type: CatalogListItemType.column,
         label: 'card medium',
         child: NotedCard(
@@ -68,6 +68,7 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProvid
           width: double.infinity,
           height: 96,
           margin: EdgeInsets.zero,
+          onTap: () {},
         ),
       ),
       const CatalogListItem(

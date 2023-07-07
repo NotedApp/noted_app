@@ -1,8 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-class NotedIcons {
-  NotedIcons._();
-
+abstract class NotedIcons {
   static const _fontFamily = 'NotedIcons';
 
   static const IconData textColor = IconData(0xe800, fontFamily: _fontFamily);

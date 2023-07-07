@@ -7,12 +7,14 @@ import 'package:noted_app/widget/common/noted_widget_config.dart';
 class NotedHeaderPage extends StatelessWidget {
   final Widget child;
   final bool hasBackButton;
+  final VoidCallback? onBack;
   final String? title;
   final List<NotedIconButton>? trailingActions;
 
   const NotedHeaderPage({
     required this.child,
     required this.hasBackButton,
+    this.onBack,
     this.title,
     this.trailingActions,
     super.key,
@@ -31,7 +33,7 @@ class NotedHeaderPage extends StatelessWidget {
                       type: NotedIconButtonType.filled,
                       size: NotedWidgetSize.small,
                       // TODO: Update with routing.
-                      onPressed: () => Navigator.of(context).pop(),
+                      onPressed: onBack ?? () => Navigator.of(context).pop(),
                     )
                   : null,
               title: title,

@@ -21,12 +21,16 @@ class NotedSnackBar {
     );
   }
 
-  static SnackBar createWithClose({required BuildContext context, required Widget content}) {
+  static SnackBar createWithClose({
+    required BuildContext context,
+    required Widget content,
+    VoidCallback? onClose,
+  }) {
     NotedIconButton closeButton = NotedIconButton(
       icon: NotedIcons.close,
       type: NotedIconButtonType.simple,
       size: NotedWidgetSize.small,
-      onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar(),
+      onPressed: onClose ?? () => ScaffoldMessenger.of(context).hideCurrentSnackBar(),
     );
 
     Row contentRow = Row(
@@ -43,7 +47,12 @@ class NotedSnackBar {
     return create(context: context, content: contentRow);
   }
 
-  static SnackBar createWithText({required BuildContext context, required String text, bool hasClose = false}) {
+  static SnackBar createWithText({
+    required BuildContext context,
+    required String text,
+    bool hasClose = false,
+    VoidCallback? onClose,
+  }) {
     ThemeData theme = Theme.of(context);
 
     Widget content = Padding(
@@ -51,6 +60,15 @@ class NotedSnackBar {
       child: Text(text, style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurface)),
     );
 
-    return hasClose ? createWithClose(context: context, content: content) : create(context: context, content: content);
+    return hasClose
+        ? createWithClose(
+            context: context,
+            content: content,
+            onClose: onClose,
+          )
+        : create(
+            context: context,
+            content: content,
+          );
   }
 }

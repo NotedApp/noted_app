@@ -39,13 +39,14 @@ class NotedCard extends StatelessWidget {
     return SizedBox(
       width: width,
       height: height,
-      child: GestureDetector(
-        onTap: onTap,
-        child: Card(
-          color: color ?? colors.background,
-          elevation: 4,
-          shape: shape,
-          margin: margin,
+      child: Card(
+        color: color ?? colors.background,
+        elevation: 4,
+        shape: shape,
+        margin: margin,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(borderRadius),
           child: child,
         ),
       ),
