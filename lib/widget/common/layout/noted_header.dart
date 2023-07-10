@@ -15,37 +15,26 @@ class NotedHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> children = [];
-
-    if (leadingAction != null) {
-      children.add(leadingAction!);
-      children.add(const SizedBox(width: 16));
-    }
-
-    if (title?.isNotEmpty ?? false) {
-      children.add(
-        Expanded(
-          child: Text(
-            title!,
-            style: Theme.of(context).textTheme.displayMedium,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-      );
-    } else {
-      children.add(const Spacer());
-    }
-
-    for (NotedIconButton action in trailingActions) {
-      children.add(const SizedBox(width: 12));
-      children.add(action);
-    }
-
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       width: double.infinity,
       height: 52,
-      child: Row(children: children),
+      child: Row(
+        children: [
+          if (leadingAction != null) Padding(padding: EdgeInsets.only(right: 16), child: leadingAction),
+          if (title?.isNotEmpty ?? false)
+            Expanded(
+              child: Text(
+                title!,
+                style: Theme.of(context).textTheme.displayMedium,
+                overflow: TextOverflow.ellipsis,
+              ),
+            )
+          else
+            const Spacer(),
+          for (NotedIconButton action in trailingActions) Padding(padding: EdgeInsets.only(left: 12), child: action),
+        ],
+      ),
     );
   }
 }

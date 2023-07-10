@@ -1,10 +1,9 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/widget/common/rich_text/noted_rich_text_attributes.dart';
 import 'package:noted_app/widget/common/rich_text/noted_rich_text_controller.dart';
+import 'package:noted_models/noted_models.dart';
 
 Attribute _getQuillAttribute(NotedRichTextAttribute attribute) {
   return switch (attribute) {
@@ -27,7 +26,14 @@ Attribute _getQuillAttribute(NotedRichTextAttribute attribute) {
 class QuillRichTextController extends NotedRichTextController {
   QuillController controller = QuillController.basic();
 
-  QuillRichTextController() {
+  QuillRichTextController({NotedDocument? initial}) {
+    if (initial != null) {
+      controller = QuillController(
+        document: Document.fromDelta(Delta.fromJson(initial)),
+        selection: TextSelection.collapsed(offset: 0),
+      );
+    }
+
     controller.addListener(notifyListeners);
   }
 

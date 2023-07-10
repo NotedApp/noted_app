@@ -6,6 +6,7 @@ import 'package:noted_app/catalog/pages/catalog_icons_page.dart';
 import 'package:noted_app/catalog/pages/catalog_layout_page.dart';
 import 'package:noted_app/catalog/pages/catalog_svg_image_page.dart';
 import 'package:noted_app/catalog/pages/catalog_text_style_page.dart';
+import 'package:noted_app/catalog/pages/catalog_tiles_page.dart';
 import 'package:noted_app/catalog/pages/input/catalog_misc_input_page.dart';
 import 'package:noted_app/catalog/pages/input/catalog_text_input_page.dart';
 import 'package:noted_app/catalog/pages/rich_text/catalog_quill_rich_text.dart';
@@ -35,6 +36,7 @@ class CatalogContent {
       CatalogLeaf(title: 'text', page: const CatalogTextStylePage()),
       CatalogLeaf(title: 'images', page: const CatalogSvgImagePage()),
       CatalogLeaf(title: 'icons', page: const CatalogIconsPage()),
+      CatalogLeaf(title: 'tiles', page: const CatalogTilesPage()),
       CatalogLeaf(title: 'layout', page: CatalogLayoutPage()),
       CatalogLeaf(title: 'rich text', page: const CatalogQuillRichText()),
       CatalogBranch(title: 'buttons', children: [

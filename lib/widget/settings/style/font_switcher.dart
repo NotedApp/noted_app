@@ -58,35 +58,34 @@ class FontSwitcherItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> children = [
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(title, style: font.displayMedium),
-          const SizedBox(height: 8),
-          Text(title, style: font.headlineMedium),
-          const SizedBox(height: 8),
-          Text(title, style: font.bodyMedium),
-        ],
-      ),
-    ];
-
-    if (isSelected) {
-      children.add(
-        const Align(
-          alignment: Alignment.topRight,
-          child: Padding(
-            padding: EdgeInsets.only(top: 4),
-            child: Icon(NotedIcons.check, size: 36),
-          ),
-        ),
-      );
-    }
-
     return NotedCard(
       size: NotedWidgetSize.medium,
       onTap: onTap,
-      child: Padding(padding: const EdgeInsets.fromLTRB(20, 12, 16, 18), child: Stack(children: children)),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 12, 16, 18),
+        child: Stack(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: font.displayMedium),
+                const SizedBox(height: 8),
+                Text(title, style: font.headlineMedium),
+                const SizedBox(height: 8),
+                Text(title, style: font.bodyMedium),
+              ],
+            ),
+            if (isSelected)
+              const Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: EdgeInsets.only(top: 4),
+                  child: Icon(NotedIcons.check, size: 36),
+                ),
+              ),
+          ],
+        ),
+      ),
     );
   }
 }

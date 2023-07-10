@@ -17,19 +17,6 @@ class SettingsRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-    List<Widget> children = [];
-
-    if (icon != null) {
-      children.add(Icon(icon, size: 24, color: theme.colorScheme.tertiary));
-      children.add(const SizedBox(width: 12));
-    }
-
-    children.add(Expanded(child: Text(title, style: theme.textTheme.bodyLarge)));
-
-    if (trailing != null) {
-      children.add(const SizedBox(width: 12));
-      children.add(trailing!);
-    }
 
     return InkWell(
       onTap: onPressed,
@@ -37,7 +24,21 @@ class SettingsRow extends StatelessWidget {
         height: 54,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-          child: Row(children: children),
+          child: Row(
+            children: [
+              if (icon != null)
+                Padding(
+                  padding: EdgeInsets.only(right: 12),
+                  child: Icon(icon, size: 24, color: theme.colorScheme.tertiary),
+                ),
+              Expanded(child: Text(title, style: theme.textTheme.bodyLarge)),
+              if (trailing != null)
+                Padding(
+                  padding: EdgeInsets.only(right: 12),
+                  child: trailing,
+                ),
+            ],
+          ),
         ),
       ),
     );

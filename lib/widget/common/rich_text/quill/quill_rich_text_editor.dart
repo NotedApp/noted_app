@@ -9,6 +9,8 @@ class QuillRichTextEditor extends NotedRichTextEditor {
     super.focusNode,
     super.placeholder,
     super.readonly,
+    super.padding,
+    super.onTap,
     super.key,
   });
 
@@ -26,13 +28,24 @@ class QuillRichTextEditor extends NotedRichTextEditor {
       focusNode: focusNode ?? FocusNode(),
       scrollController: ScrollController(),
       scrollable: true,
-      padding: EdgeInsets.zero,
+      padding: padding,
       autoFocus: false,
       readOnly: readonly,
       expands: true,
       placeholder: placeholder,
       showCursor: !readonly,
       keyboardAppearance: theme.brightness,
+      onTapUp: _handleTap,
     );
+  }
+
+  bool _handleTap(TapUpDetails details, TextPosition Function(Offset) position) {
+    QuillController quillController = (controller as QuillRichTextController).controller;
+
+    if (quillController.selection.baseOffset == quillController.selection.extentOffset) {
+      onTap?.call();
+    }
+
+    return false;
   }
 }

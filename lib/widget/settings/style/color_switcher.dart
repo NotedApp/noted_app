@@ -60,15 +60,6 @@ class ColorSwitcherItem extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     TextStyle? titleStyle = theme.textTheme.headlineMedium?.copyWith(color: colors.onBackground);
-    List<Widget> titleChildren = [Text(title, style: titleStyle)];
-
-    if (isSelected) {
-      titleChildren.add(Icon(
-        NotedIcons.check,
-        size: 36,
-        color: colors.onBackground,
-      ));
-    }
 
     return NotedCard(
       size: NotedWidgetSize.medium,
@@ -78,7 +69,18 @@ class ColorSwitcherItem extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(16, 12, 16, 20),
         child: Column(
           children: [
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: titleChildren),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(title, style: titleStyle),
+                if (isSelected)
+                  Icon(
+                    NotedIcons.check,
+                    size: 36,
+                    color: colors.onBackground,
+                  ),
+              ],
+            ),
             const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
