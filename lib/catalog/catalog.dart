@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/catalog/catalog_content.dart';
 import 'package:noted_app/catalog/catalog_renderer.dart';
 import 'package:noted_app/state/theme/theme_cubit.dart';
@@ -29,6 +30,8 @@ class CatalogAppView extends StatelessWidget {
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) => MaterialApp(
         title: 'noted catalog',
+        localizationsDelegates: Strings.localizationsDelegates,
+        supportedLocales: Strings.supportedLocales,
         theme: state.themeData,
         home: CatalogRenderer(CatalogContent.content, isRoot: true),
       ),

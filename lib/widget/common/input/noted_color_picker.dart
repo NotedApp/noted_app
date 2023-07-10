@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/theme/custom_colors.dart';
 import 'package:noted_app/util/extensions.dart';
-import 'package:noted_app/util/noted_strings.dart';
 import 'package:noted_app/widget/common/button/noted_text_button.dart';
 import 'package:noted_app/widget/common/icon/noted_icons.dart';
 import 'package:noted_app/widget/common/layout/noted_dialog.dart';
@@ -35,13 +35,14 @@ class _NotedColorPickerState extends State<NotedColorPicker> {
   @override
   Widget build(BuildContext context) {
     ColorScheme colors = Theme.of(context).colorScheme;
+    Strings strings = Strings.of(context);
     VoidCallback? resetDefault = widget.onResetDefault;
 
     return NotedDialog(
       title: widget.title,
-      leftActionText: NotedStrings.getString(NotedStringDomain.common, 'confirm'),
+      leftActionText: strings.common_confirm,
       onLeftActionPressed: () => Navigator.of(context).pop(selectedColor),
-      rightActionText: NotedStrings.getString(NotedStringDomain.common, 'cancel'),
+      rightActionText: strings.common_cancel,
       onRightActionPressed: () => Navigator.of(context).pop(),
       child: Column(
         children: [
@@ -67,7 +68,7 @@ class _NotedColorPickerState extends State<NotedColorPicker> {
               child: SizedBox(
                 width: double.infinity,
                 child: NotedTextButton(
-                  label: NotedStrings.getString(NotedStringDomain.settings, 'colorDefault'),
+                  label: strings.settings_colorDefault,
                   type: NotedTextButtonType.outlined,
                   size: NotedWidgetSize.small,
                   onPressed: () {
