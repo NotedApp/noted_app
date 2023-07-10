@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
@@ -13,20 +14,23 @@ void main() {
 
       await tester.pumpWidget(
         TestWrapper(
-          child: NotedHeader(
-            leadingAction: NotedIconButton(
-              icon: NotedIcons.chevronLeft,
-              type: NotedIconButtonType.simple,
-              onPressed: leading,
-            ),
-            title: 'test page title',
-            trailingActions: [
-              NotedIconButton(
-                icon: NotedIcons.account,
+          child: Builder(
+            builder: (context) => NotedHeader(
+              context: context,
+              leadingAction: NotedIconButton(
+                icon: NotedIcons.chevronLeft,
                 type: NotedIconButtonType.simple,
-                onPressed: trailing,
+                onPressed: leading,
               ),
-            ],
+              title: 'test page title',
+              trailingActions: [
+                NotedIconButton(
+                  icon: NotedIcons.account,
+                  type: NotedIconButtonType.simple,
+                  onPressed: trailing,
+                ),
+              ],
+            ),
           ),
         ),
       );
@@ -51,19 +55,22 @@ void main() {
 
       await tester.pumpWidget(
         TestWrapper(
-          child: NotedHeader(
-            leadingAction: NotedIconButton(
-              icon: NotedIcons.chevronLeft,
-              type: NotedIconButtonType.simple,
-              onPressed: leading,
-            ),
-            trailingActions: [
-              NotedIconButton(
-                icon: NotedIcons.account,
+          child: Builder(
+            builder: (context) => NotedHeader(
+              context: context,
+              leadingAction: NotedIconButton(
+                icon: NotedIcons.chevronLeft,
                 type: NotedIconButtonType.simple,
-                onPressed: trailing,
+                onPressed: leading,
               ),
-            ],
+              trailingActions: [
+                NotedIconButton(
+                  icon: NotedIcons.account,
+                  type: NotedIconButtonType.simple,
+                  onPressed: trailing,
+                ),
+              ],
+            ),
           ),
         ),
       );

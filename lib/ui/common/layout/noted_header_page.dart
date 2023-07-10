@@ -23,26 +23,20 @@ class NotedHeaderPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            NotedHeader(
-              leadingAction: hasBackButton
-                  ? NotedIconButton(
-                      icon: NotedIcons.chevronLeft,
-                      type: NotedIconButtonType.filled,
-                      size: NotedWidgetSize.small,
-                      // TODO: Update with routing.
-                      onPressed: onBack ?? () => Navigator.of(context).pop(),
-                    )
-                  : null,
-              title: title,
-              trailingActions: trailingActions ?? [],
-            ),
-            Expanded(child: child),
-          ],
-        ),
+      appBar: NotedHeader(
+        context: context,
+        leadingAction: hasBackButton
+            ? NotedIconButton(
+                icon: NotedIcons.chevronLeft,
+                type: NotedIconButtonType.filled,
+                size: NotedWidgetSize.small,
+                onPressed: onBack ?? () => Navigator.of(context).maybePop(),
+              )
+            : null,
+        title: title,
+        trailingActions: trailingActions ?? [],
       ),
+      body: child,
     );
   }
 }
