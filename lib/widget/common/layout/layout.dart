@@ -5,3 +5,4 @@ export './noted_header.dart';
 export './noted_loading_indicator.dart';
 export './noted_snack_bar.dart';
 export './noted_tab_bar.dart';
+export './noted_tile.dart';

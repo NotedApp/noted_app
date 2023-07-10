@@ -18,25 +18,28 @@ void main() {
         TestWrapper(
           child: Column(
             children: [
-              NotedCard(
-                key: smallKey,
+              SizedBox(
                 height: 80,
-                width: 80,
-                size: NotedWidgetSize.small,
-                onTap: onPressed,
+                child: NotedCard(
+                  key: smallKey,
+                  size: NotedWidgetSize.small,
+                  onTap: onPressed,
+                ),
               ),
-              NotedCard(
-                key: mediumKey,
+              SizedBox(
                 height: 80,
-                width: 80,
-                size: NotedWidgetSize.medium,
+                child: NotedCard(
+                  key: mediumKey,
+                  size: NotedWidgetSize.medium,
+                ),
               ),
-              NotedCard(
-                key: largeKey,
+              SizedBox(
                 height: 80,
-                width: 80,
-                size: NotedWidgetSize.large,
-                onTap: onPressed,
+                child: NotedCard(
+                  key: largeKey,
+                  size: NotedWidgetSize.large,
+                  onTap: onPressed,
+                ),
               ),
             ],
           ),

@@ -3,8 +3,6 @@ import 'package:noted_app/widget/common/noted_widget_config.dart';
 
 class NotedCard extends StatelessWidget {
   final NotedWidgetSize size;
-  final double? width;
-  final double? height;
   final EdgeInsetsGeometry? margin;
   final Color? color;
   final VoidCallback? onTap;
@@ -12,8 +10,6 @@ class NotedCard extends StatelessWidget {
 
   const NotedCard({
     required this.size,
-    this.width,
-    this.height,
     this.margin,
     this.color,
     this.onTap,
@@ -36,19 +32,15 @@ class NotedCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(borderRadius),
     );
 
-    return SizedBox(
-      width: width,
-      height: height,
-      child: Card(
-        color: color ?? colors.background,
-        elevation: 4,
-        shape: shape,
-        margin: margin,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(borderRadius),
-          child: child,
-        ),
+    return Card(
+      color: color ?? colors.background,
+      elevation: 4,
+      shape: shape,
+      margin: margin,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(borderRadius),
+        child: child,
       ),
     );
   }

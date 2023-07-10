@@ -11,11 +11,15 @@ dependencies:
   flutter:
     sdk: flutter
 
+  noted_models:
+    git:
+      url: https://github.com/NotedApp/noted_models.git
+      ref: master
+
   flutter_bloc: ^8.1.2
   flutter_svg: ^2.0.6
   equatable: ^2.0.5
   flutter_quill: ^7.2.3
-  appflowy_editor: ^1.0.1
   meta: ^1.9.1
 
 dev_dependencies:

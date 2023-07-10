@@ -53,32 +53,35 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProvid
       const CatalogListItem(
         type: CatalogListItemType.column,
         label: 'card large',
-        child: NotedCard(
-          size: NotedWidgetSize.large,
-          width: double.infinity,
+        child: SizedBox(
           height: 128,
-          margin: EdgeInsets.zero,
+          child: NotedCard(
+            size: NotedWidgetSize.large,
+            margin: EdgeInsets.zero,
+          ),
         ),
       ),
       CatalogListItem(
         type: CatalogListItemType.column,
         label: 'card medium',
-        child: NotedCard(
-          size: NotedWidgetSize.medium,
-          width: double.infinity,
+        child: SizedBox(
           height: 96,
-          margin: EdgeInsets.zero,
-          onTap: () {},
+          child: NotedCard(
+            size: NotedWidgetSize.medium,
+            margin: EdgeInsets.zero,
+            onTap: () {},
+          ),
         ),
       ),
       const CatalogListItem(
         type: CatalogListItemType.column,
         label: 'card small',
-        child: NotedCard(
-          size: NotedWidgetSize.small,
-          width: double.infinity,
+        child: SizedBox(
           height: 64,
-          margin: EdgeInsets.zero,
+          child: NotedCard(
+            size: NotedWidgetSize.small,
+            margin: EdgeInsets.zero,
+          ),
         ),
       ),
       CatalogListItem(
