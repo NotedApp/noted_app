@@ -23,6 +23,14 @@ class QuillRichTextEditor extends NotedRichTextEditor {
     ThemeData theme = Theme.of(context);
     QuillController quillController = (controller as QuillRichTextController).controller;
 
+    bool Function(TapUpDetails, TextPosition Function(Offset)) onTapUp = (_, __) {
+      if (quillController.selection.baseOffset == quillController.selection.extentOffset) {
+        onTap?.call();
+      }
+
+      return false;
+    };
+
     return QuillEditor(
       controller: quillController,
       focusNode: focusNode ?? FocusNode(),
@@ -35,10 +43,7 @@ class QuillRichTextEditor extends NotedRichTextEditor {
       placeholder: placeholder,
       showCursor: !readonly,
       keyboardAppearance: theme.brightness,
-      onTapUp: (details, p1) {
-        onTap?.call();
-        return false;
-      },
+      onTapUp: onTapUp,
     );
   }
 }
