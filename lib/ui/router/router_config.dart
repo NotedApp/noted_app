@@ -1,5 +1,5 @@
 import 'package:go_router/go_router.dart';
-import 'package:noted_app/main.dart';
+import 'package:noted_app/app.dart';
 
 GoRouter routerConfig = GoRouter(
   routes: [
