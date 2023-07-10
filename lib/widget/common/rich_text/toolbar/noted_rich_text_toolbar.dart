@@ -23,7 +23,6 @@ class NotedRichTextToolbar extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: colors.onBackground.withAlpha(64),
-            offset: const Offset(0, -1),
             blurRadius: 4,
           ),
         ],

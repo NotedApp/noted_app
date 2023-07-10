@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/state/theme/theme_cubit.dart';
 import 'package:noted_app/state/theme/theme_state.dart';
 import 'package:noted_app/theme/color_schemes.dart';
-import 'package:noted_app/util/noted_strings.dart';
 import 'package:noted_app/widget/common/icon/noted_icons.dart';
 import 'package:noted_app/widget/common/layout/noted_card.dart';
 import 'package:noted_app/widget/common/layout/noted_header_page.dart';
@@ -17,9 +17,10 @@ class ColorSwitcher extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeCubit cubit = context.read<ThemeCubit>();
+    Strings strings = Strings.of(context);
 
     return NotedHeaderPage(
-      title: NotedStrings.getString(NotedStringDomain.settings, 'colorTitle'),
+      title: strings.settings_colorTitle,
       hasBackButton: true,
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) => ListView.separated(
@@ -28,7 +29,7 @@ class ColorSwitcher extends StatelessWidget {
           itemBuilder: (context, index) {
             ColorScheme colors = NotedColorSchemes.fromName(names[index]);
             return ColorSwitcherItem(
-              title: NotedStrings.getString(NotedStringDomain.settings, names[index].toString()),
+              title: _getSchemeName(strings, names[index]),
               colors: colors,
               isSelected: state.colorSchemeName == names[index],
               onTap: () => cubit.updateColorScheme(names[index]),
@@ -39,6 +40,17 @@ class ColorSwitcher extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _getSchemeName(Strings strings, NotedColorSchemeName name) {
+    return switch (name) {
+      NotedColorSchemeName.blue => strings.settings_colorSchemeBlue,
+      NotedColorSchemeName.green => strings.settings_colorSchemeGreen,
+      NotedColorSchemeName.dark => strings.settings_colorSchemeDark,
+      NotedColorSchemeName.oled => strings.settings_colorSchemeOled,
+      NotedColorSchemeName.light => strings.settings_colorSchemeLight,
+      NotedColorSchemeName.custom => strings.settings_colorSchemeCustom,
+    };
   }
 }
 

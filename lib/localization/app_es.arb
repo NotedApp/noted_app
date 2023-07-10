@@ -1,0 +1,24 @@
+{
+  "unknown": "unknown",
+  
+  "app_title": "noted",
+
+  "common_confirm": "confirm",
+  "common_cancel": "cancel",
+
+  "settings_colorTitle": "colors",
+  "settings_colorSchemeBlue": "blue",
+  "settings_colorSchemeGreen": "green",
+  "settings_colorSchemeDark": "dark",
+  "settings_colorSchemeOled": "oled",
+  "settings_colorSchemeLight": "light",
+  "settings_colorSchemeCustom": "custom",
+  "settings_colorDefault": "default color",
+  "settings_fontTitle": "fonts",
+  "settings_textThemePoppins": "poppins",
+  "settings_textThemeRoboto": "roboto",
+  "settings_textThemeLora": "lora",
+  "settings_textThemeVollkorn": "vollkorn",
+
+  "editor_linkPickerTitle": "link to"
+}
