@@ -9,9 +9,10 @@ class CatalogTilesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.count(
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-      crossAxisSpacing: 12,
-      mainAxisSpacing: 12,
+      crossAxisSpacing: 8,
+      mainAxisSpacing: 8,
       crossAxisCount: 2,
+      shrinkWrap: true,
       children: [
         NotebookNoteTile(note: testNote0),
         NotebookNoteTile(note: testNote1),

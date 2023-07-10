@@ -9,6 +9,7 @@ class QuillRichTextEditor extends NotedRichTextEditor {
     super.focusNode,
     super.placeholder,
     super.readonly,
+    super.padding,
     super.key,
   });
 
@@ -26,7 +27,7 @@ class QuillRichTextEditor extends NotedRichTextEditor {
       focusNode: focusNode ?? FocusNode(),
       scrollController: ScrollController(),
       scrollable: true,
-      padding: EdgeInsets.zero,
+      padding: padding,
       autoFocus: false,
       readOnly: readonly,
       expands: true,

@@ -10,14 +10,11 @@ class NotedTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1,
-      child: NotedCard(
-        size: NotedWidgetSize.small,
-        color: Theme.of(context).colorScheme.surface,
-        onTap: onTap,
-        child: child,
-      ),
+    return NotedCard(
+      size: NotedWidgetSize.small,
+      color: Theme.of(context).colorScheme.background,
+      onTap: onTap,
+      child: child,
     );
   }
 }

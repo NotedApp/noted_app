@@ -7,12 +7,14 @@ abstract class NotedRichTextEditor extends StatelessWidget {
   final FocusNode? focusNode;
   final String? placeholder;
   final bool readonly;
+  final EdgeInsetsGeometry padding;
 
   const NotedRichTextEditor({
     required this.controller,
     this.focusNode,
     this.placeholder,
     this.readonly = false,
+    this.padding = EdgeInsets.zero,
     super.key,
   });
 
@@ -21,12 +23,14 @@ abstract class NotedRichTextEditor extends StatelessWidget {
     FocusNode? focusNode,
     String? placeholder,
     bool readonly = false,
+    EdgeInsetsGeometry padding = EdgeInsets.zero,
   }) {
     return QuillRichTextEditor(
       controller: controller,
       focusNode: focusNode,
       placeholder: placeholder,
       readonly: readonly,
+      padding: padding,
     );
   }
 }

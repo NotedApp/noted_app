@@ -23,31 +23,33 @@ class _NotebookNoteTileState extends State<NotebookNoteTile> {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
-    Color surface = theme.colorScheme.surface;
-    Color surfaceTransparent = surface.withOpacity(0);
-
     return NotedTile(
       child: Container(
-        padding: const EdgeInsets.fromLTRB(10, 8, 12, 0),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            stops: [0, 0.85, 1],
-            colors: [surfaceTransparent, surfaceTransparent, surface],
-          ),
+        padding: EdgeInsets.only(
+          left: 12,
+          top: widget.note.title.isNotEmpty ? 12 : 0,
+          right: 12,
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (widget.note.title.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(bottom: 8),
-                child: Text(widget.note.title, style: theme.textTheme.titleMedium),
+                child: Text(
+                  widget.note.title,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
               ),
-            NotedRichTextEditor.quill(
-              controller: _textController,
-              readonly: true,
+            Expanded(
+              child: NotedRichTextEditor.quill(
+                controller: _textController,
+                readonly: true,
+                padding: EdgeInsets.only(
+                  top: widget.note.title.isNotEmpty ? 0 : 12,
+                  bottom: 12,
+                ),
+              ),
             ),
           ],
         ),
