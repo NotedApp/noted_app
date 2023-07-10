@@ -40,10 +40,6 @@ class QuillRichTextEditor extends NotedRichTextEditor {
   }
 
   bool _handleTap(TapUpDetails details, TextPosition Function(Offset) position) {
-    if (controller is! QuillRichTextController) {
-      throw ArgumentError('A quill rich text editor must have a QuillController as its controller.');
-    }
-
     QuillController quillController = (controller as QuillRichTextController).controller;
 
     if (quillController.selection.baseOffset == quillController.selection.extentOffset) {
