@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/catalog/catalog_list_widget.dart';
-import 'package:noted_app/widget/common/button/noted_text_button.dart';
-import 'package:noted_app/widget/common/layout/noted_card.dart';
-import 'package:noted_app/widget/common/layout/noted_dialog.dart';
-import 'package:noted_app/widget/common/layout/noted_loading_indicator.dart';
-import 'package:noted_app/widget/common/layout/noted_snack_bar.dart';
-import 'package:noted_app/widget/common/layout/noted_tab_bar.dart';
-import 'package:noted_app/widget/common/noted_widget_config.dart';
+import 'package:noted_app/ui/common/button/noted_text_button.dart';
+import 'package:noted_app/ui/common/layout/noted_card.dart';
+import 'package:noted_app/ui/common/layout/noted_dialog.dart';
+import 'package:noted_app/ui/common/layout/noted_loading_indicator.dart';
+import 'package:noted_app/ui/common/layout/noted_snack_bar.dart';
+import 'package:noted_app/ui/common/layout/noted_tab_bar.dart';
+import 'package:noted_app/ui/common/noted_widget_config.dart';
 
 class CatalogLayoutPage extends StatefulWidget {
   final List<String> tabs = ['all (20)', 'notes', 'to-do', 'climbing', 'finances'];

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:noted_app/widget/common/icon/noted_icons.dart';
+import 'package:noted_app/ui/common/icon/noted_icons.dart';
 
 class CatalogIconsPage extends StatelessWidget {
   const CatalogIconsPage({super.key});

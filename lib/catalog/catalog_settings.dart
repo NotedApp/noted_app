@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:noted_app/widget/common/icon/noted_icons.dart';
-import 'package:noted_app/widget/common/layout/noted_header_page.dart';
-import 'package:noted_app/widget/settings/settings_row.dart';
-import 'package:noted_app/widget/settings/style/color_switcher.dart';
-import 'package:noted_app/widget/settings/style/font_switcher.dart';
+import 'package:noted_app/ui/common/icon/noted_icons.dart';
+import 'package:noted_app/ui/common/layout/noted_header_page.dart';
+import 'package:noted_app/ui/settings/settings_row.dart';
+import 'package:noted_app/ui/settings/style/color_switcher.dart';
+import 'package:noted_app/ui/settings/style/font_switcher.dart';
 
 class CatalogSettings extends StatelessWidget {
   const CatalogSettings({super.key});

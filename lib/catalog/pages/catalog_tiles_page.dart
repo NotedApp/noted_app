@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/catalog/mock/notebook/mock_notes.dart';
-import 'package:noted_app/widget/common/noted_library.dart';
-import 'package:noted_app/widget/spaces/notebook/tiles/notebook_note_tile.dart';
+import 'package:noted_app/ui/common/noted_library.dart';
+import 'package:noted_app/ui/spaces/notebook/tiles/notebook_note_tile.dart';
 
 class CatalogTilesPage extends StatelessWidget {
   const CatalogTilesPage({super.key});
