@@ -37,52 +37,48 @@ class _NotedColorPickerState extends State<NotedColorPicker> {
     ColorScheme colors = Theme.of(context).colorScheme;
     VoidCallback? resetDefault = widget.onResetDefault;
 
-    List<Widget> children = [
-      GridView.count(
-        crossAxisCount: 6,
-        crossAxisSpacing: 8,
-        mainAxisSpacing: 8,
-        shrinkWrap: true,
-        children: customColors
-            .map(
-              (color) => NotedColorPickerButton(
-                color: color,
-                colors: colors,
-                isSelected: color == selectedColor,
-                onPressed: () => setState(() => selectedColor = color),
-              ),
-            )
-            .toList(),
-      ),
-    ];
-
-    if (resetDefault != null) {
-      children.add(
-        Padding(
-          padding: const EdgeInsets.only(top: 12),
-          child: SizedBox(
-            width: double.infinity,
-            child: NotedTextButton(
-              label: NotedStrings.getString(NotedStringDomain.settings, 'colorDefault'),
-              type: NotedTextButtonType.outlined,
-              size: NotedWidgetSize.small,
-              onPressed: () {
-                resetDefault();
-                Navigator.of(context).pop();
-              },
-            ),
-          ),
-        ),
-      );
-    }
-
     return NotedDialog(
       title: widget.title,
       leftActionText: NotedStrings.getString(NotedStringDomain.common, 'confirm'),
       onLeftActionPressed: () => Navigator.of(context).pop(selectedColor),
       rightActionText: NotedStrings.getString(NotedStringDomain.common, 'cancel'),
       onRightActionPressed: () => Navigator.of(context).pop(),
-      child: Column(children: children),
+      child: Column(
+        children: [
+          GridView.count(
+            crossAxisCount: 6,
+            crossAxisSpacing: 8,
+            mainAxisSpacing: 8,
+            shrinkWrap: true,
+            children: customColors
+                .map(
+                  (color) => NotedColorPickerButton(
+                    color: color,
+                    colors: colors,
+                    isSelected: color == selectedColor,
+                    onPressed: () => setState(() => selectedColor = color),
+                  ),
+                )
+                .toList(),
+          ),
+          if (resetDefault != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 12),
+              child: SizedBox(
+                width: double.infinity,
+                child: NotedTextButton(
+                  label: NotedStrings.getString(NotedStringDomain.settings, 'colorDefault'),
+                  type: NotedTextButtonType.outlined,
+                  size: NotedWidgetSize.small,
+                  onPressed: () {
+                    resetDefault();
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }

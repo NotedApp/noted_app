@@ -24,24 +24,7 @@ class NotedDialog extends StatelessWidget {
     ThemeData theme = Theme.of(context);
     bool hasTitle = title != null;
     bool hasActions = leftActionText != null || rightActionText != null;
-
-    List<Widget> contents = [];
-
-    if (hasTitle) {
-      contents.add(
-        Padding(
-          padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
-          child: Text(title!, style: theme.textTheme.headlineMedium),
-        ),
-      );
-    }
-
-    contents.add(
-      Padding(
-        padding: EdgeInsets.fromLTRB(20, hasTitle ? 0 : 20, 20, hasActions ? 0 : 20),
-        child: child,
-      ),
-    );
+    Widget actionRow = Container();
 
     if (hasActions) {
       MainAxisAlignment alignment;
@@ -87,11 +70,9 @@ class NotedDialog extends StatelessWidget {
         );
       }
 
-      contents.add(
-        Padding(
-          padding: const EdgeInsets.fromLTRB(14, 6, 14, 14),
-          child: Row(mainAxisAlignment: alignment, children: actions),
-        ),
+      actionRow = Padding(
+        padding: const EdgeInsets.fromLTRB(14, 6, 14, 14),
+        child: Row(mainAxisAlignment: alignment, children: actions),
       );
     }
 
@@ -106,7 +87,18 @@ class NotedDialog extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: contents,
+        children: [
+          if (hasTitle)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
+              child: Text(title!, style: theme.textTheme.headlineMedium),
+            ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(20, hasTitle ? 0 : 20, 20, hasActions ? 0 : 20),
+            child: child,
+          ),
+          if (hasActions) actionRow,
+        ],
       ),
     );
   }

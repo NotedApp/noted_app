@@ -73,41 +73,37 @@ class NotedTextField extends StatelessWidget {
           errorStyle: errorStyle,
         );
 
-    List<Widget> children = [
-      TextFormField(
-        style: style,
-        decoration: decoration,
-        controller: controller,
-        keyboardType: keyboardType,
-        keyboardAppearance: theme.brightness,
-        obscureText: obscureText,
-        autocorrect: autocorrect,
-        onChanged: onChanged,
-        onEditingComplete: onEditingComplete,
-        onFieldSubmitted: onSubmitted,
-        validator: validator,
-        enabled: enabled,
-      ),
-    ];
-
-    if (icon != null) {
-      children.add(
-        Align(
-          alignment: Alignment.centerRight,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            child: NotedIconButton(
-              type: NotedIconButtonType.simple,
-              size: NotedWidgetSize.small,
-              icon: icon!,
-              onPressed: onIconPressed,
+    return Stack(
+      children: [
+        TextFormField(
+          style: style,
+          decoration: decoration,
+          controller: controller,
+          keyboardType: keyboardType,
+          keyboardAppearance: theme.brightness,
+          obscureText: obscureText,
+          autocorrect: autocorrect,
+          onChanged: onChanged,
+          onEditingComplete: onEditingComplete,
+          onFieldSubmitted: onSubmitted,
+          validator: validator,
+          enabled: enabled,
+        ),
+        if (icon != null)
+          Align(
+            alignment: Alignment.centerRight,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              child: NotedIconButton(
+                type: NotedIconButtonType.simple,
+                size: NotedWidgetSize.small,
+                icon: icon!,
+                onPressed: onIconPressed,
+              ),
             ),
           ),
-        ),
-      );
-    }
-
-    return Stack(children: children);
+      ],
+    );
   }
 }
 
