@@ -66,7 +66,7 @@ void main() {
       expect(property.resolve({MaterialState.dragged, MaterialState.pressed}).side.width, 7);
     });
 
-    test('outlined border material state resolves in all cases', () {
+    test('text style material state resolves in all cases', () {
       MaterialStateProperty<TextStyle> property = const TextStyle(fontSize: 7).materialState();
       expect(property.resolve({MaterialState.disabled}).fontSize, 7);
       expect(property.resolve({MaterialState.hovered}).fontSize, 7);
