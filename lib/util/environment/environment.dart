@@ -1,4 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:noted_app/repository/auth/auth_repository.dart';
+import 'package:noted_app/repository/auth/firebase_auth_repository.dart';
+import 'package:noted_app/repository/auth/local_auth_repository.dart';
+import 'package:noted_app/util/environment/dependencies.dart';
 import 'package:noted_app/util/environment/test_firebase_options.dart';
 
 sealed class Environment {
@@ -12,7 +16,7 @@ class LocalEnvironment extends Environment {
   }
 
   void _registerDependencies() {
-    // TODO: implement registerDependencies
+    locator.registerSingleton<AuthRepository>(LocalAuthRepository());
   }
 }
 
@@ -25,17 +29,20 @@ class TestEnvironment extends Environment {
   }
 
   void _registerDependencies() {
-    // TODO: implement registerDependencies
+    locator.registerSingleton<AuthRepository>(FirebaseAuthRepository());
   }
 }
 
 class ProdEnvironment extends Environment {
   @override
   Future<void> configure() async {
-    // TODO: implement configure
+    // TODO: Update this to use prod firebase options.
+    await Firebase.initializeApp(options: TestFirebaseOptions.currentPlatform);
+
+    _registerDependencies();
   }
 
   void _registerDependencies() {
-    throw UnimplementedError();
+    locator.registerSingleton<AuthRepository>(FirebaseAuthRepository());
   }
 }

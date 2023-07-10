@@ -149,10 +149,10 @@ packages:
     dependency: transitive
     description:
       name: dart_mappable
-      sha256: f9fe2fe361da2b899e58aaeb911eabae54c859a97db486e1820bd786153829d6
+      sha256: ac9e39d7696a8f6e622f9071f78123b2fca6b4d14f6f8af1df1a04782917ac49
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.1"
+    version: "3.1.2"
   dart_style:
     dependency: transitive
     description:
@@ -555,7 +555,7 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: cf6e62c1a92ea61c0fecc3aa9fbee42769b7c202
+      resolved-ref: "8239f99e9f89c687ebd5bb3f79afaf295085623a"
       url: "https://github.com/NotedApp/noted_models.git"
     source: git
     version: "0.0.1"
