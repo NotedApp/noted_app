@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/catalog/mock/notebook/mock_notes.dart';
+import 'package:noted_app/widget/common/noted_library.dart';
 import 'package:noted_app/widget/spaces/notebook/tiles/notebook_note_tile.dart';
 
 class CatalogTilesPage extends StatelessWidget {
@@ -14,9 +15,19 @@ class CatalogTilesPage extends StatelessWidget {
       crossAxisCount: 2,
       shrinkWrap: true,
       children: [
-        NotebookNoteTile(note: testNote0),
-        NotebookNoteTile(note: testNote1),
+        NotebookNoteTile(note: testNote0, onTap: () => _showTapSnackBar(context)),
+        NotebookNoteTile(note: testNote1, onTap: () => _showTapSnackBar(context)),
       ],
     );
+  }
+
+  void _showTapSnackBar(BuildContext context) {
+    SnackBar snackBar = NotedSnackBar.createWithText(
+      context: context,
+      text: 'card tapped',
+      hasClose: true,
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

@@ -8,6 +8,7 @@ abstract class NotedRichTextEditor extends StatelessWidget {
   final String? placeholder;
   final bool readonly;
   final EdgeInsetsGeometry padding;
+  final VoidCallback? onTap;
 
   const NotedRichTextEditor({
     required this.controller,
@@ -15,6 +16,7 @@ abstract class NotedRichTextEditor extends StatelessWidget {
     this.placeholder,
     this.readonly = false,
     this.padding = EdgeInsets.zero,
+    this.onTap,
     super.key,
   });
 
@@ -24,6 +26,7 @@ abstract class NotedRichTextEditor extends StatelessWidget {
     String? placeholder,
     bool readonly = false,
     EdgeInsetsGeometry padding = EdgeInsets.zero,
+    VoidCallback? onTap,
   }) {
     return QuillRichTextEditor(
       controller: controller,
@@ -31,6 +34,7 @@ abstract class NotedRichTextEditor extends StatelessWidget {
       placeholder: placeholder,
       readonly: readonly,
       padding: padding,
+      onTap: onTap,
     );
   }
 }

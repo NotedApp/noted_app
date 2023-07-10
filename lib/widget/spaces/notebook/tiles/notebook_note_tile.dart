@@ -4,8 +4,9 @@ import 'package:noted_models/noted_models.dart';
 
 class NotebookNoteTile extends StatefulWidget {
   final NotebookNote note;
+  final VoidCallback? onTap;
 
-  const NotebookNoteTile({required this.note, super.key});
+  const NotebookNoteTile({required this.note, this.onTap, super.key});
 
   @override
   State<StatefulWidget> createState() => _NotebookNoteTileState();
@@ -49,13 +50,14 @@ class _NotebookNoteTileState extends State<NotebookNoteTile> {
                   top: widget.note.title.isNotEmpty ? 0 : 12,
                   bottom: 12,
                 ),
+                onTap: widget.onTap,
               ),
             ),
           ],
         ),
       ),
       // TODO: Implement real navigation here.
-      onTap: () => Navigator.of(context).pushNamed('notes/${widget.note.id}'),
+      onTap: widget.onTap ?? () => Navigator.of(context).pushNamed('notes/${widget.note.id}'),
     );
   }
 

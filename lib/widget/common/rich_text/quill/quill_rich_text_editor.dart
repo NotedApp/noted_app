@@ -10,6 +10,7 @@ class QuillRichTextEditor extends NotedRichTextEditor {
     super.placeholder,
     super.readonly,
     super.padding,
+    super.onTap,
     super.key,
   });
 
@@ -34,6 +35,10 @@ class QuillRichTextEditor extends NotedRichTextEditor {
       placeholder: placeholder,
       showCursor: !readonly,
       keyboardAppearance: theme.brightness,
+      onTapUp: (details, p1) {
+        onTap?.call();
+        return false;
+      },
     );
   }
 }
