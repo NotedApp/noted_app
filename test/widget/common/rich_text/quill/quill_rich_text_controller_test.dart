@@ -18,7 +18,7 @@ void main() {
       expect(controller.controller.getPlainText(), 'hello world');
     });
 
-    test('validates and updates controller bold formatting', () {
+    test('validates and updates bold formatting', () {
       QuillRichTextController controller = NotedRichTextController.quill(
         initial: testData0,
       ) as QuillRichTextController;
@@ -31,6 +31,22 @@ void main() {
 
       controller.setAttribute(NotedRichTextAttribute.bold, false);
       expect(controller.isAttributeToggled(NotedRichTextAttribute.bold), false);
+    });
+
+    test('validates and updates header formatting', () {
+      QuillRichTextController controller = NotedRichTextController.quill(
+        initial: testData0,
+      ) as QuillRichTextController;
+
+      controller.controller.updateSelection(TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.LOCAL);
+      expect(controller.isAttributeToggled(NotedRichTextAttribute.h1), false);
+
+      controller.setAttribute(NotedRichTextAttribute.h1, true);
+      expect(controller.isAttributeToggled(NotedRichTextAttribute.h1), true);
+      expect(controller.isAttributeToggled(NotedRichTextAttribute.h2), false);
+
+      controller.setAttribute(NotedRichTextAttribute.h1, false);
+      expect(controller.isAttributeToggled(NotedRichTextAttribute.h1), false);
     });
   });
 }
