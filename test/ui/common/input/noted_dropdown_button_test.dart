@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:noted_app/widget/common/input/input.dart';
+import 'package:noted_app/ui/common/input/input.dart';
 
 import '../../../helpers/common.dart';
 import '../../test_wrapper.dart';

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:noted_app/widget/common/noted_library.dart';
-import 'package:noted_app/widget/common/rich_text/noted_rich_text_attributes.dart';
-import 'package:noted_app/widget/common/rich_text/quill/quill_rich_text_controller.dart';
+import 'package:noted_app/ui/common/noted_library.dart';
+import 'package:noted_app/ui/common/rich_text/noted_rich_text_attributes.dart';
+import 'package:noted_app/ui/common/rich_text/quill/quill_rich_text_controller.dart';
 
 import '../../../../helpers/mocks/mock_delta.dart';
 

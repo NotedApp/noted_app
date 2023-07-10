@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/catalog/catalog_list_widget.dart';
-import 'package:noted_app/widget/common/rich_text/noted_rich_text_controller.dart';
-import 'package:noted_app/widget/common/rich_text/noted_rich_text_editor.dart';
-import 'package:noted_app/widget/common/rich_text/toolbar/noted_rich_text_toolbar.dart';
+import 'package:noted_app/ui/common/rich_text/noted_rich_text_controller.dart';
+import 'package:noted_app/ui/common/rich_text/noted_rich_text_editor.dart';
+import 'package:noted_app/ui/common/rich_text/toolbar/noted_rich_text_toolbar.dart';
 
 class CatalogQuillRichText extends StatefulWidget {
   const CatalogQuillRichText({super.key});

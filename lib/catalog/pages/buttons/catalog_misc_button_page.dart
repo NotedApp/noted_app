@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/catalog/catalog_list_widget.dart';
-import 'package:noted_app/widget/common/button/noted_switch_button.dart';
+import 'package:noted_app/ui/common/button/noted_switch_button.dart';
 
 class CatalogMiscButtonPage extends StatefulWidget {
   const CatalogMiscButtonPage({super.key});

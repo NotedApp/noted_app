@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/catalog/catalog_content.dart';
 import 'package:noted_app/catalog/catalog_settings.dart';
-import 'package:noted_app/widget/common/button/noted_icon_button.dart';
-import 'package:noted_app/widget/common/icon/noted_icons.dart';
-import 'package:noted_app/widget/common/layout/noted_header_page.dart';
-import 'package:noted_app/widget/common/noted_widget_config.dart';
+import 'package:noted_app/ui/common/button/noted_icon_button.dart';
+import 'package:noted_app/ui/common/icon/noted_icons.dart';
+import 'package:noted_app/ui/common/layout/noted_header_page.dart';
+import 'package:noted_app/ui/common/noted_widget_config.dart';
 
 class CatalogRenderer extends StatelessWidget {
   final CatalogNode node;
