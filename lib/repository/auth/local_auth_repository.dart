@@ -1,6 +1,7 @@
 import 'package:noted_app/repository/auth/auth_repository.dart';
 import 'package:noted_models/noted_models.dart';
 
+/// An [AuthRepository] that uses mock data as its source of truth.
 class LocalAuthRepository extends AuthRepository {
   @override
   // TODO: implement currentUser
