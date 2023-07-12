@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 
 import '../../../helpers/common.dart';
@@ -45,8 +45,8 @@ void main() {
       expect(leadingButton, findsOneWidget);
       expect(trailingButton, findsOneWidget);
 
-      verify(leading()).called(1);
-      verify(trailing()).called(1);
+      verify(() => leading()).called(1);
+      verify(() => trailing()).called(1);
     });
 
     testWidgets('header handles a case with no title', (tester) async {
@@ -85,8 +85,8 @@ void main() {
       expect(leadingButton, findsOneWidget);
       expect(trailingButton, findsOneWidget);
 
-      verify(leading()).called(1);
-      verify(trailing()).called(1);
+      verify(() => leading()).called(1);
+      verify(() => trailing()).called(1);
     });
   });
 }

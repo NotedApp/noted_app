@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 
 import '../../../helpers/common.dart';
@@ -37,12 +37,12 @@ void main() {
       await tester.tap(second);
       await tester.pumpAndSettle(const Duration(seconds: 1));
 
-      verify(onPressed(captureThat(equals(1)))).called(1);
+      verify(() => onPressed(1)).called(1);
 
       await tester.tap(third);
       await tester.pumpAndSettle(const Duration(seconds: 1));
 
-      verify(onPressed(captureThat(equals(2)))).called(1);
+      verify(() => onPressed(2)).called(1);
     });
   });
 }

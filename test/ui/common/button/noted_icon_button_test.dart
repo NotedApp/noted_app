@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 
 import '../../../helpers/common.dart';
@@ -63,7 +63,7 @@ void main() {
       await tester.tap(mediumFinder);
       await tester.tap(largeFinder);
 
-      verify(onPressed()).called(3);
+      verify(() => onPressed()).called(3);
     });
 
     testWidgets('filled icon button functions as expected', (tester) async {
@@ -121,7 +121,7 @@ void main() {
       await tester.tap(mediumFinder);
       await tester.tap(largeFinder);
 
-      verify(onPressed()).called(3);
+      verify(() => onPressed()).called(3);
     });
   });
 }

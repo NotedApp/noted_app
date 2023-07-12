@@ -52,12 +52,13 @@ class FirebaseAuthRepository extends AuthRepository {
       late final AuthCredential credential;
 
       if (kIsWeb) {
-        final googleProvider = GoogleAuthProvider();
-        final userCredential = await _firebaseAuth.signInWithPopup(googleProvider);
+        GoogleAuthProvider googleProvider = GoogleAuthProvider();
+        UserCredential userCredential = await _firebaseAuth.signInWithPopup(googleProvider);
         credential = userCredential.credential!;
       } else {
-        final googleUser = await _googleSignIn.signIn();
-        final googleAuth = await googleUser!.authentication;
+        GoogleSignInAccount? googleUser = await _googleSignIn.signInSilently();
+        googleUser ??= await _googleSignIn.signIn();
+        GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
         credential = GoogleAuthProvider.credential(
           accessToken: googleAuth.accessToken,
           idToken: googleAuth.idToken,

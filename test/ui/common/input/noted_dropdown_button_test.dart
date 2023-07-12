@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:noted_app/ui/common/input/input.dart';
 
 import '../../../helpers/common.dart';
@@ -34,7 +34,7 @@ void main() {
       await tester.tap(items.at(1), warnIfMissed: false);
       await tester.pump(const Duration(seconds: 1));
 
-      verify(onSelect(captureThat(equals('0')))).called(1);
+      verify(() => onSelect('0')).called(1);
     });
   });
 }
