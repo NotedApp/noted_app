@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 
 import '../../../helpers/common.dart';
@@ -30,7 +30,7 @@ void main() {
 
       expect(cardFinder, findsOneWidget);
       expect((card.shape! as RoundedRectangleBorder).borderRadius, equals(BorderRadius.circular(12)));
-      verify(onPressed()).called(1);
+      verify(() => onPressed()).called(1);
     });
   });
 }

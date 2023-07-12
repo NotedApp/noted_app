@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 
 import '../../../helpers/common.dart';
@@ -103,7 +103,7 @@ void main() {
       await tester.tap(find.byIcon(NotedIcons.close));
       await tester.pump(const Duration(seconds: 1));
 
-      verify(close()).called(1);
+      verify(() => close()).called(1);
     });
 
     testWidgets('snack bar is created with text and default close content', (tester) async {

@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/common/rich_text/noted_rich_text_attributes.dart';
 import 'package:noted_app/ui/common/rich_text/quill/quill_rich_text_editor.dart';
@@ -44,7 +44,7 @@ void main() {
       await tester.tap(editor);
 
       expect(editor, findsOneWidget);
-      verify(onTap()).called(1);
+      verify(() => onTap()).called(1);
     });
 
     testWidgets('quill rich text editor handles tap with invalid controller', (tester) async {

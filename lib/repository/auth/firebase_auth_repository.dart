@@ -5,6 +5,8 @@ import 'package:noted_app/repository/auth/auth_repository.dart';
 import 'package:noted_app/util/noted_error.dart';
 import 'package:noted_models/noted_models.dart';
 
+// TODO: Test this file.
+// coverage:ignore-file
 /// An [AuthRepository] that uses Firebase Authentication as its source of truth.
 class FirebaseAuthRepository extends AuthRepository {
   final FirebaseAuth _firebaseAuth;
@@ -52,12 +54,13 @@ class FirebaseAuthRepository extends AuthRepository {
       late final AuthCredential credential;
 
       if (kIsWeb) {
-        final googleProvider = GoogleAuthProvider();
-        final userCredential = await _firebaseAuth.signInWithPopup(googleProvider);
+        GoogleAuthProvider googleProvider = GoogleAuthProvider();
+        UserCredential userCredential = await _firebaseAuth.signInWithPopup(googleProvider);
         credential = userCredential.credential!;
       } else {
-        final googleUser = await _googleSignIn.signIn();
-        final googleAuth = await googleUser!.authentication;
+        GoogleSignInAccount? googleUser = await _googleSignIn.signInSilently();
+        googleUser ??= await _googleSignIn.signIn();
+        GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
         credential = GoogleAuthProvider.credential(
           accessToken: googleAuth.accessToken,
           idToken: googleAuth.idToken,

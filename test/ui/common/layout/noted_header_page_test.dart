@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 
 import '../../../helpers/common.dart';
@@ -41,8 +41,8 @@ void main() {
       expect(backButton, findsOneWidget);
       expect(action, findsOneWidget);
 
-      verify(trailing()).called(1);
-      verify(back()).called(1);
+      verify(() => trailing()).called(1);
+      verify(() => back()).called(1);
     });
   });
 }

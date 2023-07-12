@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 
 import '../../../helpers/common.dart';
@@ -24,7 +24,7 @@ void main() {
       expect(input, findsOneWidget);
       await tester.enterText(input, 'test');
 
-      verify(onChanged(captureThat(equals('test')))).called(1);
+      verify(() => onChanged('test')).called(1);
     });
 
     testWidgets('title text field produces a string', (tester) async {
@@ -44,7 +44,7 @@ void main() {
       expect(input, findsOneWidget);
       await tester.enterText(input, 'test');
 
-      verify(onChanged(captureThat(equals('test')))).called(1);
+      verify(() => onChanged('test')).called(1);
     });
 
     testWidgets('text field handles an icon', (tester) async {
@@ -66,7 +66,7 @@ void main() {
       expect(icon, findsOneWidget);
       await tester.tap(icon);
 
-      verify(onPressed()).called(1);
+      verify(() => onPressed()).called(1);
     });
 
     testWidgets('text field handles an error', (tester) async {

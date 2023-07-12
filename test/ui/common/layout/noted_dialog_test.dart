@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 
 import '../../../helpers/common.dart';
@@ -55,8 +55,8 @@ void main() {
       await tester.tap(right);
       await tester.pump(const Duration(seconds: 1));
 
-      verify(onLeft()).called(1);
-      verify(onRight()).called(1);
+      verify(() => onLeft()).called(1);
+      verify(() => onRight()).called(1);
     });
 
     testWidgets('dialog handles only left action', (tester) async {
@@ -102,7 +102,7 @@ void main() {
       await tester.tap(left);
       await tester.pump(const Duration(seconds: 1));
 
-      verify(onLeft()).called(1);
+      verify(() => onLeft()).called(1);
     });
 
     testWidgets('dialog handles only right action', (tester) async {
@@ -148,7 +148,7 @@ void main() {
       await tester.tap(right);
       await tester.pump(const Duration(seconds: 1));
 
-      verify(onRight()).called(1);
+      verify(() => onRight()).called(1);
     });
   });
 }

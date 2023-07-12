@@ -12,8 +12,8 @@ class CatalogQuillRichText extends StatefulWidget {
 }
 
 class _CatalogQuillRichTextState extends State<CatalogQuillRichText> {
-  late NotedRichTextController _textController;
-  late FocusNode _focusNode;
+  late final NotedRichTextController _textController;
+  late final FocusNode _focusNode;
   PersistentBottomSheetController? _toolbarController;
 
   @override

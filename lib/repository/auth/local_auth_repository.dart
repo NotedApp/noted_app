@@ -82,7 +82,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
 
   @override
   Future<void> signOut() async {
-    _updateUser(NotedUser.empty(), ErrorCode.repository_auth_signOut_failed);
+    await _updateUser(NotedUser.empty(), ErrorCode.repository_auth_signOut_failed);
   }
 
   @override

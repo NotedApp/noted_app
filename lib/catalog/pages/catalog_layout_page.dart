@@ -18,7 +18,7 @@ class CatalogLayoutPage extends StatefulWidget {
 }
 
 class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProviderStateMixin {
-  late TabController tabController;
+  late final TabController tabController;
 
   @override
   void initState() {

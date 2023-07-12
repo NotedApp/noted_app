@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:noted_app/theme/custom_colors.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 
@@ -49,7 +49,7 @@ void main() {
       await tester.pump(const Duration(seconds: 1));
 
       expect(result, completion(equals(null)));
-      verify(onReset()).called(1);
+      verify(() => onReset()).called(1);
     });
 
     testWidgets('color picker selects a color', (tester) async {
