@@ -25,6 +25,46 @@
       "program": "lib/main.dart"
     },
     {
+      "name": "noted_app_test (debug mode)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/test.dart"
+    },
+    {
+      "name": "noted_app_test (profile mode)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile",
+      "program": "lib/test.dart"
+    },
+    {
+      "name": "noted_app_test (release mode)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release",
+      "program": "lib/test.dart"
+    },
+    {
+      "name": "noted_app_local (debug mode)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/local.dart"
+    },
+    {
+      "name": "noted_app_local (profile mode)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile",
+      "program": "lib/local.dart"
+    },
+    {
+      "name": "noted_app_local (release mode)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release",
+      "program": "lib/local.dart"
+    },
+    {
       "name": "noted_catalog (debug mode)",
       "request": "launch",
       "type": "dart",

@@ -61,7 +61,7 @@ void main() {
           NotedColorSchemeName.blue,
           NotedTextThemeName.poppins,
           NotedColorSchemes.blueColorScheme,
-          error: NotedError('theme_cubit.custom_fetch_failed'),
+          error: NotedError(ErrorCode.state_theme_customFetchFailed),
         ),
       ],
     );

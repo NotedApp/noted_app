@@ -18,7 +18,7 @@ class ThemeCubit extends Cubit<ThemeState> {
 
   void fetchCustomColorScheme() {
     // TODO: Actually fetch state from remote here.
-    emit(state.copyWith(error: NotedError('theme_cubit.custom_fetch_failed')));
+    emit(state.copyWith(error: NotedError(ErrorCode.state_theme_customFetchFailed)));
   }
 
   void updateCustomColorScheme(ColorScheme customScheme) {
