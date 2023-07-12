@@ -10,7 +10,7 @@ abstract class AuthRepository {
   /// A [Stream] that emits a new user whenever the user's authentication state changes.
   ///
   /// Emits [NotedUser.empty] if the user is not authenticated.
-  Stream<NotedUser> get user;
+  Stream<NotedUser> get userStream;
 
   /// Creates a new user with the provided [email] and [password].
   Future<void> createUserWithEmailAndPassword({String email, String password});

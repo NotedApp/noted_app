@@ -16,7 +16,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
   NotedUser get currentUser => _currentUser;
 
   @override
-  Stream<NotedUser> get user => _userStreamController.stream;
+  Stream<NotedUser> get userStream => _userStreamController.stream;
 
   @override
   Future<void> createUserWithEmailAndPassword({String email = '', String password = ''}) async {
@@ -39,7 +39,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
     _localUsers.add(user);
     _localPasswords.add(password);
 
-    _updateUser(user, ErrorCode.repository_auth_createUser_failed, delay: false);
+    await _updateUser(user, ErrorCode.repository_auth_createUser_failed, delay: false);
   }
 
   @override
@@ -56,13 +56,13 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
       throw NotedError(ErrorCode.repository_auth_emailSignIn_invalidPassword);
     }
 
-    _updateUser(user, ErrorCode.repository_auth_emailSignIn_failed);
+    await _updateUser(user, ErrorCode.repository_auth_emailSignIn_failed);
   }
 
   @override
   Future<void> signInWithGoogle() async {
     NotedUser googleUser = _localUsers.firstWhere((user) => user.id == 'local-google');
-    _updateUser(googleUser, ErrorCode.repository_auth_googleSignIn_failed);
+    await _updateUser(googleUser, ErrorCode.repository_auth_googleSignIn_failed);
   }
 
   @override
@@ -86,8 +86,8 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
   }
 
   @override
-  FutureOr onDispose() {
-    _userStreamController.close();
+  FutureOr onDispose() async {
+    await _userStreamController.close();
   }
 
   Future<void> _updateUser(NotedUser user, ErrorCode error, {bool delay = true}) async {

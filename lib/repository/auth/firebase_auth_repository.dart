@@ -20,7 +20,7 @@ class FirebaseAuthRepository extends AuthRepository {
   NotedUser get currentUser => _firebaseAuth.currentUser?._toNoted ?? NotedUser.empty();
 
   @override
-  Stream<NotedUser> get user {
+  Stream<NotedUser> get userStream {
     return _firebaseAuth.authStateChanges().map((firebaseUser) => firebaseUser?._toNoted ?? NotedUser.empty());
   }
 
