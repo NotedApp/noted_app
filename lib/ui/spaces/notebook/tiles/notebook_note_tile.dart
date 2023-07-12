@@ -13,7 +13,7 @@ class NotebookNoteTile extends StatefulWidget {
 }
 
 class _NotebookNoteTileState extends State<NotebookNoteTile> {
-  late NotedRichTextController _textController;
+  late final NotedRichTextController _textController;
 
   @override
   void initState() {

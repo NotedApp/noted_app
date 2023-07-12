@@ -14,7 +14,7 @@ class NotedStringPicker extends StatefulWidget {
 }
 
 class _NotedStringPickerState extends State<NotedStringPicker> {
-  late TextEditingController controller;
+  late final TextEditingController controller;
 
   @override
   void initState() {

@@ -4,13 +4,15 @@ import 'package:noted_app/util/logging/noted_logger.dart';
 
 typedef NotedMiddleware<Event> = void Function(Event);
 
-abstract class NotedEvent {}
+abstract class NotedEvent {
+  const NotedEvent();
+}
 
 abstract class TrackableEvent {}
 
 abstract class NotedBloc<Event extends NotedEvent, State> extends Bloc<Event, State> {
   final String _type;
-  late NotedLogger _logger;
+  late final NotedLogger _logger;
 
   NotedBloc(super.initialState, this._type) {
     _logger = locator<NotedLogger>();
@@ -20,7 +22,7 @@ abstract class NotedBloc<Event extends NotedEvent, State> extends Bloc<Event, St
   void onTransition(Transition<Event, State> transition) {
     super.onTransition(transition);
 
-    if (Event is TrackableEvent) {
+    if (transition.event is TrackableEvent) {
       _logger.log(
         name: '$_type-bloc-transition',
         params: {
@@ -30,5 +32,15 @@ abstract class NotedBloc<Event extends NotedEvent, State> extends Bloc<Event, St
         },
       );
     }
+  }
+
+  @override
+  void onError(Object error, StackTrace stackTrace) {
+    super.onError(error, stackTrace);
+
+    _logger.log(
+      name: '$_type-bloc-error',
+      params: {'error': error},
+    );
   }
 }
