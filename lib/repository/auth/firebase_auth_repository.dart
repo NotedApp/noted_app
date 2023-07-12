@@ -20,9 +20,9 @@ class FirebaseAuthRepository extends AuthRepository {
   NotedUser get currentUser => _firebaseAuth.currentUser?._toNoted ?? NotedUser.empty();
 
   @override
-  Stream<NotedUser> get user => _firebaseAuth.authStateChanges().map(
-        (firebaseUser) => firebaseUser?._toNoted ?? NotedUser.empty(),
-      );
+  Stream<NotedUser> get user {
+    return _firebaseAuth.authStateChanges().map((firebaseUser) => firebaseUser?._toNoted ?? NotedUser.empty());
+  }
 
   @override
   Future<void> createUserWithEmailAndPassword({String email = '', String password = ''}) async {
@@ -95,7 +95,7 @@ class FirebaseAuthRepository extends AuthRepository {
         _googleSignIn.signOut(),
       ]);
     } catch (_) {
-      throw NotedError(ErrorCode.repository_auth_logOut_failed);
+      throw NotedError(ErrorCode.repository_auth_signOut_failed);
     }
   }
 
