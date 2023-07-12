@@ -8,6 +8,7 @@ import 'package:noted_app/util/logging/firebase_logger.dart';
 import 'package:noted_app/util/logging/local_logger.dart';
 import 'package:noted_app/util/logging/noted_logger.dart';
 
+// coverage:ignore-file
 sealed class Environment {
   Future<void> configure();
 }

@@ -58,8 +58,7 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
         case AuthSignInWithGithubEvent _:
           await _repository.signInWithGithub();
         case _:
-          // coverage:ignore-line
-          throw StateError('Auth bloc handled a non-sign-in event as a sign-in event.');
+          throw StateError('Auth bloc handled a non-sign-in event as a sign-in event.'); // coverage:ignore-line
       }
     } catch (e) {
       emit(AuthState.unauthenticated());

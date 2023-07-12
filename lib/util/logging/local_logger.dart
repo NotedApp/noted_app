@@ -1,6 +1,7 @@
 import 'package:noted_app/util/logging/noted_logger.dart';
 import 'dart:developer' as developer;
 
+// coverage:ignore-file
 class LocalLogger extends NotedLogger {
   Map<String, dynamic> _defaultParams = {};
 
