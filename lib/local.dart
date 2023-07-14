@@ -3,8 +3,7 @@ import 'package:noted_app/app.dart';
 import 'package:noted_app/util/environment/environment.dart';
 
 void main() async {
-  Environment environment = LocalEnvironment();
-  await environment.configure();
+  await LocalEnvironment().configure();
 
   runApp(const NotedApp());
 }
