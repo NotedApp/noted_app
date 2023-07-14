@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:noted_app/state/auth/auth_bloc.dart';
 import 'package:noted_app/ui/router/router_config.dart';
 
 class NotedApp extends StatelessWidget {
@@ -8,11 +10,14 @@ class NotedApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      onGenerateTitle: (context) => Strings.of(context).app_title,
-      localizationsDelegates: Strings.localizationsDelegates,
-      supportedLocales: Strings.supportedLocales,
-      routerConfig: routerConfig,
+    return MultiBlocProvider(
+      providers: [BlocProvider(create: (context) => AuthBloc())],
+      child: MaterialApp.router(
+        onGenerateTitle: (context) => Strings.of(context).app_title,
+        localizationsDelegates: Strings.localizationsDelegates,
+        supportedLocales: Strings.supportedLocales,
+        routerConfig: routerConfig,
+      ),
     );
   }
 }
