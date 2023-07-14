@@ -6,8 +6,8 @@ import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/common/rich_text/noted_rich_text_attributes.dart';
 import 'package:noted_app/ui/common/rich_text/quill/quill_rich_text_editor.dart';
 
-import '../../../../helpers/common.dart';
-import '../../../test_wrapper.dart';
+import '../../../../helpers/mocks/mock_callbacks.dart';
+import '../../../../helpers/test_wrapper.dart';
 
 void main() {
   group('Quill Rich Text Editor', () {

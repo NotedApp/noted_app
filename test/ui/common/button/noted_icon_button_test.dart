@@ -3,8 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 
-import '../../../helpers/common.dart';
-import '../../test_wrapper.dart';
+import '../../../helpers/mocks/mock_callbacks.dart';
+import '../../../helpers/test_wrapper.dart';
 
 void main() {
   group('Noted Icon Button', () {

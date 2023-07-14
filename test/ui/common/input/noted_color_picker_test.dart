@@ -4,9 +4,9 @@ import 'package:mocktail/mocktail.dart';
 import 'package:noted_app/theme/custom_colors.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 
-import '../../../helpers/common.dart';
-import '../../../helpers/unit_test_environment.dart';
-import '../../test_wrapper.dart';
+import '../../../helpers/environment/unit_test_environment.dart';
+import '../../../helpers/mocks/mock_callbacks.dart';
+import '../../../helpers/test_wrapper.dart';
 
 void main() {
   group('Noted Color Picker', () {

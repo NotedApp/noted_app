@@ -4,15 +4,14 @@ import 'package:mocktail/mocktail.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/util/routing/noted_router.dart';
 
-import '../../helpers/unit_test_environment.dart';
-import '../../ui/test_wrapper.dart';
-
-class _MockRouter extends Mock implements NotedRouter {}
+import '../../helpers/environment/unit_test_environment.dart';
+import '../../helpers/mocks/mock_classes.dart';
+import '../../helpers/test_wrapper.dart';
 
 class _FakeBuildContext extends Fake implements BuildContext {}
 
 void main() {
-  _MockRouter _mockRouter = _MockRouter();
+  MockRouter _mockRouter = MockRouter();
 
   setUpAll(() {
     UnitTestEnvironment().configure(router: _mockRouter);
