@@ -6,6 +6,7 @@ import 'package:noted_app/ui/common/button/noted_text_button.dart';
 import 'package:noted_app/ui/common/icon/noted_icons.dart';
 import 'package:noted_app/ui/common/layout/noted_dialog.dart';
 import 'package:noted_app/ui/common/noted_widget_config.dart';
+import 'package:noted_app/util/routing/noted_router.dart';
 
 class NotedColorPicker extends StatefulWidget {
   final Color initialColor;
@@ -41,9 +42,9 @@ class _NotedColorPickerState extends State<NotedColorPicker> {
     return NotedDialog(
       title: widget.title,
       leftActionText: strings.common_confirm,
-      onLeftActionPressed: () => Navigator.of(context).pop(selectedColor),
+      onLeftActionPressed: () => context.pop(selectedColor),
       rightActionText: strings.common_cancel,
-      onRightActionPressed: () => Navigator.of(context).pop(),
+      onRightActionPressed: () => context.pop(),
       child: Column(
         children: [
           GridView.count(
@@ -73,7 +74,7 @@ class _NotedColorPickerState extends State<NotedColorPicker> {
                   size: NotedWidgetSize.small,
                   onPressed: () {
                     resetDefault();
-                    Navigator.of(context).pop();
+                    context.pop();
                   },
                 ),
               ),

@@ -10,9 +10,26 @@ void main() {
     'test-default': 0,
   };
 
-  final Map<String, Object?> params = {
+  final Map<String, Object?> uiParams = {
     'test-param-0': 10,
     'test-param-1': 'test',
+  };
+
+  final Map<String, Object?> uiResult = {
+    'test-param-0': 10,
+    'test-param-1': 'test',
+    'page': 'test',
+  };
+
+  final Map<String, Object?> blocParams = {
+    'test-param-0': 10,
+    'test-param-1': 'test',
+  };
+
+  final Map<String, Object?> blocResult = {
+    'test-param-0': 10,
+    'test-param-1': 'test',
+    'bloc': 'test',
   };
 
   final _MockFirebaseAnalytics analytics = _MockFirebaseAnalytics();
@@ -36,10 +53,16 @@ void main() {
       verify(() => analytics.setDefaultEventParameters(defaults)).called(1);
     });
 
-    test('logs to firebase with params', () {
-      logger.log(name: 'test-event', params: params);
+    test('logs ui to firebase with params', () {
+      logger.logUi(name: 'event', page: 'test', params: uiParams);
 
-      verify(() => analytics.logEvent(name: 'test-event', parameters: params)).called(1);
+      verify(() => analytics.logEvent(name: 'test-page-event', parameters: uiResult)).called(1);
+    });
+
+    test('logs bloc to firebase with params', () {
+      logger.logBloc(name: 'event', bloc: 'test', params: blocParams);
+
+      verify(() => analytics.logEvent(name: 'test-bloc-event', parameters: blocResult)).called(1);
     });
   });
 }

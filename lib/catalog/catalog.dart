@@ -3,10 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/catalog/catalog_content.dart';
 import 'package:noted_app/catalog/catalog_renderer.dart';
+import 'package:noted_app/catalog/dependencies/catalog_environment.dart';
 import 'package:noted_app/state/theme/theme_cubit.dart';
 import 'package:noted_app/state/theme/theme_state.dart';
 
 void main() {
+  CatalogEnvironment().configure();
   runApp(const CatalogApp());
 }
 

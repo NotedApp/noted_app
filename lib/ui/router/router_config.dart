@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:noted_app/app.dart';
+import 'package:noted_app/ui/router/route_error_page.dart';
 
 GoRouter routerConfig = GoRouter(
   routes: [
@@ -8,4 +9,5 @@ GoRouter routerConfig = GoRouter(
       builder: (context, state) => MyHomePage(title: 'noted'),
     ),
   ],
+  errorBuilder: (context, state) => RouteErrorPage(),
 );

@@ -38,21 +38,23 @@ void main() {
       act: (bloc) => bloc.add(_AddEvent()),
       expect: () => [1],
       verify: (_) => verify(
-        () => logger.log(
+        () => logger.logBloc(
           name: 'test-bloc-transition',
+          bloc: 'test',
           params: captureAny(named: 'params'),
         ),
       ).called(1),
     );
 
     blocTest(
-      'logs errors',
+      'logs bloc errors',
       build: NotedBlocImpl.new,
       act: (bloc) => bloc.add(_ErrorEvent()),
       expect: () => [],
       verify: (_) => verify(
-        () => logger.log(
+        () => logger.logBloc(
           name: 'test-bloc-error',
+          bloc: 'test',
           params: captureAny(named: 'params'),
         ),
       ).called(1),

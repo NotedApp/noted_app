@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/ui/common/input/noted_text_field.dart';
 import 'package:noted_app/ui/common/layout/noted_dialog.dart';
+import 'package:noted_app/util/routing/noted_router.dart';
 
 class NotedStringPicker extends StatefulWidget {
   final String initialValue;
@@ -29,9 +30,9 @@ class _NotedStringPickerState extends State<NotedStringPicker> {
     return NotedDialog(
       title: widget.title,
       leftActionText: strings.common_confirm,
-      onLeftActionPressed: () => Navigator.of(context).pop(controller.text),
+      onLeftActionPressed: () => context.pop(controller.text),
       rightActionText: strings.common_cancel,
-      onRightActionPressed: () => Navigator.of(context).pop(),
+      onRightActionPressed: () => context.pop(),
       child: NotedTextField(
         type: NotedTextFieldType.standard,
         controller: controller,

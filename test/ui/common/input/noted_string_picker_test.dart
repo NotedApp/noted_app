@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 
-import '../../test_wrapper.dart';
+import '../../../helpers/environment/unit_test_environment.dart';
+import '../../../helpers/test_wrapper.dart';
 
 void main() {
   group('Noted String Picker', () {
+    setUpAll(() {
+      UnitTestEnvironment().configure();
+    });
+
     testWidgets('string picker selects a string', (tester) async {
       Future<String?> result = Future.value('');
 

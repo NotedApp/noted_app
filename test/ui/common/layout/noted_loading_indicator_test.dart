@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 
-import '../../test_wrapper.dart';
+import '../../../helpers/test_wrapper.dart';
 
 void main() {
   group('Noted Loading Indicator', () {

@@ -1,24 +1,27 @@
 {
-  "unknown": "unknown",
+  "unknown": "Unknown",
   
-  "app_title": "noted",
+  "app_title": "Noted.",
 
-  "common_confirm": "confirm",
-  "common_cancel": "cancel",
+  "common_confirm": "Confirm",
+  "common_cancel": "Cancel",
+  "common_routeErrorTitle": "Oops!",
+  "common_routeErrorText": "Sorry, we seem to be lost!",
+  "common_routeErrorCta": "Back to home",
 
-  "settings_colorTitle": "colors",
-  "settings_colorSchemeBlue": "blue",
-  "settings_colorSchemeGreen": "green",
-  "settings_colorSchemeDark": "dark",
-  "settings_colorSchemeOled": "oled",
-  "settings_colorSchemeLight": "light",
-  "settings_colorSchemeCustom": "custom",
-  "settings_colorDefault": "default color",
-  "settings_fontTitle": "fonts",
-  "settings_textThemePoppins": "poppins",
-  "settings_textThemeRoboto": "roboto",
-  "settings_textThemeLora": "lora",
-  "settings_textThemeVollkorn": "vollkorn",
+  "settings_colorTitle": "Colors",
+  "settings_colorSchemeBlue": "Blue",
+  "settings_colorSchemeGreen": "Green",
+  "settings_colorSchemeDark": "Dark",
+  "settings_colorSchemeOled": "Oled",
+  "settings_colorSchemeLight": "Light",
+  "settings_colorSchemeCustom": "Custom",
+  "settings_colorDefault": "Default color",
+  "settings_fontTitle": "Fonts",
+  "settings_textThemePoppins": "Poppins",
+  "settings_textThemeRoboto": "Roboto",
+  "settings_textThemeLora": "Lora",
+  "settings_textThemeVollkorn": "Vollkorn",
 
-  "editor_linkPickerTitle": "link to"
+  "editor_linkPickerTitle": "Link to"
 }
