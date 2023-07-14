@@ -7,49 +7,59 @@ import 'package:noted_app/util/environment/test_firebase_options.dart';
 import 'package:noted_app/util/logging/firebase_logger.dart';
 import 'package:noted_app/util/logging/local_logger.dart';
 import 'package:noted_app/util/logging/noted_logger.dart';
+import 'package:noted_app/util/routing/noted_go_router.dart';
+import 'package:noted_app/util/routing/noted_router.dart';
 
 // coverage:ignore-file
-sealed class Environment {
-  Future<void> configure();
+abstract class Environment {
+  Future<void> configure({
+    NotedLogger? logger,
+    NotedRouter? router,
+    AuthRepository? authRepository,
+  });
 }
 
 class LocalEnvironment extends Environment {
   @override
-  Future<void> configure() async {
-    _registerDependencies();
-  }
-
-  void _registerDependencies() {
+  Future<void> configure({
+    NotedLogger? logger,
+    NotedRouter? router,
+    AuthRepository? authRepository,
+  }) async {
     // Utilities.
-    locator.registerSingleton<NotedLogger>(LocalLogger());
+    locator.registerSingleton<NotedLogger>(logger ?? LocalLogger());
+    locator.registerSingleton<NotedRouter>(router ?? NotedGoRouter());
 
     // Repositories.
-    locator.registerSingleton<AuthRepository>(LocalAuthRepository());
-
-    // Blocs.
+    locator.registerSingleton<AuthRepository>(authRepository ?? LocalAuthRepository());
   }
 }
 
 class TestEnvironment extends Environment {
   @override
-  Future<void> configure() async {
+  Future<void> configure({
+    NotedLogger? logger,
+    NotedRouter? router,
+    AuthRepository? authRepository,
+  }) async {
     await Firebase.initializeApp(options: TestFirebaseOptions.currentPlatform);
 
-    _registerDependencies();
-  }
-
-  void _registerDependencies() {
     // Utilities.
-    locator.registerSingleton<NotedLogger>(FirebaseLogger());
+    locator.registerSingleton<NotedLogger>(logger ?? FirebaseLogger());
+    locator.registerSingleton<NotedRouter>(router ?? NotedGoRouter());
 
     // Repositories.
-    locator.registerSingleton<AuthRepository>(FirebaseAuthRepository());
+    locator.registerSingleton<AuthRepository>(authRepository ?? FirebaseAuthRepository());
   }
 }
 
 class ProdEnvironment extends Environment {
   @override
-  Future<void> configure() async {
+  Future<void> configure({
+    NotedLogger? logger,
+    NotedRouter? router,
+    AuthRepository? authRepository,
+  }) async {
     throw UnimplementedError();
   }
 }
