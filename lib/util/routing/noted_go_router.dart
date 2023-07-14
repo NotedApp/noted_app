@@ -11,7 +11,7 @@ class NotedGoRouter extends NotedRouter {
       GoRouter.of(context).pushReplacement(route);
 
   @override
-  void pop<T extends Object?>(BuildContext context, {T? result = null}) {
+  void pop<T extends Object?>(BuildContext context, [T? result]) {
     if (GoRouter.of(context).canPop()) {
       GoRouter.of(context).pop(result);
     }

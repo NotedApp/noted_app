@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
+import 'package:noted_app/util/routing/noted_router.dart';
 import 'package:noted_models/noted_models.dart';
 
 class NotebookNoteTile extends StatefulWidget {
@@ -57,7 +58,7 @@ class _NotebookNoteTileState extends State<NotebookNoteTile> {
         ),
       ),
       // TODO: Implement real navigation here.
-      onTap: widget.onTap ?? () => Navigator.of(context).pushNamed('notes/${widget.note.id}'),
+      onTap: widget.onTap ?? () => context.push('notes/${widget.note.id}'),
     );
   }
 

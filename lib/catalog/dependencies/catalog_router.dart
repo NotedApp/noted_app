@@ -21,7 +21,7 @@ class CatalogRouter extends NotedRouter {
   }
 
   @override
-  void pop<T extends Object?>(BuildContext context, {T? result = null}) {
+  void pop<T extends Object?>(BuildContext context, [T? result]) {
     Navigator.of(context).maybePop(result);
   }
 }
