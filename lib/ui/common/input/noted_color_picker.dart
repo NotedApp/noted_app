@@ -36,7 +36,7 @@ class _NotedColorPickerState extends State<NotedColorPicker> {
   @override
   Widget build(BuildContext context) {
     ColorScheme colors = Theme.of(context).colorScheme;
-    Strings strings = Strings.of(context);
+    Strings strings = context.strings();
     VoidCallback? resetDefault = widget.onResetDefault;
 
     return NotedDialog(

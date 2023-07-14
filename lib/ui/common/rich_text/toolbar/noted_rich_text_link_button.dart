@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/ui/common/button/noted_icon_button.dart';
 import 'package:noted_app/ui/common/input/noted_string_picker.dart';
 import 'package:noted_app/ui/common/rich_text/noted_rich_text_attributes.dart';
 import 'package:noted_app/ui/common/rich_text/noted_rich_text_controller.dart';
 import 'package:noted_app/ui/common/rich_text/noted_rich_text_utils.dart';
+import 'package:noted_app/util/extensions.dart';
 
 class NotedRichTextLinkButton extends StatelessWidget {
   final NotedRichTextController controller;
@@ -31,7 +31,7 @@ class NotedRichTextLinkButton extends StatelessWidget {
     String? updated = await showStringPicker(
       context,
       controller.getLink() ?? '',
-      title: Strings.of(context).editor_linkPickerTitle,
+      title: context.strings().editor_linkPickerTitle,
     );
 
     if (updated != null) {

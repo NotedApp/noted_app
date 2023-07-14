@@ -3,11 +3,17 @@
   
   "app_title": "Noted.",
 
+  "common_unimplemented": "This feature is not available yet, please try again soon!",
   "common_confirm": "Confirm",
   "common_cancel": "Cancel",
   "common_routeErrorTitle": "Oops!",
   "common_routeErrorText": "Sorry, we seem to be lost!",
   "common_routeErrorCta": "Back to home",
+
+  "login_disclaimers": "By registering, you agree to Noted's ",
+  "login_termsOfUse": "Terms of Use",
+  "login_and": " and ",
+  "login_privacyPolicy": "Privacy Policy",
 
   "settings_colorTitle": "Colors",
   "settings_colorSchemeBlue": "Blue",

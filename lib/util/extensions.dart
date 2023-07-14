@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/theme/custom_colors.dart';
 
 extension NotedColorExtensions on Color {
@@ -71,5 +72,23 @@ extension NotedOutlinedBorderExtensions on OutlinedBorder {
 extension NotedTextStyleExtensions on TextStyle {
   MaterialStateProperty<TextStyle> materialState() {
     return MaterialStatePropertyAll(this);
+  }
+}
+
+extension NotedBuildContextExtensions on BuildContext {
+  Strings strings() {
+    return Strings.of(this);
+  }
+
+  ThemeData theme() {
+    return Theme.of(this);
+  }
+
+  TextTheme textTheme() {
+    return Theme.of(this).textTheme;
+  }
+
+  ColorScheme colorScheme() {
+    return Theme.of(this).colorScheme;
   }
 }

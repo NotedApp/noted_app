@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
+import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/util/routing/noted_router.dart';
 
 class RouteErrorPage extends StatelessWidget {
@@ -8,7 +9,7 @@ class RouteErrorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Strings strings = Strings.of(context);
+    Strings strings = context.strings();
 
     return Scaffold(
       body: Column(
