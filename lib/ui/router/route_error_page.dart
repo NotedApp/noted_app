@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:go_router/go_router.dart';
 import 'package:noted_app/ui/common/button/noted_text_button.dart';
 import 'package:noted_app/ui/common/layout/noted_header_page.dart';
+import 'package:noted_app/ui/common/layout/noted_image_header.dart';
+import 'package:noted_app/util/routing/noted_router.dart';
 
 class RouteErrorPage extends StatelessWidget {
   const RouteErrorPage({super.key});
@@ -13,20 +14,23 @@ class RouteErrorPage extends StatelessWidget {
 
     return NotedHeaderPage(
       hasBackButton: true,
-      child: Container(
-        alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(horizontal: 32),
-        child: Column(
-          children: [
-            Text(strings.common_routeError),
-            SizedBox(height: 12),
-            NotedTextButton(
-              label: strings.common_routeErrorCta,
-              type: NotedTextButtonType.filled,
-              onPressed: () => context.go('/'),
-            ),
-          ],
-        ),
+      child: Column(
+        children: [
+          Spacer(),
+          NotedImageHeader(),
+          Spacer(flex: 2),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 48),
+            child: Text(strings.common_routeError, textAlign: TextAlign.center),
+          ),
+          SizedBox(height: 16),
+          NotedTextButton(
+            label: strings.common_routeErrorCta,
+            type: NotedTextButtonType.filled,
+            onPressed: () => context.replace('/'),
+          ),
+          Spacer(flex: 3),
+        ],
       ),
     );
   }

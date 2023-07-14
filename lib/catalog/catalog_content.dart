@@ -10,6 +10,7 @@ import 'package:noted_app/catalog/pages/catalog_tiles_page.dart';
 import 'package:noted_app/catalog/pages/input/catalog_misc_input_page.dart';
 import 'package:noted_app/catalog/pages/input/catalog_text_input_page.dart';
 import 'package:noted_app/catalog/pages/rich_text/catalog_quill_rich_text.dart';
+import 'package:noted_app/ui/router/route_error_page.dart';
 
 sealed class CatalogNode {
   final String title;
@@ -47,6 +48,9 @@ class CatalogContent {
       CatalogBranch(title: 'input', children: [
         CatalogLeaf(title: 'text', page: const CatalogTextInputPage()),
         CatalogLeaf(title: 'misc', page: const CatalogMiscInputPage()),
+      ]),
+      CatalogBranch(title: 'pages', children: [
+        CatalogLeaf(title: 'route error', page: const RouteErrorPage()),
       ]),
     ],
   );
