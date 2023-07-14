@@ -21,7 +21,14 @@ class NotedImageHeader extends StatelessWidget {
         children: [
           Text(title ?? strings.app_title, style: theme.textTheme.displayLarge),
           SizedBox(height: 24),
-          SvgPicture.asset('assets/svg/woman_reading.svg', colorFilter: filter, fit: BoxFit.fitWidth)
+          ConstrainedBox(
+            constraints: BoxConstraints.loose(Size.fromWidth(400)),
+            child: SvgPicture.asset(
+              'assets/svg/woman_reading.svg',
+              colorFilter: filter,
+              fit: BoxFit.fitWidth,
+            ),
+          ),
         ],
       ),
     );
