@@ -37,7 +37,7 @@ class NotedSnackBar {
     Row contentRow = Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        content,
+        Expanded(child: content),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
           child: closeButton,
