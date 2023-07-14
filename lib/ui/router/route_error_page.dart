@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:noted_app/ui/common/button/noted_text_button.dart';
-import 'package:noted_app/ui/common/layout/noted_header_page.dart';
-import 'package:noted_app/ui/common/layout/noted_image_header.dart';
+import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/util/routing/noted_router.dart';
 
 class RouteErrorPage extends StatelessWidget {
@@ -12,22 +10,24 @@ class RouteErrorPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Strings strings = Strings.of(context);
 
-    return NotedHeaderPage(
-      hasBackButton: true,
-      child: Column(
+    return Scaffold(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Spacer(),
-          NotedImageHeader(),
+          NotedImageHeader(title: strings.common_routeErrorTitle),
           Spacer(flex: 2),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 48),
-            child: Text(strings.common_routeError, textAlign: TextAlign.center),
+            child: Text(strings.common_routeErrorText, textAlign: TextAlign.center),
           ),
           SizedBox(height: 16),
-          NotedTextButton(
-            label: strings.common_routeErrorCta,
-            type: NotedTextButtonType.filled,
-            onPressed: () => context.replace('/'),
+          Align(
+            child: NotedTextButton(
+              label: strings.common_routeErrorCta,
+              type: NotedTextButtonType.filled,
+              onPressed: () => context.replace('/'),
+            ),
           ),
           Spacer(flex: 3),
         ],

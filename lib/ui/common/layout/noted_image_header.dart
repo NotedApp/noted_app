@@ -5,7 +5,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 const String _notedImageHeaderTag = 'noted-image-header';
 
 class NotedImageHeader extends StatelessWidget {
-  const NotedImageHeader({super.key});
+  final String? title;
+
+  const NotedImageHeader({this.title, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class NotedImageHeader extends StatelessWidget {
       tag: _notedImageHeaderTag,
       child: Column(
         children: [
-          Text(strings.app_title, style: theme.textTheme.displayLarge),
+          Text(title ?? strings.app_title, style: theme.textTheme.displayLarge),
           SizedBox(height: 24),
           SvgPicture.asset('assets/svg/woman_reading.svg', colorFilter: filter, fit: BoxFit.fitWidth)
         ],
