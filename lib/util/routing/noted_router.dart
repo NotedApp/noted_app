@@ -7,7 +7,7 @@ abstract class NotedRouter {
   void pop<T extends Object?>(BuildContext context, [T? result]);
 }
 
-extension NotedRouterExtension on BuildContext {
+extension NotedRouterExtensions on BuildContext {
   Future<T?> push<T extends Object?>(String route) => locator<NotedRouter>().push(this, route);
   Future<T?> replace<T extends Object?>(String route) => locator<NotedRouter>().replace(this, route);
   void pop<T extends Object?>([T? result]) => locator<NotedRouter>().pop(this, result);
