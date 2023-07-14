@@ -17,6 +17,10 @@
   "login_signInWith": "sign in with",
   "login_signIn": "Sign in",
   "login_register": "Register",
+  "login_authenticated": "Signed in",
+  "login_signingOut": "Signing you out",
+  "login_signingUp": "Signing you up",
+  "login_signingIn": "Signing you in",
 
   "settings_colorTitle": "Colors",
   "settings_colorSchemeBlue": "Blue",

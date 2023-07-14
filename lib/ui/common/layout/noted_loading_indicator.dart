@@ -29,6 +29,7 @@ class NotedLoadingIndicator extends StatelessWidget {
     );
 
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         labelText,
         const SizedBox(height: 16),
