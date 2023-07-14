@@ -20,8 +20,9 @@ class NotedImageHeader extends StatelessWidget {
       tag: _notedImageHeaderTag,
       child: Column(
         children: [
+          Spacer(flex: 2),
           Text(title ?? strings.app_title, style: theme.textTheme.displayLarge),
-          SizedBox(height: 24),
+          Spacer(),
           ConstrainedBox(
             constraints: BoxConstraints.loose(Size.fromWidth(400)),
             child: SvgPicture.asset(

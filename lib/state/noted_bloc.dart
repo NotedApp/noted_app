@@ -24,7 +24,7 @@ abstract class NotedBloc<Event extends NotedEvent, State> extends Bloc<Event, St
 
     if (transition.event is TrackableEvent) {
       _logger.logBloc(
-        name: '$_type-bloc-transition',
+        name: 'transition',
         bloc: _type,
         params: {
           'from': transition.currentState,
@@ -40,7 +40,7 @@ abstract class NotedBloc<Event extends NotedEvent, State> extends Bloc<Event, St
     super.onError(error, stackTrace);
 
     _logger.logBloc(
-      name: '$_type-bloc-error',
+      name: 'error',
       bloc: _type,
       params: {'error': error},
     );

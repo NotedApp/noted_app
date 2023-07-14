@@ -14,6 +14,9 @@
   "login_termsOfUse": "Terms of Use",
   "login_and": " and ",
   "login_privacyPolicy": "Privacy Policy",
+  "login_signInWith": "sign in with",
+  "login_signIn": "Sign in",
+  "login_register": "Register",
 
   "settings_colorTitle": "Colors",
   "settings_colorSchemeBlue": "Blue",

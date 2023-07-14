@@ -15,9 +15,8 @@ class RouteErrorPage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Expanded(child: NotedImageHeader(title: strings.common_routeErrorTitle), flex: 4),
           Spacer(),
-          NotedImageHeader(title: strings.common_routeErrorTitle),
-          Spacer(flex: 2),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 48),
             child: Text(strings.common_routeErrorText, textAlign: TextAlign.center),
@@ -30,7 +29,7 @@ class RouteErrorPage extends StatelessWidget {
               onPressed: () => context.replace('/'),
             ),
           ),
-          Spacer(flex: 3),
+          Spacer()
         ],
       ),
     );

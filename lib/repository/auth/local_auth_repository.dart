@@ -92,7 +92,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
 
   Future<void> _updateUser(NotedUser user, ErrorCode error, {bool delay = true}) async {
     if (delay) {
-      Future.delayed(Duration(milliseconds: _msDelay));
+      await Future.delayed(Duration(milliseconds: _msDelay));
     }
 
     if (_shouldThrow) {
