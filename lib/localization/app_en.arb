@@ -5,6 +5,8 @@
 
   "common_confirm": "confirm",
   "common_cancel": "cancel",
+  "common_routeError": "sorry, we seem to be lost. press the button below to go home or the back button to go back.",
+  "common_routeErrorCta": "go home",
 
   "settings_colorTitle": "colors",
   "settings_colorSchemeBlue": "blue",

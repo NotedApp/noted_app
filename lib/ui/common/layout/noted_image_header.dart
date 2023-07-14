@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 const String _notedImageHeaderTag = 'noted-image-header';
 
 class NotedImageHeader extends StatelessWidget {
-  const NotedImageHeader();
+  const NotedImageHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
