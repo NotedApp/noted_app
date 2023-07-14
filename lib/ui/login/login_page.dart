@@ -6,8 +6,12 @@ import 'package:noted_app/state/auth/auth_bloc.dart';
 import 'package:noted_app/state/auth/auth_event.dart';
 import 'package:noted_app/state/auth/auth_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
+import 'package:noted_app/ui/login/login_loading.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/util/routing/noted_router.dart';
+
+const ValueKey _contentKey = const ValueKey('content');
+const ValueKey _loadingKey = const ValueKey('loading');
 
 class LoginPage extends StatelessWidget {
   @override
@@ -26,10 +30,22 @@ class LoginPage extends StatelessWidget {
               Expanded(child: NotedImageHeader()),
               SizedBox(
                 height: 320,
-                child: switch (state.status) {
-                  AuthStatus.unauthenticated => _LoginPageContent(),
-                  _ => _LoginPageLoading(status: state.status),
-                },
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 200),
+                  switchInCurve: Curves.easeIn,
+                  switchOutCurve: Curves.easeOut,
+                  transitionBuilder: (Widget child, Animation<double> animation) => SlideTransition(
+                    position: Tween(
+                      begin: child.key == _contentKey ? Offset(-1.0, 0.0) : Offset(1.0, 0.0),
+                      end: Offset(0.0, 0.0),
+                    ).animate(animation),
+                    child: child,
+                  ),
+                  child: switch (state.status) {
+                    AuthStatus.unauthenticated => const _LoginPageContent(key: _contentKey),
+                    _ => LoginLoading(status: state.status, key: _loadingKey),
+                  },
+                ),
               ),
             ],
           ),
@@ -40,6 +56,8 @@ class LoginPage extends StatelessWidget {
 }
 
 class _LoginPageContent extends StatelessWidget {
+  const _LoginPageContent({super.key});
+
   @override
   Widget build(BuildContext context) {
     final AuthBloc bloc = context.read();
@@ -147,30 +165,5 @@ class _LoginPageContent extends StatelessWidget {
 
   void _viewPrivacyPolicy(BuildContext context) {
     NotedSnackBar.showUnimplementedSnackBar(context);
-  }
-}
-
-class _LoginPageLoading extends StatelessWidget {
-  final AuthStatus status;
-
-  const _LoginPageLoading({required this.status});
-
-  @override
-  Widget build(BuildContext context) {
-    final Strings strings = context.strings();
-
-    return Expanded(
-      child: Center(
-        child: NotedLoadingIndicator(
-          label: switch (status) {
-            AuthStatus.unauthenticated => strings.unknown,
-            AuthStatus.authenticated => strings.login_authenticated,
-            AuthStatus.signing_out => strings.login_signingOut,
-            AuthStatus.signing_in => strings.login_signingIn,
-            AuthStatus.signing_up => strings.login_signingUp,
-          },
-        ),
-      ),
-    );
   }
 }
