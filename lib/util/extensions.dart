@@ -75,6 +75,7 @@ extension NotedTextStyleExtensions on TextStyle {
   }
 }
 
+// coverage:ignore-start
 extension NotedBuildContextExtensions on BuildContext {
   Strings strings() {
     return Strings.of(this);
@@ -92,3 +93,4 @@ extension NotedBuildContextExtensions on BuildContext {
     return Theme.of(this).colorScheme;
   }
 }
+// coverage:ignore-end

@@ -142,5 +142,37 @@ void main() {
 
       expect(find.text('test snackbar content'), findsNothing);
     });
+
+    testWidgets('snack bar is created with unimplemented text', (tester) async {
+      await tester.pumpWidget(
+        TestWrapper(
+          child: Scaffold(
+            body: Builder(
+              builder: (context) => NotedIconButton(
+                icon: NotedIcons.pencil,
+                type: NotedIconButtonType.simple,
+                onPressed: () => showUnimplementedSnackBar(context),
+              ),
+            ),
+          ),
+        ),
+      );
+
+      await tester.tap(find.byIcon(NotedIcons.pencil));
+      await tester.pump(const Duration(seconds: 1));
+
+      Finder text = find.text('this feature is not available yet, please try again soon!');
+      Finder closeButton = find.byIcon(NotedIcons.close);
+      SnackBar bar = tester.widget(find.byType(SnackBar));
+
+      expect(text, findsOneWidget);
+      expect(closeButton, findsOneWidget);
+      expect((bar.shape! as RoundedRectangleBorder).borderRadius, equals(BorderRadius.circular(12)));
+
+      await tester.tap(find.byIcon(NotedIcons.close));
+      await tester.pump(const Duration(seconds: 1));
+
+      expect(text, findsNothing);
+    });
   });
 }

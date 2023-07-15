@@ -77,16 +77,16 @@ class NotedSnackBar {
             content: content,
           );
   }
+}
 
-  static void showUnimplementedSnackBar(BuildContext context) {
-    ScaffoldMessengerState? state = ScaffoldMessenger.maybeOf(context);
+void showUnimplementedSnackBar(BuildContext context) {
+  ScaffoldMessengerState? state = ScaffoldMessenger.maybeOf(context);
 
-    state?.showSnackBar(
-      createWithText(
-        context: context,
-        text: context.strings().common_unimplemented,
-        hasClose: true,
-      ),
-    );
-  }
+  state?.showSnackBar(
+    NotedSnackBar.createWithText(
+      context: context,
+      text: context.strings().common_unimplemented,
+      hasClose: true,
+    ),
+  );
 }

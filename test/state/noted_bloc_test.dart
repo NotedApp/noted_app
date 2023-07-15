@@ -39,7 +39,7 @@ void main() {
       expect: () => [1],
       verify: (_) => verify(
         () => logger.logBloc(
-          name: 'test-bloc-transition',
+          name: 'transition',
           bloc: 'test',
           params: captureAny(named: 'params'),
         ),
@@ -53,7 +53,7 @@ void main() {
       expect: () => [],
       verify: (_) => verify(
         () => logger.logBloc(
-          name: 'test-bloc-error',
+          name: 'error',
           bloc: 'test',
           params: captureAny(named: 'params'),
         ),

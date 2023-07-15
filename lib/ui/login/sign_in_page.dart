@@ -139,6 +139,6 @@ class _SignInPageContentState extends State<_SignInPageContent> {
   }
 
   void _resetPassword(BuildContext context) {
-    NotedSnackBar.showUnimplementedSnackBar(context);
+    showUnimplementedSnackBar(context);
   }
 }

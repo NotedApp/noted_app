@@ -68,19 +68,19 @@ class _LoginPageContent extends StatelessWidget {
               icon: NotedIcons.apple,
               type: NotedIconButtonType.filled,
               color: NotedWidgetColor.secondary,
-              onPressed: () => NotedSnackBar.showUnimplementedSnackBar(context),
+              onPressed: () => showUnimplementedSnackBar(context),
             ),
             NotedIconButton(
               icon: NotedIcons.facebook,
               type: NotedIconButtonType.filled,
               color: NotedWidgetColor.secondary,
-              onPressed: () => NotedSnackBar.showUnimplementedSnackBar(context),
+              onPressed: () => showUnimplementedSnackBar(context),
             ),
             NotedIconButton(
               icon: NotedIcons.github,
               type: NotedIconButtonType.filled,
               color: NotedWidgetColor.secondary,
-              onPressed: () => NotedSnackBar.showUnimplementedSnackBar(context),
+              onPressed: () => showUnimplementedSnackBar(context),
             ),
           ],
         ),
@@ -117,10 +117,10 @@ class _LoginPageContent extends StatelessWidget {
   }
 
   void _viewTermsOfUse(BuildContext context) {
-    NotedSnackBar.showUnimplementedSnackBar(context);
+    showUnimplementedSnackBar(context);
   }
 
   void _viewPrivacyPolicy(BuildContext context) {
-    NotedSnackBar.showUnimplementedSnackBar(context);
+    showUnimplementedSnackBar(context);
   }
 }
