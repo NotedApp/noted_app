@@ -4,6 +4,7 @@ import 'package:noted_app/app.dart';
 import 'package:noted_app/state/auth/auth_bloc.dart';
 import 'package:noted_app/state/auth/auth_state.dart';
 import 'package:noted_app/ui/login/login_page.dart';
+import 'package:noted_app/ui/login/register_page.dart';
 import 'package:noted_app/ui/login/sign_in_page.dart';
 import 'package:noted_app/ui/router/route_error_page.dart';
 
@@ -27,7 +28,7 @@ GoRouter routerConfig = GoRouter(
         ),
         GoRoute(
           path: 'register',
-          builder: (context, state) => MyHomePage(title: 'noted'),
+          builder: (context, state) => RegisterPage(),
         ),
       ],
       redirect: (context, state) {

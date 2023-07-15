@@ -27,6 +27,7 @@
   "login_forgotPassword": "forgot your password? ",
   "login_resetPassword": "reset it here",
   "login_existingAccount": "already have an account? ",
+  "login_error_confirmPassword": "please confirm that your passwords match",
 
   "settings_colorTitle": "colors",
   "settings_colorSchemeBlue": "blue",
