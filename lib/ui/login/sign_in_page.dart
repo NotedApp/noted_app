@@ -35,61 +35,58 @@ class _SignInPageContentState extends State<_SignInPageContent> {
     final TextTheme theme = context.textTheme();
     final Strings strings = context.strings();
 
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SizedBox(height: 18),
-          NotedTextField(
-            name: strings.login_email,
-            hint: strings.login_email,
-            keyboardType: TextInputType.emailAddress,
-            type: NotedTextFieldType.standard,
-          ),
-          SizedBox(height: 12),
-          NotedTextField(
-            name: strings.login_password,
-            hint: strings.login_password,
-            keyboardType: TextInputType.visiblePassword,
-            type: NotedTextFieldType.standard,
-            obscureText: true,
-            autocorrect: false,
-          ),
-          SizedBox(height: 12),
-          NotedTextButton(
-            label: strings.login_signIn,
-            type: NotedTextButtonType.filled,
-            onPressed: () => context.push('/login/sign-in'),
-          ),
-          SizedBox(height: 12),
-          NotedTextButton(
-            label: strings.login_register,
-            type: NotedTextButtonType.filled,
-            color: NotedWidgetColor.secondary,
-            onPressed: () => context.push('/login/register'),
-          ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(36, 14, 36, 18),
-            child: RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: strings.login_forgotPassword,
-                    style: theme.labelSmall,
-                  ),
-                  TextSpan(
-                    text: strings.login_resetPassword,
-                    style: theme.labelSmall?.copyWith(decoration: TextDecoration.underline),
-                    recognizer: TapGestureRecognizer()..onTap = () => _resetPassword(context),
-                  ),
-                ],
-              ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SizedBox(height: 18),
+        NotedTextField(
+          name: strings.login_email,
+          hint: strings.login_email,
+          keyboardType: TextInputType.emailAddress,
+          type: NotedTextFieldType.standard,
+        ),
+        SizedBox(height: 12),
+        NotedTextField(
+          name: strings.login_password,
+          hint: strings.login_password,
+          keyboardType: TextInputType.visiblePassword,
+          type: NotedTextFieldType.standard,
+          obscureText: true,
+          autocorrect: false,
+        ),
+        SizedBox(height: 12),
+        NotedTextButton(
+          label: strings.login_signIn,
+          type: NotedTextButtonType.filled,
+          onPressed: () => context.push('/login/sign-in'),
+        ),
+        SizedBox(height: 12),
+        NotedTextButton(
+          label: strings.login_register,
+          type: NotedTextButtonType.filled,
+          color: NotedWidgetColor.secondary,
+          onPressed: () => context.push('/login/register'),
+        ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(36, 14, 36, 18),
+          child: RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: strings.login_forgotPassword,
+                  style: theme.labelSmall,
+                ),
+                TextSpan(
+                  text: strings.login_resetPassword,
+                  style: theme.labelSmall?.copyWith(decoration: TextDecoration.underline),
+                  recognizer: TapGestureRecognizer()..onTap = () => _resetPassword(context),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
