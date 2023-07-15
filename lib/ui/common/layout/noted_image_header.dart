@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:noted_app/util/extensions.dart';
 
@@ -13,15 +12,15 @@ class NotedImageHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = context.theme();
-    Strings strings = context.strings();
     ColorFilter filter = ColorFilter.mode(theme.colorScheme.tertiary, BlendMode.srcIn);
 
     return Hero(
       tag: _notedImageHeaderTag,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Spacer(flex: 2),
-          Text(title ?? strings.app_title, style: theme.textTheme.displayLarge),
+          if (title != null) Spacer(flex: 2),
+          if (title != null) Text(title!, style: theme.textTheme.displayLarge),
           Spacer(),
           ConstrainedBox(
             constraints: BoxConstraints.loose(Size.fromWidth(400)),
