@@ -9,40 +9,21 @@ import 'package:noted_app/ui/login/login_frame.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/util/routing/noted_router.dart';
 
-class SignInPage extends StatelessWidget {
+class SignInPage extends StatefulWidget {
   final String initialEmail;
   final String initialPassword;
 
-  const SignInPage({
+  SignInPage({
     this.initialEmail = '',
     this.initialPassword = '',
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
-    return LoginFrame(
-      headerTitle: context.strings().login_signIn,
-      contentBuilder: (key) => _SignInPageContent(
-        initialEmail: initialEmail,
-        initialPassword: initialPassword,
-        key: key,
-      ),
-    );
-  }
+  State<StatefulWidget> createState() => _SignInPageState();
 }
 
-class _SignInPageContent extends StatefulWidget {
-  final String initialEmail;
-  final String initialPassword;
-
-  _SignInPageContent({this.initialEmail = '', this.initialPassword = '', super.key});
-
-  @override
-  State<StatefulWidget> createState() => _SignInPageContentState();
-}
-
-class _SignInPageContentState extends State<_SignInPageContent> {
+class _SignInPageState extends State<SignInPage> {
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
   String? _emailError = null;
@@ -63,71 +44,75 @@ class _SignInPageContentState extends State<_SignInPageContent> {
     final TextTheme theme = context.textTheme();
     final Strings strings = context.strings();
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        SizedBox(height: 18),
-        NotedTextField(
-          controller: _emailController,
-          name: strings.login_email,
-          hint: strings.login_email,
-          errorText: _emailError,
-          showErrorText: true,
-          keyboardType: TextInputType.emailAddress,
-          type: NotedTextFieldType.standard,
-        ),
-        SizedBox(height: 12),
-        NotedTextField(
-          controller: _passwordController,
-          name: strings.login_password,
-          hint: strings.login_password,
-          errorText: _passwordError,
-          showErrorText: true,
-          keyboardType: TextInputType.visiblePassword,
-          type: NotedTextFieldType.standard,
-          autocorrect: false,
-          obscureText: !_showPassword,
-          icon: _showPassword ? NotedIcons.eyeClosed : NotedIcons.eye,
-          onIconPressed: () => setState(() => _showPassword = !_showPassword),
-        ),
-        SizedBox(height: 12),
-        NotedTextButton(
-          label: strings.login_signIn,
-          type: NotedTextButtonType.filled,
-          onPressed: () => bloc.add(
-            AuthSignInWithEmailEvent(
-              _emailController.text,
-              _passwordController.text,
+    return LoginFrame(
+      headerTitle: context.strings().login_signIn,
+      contentBuilder: (key) => Column(
+        key: key,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          SizedBox(height: 18),
+          NotedTextField(
+            controller: _emailController,
+            name: strings.login_email,
+            hint: strings.login_email,
+            errorText: _emailError,
+            showErrorText: true,
+            keyboardType: TextInputType.emailAddress,
+            type: NotedTextFieldType.standard,
+          ),
+          SizedBox(height: 12),
+          NotedTextField(
+            controller: _passwordController,
+            name: strings.login_password,
+            hint: strings.login_password,
+            errorText: _passwordError,
+            showErrorText: true,
+            keyboardType: TextInputType.visiblePassword,
+            type: NotedTextFieldType.standard,
+            autocorrect: false,
+            obscureText: !_showPassword,
+            icon: _showPassword ? NotedIcons.eyeClosed : NotedIcons.eye,
+            onIconPressed: () => setState(() => _showPassword = !_showPassword),
+          ),
+          SizedBox(height: 12),
+          NotedTextButton(
+            label: strings.login_signIn,
+            type: NotedTextButtonType.filled,
+            onPressed: () => bloc.add(
+              AuthSignInWithEmailEvent(
+                _emailController.text,
+                _passwordController.text,
+              ),
             ),
           ),
-        ),
-        SizedBox(height: 12),
-        NotedTextButton(
-          label: strings.login_register,
-          type: NotedTextButtonType.filled,
-          color: NotedWidgetColor.secondary,
-          onPressed: () => context.push('/login/register'),
-        ),
-        Padding(
-          padding: EdgeInsets.fromLTRB(36, 14, 36, 18),
-          child: RichText(
-            textAlign: TextAlign.center,
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: strings.login_forgotPassword,
-                  style: theme.labelSmall,
-                ),
-                TextSpan(
-                  text: strings.login_resetPassword,
-                  style: theme.labelSmall?.copyWith(decoration: TextDecoration.underline),
-                  recognizer: TapGestureRecognizer()..onTap = () => _resetPassword(context),
-                ),
-              ],
+          SizedBox(height: 12),
+          NotedTextButton(
+            label: strings.login_register,
+            type: NotedTextButtonType.filled,
+            color: NotedWidgetColor.secondary,
+            onPressed: () => context.push('/login/register'),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(36, 14, 36, 18),
+            child: RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: strings.login_forgotPassword,
+                    style: theme.labelSmall,
+                  ),
+                  TextSpan(
+                    text: strings.login_resetPassword,
+                    style: theme.labelSmall?.copyWith(decoration: TextDecoration.underline),
+                    recognizer: TapGestureRecognizer()..onTap = () => _resetPassword(context),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
