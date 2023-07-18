@@ -105,7 +105,7 @@ class _SignInPageState extends State<SignInPage> {
                   TextSpan(
                     text: strings.login_resetPassword,
                     style: theme.labelSmall?.copyWith(decoration: TextDecoration.underline),
-                    recognizer: TapGestureRecognizer()..onTap = () => _resetPassword(context),
+                    recognizer: TapGestureRecognizer()..onTap = () => context.push('/login/reset-password'),
                   ),
                 ],
               ),
@@ -121,9 +121,5 @@ class _SignInPageState extends State<SignInPage> {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
-  }
-
-  void _resetPassword(BuildContext context) {
-    showUnimplementedSnackBar(context);
   }
 }

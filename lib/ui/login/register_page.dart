@@ -48,6 +48,7 @@ class _RegisterPageState extends State<RegisterPage> {
     final AuthBloc bloc = context.read();
     final TextTheme theme = context.textTheme();
     final Strings strings = context.strings();
+
     return LoginFrame(
       headerTitle: context.strings().login_register,
       contentBuilder: (key) => Column(
@@ -124,6 +125,7 @@ class _RegisterPageState extends State<RegisterPage> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmController.dispose();
     super.dispose();
   }
 

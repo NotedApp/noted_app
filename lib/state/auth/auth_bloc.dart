@@ -33,6 +33,10 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
   }
 
   void _onSignUpWithEmail(AuthSignUpWithEmailEvent event, Emitter<AuthState> emit) async {
+    if (state.status != AuthStatus.unauthenticated) {
+      return;
+    }
+
     try {
       emit(AuthState.authenticating(status: AuthStatus.signing_up));
       await _repository.createUserWithEmailAndPassword(email: event.email, password: event.password);
@@ -43,6 +47,10 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
   }
 
   void _onSignIn(AuthEvent event, Emitter<AuthState> emit) async {
+    if (state.status != AuthStatus.unauthenticated) {
+      return;
+    }
+
     try {
       emit(AuthState.authenticating(status: AuthStatus.signing_in));
 
@@ -67,6 +75,10 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
   }
 
   void _onSignOut(AuthEvent event, Emitter<AuthState> emit) async {
+    if (state.status != AuthStatus.authenticated) {
+      return;
+    }
+
     try {
       emit(AuthState.authenticating(status: AuthStatus.signing_out));
       await _repository.signOut();
