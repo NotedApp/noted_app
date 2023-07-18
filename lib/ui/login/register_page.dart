@@ -115,7 +115,6 @@ class _RegisterPageContentState extends State<_RegisterPageContent> {
         NotedTextButton(
           label: strings.login_register,
           type: NotedTextButtonType.filled,
-          color: NotedWidgetColor.secondary,
           onPressed: () => _tryRegister(context, bloc),
         ),
         Padding(

@@ -12,7 +12,7 @@ GoRouter routerConfig = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => MyHomePage(title: 'noted'),
+      builder: (context, state) => MyHomePage(),
       redirect: (context, state) {
         AuthBloc auth = context.read<AuthBloc>();
         return auth.state.status != AuthStatus.authenticated ? '/login' : null;
