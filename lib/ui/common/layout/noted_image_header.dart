@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:noted_app/util/extensions.dart';
 
 const String _notedImageHeaderTag = 'noted-image-header';
 
@@ -11,16 +11,17 @@ class NotedImageHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
-    Strings strings = Strings.of(context);
+    ThemeData theme = context.theme();
     ColorFilter filter = ColorFilter.mode(theme.colorScheme.tertiary, BlendMode.srcIn);
 
     return Hero(
       tag: _notedImageHeaderTag,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Text(title ?? strings.app_title, style: theme.textTheme.displayLarge),
-          SizedBox(height: 24),
+          if (title != null) Spacer(flex: 2),
+          if (title != null) Text(title!, style: theme.textTheme.displayLarge),
+          Spacer(),
           ConstrainedBox(
             constraints: BoxConstraints.loose(Size.fromWidth(400)),
             child: SvgPicture.asset(

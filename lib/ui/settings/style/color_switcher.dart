@@ -8,6 +8,7 @@ import 'package:noted_app/ui/common/icon/noted_icons.dart';
 import 'package:noted_app/ui/common/layout/noted_card.dart';
 import 'package:noted_app/ui/common/layout/noted_header_page.dart';
 import 'package:noted_app/ui/common/noted_widget_config.dart';
+import 'package:noted_app/util/extensions.dart';
 
 class ColorSwitcher extends StatelessWidget {
   List<NotedColorSchemeName> get names => NotedColorSchemeName.values;
@@ -17,7 +18,7 @@ class ColorSwitcher extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeCubit cubit = context.read<ThemeCubit>();
-    Strings strings = Strings.of(context);
+    Strings strings = context.strings();
 
     return NotedHeaderPage(
       title: strings.settings_colorTitle,

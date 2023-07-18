@@ -28,8 +28,8 @@ class NotedTextThemes {
     labelLarge: TextStyle(fontFamily: 'Poppins', fontSize: 14, height: 20 / 14, fontWeight: FontWeight.normal),
     labelMedium: TextStyle(fontFamily: 'Poppins', fontSize: 12, height: 16 / 12, fontWeight: FontWeight.normal),
     labelSmall: TextStyle(fontFamily: 'Poppins', fontSize: 11, height: 16 / 11, fontWeight: FontWeight.normal),
-    bodyLarge: TextStyle(fontFamily: 'Poppins', fontSize: 18, height: 24 / 18, fontWeight: FontWeight.normal),
-    bodyMedium: TextStyle(fontFamily: 'Poppins', fontSize: 16, height: 20 / 16, fontWeight: FontWeight.normal),
+    bodyLarge: TextStyle(fontFamily: 'Poppins', fontSize: 16, height: 24 / 16, fontWeight: FontWeight.normal),
+    bodyMedium: TextStyle(fontFamily: 'Poppins', fontSize: 14, height: 20 / 14, fontWeight: FontWeight.normal),
     bodySmall: TextStyle(fontFamily: 'Poppins', fontSize: 12, height: 16 / 12, fontWeight: FontWeight.normal),
   );
 
@@ -46,8 +46,8 @@ class NotedTextThemes {
     labelLarge: TextStyle(fontFamily: 'Roboto', fontSize: 14, height: 20 / 14, fontWeight: FontWeight.normal),
     labelMedium: TextStyle(fontFamily: 'Roboto', fontSize: 12, height: 16 / 12, fontWeight: FontWeight.normal),
     labelSmall: TextStyle(fontFamily: 'Roboto', fontSize: 11, height: 16 / 11, fontWeight: FontWeight.normal),
-    bodyLarge: TextStyle(fontFamily: 'Roboto', fontSize: 18, height: 24 / 18, fontWeight: FontWeight.normal),
-    bodyMedium: TextStyle(fontFamily: 'Roboto', fontSize: 16, height: 20 / 16, fontWeight: FontWeight.normal),
+    bodyLarge: TextStyle(fontFamily: 'Roboto', fontSize: 16, height: 24 / 16, fontWeight: FontWeight.normal),
+    bodyMedium: TextStyle(fontFamily: 'Roboto', fontSize: 14, height: 20 / 14, fontWeight: FontWeight.normal),
     bodySmall: TextStyle(fontFamily: 'Roboto', fontSize: 12, height: 16 / 12, fontWeight: FontWeight.normal),
   );
 
@@ -64,8 +64,8 @@ class NotedTextThemes {
     labelLarge: TextStyle(fontFamily: 'Lora', fontSize: 14, height: 20 / 14, fontWeight: FontWeight.normal),
     labelMedium: TextStyle(fontFamily: 'Lora', fontSize: 12, height: 16 / 12, fontWeight: FontWeight.normal),
     labelSmall: TextStyle(fontFamily: 'Lora', fontSize: 11, height: 16 / 11, fontWeight: FontWeight.normal),
-    bodyLarge: TextStyle(fontFamily: 'Lora', fontSize: 18, height: 24 / 18, fontWeight: FontWeight.normal),
-    bodyMedium: TextStyle(fontFamily: 'Lora', fontSize: 16, height: 20 / 16, fontWeight: FontWeight.normal),
+    bodyLarge: TextStyle(fontFamily: 'Lora', fontSize: 16, height: 24 / 16, fontWeight: FontWeight.normal),
+    bodyMedium: TextStyle(fontFamily: 'Lora', fontSize: 14, height: 20 / 14, fontWeight: FontWeight.normal),
     bodySmall: TextStyle(fontFamily: 'Lora', fontSize: 12, height: 16 / 12, fontWeight: FontWeight.normal),
   );
 
@@ -82,8 +82,8 @@ class NotedTextThemes {
     labelLarge: TextStyle(fontFamily: 'Vollkorn', fontSize: 14, height: 20 / 14, fontWeight: FontWeight.normal),
     labelMedium: TextStyle(fontFamily: 'Vollkorn', fontSize: 12, height: 16 / 12, fontWeight: FontWeight.normal),
     labelSmall: TextStyle(fontFamily: 'Vollkorn', fontSize: 11, height: 16 / 11, fontWeight: FontWeight.normal),
-    bodyLarge: TextStyle(fontFamily: 'Vollkorn', fontSize: 18, height: 24 / 18, fontWeight: FontWeight.normal),
-    bodyMedium: TextStyle(fontFamily: 'Vollkorn', fontSize: 16, height: 20 / 16, fontWeight: FontWeight.normal),
+    bodyLarge: TextStyle(fontFamily: 'Vollkorn', fontSize: 16, height: 24 / 16, fontWeight: FontWeight.normal),
+    bodyMedium: TextStyle(fontFamily: 'Vollkorn', fontSize: 14, height: 20 / 14, fontWeight: FontWeight.normal),
     bodySmall: TextStyle(fontFamily: 'Vollkorn', fontSize: 12, height: 16 / 12, fontWeight: FontWeight.normal),
   );
 }

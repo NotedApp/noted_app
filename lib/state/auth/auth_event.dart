@@ -1,7 +1,7 @@
 import 'package:noted_app/state/noted_bloc.dart';
 import 'package:noted_models/noted_models.dart';
 
-sealed class AuthEvent extends NotedEvent {
+sealed class AuthEvent extends NotedEvent implements TrackableEvent {
   const AuthEvent();
 }
 
@@ -29,7 +29,7 @@ class AuthSignInWithGithubEvent extends AuthEvent {}
 
 class AuthSignOutEvent extends AuthEvent {}
 
-class AuthUserUpdatedEvent extends AuthEvent implements TrackableEvent {
+class AuthUserUpdatedEvent extends AuthEvent {
   final NotedUser user;
 
   const AuthUserUpdatedEvent(this.user);

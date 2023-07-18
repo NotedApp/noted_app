@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/ui/common/input/noted_text_field.dart';
 import 'package:noted_app/ui/common/layout/noted_dialog.dart';
+import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/util/routing/noted_router.dart';
 
 class NotedStringPicker extends StatefulWidget {
@@ -25,7 +26,7 @@ class _NotedStringPickerState extends State<NotedStringPicker> {
 
   @override
   Widget build(BuildContext context) {
-    Strings strings = Strings.of(context);
+    Strings strings = context.strings();
 
     return NotedDialog(
       title: widget.title,

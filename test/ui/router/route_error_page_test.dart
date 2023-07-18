@@ -21,13 +21,13 @@ void main() {
     testWidgets('error page renders a header, image, text, and home button', (tester) async {
       await tester.pumpWidget(TestWrapper(child: RouteErrorPage()));
 
-      Finder action = find.text('Back to home');
+      Finder action = find.text('back to home');
 
       await tester.tap(action);
 
-      expect(find.text('Oops!'), findsOneWidget);
+      expect(find.text('oops!'), findsOneWidget);
       expect(find.byType(SvgPicture), findsOneWidget);
-      expect(find.text('Sorry, we seem to be lost!'), findsOneWidget);
+      expect(find.text('sorry, we seem to be lost!'), findsOneWidget);
       expect(action, findsOneWidget);
 
       verify(() => _mockRouter.replace(captureAny(), '/')).called(1);

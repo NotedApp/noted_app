@@ -90,15 +90,17 @@ class NotedTextField extends StatelessWidget {
           enabled: enabled,
         ),
         if (icon != null)
-          Align(
-            alignment: Alignment.centerRight,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: NotedIconButton(
-                type: NotedIconButtonType.simple,
-                size: NotedWidgetSize.small,
-                icon: icon!,
-                onPressed: onIconPressed,
+          Positioned.fill(
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: NotedIconButton(
+                  type: NotedIconButtonType.simple,
+                  size: NotedWidgetSize.small,
+                  icon: icon!,
+                  onPressed: onIconPressed,
+                ),
               ),
             ),
           ),
