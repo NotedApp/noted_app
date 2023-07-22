@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:get_it/get_it.dart';
 import 'package:noted_app/repository/auth/auth_repository.dart';
-import 'package:noted_app/util/noted_error.dart';
+import 'package:noted_app/util/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 /// An [AuthRepository] that uses mock data as its source of truth.
@@ -23,11 +23,11 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (email.length < 3) {
-      throw NotedError(ErrorCode.repository_auth_createUser_invalidEmail);
+      throw NotedException(ErrorCode.auth_createUser_invalidEmail);
     }
 
     if (password.length < 3) {
-      throw NotedError(ErrorCode.repository_auth_createUser_weakPassword);
+      throw NotedException(ErrorCode.auth_createUser_weakPassword);
     }
 
     NotedUser user = NotedUser(
@@ -39,7 +39,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
     _localUsers.add(user);
     _localPasswords.add(password);
 
-    await _updateUser(user, ErrorCode.repository_auth_createUser_failed, delay: false);
+    await _updateUser(user, ErrorCode.auth_createUser_failed, delay: false);
   }
 
   @override
@@ -49,20 +49,20 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
     NotedUser user = _localUsers.firstWhere((user) => user.email == email, orElse: NotedUser.empty);
 
     if (user.isEmpty) {
-      throw NotedError(ErrorCode.repository_auth_emailSignIn_invalidEmail);
+      throw NotedException(ErrorCode.auth_emailSignIn_invalidEmail);
     }
 
     if (!_localPasswords.contains(password)) {
-      throw NotedError(ErrorCode.repository_auth_emailSignIn_invalidPassword);
+      throw NotedException(ErrorCode.auth_emailSignIn_invalidPassword);
     }
 
-    await _updateUser(user, ErrorCode.repository_auth_emailSignIn_failed);
+    await _updateUser(user, ErrorCode.auth_emailSignIn_failed, delay: false);
   }
 
   @override
   Future<void> signInWithGoogle() async {
     NotedUser googleUser = _localUsers.firstWhere((user) => user.id == 'local-google');
-    await _updateUser(googleUser, ErrorCode.repository_auth_googleSignIn_failed);
+    await _updateUser(googleUser, ErrorCode.auth_googleSignIn_failed);
   }
 
   @override
@@ -82,7 +82,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
 
   @override
   Future<void> signOut() async {
-    await _updateUser(NotedUser.empty(), ErrorCode.repository_auth_signOut_failed);
+    await _updateUser(NotedUser.empty(), ErrorCode.auth_signOut_failed);
   }
 
   @override
@@ -90,7 +90,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (_shouldThrow) {
-      throw NotedError(ErrorCode.repository_auth_passwordReset_failed);
+      throw NotedException(ErrorCode.auth_passwordReset_failed);
     }
   }
 
@@ -105,7 +105,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
     }
 
     if (_shouldThrow) {
-      throw NotedError(error);
+      throw NotedException(error);
     }
 
     _currentUser = user;

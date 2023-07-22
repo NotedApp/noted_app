@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:noted_app/repository/auth/local_auth_repository.dart';
-import 'package:noted_app/util/noted_error.dart';
+import 'package:noted_app/util/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 void main() {
@@ -32,14 +32,14 @@ void main() {
       // Test create with invalid email.
       await expectLater(
         () => repository.createUserWithEmailAndPassword(email: '12', password: 'password'),
-        throwsA(isA<NotedError>()),
+        throwsA(isA<NotedException>()),
       );
       expect(repository.currentUser, NotedUser.empty());
 
       // Test create with invalid password.
       await expectLater(
         () => repository.createUserWithEmailAndPassword(email: 'email', password: '12'),
-        throwsA(isA<NotedError>()),
+        throwsA(isA<NotedException>()),
       );
       expect(repository.currentUser, NotedUser.empty());
 
@@ -62,14 +62,14 @@ void main() {
       // Test sign in with invalid email.
       await expectLater(
         () => repository.signInWithEmailAndPassword(email: 'test', password: 'password'),
-        throwsA(isA<NotedError>()),
+        throwsA(isA<NotedException>()),
       );
       expect(repository.currentUser, NotedUser.empty());
 
       // Test sign in with invalid password.
       await expectLater(
         () => repository.signInWithEmailAndPassword(email: 'email', password: 'test'),
-        throwsA(isA<NotedError>()),
+        throwsA(isA<NotedException>()),
       );
       expect(repository.currentUser, NotedUser.empty());
 
@@ -108,7 +108,7 @@ void main() {
     test('throws for a password reset email', () async {
       repository.setShouldThrow(true);
 
-      await expectLater(() => repository.sendPasswordResetEmail(email: 'test'), throwsA(isA<NotedError>()));
+      await expectLater(() => repository.sendPasswordResetEmail(email: 'test'), throwsA(isA<NotedException>()));
       expect(repository.currentUser, NotedUser.empty());
     });
 
@@ -117,7 +117,7 @@ void main() {
 
       repository.setShouldThrow(true);
 
-      await expectLater(() => repository.signInWithGoogle(), throwsA(isA<NotedError>()));
+      await expectLater(() => repository.signInWithGoogle(), throwsA(isA<NotedException>()));
       expect(repository.currentUser, NotedUser.empty());
 
       repository.reset();

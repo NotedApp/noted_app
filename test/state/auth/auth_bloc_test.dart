@@ -7,7 +7,7 @@ import 'package:noted_app/state/auth/auth_event.dart';
 import 'package:noted_app/state/auth/auth_state.dart';
 import 'package:noted_app/util/environment/dependencies.dart';
 import 'package:noted_app/util/environment/environment.dart';
-import 'package:noted_app/util/noted_error.dart';
+import 'package:noted_app/util/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 void main() {
@@ -47,9 +47,8 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         AuthState.authenticating(status: AuthStatus.signing_up),
-        AuthState.unauthenticated(),
+        AuthState.unauthenticated(error: NotedException(ErrorCode.auth_createUser_invalidEmail)),
       ],
-      errors: () => [isA<NotedError>()],
     );
 
     blocTest(
@@ -70,9 +69,8 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         AuthState.authenticating(status: AuthStatus.signing_in),
-        AuthState.unauthenticated(),
+        AuthState.unauthenticated(error: NotedException(ErrorCode.auth_emailSignIn_invalidEmail)),
       ],
-      errors: () => [isA<NotedError>()],
     );
 
     blocTest(
@@ -96,9 +94,8 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         AuthState.authenticating(status: AuthStatus.signing_in),
-        AuthState.unauthenticated(),
+        AuthState.unauthenticated(error: NotedException(ErrorCode.auth_googleSignIn_failed)),
       ],
-      errors: () => [isA<NotedError>()],
     );
 
     blocTest(
@@ -108,9 +105,8 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         AuthState.authenticating(status: AuthStatus.signing_in),
-        AuthState.unauthenticated(),
+        AuthState.unauthenticated(error: NotedException.fromObject(UnimplementedError())),
       ],
-      errors: () => [isA<UnimplementedError>()],
     );
 
     blocTest(
@@ -120,9 +116,8 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         AuthState.authenticating(status: AuthStatus.signing_in),
-        AuthState.unauthenticated(),
+        AuthState.unauthenticated(error: NotedException.fromObject(UnimplementedError())),
       ],
-      errors: () => [isA<UnimplementedError>()],
     );
 
     blocTest(
@@ -132,9 +127,8 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         AuthState.authenticating(status: AuthStatus.signing_in),
-        AuthState.unauthenticated(),
+        AuthState.unauthenticated(error: NotedException.fromObject(UnimplementedError())),
       ],
-      errors: () => [isA<UnimplementedError>()],
     );
 
     blocTest(
@@ -162,9 +156,8 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         AuthState.authenticating(status: AuthStatus.signing_out),
-        AuthState.authenticated(user: google),
+        AuthState.authenticated(user: google, error: NotedException(ErrorCode.auth_signOut_failed)),
       ],
-      errors: () => [isA<NotedError>()],
     );
 
     blocTest(
@@ -188,9 +181,8 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         AuthState.authenticating(status: AuthStatus.sending_password_reset),
-        AuthState.unauthenticated(),
+        AuthState.unauthenticated(error: NotedException(ErrorCode.auth_passwordReset_failed)),
       ],
-      errors: () => [isA<NotedError>()],
     );
   });
 }

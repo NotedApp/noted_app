@@ -4,9 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/state/auth/auth_bloc.dart';
 import 'package:noted_app/state/auth/auth_event.dart';
+import 'package:noted_app/state/auth/auth_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/login/login_frame.dart';
 import 'package:noted_app/util/extensions.dart';
+import 'package:noted_app/util/noted_exception.dart';
 import 'package:noted_app/util/routing/noted_router.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -36,11 +38,9 @@ class _RegisterPageState extends State<RegisterPage> {
     _passwordController = TextEditingController(text: widget.initialPassword);
     _confirmController = TextEditingController();
 
-    _confirmController.addListener(() {
-      if (_confirmError != null) {
-        setState(() => _confirmError = null);
-      }
-    });
+    _emailController.addListener(() => setState(() => _emailError = null));
+    _passwordController.addListener(() => setState(() => _passwordError = null));
+    _confirmController.addListener(() => setState(() => _confirmError = null));
   }
 
   @override
@@ -51,6 +51,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
     return LoginFrame(
       headerTitle: context.strings().login_register,
+      stateListener: _handleStateUpdate,
       contentBuilder: (key) => Column(
         key: key,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -121,12 +122,34 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    _confirmController.dispose();
-    super.dispose();
+  void _handleStateUpdate(BuildContext context, AuthState state) {
+    if (state.error != null && (ModalRoute.of(context)?.isCurrent ?? false)) {
+      final Strings strings = context.strings();
+      String? message;
+
+      switch (state.error!.errorCode) {
+        case ErrorCode.auth_createUser_invalidEmail:
+          setState(() => _emailError = strings.login_error_createUserInvalidEmail);
+        case ErrorCode.auth_createUser_weakPassword:
+          setState(() => _passwordError = strings.login_error_createUserWeakPassword);
+        case ErrorCode.auth_createUser_disabled:
+          message = strings.login_error_createUserDisabled;
+        case ErrorCode.auth_createUser_existingAccount:
+          message = strings.login_error_createUserExistingAccount;
+        default:
+          message = strings.login_error_createUserFailed;
+      }
+
+      if (message != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          NotedSnackBar.createWithText(
+            context: context,
+            text: message,
+            hasClose: true,
+          ),
+        );
+      }
+    }
   }
 
   void _tryRegister(BuildContext context, AuthBloc bloc) {
@@ -136,5 +159,13 @@ class _RegisterPageState extends State<RegisterPage> {
     }
 
     bloc.add(AuthSignUpWithEmailEvent(_emailController.text, _passwordController.text));
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmController.dispose();
+    super.dispose();
   }
 }

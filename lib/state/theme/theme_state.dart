@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:noted_app/theme/color_schemes.dart';
 import 'package:noted_app/theme/text_themes.dart';
 import 'package:noted_app/util/extensions.dart';
-import 'package:noted_app/util/noted_error.dart';
+import 'package:noted_app/util/noted_exception.dart';
 
 final class ThemeState extends Equatable {
   final NotedColorSchemeName colorSchemeName;
   final NotedTextThemeName textThemeName;
   final ColorScheme customColorScheme;
-  final NotedError? error;
+  final NotedException? error;
 
   ColorScheme get colorScheme => NotedColorSchemes.fromName(colorSchemeName);
   TextTheme get textTheme => NotedTextThemes.fromName(textThemeName);
@@ -34,7 +34,7 @@ final class ThemeState extends Equatable {
     NotedColorSchemeName? colorSchemeName,
     NotedTextThemeName? textThemeName,
     ColorScheme? customColorScheme,
-    NotedError? error,
+    NotedException? error,
   }) {
     return ThemeState(
       colorSchemeName ?? this.colorSchemeName,

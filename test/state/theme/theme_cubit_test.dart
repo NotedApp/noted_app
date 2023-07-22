@@ -4,7 +4,7 @@ import 'package:noted_app/state/theme/theme_cubit.dart';
 import 'package:noted_app/state/theme/theme_state.dart';
 import 'package:noted_app/theme/color_schemes.dart';
 import 'package:noted_app/theme/text_themes.dart';
-import 'package:noted_app/util/noted_error.dart';
+import 'package:noted_app/util/noted_exception.dart';
 
 void main() {
   group('ThemeCubit', () {
@@ -61,7 +61,7 @@ void main() {
           NotedColorSchemeName.blue,
           NotedTextThemeName.poppins,
           NotedColorSchemes.blueColorScheme,
-          error: NotedError(ErrorCode.state_theme_customFetchFailed),
+          error: NotedException(ErrorCode.state_theme_customFetchFailed),
         ),
       ],
     );

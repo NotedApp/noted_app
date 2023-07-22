@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:noted_app/repository/auth/auth_repository.dart';
-import 'package:noted_app/util/noted_error.dart';
+import 'package:noted_app/util/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 // TODO: Test this file.
@@ -31,9 +31,9 @@ class FirebaseAuthRepository extends AuthRepository {
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
-      throw NotedError(_getCreateUserErrorCode(e.code));
+      throw NotedException(_getCreateUserErrorCode(e.code));
     } catch (_) {
-      throw NotedError(ErrorCode.repository_auth_createUser_failed);
+      throw NotedException(ErrorCode.auth_createUser_failed);
     }
   }
 
@@ -42,9 +42,9 @@ class FirebaseAuthRepository extends AuthRepository {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
-      throw NotedError(_getEmailSignInErrorCode(e.code));
+      throw NotedException(_getEmailSignInErrorCode(e.code));
     } catch (_) {
-      throw NotedError(ErrorCode.repository_auth_createUser_failed);
+      throw NotedException(ErrorCode.auth_createUser_failed);
     }
   }
 
@@ -69,9 +69,9 @@ class FirebaseAuthRepository extends AuthRepository {
 
       await _firebaseAuth.signInWithCredential(credential);
     } on FirebaseAuthException catch (e) {
-      throw NotedError(_getGoogleSignInErrorCode(e.code));
+      throw NotedException(_getGoogleSignInErrorCode(e.code));
     } catch (_) {
-      throw NotedError(ErrorCode.repository_auth_googleSignIn_failed);
+      throw NotedException(ErrorCode.auth_googleSignIn_failed);
     }
   }
 
@@ -98,7 +98,7 @@ class FirebaseAuthRepository extends AuthRepository {
         _googleSignIn.signOut(),
       ]);
     } catch (_) {
-      throw NotedError(ErrorCode.repository_auth_signOut_failed);
+      throw NotedException(ErrorCode.auth_signOut_failed);
     }
   }
 
@@ -107,49 +107,47 @@ class FirebaseAuthRepository extends AuthRepository {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (e) {
-      throw NotedError(_getPasswordResetErrorCode(e.code));
+      throw NotedException(_getPasswordResetErrorCode(e.code));
     } catch (_) {
-      throw NotedError(ErrorCode.repository_auth_passwordReset_failed);
+      throw NotedException(ErrorCode.auth_passwordReset_failed);
     }
   }
 
   ErrorCode _getCreateUserErrorCode(String code) {
     return switch (code) {
-      'invalid-email' => ErrorCode.repository_auth_createUser_invalidEmail,
-      'user-disabled' => ErrorCode.repository_auth_createUser_disabled,
-      'operation-not-allowed' => ErrorCode.repository_auth_createUser_disabled,
-      'email-already-in-use' => ErrorCode.repository_auth_createUser_existingAccount,
-      'weak-password' => ErrorCode.repository_auth_createUser_weakPassword,
-      _ => ErrorCode.repository_auth_createUser_failed,
+      'invalid-email' => ErrorCode.auth_createUser_invalidEmail,
+      'user-disabled' => ErrorCode.auth_createUser_disabled,
+      'operation-not-allowed' => ErrorCode.auth_createUser_disabled,
+      'email-already-in-use' => ErrorCode.auth_createUser_existingAccount,
+      'weak-password' => ErrorCode.auth_createUser_weakPassword,
+      _ => ErrorCode.auth_createUser_failed,
     };
   }
 
   ErrorCode _getEmailSignInErrorCode(String code) {
     return switch (code) {
-      'invalid-email' => ErrorCode.repository_auth_emailSignIn_invalidEmail,
-      'user-disabled' => ErrorCode.repository_auth_emailSignIn_disabled,
-      'user-not-found' => ErrorCode.repository_auth_emailSignIn_invalidEmail,
-      'wrong-password' => ErrorCode.repository_auth_emailSignIn_invalidPassword,
-      _ => ErrorCode.repository_auth_emailSignIn_failed,
+      'invalid-email' => ErrorCode.auth_emailSignIn_invalidEmail,
+      'user-disabled' => ErrorCode.auth_emailSignIn_disabled,
+      'user-not-found' => ErrorCode.auth_emailSignIn_invalidEmail,
+      'wrong-password' => ErrorCode.auth_emailSignIn_invalidPassword,
+      _ => ErrorCode.auth_emailSignIn_failed,
     };
   }
 
   ErrorCode _getGoogleSignInErrorCode(String code) {
     return switch (code) {
-      'account-exists-with-different-credential' => ErrorCode.repository_auth_googleSignIn_existingAccount,
-      'operation-not-allowed' => ErrorCode.repository_auth_googleSignIn_disabled,
-      'user-disabled' => ErrorCode.repository_auth_googleSignIn_disabled,
-      'user-not-found' => ErrorCode.repository_auth_googleSignIn_invalidEmail,
-      'wrong-password' => ErrorCode.repository_auth_googleSignIn_invalidPassword,
-      _ => ErrorCode.repository_auth_googleSignIn_failed,
+      'account-exists-with-different-credential' => ErrorCode.auth_googleSignIn_existingAccount,
+      'operation-not-allowed' => ErrorCode.auth_googleSignIn_disabled,
+      'user-disabled' => ErrorCode.auth_googleSignIn_disabled,
+      _ => ErrorCode.auth_googleSignIn_failed,
     };
   }
 
   ErrorCode _getPasswordResetErrorCode(String code) {
     return switch (code) {
-      'invalid-email' => ErrorCode.repository_auth_passwordReset_invalidEmail,
-      'user-not-found' => ErrorCode.repository_auth_passwordReset_invalidEmail,
-      _ => ErrorCode.repository_auth_passwordReset_failed,
+      'invalid-email' => ErrorCode.auth_passwordReset_invalidEmail,
+      'user-not-found' => ErrorCode.auth_passwordReset_invalidEmail,
+      _ => ErrorCode.auth_passwordReset_failed,
     };
   }
 }
