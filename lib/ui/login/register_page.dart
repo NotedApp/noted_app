@@ -38,11 +38,9 @@ class _RegisterPageState extends State<RegisterPage> {
     _passwordController = TextEditingController(text: widget.initialPassword);
     _confirmController = TextEditingController();
 
-    _confirmController.addListener(() {
-      if (_confirmError != null) {
-        setState(() => _confirmError = null);
-      }
-    });
+    _emailController.addListener(() => setState(() => _emailError = null));
+    _passwordController.addListener(() => setState(() => _passwordError = null));
+    _confirmController.addListener(() => setState(() => _confirmError = null));
   }
 
   @override

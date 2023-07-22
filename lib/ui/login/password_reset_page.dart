@@ -27,6 +27,8 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
     super.initState();
 
     _emailController = TextEditingController(text: widget.initialEmail);
+
+    _emailController.addListener(() => setState(() => _emailError = null));
   }
 
   @override
