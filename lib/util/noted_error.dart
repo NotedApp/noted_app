@@ -1,12 +1,21 @@
 import 'package:equatable/equatable.dart';
 
-class NotedError extends Error with EquatableMixin {
+class NotedException with EquatableMixin implements Exception {
   final ErrorCode errorCode;
+  final String message;
 
-  NotedError(this.errorCode);
+  NotedException(this.errorCode, {this.message = ''});
+
+  factory NotedException.fromObject(Object e) {
+    if (e is NotedException) {
+      return e;
+    }
+
+    return NotedException(ErrorCode.common_unknown, message: e.toString());
+  }
 
   @override
-  List<Object?> get props => [errorCode];
+  List<Object?> get props => [errorCode, message];
 }
 
 enum ErrorCode {

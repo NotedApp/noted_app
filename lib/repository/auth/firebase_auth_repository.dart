@@ -31,9 +31,9 @@ class FirebaseAuthRepository extends AuthRepository {
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
-      throw NotedError(_getCreateUserErrorCode(e.code));
+      throw NotedException(_getCreateUserErrorCode(e.code));
     } catch (_) {
-      throw NotedError(ErrorCode.repository_auth_createUser_failed);
+      throw NotedException(ErrorCode.repository_auth_createUser_failed);
     }
   }
 
@@ -42,9 +42,9 @@ class FirebaseAuthRepository extends AuthRepository {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
-      throw NotedError(_getEmailSignInErrorCode(e.code));
+      throw NotedException(_getEmailSignInErrorCode(e.code));
     } catch (_) {
-      throw NotedError(ErrorCode.repository_auth_createUser_failed);
+      throw NotedException(ErrorCode.repository_auth_createUser_failed);
     }
   }
 
@@ -69,9 +69,9 @@ class FirebaseAuthRepository extends AuthRepository {
 
       await _firebaseAuth.signInWithCredential(credential);
     } on FirebaseAuthException catch (e) {
-      throw NotedError(_getGoogleSignInErrorCode(e.code));
+      throw NotedException(_getGoogleSignInErrorCode(e.code));
     } catch (_) {
-      throw NotedError(ErrorCode.repository_auth_googleSignIn_failed);
+      throw NotedException(ErrorCode.repository_auth_googleSignIn_failed);
     }
   }
 
@@ -98,7 +98,7 @@ class FirebaseAuthRepository extends AuthRepository {
         _googleSignIn.signOut(),
       ]);
     } catch (_) {
-      throw NotedError(ErrorCode.repository_auth_signOut_failed);
+      throw NotedException(ErrorCode.repository_auth_signOut_failed);
     }
   }
 
@@ -107,9 +107,9 @@ class FirebaseAuthRepository extends AuthRepository {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (e) {
-      throw NotedError(_getPasswordResetErrorCode(e.code));
+      throw NotedException(_getPasswordResetErrorCode(e.code));
     } catch (_) {
-      throw NotedError(ErrorCode.repository_auth_passwordReset_failed);
+      throw NotedException(ErrorCode.repository_auth_passwordReset_failed);
     }
   }
 

@@ -23,11 +23,11 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (email.length < 3) {
-      throw NotedError(ErrorCode.repository_auth_createUser_invalidEmail);
+      throw NotedException(ErrorCode.repository_auth_createUser_invalidEmail);
     }
 
     if (password.length < 3) {
-      throw NotedError(ErrorCode.repository_auth_createUser_weakPassword);
+      throw NotedException(ErrorCode.repository_auth_createUser_weakPassword);
     }
 
     NotedUser user = NotedUser(
@@ -49,11 +49,11 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
     NotedUser user = _localUsers.firstWhere((user) => user.email == email, orElse: NotedUser.empty);
 
     if (user.isEmpty) {
-      throw NotedError(ErrorCode.repository_auth_emailSignIn_invalidEmail);
+      throw NotedException(ErrorCode.repository_auth_emailSignIn_invalidEmail);
     }
 
     if (!_localPasswords.contains(password)) {
-      throw NotedError(ErrorCode.repository_auth_emailSignIn_invalidPassword);
+      throw NotedException(ErrorCode.repository_auth_emailSignIn_invalidPassword);
     }
 
     await _updateUser(user, ErrorCode.repository_auth_emailSignIn_failed);
@@ -90,7 +90,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (_shouldThrow) {
-      throw NotedError(ErrorCode.repository_auth_passwordReset_failed);
+      throw NotedException(ErrorCode.repository_auth_passwordReset_failed);
     }
   }
 
@@ -105,7 +105,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
     }
 
     if (_shouldThrow) {
-      throw NotedError(error);
+      throw NotedException(error);
     }
 
     _currentUser = user;
