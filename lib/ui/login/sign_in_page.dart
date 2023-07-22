@@ -123,7 +123,7 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   void _handleStateUpdate(BuildContext context, AuthState state) {
-    if (state.error != null) {
+    if (state.error != null && (ModalRoute.of(context)?.isCurrent ?? false)) {
       final Strings strings = context.strings();
       String? message;
 
@@ -142,7 +142,7 @@ class _SignInPageState extends State<SignInPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           NotedSnackBar.createWithText(
             context: context,
-            text: strings.login_error_emailSignInFailed,
+            text: message,
             hasClose: true,
           ),
         );

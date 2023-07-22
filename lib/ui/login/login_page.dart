@@ -4,9 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/state/auth/auth_bloc.dart';
 import 'package:noted_app/state/auth/auth_event.dart';
+import 'package:noted_app/state/auth/auth_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/login/login_frame.dart';
 import 'package:noted_app/util/extensions.dart';
+import 'package:noted_app/util/noted_exception.dart';
 import 'package:noted_app/util/routing/noted_router.dart';
 
 class LoginPage extends StatelessWidget {
@@ -16,7 +18,28 @@ class LoginPage extends StatelessWidget {
       hasBackButton: false,
       contentTitle: context.strings().app_title,
       contentBuilder: (key) => _LoginPageContent(key: key),
+      stateListener: _handleStateUpdate,
     );
+  }
+
+  void _handleStateUpdate(BuildContext context, AuthState state) {
+    if (state.error != null && (ModalRoute.of(context)?.isCurrent ?? false)) {
+      final Strings strings = context.strings();
+      final String message = switch (state.error!.errorCode) {
+        ErrorCode.auth_googleSignIn_disabled => strings.login_error_googleSignInDisabled,
+        ErrorCode.auth_googleSignIn_existingAccount => strings.login_error_googleSignExistingAccount,
+        ErrorCode.auth_googleSignIn_failed => strings.login_error_googleSignInFailed,
+        _ => strings.login_error_emailSignInFailed,
+      };
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        NotedSnackBar.createWithText(
+          context: context,
+          text: message,
+          hasClose: true,
+        ),
+      );
+    }
   }
 }
 
