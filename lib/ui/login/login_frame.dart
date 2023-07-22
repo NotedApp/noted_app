@@ -16,12 +16,14 @@ class LoginFrame extends StatelessWidget {
   final String? headerTitle;
   final String? contentTitle;
   final Widget Function(Key) contentBuilder;
+  final void Function(BuildContext, AuthState)? stateListener;
 
   const LoginFrame({
     this.hasBackButton = true,
     this.headerTitle,
     this.contentTitle,
     required this.contentBuilder,
+    this.stateListener,
     super.key,
   });
 
@@ -61,6 +63,8 @@ class LoginFrame extends StatelessWidget {
                 listener: (context, state) {
                   if (state.status == AuthStatus.authenticated) {
                     context.replace('/');
+                  } else {
+                    stateListener?.call(context, state);
                   }
                 },
                 builder: (context, state) => AnimatedSwitcher(

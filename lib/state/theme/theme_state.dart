@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:noted_app/theme/color_schemes.dart';
 import 'package:noted_app/theme/text_themes.dart';
 import 'package:noted_app/util/extensions.dart';
-import 'package:noted_app/util/noted_error.dart';
+import 'package:noted_app/util/noted_exception.dart';
 
 final class ThemeState extends Equatable {
   final NotedColorSchemeName colorSchemeName;

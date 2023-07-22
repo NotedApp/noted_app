@@ -6,7 +6,7 @@ import 'package:noted_app/state/auth/auth_event.dart';
 import 'package:noted_app/state/auth/auth_state.dart';
 import 'package:noted_app/state/noted_bloc.dart';
 import 'package:noted_app/util/environment/dependencies.dart';
-import 'package:noted_app/util/noted_error.dart';
+import 'package:noted_app/util/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
