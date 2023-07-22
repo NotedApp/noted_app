@@ -33,6 +33,9 @@ enum ErrorCode {
 
   repository_auth_signOut_failed,
 
+  repository_auth_passwordReset_failed,
+  repository_auth_passwordReset_invalidEmail,
+
   // State management error codes.
   state_theme_customFetchFailed,
 }

@@ -54,7 +54,7 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
           NotedTextButton(
             label: strings.login_resetPasswordCta,
             type: NotedTextButtonType.filled,
-            onPressed: () => bloc.add(AuthSignInWithGoogleEvent()),
+            onPressed: () => bloc.add(AuthSendPasswordResetEvent(_emailController.text)),
           )
         ],
       ),

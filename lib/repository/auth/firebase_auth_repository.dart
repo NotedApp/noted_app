@@ -102,6 +102,17 @@ class FirebaseAuthRepository extends AuthRepository {
     }
   }
 
+  @override
+  Future<void> sendPasswordResetEmail({String email = ''}) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      throw NotedError(_getPasswordResetErrorCode(e.code));
+    } catch (_) {
+      throw NotedError(ErrorCode.repository_auth_passwordReset_failed);
+    }
+  }
+
   ErrorCode _getCreateUserErrorCode(String code) {
     return switch (code) {
       'invalid-email' => ErrorCode.repository_auth_createUser_invalidEmail,
@@ -131,6 +142,14 @@ class FirebaseAuthRepository extends AuthRepository {
       'user-not-found' => ErrorCode.repository_auth_googleSignIn_invalidEmail,
       'wrong-password' => ErrorCode.repository_auth_googleSignIn_invalidPassword,
       _ => ErrorCode.repository_auth_googleSignIn_failed,
+    };
+  }
+
+  ErrorCode _getPasswordResetErrorCode(String code) {
+    return switch (code) {
+      'invalid-email' => ErrorCode.repository_auth_passwordReset_invalidEmail,
+      'user-not-found' => ErrorCode.repository_auth_passwordReset_invalidEmail,
+      _ => ErrorCode.repository_auth_passwordReset_failed,
     };
   }
 }

@@ -27,6 +27,7 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
     on<AuthSignInWithFacebookEvent>(_onSignIn);
     on<AuthSignInWithGithubEvent>(_onSignIn);
     on<AuthSignOutEvent>(_onSignOut);
+    on<AuthSendPasswordResetEvent>(_onResetPassword);
     on<AuthUserUpdatedEvent>(_onUserChanged);
 
     _userSubscription = _repository.userStream.listen((user) => add(AuthUserUpdatedEvent(user)));
@@ -74,7 +75,7 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
     }
   }
 
-  void _onSignOut(AuthEvent event, Emitter<AuthState> emit) async {
+  void _onSignOut(AuthSignOutEvent event, Emitter<AuthState> emit) async {
     if (state.status != AuthStatus.authenticated) {
       return;
     }
@@ -85,6 +86,21 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
     } catch (e) {
       NotedUser current = _repository.currentUser;
       emit(current.isEmpty ? AuthState.unauthenticated() : AuthState.authenticated(user: current));
+      addError(e);
+    }
+  }
+
+  void _onResetPassword(AuthSendPasswordResetEvent event, Emitter<AuthState> emit) async {
+    if (state.status != AuthStatus.unauthenticated) {
+      return;
+    }
+
+    try {
+      emit(AuthState.authenticating(status: AuthStatus.sending_password_reset));
+      await _repository.sendPasswordResetEmail(email: event.email);
+      emit(AuthState.unauthenticated());
+    } catch (e) {
+      emit(AuthState.unauthenticated());
       addError(e);
     }
   }

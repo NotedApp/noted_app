@@ -21,6 +21,7 @@ class LoginLoading extends StatelessWidget {
           AuthStatus.signing_out => strings.login_signingOut,
           AuthStatus.signing_in => strings.login_signingIn,
           AuthStatus.signing_up => strings.login_signingUp,
+          AuthStatus.sending_password_reset => strings.login_sendingPasswordReset,
         },
       ),
     );
