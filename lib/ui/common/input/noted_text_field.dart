@@ -66,45 +66,36 @@ class NotedTextField extends StatelessWidget {
 
     TextStyle? style = builder.styleOf(theme.textTheme);
 
+    NotedIconButton? suffix = icon == null
+        ? null
+        : NotedIconButton(
+            type: NotedIconButtonType.simple,
+            size: NotedWidgetSize.small,
+            icon: icon!,
+            onPressed: onIconPressed,
+          );
+
     InputDecoration decoration = builder.decorationOf(theme.colorScheme).copyWith(
           isDense: true,
           hintText: hint,
           errorText: resolvedErrorText,
           errorStyle: errorStyle,
+          suffixIcon: suffix,
         );
 
-    return Stack(
-      children: [
-        TextFormField(
-          style: style,
-          decoration: decoration,
-          controller: controller,
-          keyboardType: keyboardType,
-          keyboardAppearance: theme.brightness,
-          obscureText: obscureText,
-          autocorrect: autocorrect,
-          onChanged: onChanged,
-          onEditingComplete: onEditingComplete,
-          onFieldSubmitted: onSubmitted,
-          validator: validator,
-          enabled: enabled,
-        ),
-        if (icon != null)
-          Positioned.fill(
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: NotedIconButton(
-                  type: NotedIconButtonType.simple,
-                  size: NotedWidgetSize.small,
-                  icon: icon!,
-                  onPressed: onIconPressed,
-                ),
-              ),
-            ),
-          ),
-      ],
+    return TextFormField(
+      style: style,
+      decoration: decoration,
+      controller: controller,
+      keyboardType: keyboardType,
+      keyboardAppearance: theme.brightness,
+      obscureText: obscureText,
+      autocorrect: autocorrect,
+      onChanged: onChanged,
+      onEditingComplete: onEditingComplete,
+      onFieldSubmitted: onSubmitted,
+      validator: validator,
+      enabled: enabled,
     );
   }
 }

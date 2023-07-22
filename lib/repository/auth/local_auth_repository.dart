@@ -9,7 +9,7 @@ import 'package:noted_models/noted_models.dart';
 class LocalAuthRepository extends AuthRepository implements Disposable {
   final StreamController<NotedUser> _userStreamController = StreamController.broadcast();
   NotedUser _currentUser = NotedUser.empty();
-  bool _shouldThrow = true;
+  bool _shouldThrow = false;
   int _msDelay = 2000;
 
   @override
