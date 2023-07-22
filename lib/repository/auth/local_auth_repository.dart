@@ -86,6 +86,15 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
   }
 
   @override
+  Future<void> sendPasswordResetEmail({String email = ''}) async {
+    await Future.delayed(Duration(milliseconds: _msDelay));
+
+    if (_shouldThrow) {
+      throw NotedError(ErrorCode.repository_auth_passwordReset_failed);
+    }
+  }
+
+  @override
   FutureOr onDispose() async {
     await _userStreamController.close();
   }
@@ -108,6 +117,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
   void reset() {
     _shouldThrow = false;
     _msDelay = 2000;
+    _currentUser = NotedUser.empty();
   }
 }
 

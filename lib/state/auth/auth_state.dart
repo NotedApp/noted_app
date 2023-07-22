@@ -6,6 +6,7 @@ enum AuthStatus {
   signing_out,
   signing_up,
   signing_in,
+  sending_password_reset,
   authenticated,
 }
 

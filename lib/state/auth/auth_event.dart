@@ -29,6 +29,12 @@ class AuthSignInWithGithubEvent extends AuthEvent {}
 
 class AuthSignOutEvent extends AuthEvent {}
 
+class AuthSendPasswordResetEvent extends AuthEvent {
+  final String email;
+
+  const AuthSendPasswordResetEvent(this.email);
+}
+
 class AuthUserUpdatedEvent extends AuthEvent {
   final NotedUser user;
 

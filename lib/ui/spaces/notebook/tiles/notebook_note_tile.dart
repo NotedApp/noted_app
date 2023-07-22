@@ -57,7 +57,6 @@ class _NotebookNoteTileState extends State<NotebookNoteTile> {
           ],
         ),
       ),
-      // TODO: Implement real navigation here.
       onTap: widget.onTap ?? () => context.push('notes/${widget.note.id}'),
     );
   }

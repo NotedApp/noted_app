@@ -9,40 +9,17 @@ import 'package:noted_app/ui/login/login_frame.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/util/routing/noted_router.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
   final String initialEmail;
   final String initialPassword;
 
-  const RegisterPage({
-    this.initialEmail = '',
-    this.initialPassword = '',
-    super.key,
-  });
+  RegisterPage({this.initialEmail = '', this.initialPassword = '', super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return LoginFrame(
-      headerTitle: context.strings().login_register,
-      contentBuilder: (key) => _RegisterPageContent(
-        initialEmail: initialEmail,
-        initialPassword: initialPassword,
-        key: key,
-      ),
-    );
-  }
+  State<StatefulWidget> createState() => _RegisterPageState();
 }
 
-class _RegisterPageContent extends StatefulWidget {
-  final String initialEmail;
-  final String initialPassword;
-
-  _RegisterPageContent({this.initialEmail = '', this.initialPassword = '', super.key});
-
-  @override
-  State<StatefulWidget> createState() => _RegisterPageContentState();
-}
-
-class _RegisterPageContentState extends State<_RegisterPageContent> {
+class _RegisterPageState extends State<RegisterPage> {
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
   late final TextEditingController _confirmController;
@@ -72,71 +49,75 @@ class _RegisterPageContentState extends State<_RegisterPageContent> {
     final TextTheme theme = context.textTheme();
     final Strings strings = context.strings();
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        SizedBox(height: 18),
-        NotedTextField(
-          controller: _emailController,
-          name: strings.login_email,
-          hint: strings.login_email,
-          errorText: _emailError,
-          showErrorText: true,
-          keyboardType: TextInputType.emailAddress,
-          type: NotedTextFieldType.standard,
-        ),
-        SizedBox(height: 12),
-        NotedTextField(
-          controller: _passwordController,
-          name: strings.login_password,
-          hint: strings.login_password,
-          errorText: _passwordError,
-          showErrorText: true,
-          keyboardType: TextInputType.visiblePassword,
-          type: NotedTextFieldType.standard,
-          autocorrect: false,
-          obscureText: !_showPassword,
-          icon: _showPassword ? NotedIcons.eyeClosed : NotedIcons.eye,
-          onIconPressed: () => setState(() => _showPassword = !_showPassword),
-        ),
-        SizedBox(height: 12),
-        NotedTextField(
-          controller: _confirmController,
-          name: strings.login_confirmPassword,
-          hint: strings.login_confirmPassword,
-          errorText: _confirmError,
-          showErrorText: true,
-          keyboardType: TextInputType.visiblePassword,
-          type: NotedTextFieldType.standard,
-          autocorrect: false,
-          obscureText: !_showPassword,
-        ),
-        SizedBox(height: 12),
-        NotedTextButton(
-          label: strings.login_register,
-          type: NotedTextButtonType.filled,
-          onPressed: () => _tryRegister(context, bloc),
-        ),
-        Padding(
-          padding: EdgeInsets.fromLTRB(36, 14, 36, 18),
-          child: RichText(
-            textAlign: TextAlign.center,
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: strings.login_existingAccount,
-                  style: theme.labelSmall,
-                ),
-                TextSpan(
-                  text: strings.login_signIn,
-                  style: theme.labelSmall?.copyWith(decoration: TextDecoration.underline),
-                  recognizer: TapGestureRecognizer()..onTap = () => context.push('/login/sign-in'),
-                ),
-              ],
+    return LoginFrame(
+      headerTitle: context.strings().login_register,
+      contentBuilder: (key) => Column(
+        key: key,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          SizedBox(height: 18),
+          NotedTextField(
+            controller: _emailController,
+            name: strings.login_email,
+            hint: strings.login_email,
+            errorText: _emailError,
+            showErrorText: true,
+            keyboardType: TextInputType.emailAddress,
+            type: NotedTextFieldType.standard,
+          ),
+          SizedBox(height: 12),
+          NotedTextField(
+            controller: _passwordController,
+            name: strings.login_password,
+            hint: strings.login_password,
+            errorText: _passwordError,
+            showErrorText: true,
+            keyboardType: TextInputType.visiblePassword,
+            type: NotedTextFieldType.standard,
+            autocorrect: false,
+            obscureText: !_showPassword,
+            icon: _showPassword ? NotedIcons.eyeClosed : NotedIcons.eye,
+            onIconPressed: () => setState(() => _showPassword = !_showPassword),
+          ),
+          SizedBox(height: 12),
+          NotedTextField(
+            controller: _confirmController,
+            name: strings.login_confirmPassword,
+            hint: strings.login_confirmPassword,
+            errorText: _confirmError,
+            showErrorText: true,
+            keyboardType: TextInputType.visiblePassword,
+            type: NotedTextFieldType.standard,
+            autocorrect: false,
+            obscureText: !_showPassword,
+          ),
+          SizedBox(height: 12),
+          NotedTextButton(
+            label: strings.login_register,
+            type: NotedTextButtonType.filled,
+            onPressed: () => _tryRegister(context, bloc),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(36, 14, 36, 18),
+            child: RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: strings.login_existingAccount,
+                    style: theme.labelSmall,
+                  ),
+                  TextSpan(
+                    text: strings.login_signIn,
+                    style: theme.labelSmall?.copyWith(decoration: TextDecoration.underline),
+                    recognizer: TapGestureRecognizer()..onTap = () => context.push('/login/sign-in'),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -144,6 +125,7 @@ class _RegisterPageContentState extends State<_RegisterPageContent> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmController.dispose();
     super.dispose();
   }
 

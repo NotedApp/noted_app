@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:noted_app/repository/auth/auth_repository.dart';
 import 'package:noted_app/repository/auth/firebase_auth_repository.dart';
 import 'package:noted_app/repository/auth/local_auth_repository.dart';
@@ -42,6 +43,7 @@ class TestEnvironment extends Environment {
     NotedRouter? router,
     AuthRepository? authRepository,
   }) async {
+    await WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp(options: TestFirebaseOptions.currentPlatform);
 
     // Utilities.

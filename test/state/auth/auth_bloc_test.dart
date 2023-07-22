@@ -166,5 +166,31 @@ void main() {
       ],
       errors: () => [isA<NotedError>()],
     );
+
+    blocTest(
+      'sends password reset email',
+      build: AuthBloc.new,
+      act: (bloc) => bloc.add(AuthSendPasswordResetEvent('test')),
+      wait: const Duration(milliseconds: 10),
+      expect: () => [
+        AuthState.authenticating(status: AuthStatus.sending_password_reset),
+        AuthState.unauthenticated(),
+      ],
+    );
+
+    blocTest(
+      'sends password reset email and handles error',
+      setUp: () async {
+        getRepository().setShouldThrow(true);
+      },
+      build: AuthBloc.new,
+      act: (bloc) => bloc.add(AuthSendPasswordResetEvent('test')),
+      wait: const Duration(milliseconds: 10),
+      expect: () => [
+        AuthState.authenticating(status: AuthStatus.sending_password_reset),
+        AuthState.unauthenticated(),
+      ],
+      errors: () => [isA<NotedError>()],
+    );
   });
 }
