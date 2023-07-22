@@ -117,6 +117,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
   void reset() {
     _shouldThrow = false;
     _msDelay = 2000;
+    _currentUser = NotedUser.empty();
   }
 }
 

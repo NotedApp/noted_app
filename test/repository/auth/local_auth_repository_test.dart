@@ -100,6 +100,18 @@ void main() {
       await expectLater(() => repository.signInWithGithub(), throwsA(isA<UnimplementedError>()));
     });
 
+    test('sends a password reset email', () async {
+      await repository.sendPasswordResetEmail(email: 'test');
+      expect(repository.currentUser, NotedUser.empty());
+    });
+
+    test('throws for a password reset email', () async {
+      repository.setShouldThrow(true);
+
+      await expectLater(() => repository.sendPasswordResetEmail(email: 'test'), throwsA(isA<NotedError>()));
+      expect(repository.currentUser, NotedUser.empty());
+    });
+
     test('throws and resets when requested', () async {
       NotedUser expected = NotedUser(id: 'local-google', name: 'googly_woogly', email: 'local-google@noted.com');
 
