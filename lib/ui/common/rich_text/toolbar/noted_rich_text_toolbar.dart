@@ -5,10 +5,25 @@ import 'package:noted_app/ui/common/rich_text/toolbar/noted_rich_text_color_butt
 import 'package:noted_app/ui/common/rich_text/toolbar/noted_rich_text_link_button.dart';
 import 'package:noted_app/ui/common/rich_text/toolbar/noted_rich_text_toggle_button.dart';
 
-class NotedRichTextToolbar extends StatelessWidget {
+enum _ToolbarState {
+  home,
+  colorPicker,
+}
+
+Key _homeKey = Key(_ToolbarState.home.name);
+Key _colorPickerKey = Key(_ToolbarState.colorPicker.name);
+
+class NotedRichTextToolbar extends StatefulWidget {
   final NotedRichTextController controller;
 
   const NotedRichTextToolbar({required this.controller, super.key});
+
+  @override
+  State<StatefulWidget> createState() => _NotedRichTextToolbarState();
+}
+
+class _NotedRichTextToolbarState extends State<NotedRichTextToolbar> {
+  _ToolbarState state = _ToolbarState.home;
 
   @override
   Widget build(BuildContext context) {
@@ -27,15 +42,30 @@ class NotedRichTextToolbar extends StatelessWidget {
           ),
         ],
       ),
-      child: _ToolbarDefault(controller: controller),
+      child: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 200),
+        switchInCurve: Curves.easeIn,
+        switchOutCurve: Curves.easeOut,
+        transitionBuilder: (Widget child, Animation<double> animation) => SlideTransition(
+          position: Tween(
+            begin: child.key == _homeKey ? Offset(-1.0, 0.0) : Offset(1.0, 0.0),
+            end: Offset(0.0, 0.0),
+          ).animate(animation),
+          child: child,
+        ),
+        child: switch (state) {
+          _ToolbarState.home => _ToolbarHome(controller: widget.controller, key: _homeKey),
+          _ToolbarState.colorPicker => _ToolbarColorPicker(controller: widget.controller, key: _colorPickerKey),
+        },
+      ),
     );
   }
 }
 
-class _ToolbarDefault extends StatelessWidget {
+class _ToolbarHome extends StatelessWidget {
   final NotedRichTextController controller;
 
-  const _ToolbarDefault({required this.controller, super.key});
+  const _ToolbarHome({required this.controller, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -112,5 +142,17 @@ class _ToolbarDefault extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class _ToolbarColorPicker extends StatefulWidget {
+  final NotedRichTextController controller;
+
+  const _ToolbarColorPicker({required this.controller, super.key});
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    throw UnimplementedError();
   }
 }

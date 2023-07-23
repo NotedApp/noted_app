@@ -40,7 +40,7 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
     }
 
     try {
-      emit(AuthState.authenticating(status: AuthStatus.signing_up));
+      emit(AuthState.authenticating(status: AuthStatus.signingUp));
       await _repository.createUserWithEmailAndPassword(email: event.email, password: event.password);
     } catch (e) {
       emit(AuthState.unauthenticated(error: NotedException.fromObject(e)));
@@ -53,7 +53,7 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
     }
 
     try {
-      emit(AuthState.authenticating(status: AuthStatus.signing_in));
+      emit(AuthState.authenticating(status: AuthStatus.signingIn));
 
       switch (event) {
         case AuthSignInWithEmailEvent _:
@@ -80,7 +80,7 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
     }
 
     try {
-      emit(AuthState.authenticating(status: AuthStatus.signing_out));
+      emit(AuthState.authenticating(status: AuthStatus.signingOut));
       await _repository.signOut();
     } catch (e) {
       NotedUser current = _repository.currentUser;
@@ -96,7 +96,7 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
     }
 
     try {
-      emit(AuthState.authenticating(status: AuthStatus.sending_password_reset));
+      emit(AuthState.authenticating(status: AuthStatus.sendingPasswordReset));
       await _repository.sendPasswordResetEmail(email: event.email);
       emit(AuthState.unauthenticated());
     } catch (e) {
