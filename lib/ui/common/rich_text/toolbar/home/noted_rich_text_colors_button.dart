@@ -5,12 +5,12 @@ import 'package:noted_app/ui/common/rich_text/noted_rich_text_attributes.dart';
 import 'package:noted_app/ui/common/rich_text/noted_rich_text_controller.dart';
 import 'package:noted_app/ui/common/rich_text/noted_rich_text_utils.dart';
 
-class NotedRichTextColorButton extends StatelessWidget {
+class NotedRichTextColorsButton extends StatelessWidget {
   final NotedRichTextController controller;
   final NotedRichTextAttribute attribute;
   final ColorScheme colors;
 
-  const NotedRichTextColorButton({
+  const NotedRichTextColorsButton({
     required this.controller,
     required this.attribute,
     required this.colors,

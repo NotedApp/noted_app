@@ -8,7 +8,7 @@ enum NotedIconButtonType {
 }
 
 class NotedIconButton extends StatelessWidget {
-  final IconData icon;
+  final IconData? icon;
   final NotedIconButtonType type;
   final NotedWidgetSize size;
   final NotedWidgetColor? color;
