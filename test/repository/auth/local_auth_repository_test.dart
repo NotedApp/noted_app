@@ -4,6 +4,9 @@ import 'package:noted_app/util/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 void main() {
+  final NotedUser expected = NotedUser(id: 'local-11', name: 'Local 11', email: 'email');
+  final NotedUser local = NotedUser(id: 'local-0', email: 'local-0@noted.com', name: 'shaquille.oatmeal');
+
   late LocalAuthRepository repository;
 
   setUp(() {
@@ -13,9 +16,6 @@ void main() {
 
   group('LocalAuthRepository', () {
     test('creates a user and signs in/out with email and password', () async {
-      NotedUser expected = NotedUser(id: 'local-11', name: 'Local 11', email: 'email');
-      NotedUser local = NotedUser(id: 'local-0', email: 'local-0@noted.com', name: 'shaquille.oatmeal');
-
       expectLater(
         repository.userStream,
         emitsInOrder(
@@ -110,6 +110,50 @@ void main() {
 
       await expectLater(() => repository.sendPasswordResetEmail(email: 'test'), throwsA(isA<NotedException>()));
       expect(repository.currentUser, NotedUser.empty());
+    });
+
+    test('changes the account password', () async {
+      await repository.signInWithEmailAndPassword(email: 'local-0@noted.com', password: 'local');
+      expect(repository.currentUser, local);
+
+      await repository.changePassword(password: 'password');
+
+      await repository.signOut();
+      expect(repository.currentUser, NotedUser.empty());
+
+      await repository.signInWithEmailAndPassword(email: 'local-0@noted.com', password: 'password');
+      expect(repository.currentUser, local);
+    });
+
+    test('throws for a password change', () async {
+      await repository.signInWithEmailAndPassword(email: 'local-0@noted.com', password: 'local');
+      expect(repository.currentUser, local);
+
+      repository.setShouldThrow(true);
+
+      await expectLater(() => repository.changePassword(password: 'password'), throwsA(isA<NotedException>()));
+    });
+
+    test('deletes the current account', () async {
+      await repository.signInWithEmailAndPassword(email: 'local-0@noted.com', password: 'local');
+      expect(repository.currentUser, local);
+
+      await repository.deleteAccount();
+      expect(repository.currentUser, NotedUser.empty());
+
+      await expectLater(
+        () => repository.signInWithEmailAndPassword(email: 'local-0@noted.com', password: 'local'),
+        throwsA(isA<NotedException>()),
+      );
+    });
+
+    test('throws for an account delete', () async {
+      await repository.signInWithEmailAndPassword(email: 'local-0@noted.com', password: 'local');
+      expect(repository.currentUser, local);
+
+      repository.setShouldThrow(true);
+
+      await expectLater(() => repository.deleteAccount(), throwsA(isA<NotedException>()));
     });
 
     test('throws and resets when requested', () async {

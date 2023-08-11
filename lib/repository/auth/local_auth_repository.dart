@@ -12,6 +12,26 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
   bool _shouldThrow = false;
   int _msDelay = 2000;
 
+  /// A list of [NotedUser]s who can be logged in in a local environment.
+  List<NotedUser> _localUsers = [
+    NotedUser(id: 'local-0', email: 'local-0@noted.com', name: 'shaquille.oatmeal'),
+    NotedUser(id: 'local-1', email: 'local-1@noted.com', name: 'averagestudent'),
+    NotedUser(id: 'local-2', email: 'local-2@noted.com', name: 'me_for_president'),
+    NotedUser(id: 'local-3', email: 'local-3@noted.com', name: 'chickenriceandbeans'),
+    NotedUser(id: 'local-4', email: 'local-4@noted.com', name: 'fluffycookie'),
+    NotedUser(id: 'local-5', email: 'local-5@noted.com', name: 'averagestudent'),
+    NotedUser(id: 'local-6', email: 'local-6@noted.com', name: 'LactoseTheIntolerant'),
+    NotedUser(id: 'local-7', email: 'local-7@noted.com', name: 'kim_chi'),
+    NotedUser(id: 'local-8', email: 'local-8@noted.com', name: 'just-a-harmless-potato'),
+    NotedUser(id: 'local-9', email: 'local-9@noted.com', name: 'dog'),
+    NotedUser(id: 'local-google', email: 'local-google@noted.com', name: 'googly_woogly'),
+  ];
+
+  /// A list of [String]s that are accepted as passwords for all [_localUsers].
+  List<String> _localPasswords = [
+    'local',
+  ];
+
   @override
   NotedUser get currentUser => _currentUser;
 
@@ -95,6 +115,17 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
   }
 
   @override
+  Future<void> changePassword({String password = ''}) async {
+    await Future.delayed(Duration(milliseconds: _msDelay));
+
+    if (_shouldThrow) {
+      throw NotedException(ErrorCode.auth_changePassword_failed);
+    }
+
+    _localPasswords.add(password);
+  }
+
+  @override
   Future<void> deleteAccount() async {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
@@ -104,17 +135,6 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
 
     _localUsers.removeWhere((user) => user.id == _currentUser.id);
     await _updateUser(NotedUser.empty(), ErrorCode.auth_deleteAccount_failed, delay: false);
-  }
-
-  @override
-  Future<void> changePassword({String password = ''}) async {
-    await Future.delayed(Duration(milliseconds: _msDelay));
-
-    if (_shouldThrow) {
-      throw NotedException(ErrorCode.auth_changePassword_failed);
-    }
-
-    _localPasswords.add(password);
   }
 
   @override
@@ -143,23 +163,3 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
     _currentUser = NotedUser.empty();
   }
 }
-
-/// A list of [NotedUser]s who can be logged in in a local environment.
-List<NotedUser> _localUsers = [
-  NotedUser(id: 'local-0', email: 'local-0@noted.com', name: 'shaquille.oatmeal'),
-  NotedUser(id: 'local-1', email: 'local-1@noted.com', name: 'averagestudent'),
-  NotedUser(id: 'local-2', email: 'local-2@noted.com', name: 'me_for_president'),
-  NotedUser(id: 'local-3', email: 'local-3@noted.com', name: 'chickenriceandbeans'),
-  NotedUser(id: 'local-4', email: 'local-4@noted.com', name: 'fluffycookie'),
-  NotedUser(id: 'local-5', email: 'local-5@noted.com', name: 'averagestudent'),
-  NotedUser(id: 'local-6', email: 'local-6@noted.com', name: 'LactoseTheIntolerant'),
-  NotedUser(id: 'local-7', email: 'local-7@noted.com', name: 'kim_chi'),
-  NotedUser(id: 'local-8', email: 'local-8@noted.com', name: 'just-a-harmless-potato'),
-  NotedUser(id: 'local-9', email: 'local-9@noted.com', name: 'dog'),
-  NotedUser(id: 'local-google', email: 'local-google@noted.com', name: 'googly_woogly'),
-];
-
-/// A list of [String]s that are accepted as passwords for all [_localUsers].
-List<String> _localPasswords = [
-  'local',
-];
