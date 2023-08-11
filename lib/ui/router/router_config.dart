@@ -8,6 +8,7 @@ import 'package:noted_app/ui/login/password_reset_page.dart';
 import 'package:noted_app/ui/login/register_page.dart';
 import 'package:noted_app/ui/login/sign_in_page.dart';
 import 'package:noted_app/ui/router/route_error_page.dart';
+import 'package:noted_app/ui/settings/account/account_page.dart';
 import 'package:noted_app/ui/settings/settings_page.dart';
 
 GoRouter routerConfig = GoRouter(
@@ -26,7 +27,7 @@ GoRouter routerConfig = GoRouter(
           routes: [
             GoRoute(
               path: 'account',
-              builder: (context, state) => SettingsPage(),
+              builder: (context, state) => AccountPage(),
             ),
             GoRoute(
               path: 'style',

@@ -18,6 +18,7 @@ class SettingsPage extends StatelessWidget {
       title: strings.settings_title,
       child: Column(
         children: [
+          SizedBox(height: 16),
           SettingsRow(
             icon: NotedIcons.account,
             title: strings.settings_accountTitle,
@@ -28,31 +29,31 @@ class SettingsPage extends StatelessWidget {
             icon: NotedIcons.brush,
             title: strings.settings_styleTitle,
             hasArrow: true,
-            onPressed: () => context.push('/settings/style'),
+            onPressed: () => showUnimplementedSnackBar(context),
           ),
           SettingsRow(
             icon: NotedIcons.plug,
             title: strings.settings_pluginsTitle,
             hasArrow: true,
-            onPressed: () => context.push('/settings/plugins'),
+            onPressed: () => showUnimplementedSnackBar(context),
           ),
           SettingsRow(
             icon: NotedIcons.trash,
             title: strings.settings_deletedTitle,
             hasArrow: true,
-            onPressed: () => context.push('/settings/deleted'),
+            onPressed: () => showUnimplementedSnackBar(context),
           ),
           SettingsRow(
             icon: NotedIcons.creditCard,
             title: strings.settings_subscriptionsTitle,
             hasArrow: true,
-            onPressed: () => context.push('/settings/subscriptions'),
+            onPressed: () => showUnimplementedSnackBar(context),
           ),
           SettingsRow(
             icon: NotedIcons.help,
             title: strings.settings_helpTitle,
             hasArrow: true,
-            onPressed: () => context.push('/settings/help'),
+            onPressed: () => showUnimplementedSnackBar(context),
           ),
           Spacer(),
           FutureBuilder<String>(

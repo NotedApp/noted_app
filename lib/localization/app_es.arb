@@ -9,6 +9,7 @@
   "common_routeErrorTitle": "oops!",
   "common_routeErrorText": "sorry, we seem to be lost!",
   "common_routeErrorCta": "back to home",
+  "common_notAny": "n/a",
 
   "login_disclaimers": "by registering, you agree to noted's ",
   "login_termsOfUse": "terms of use",
@@ -52,7 +53,7 @@
   "login_error_passwordResetInvalidEmail": "couldn't find an account with this email.",
 
   "settings_title": "settings",
-  "settings_accountTitle": "accout",
+  "settings_accountTitle": "account",
   "settings_styleTitle": "style",
   "settings_colorTitle": "colors",
   "settings_colorSchemeBlue": "blue",
