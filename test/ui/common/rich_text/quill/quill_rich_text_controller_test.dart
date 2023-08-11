@@ -10,20 +10,20 @@ import '../../../../helpers/mocks/mock_delta.dart';
 
 void main() {
   group('Quill Rich Text Controller', () {
-    test('creates a controller with initial data', () {
-      QuillRichTextController controller = NotedRichTextController.quill(
+    late QuillRichTextController controller;
+
+    setUp(() {
+      controller = NotedRichTextController.quill(
         initial: testData0,
       ) as QuillRichTextController;
+    });
 
+    test('creates a controller with initial data', () {
       controller.controller.updateSelection(TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.LOCAL);
       expect(controller.controller.getPlainText(), 'hello world');
     });
 
     test('validates and updates bold formatting', () {
-      QuillRichTextController controller = NotedRichTextController.quill(
-        initial: testData0,
-      ) as QuillRichTextController;
-
       controller.controller.updateSelection(TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.LOCAL);
       expect(controller.isAttributeToggled(NotedRichTextAttribute.bold), false);
 
@@ -35,10 +35,6 @@ void main() {
     });
 
     test('validates and updates header formatting', () {
-      QuillRichTextController controller = NotedRichTextController.quill(
-        initial: testData0,
-      ) as QuillRichTextController;
-
       controller.controller.updateSelection(TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.LOCAL);
       expect(controller.isAttributeToggled(NotedRichTextAttribute.h1), false);
 
@@ -51,10 +47,6 @@ void main() {
     });
 
     test('validates and updates color formatting', () {
-      QuillRichTextController controller = NotedRichTextController.quill(
-        initial: testData0,
-      ) as QuillRichTextController;
-
       controller.controller.updateSelection(TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.LOCAL);
       expect(controller.getColor(NotedRichTextAttribute.textColor), null);
 
@@ -66,10 +58,6 @@ void main() {
     });
 
     test('validates and updates list formatting', () {
-      QuillRichTextController controller = NotedRichTextController.quill(
-        initial: testData0,
-      ) as QuillRichTextController;
-
       controller.controller.updateSelection(TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.LOCAL);
       expect(controller.isAttributeToggled(NotedRichTextAttribute.ul), false);
 
@@ -82,10 +70,6 @@ void main() {
     });
 
     test('validates and updates task list formatting', () {
-      QuillRichTextController controller = NotedRichTextController.quill(
-        initial: testData0,
-      ) as QuillRichTextController;
-
       controller.controller.updateSelection(TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.LOCAL);
       expect(controller.isAttributeToggled(NotedRichTextAttribute.taskList), false);
 
@@ -99,10 +83,6 @@ void main() {
     });
 
     test('validates and updates link formatting', () {
-      QuillRichTextController controller = NotedRichTextController.quill(
-        initial: testData0,
-      ) as QuillRichTextController;
-
       controller.controller.updateSelection(TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.LOCAL);
       expect(controller.getLink(), null);
 
@@ -114,18 +94,10 @@ void main() {
     });
 
     test('validates inserting an embed', () {
-      QuillRichTextController controller = NotedRichTextController.quill(
-        initial: testData0,
-      ) as QuillRichTextController;
-
       controller.insertEmbed(NotedRichTextEmbed.image);
     });
 
     test('calls controller dispose on dispose', () {
-      QuillRichTextController controller = NotedRichTextController.quill(
-        initial: testData0,
-      ) as QuillRichTextController;
-
       controller.dispose();
       expect(() => controller.controller.dispose(), throwsA(isA<FlutterError>()));
     });

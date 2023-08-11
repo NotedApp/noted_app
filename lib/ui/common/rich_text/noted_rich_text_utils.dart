@@ -1,4 +1,4 @@
-//coverage:ignore-file
+// coverage:ignore-file
 
 import 'package:flutter/material.dart';
 import 'package:noted_app/ui/common/icon/noted_icons.dart';

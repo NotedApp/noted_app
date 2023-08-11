@@ -37,11 +37,9 @@ void main() {
       expect(input, findsOneWidget);
       await tester.enterText(input, 'test');
 
-      Finder confirm = find.byWidgetPredicate(
-        (widget) => widget is NotedTextButton && widget.type == NotedTextButtonType.simple,
-      );
+      Finder confirm = find.text('confirm');
 
-      await tester.tap(confirm.first);
+      await tester.tap(confirm);
       await tester.pump(const Duration(seconds: 1));
 
       expect(result, completion(equals('test')));
@@ -73,11 +71,9 @@ void main() {
       expect(input, findsOneWidget);
       await tester.enterText(input, 'test');
 
-      Finder cancel = find.byWidgetPredicate(
-        (widget) => widget is NotedTextButton && widget.type == NotedTextButtonType.simple,
-      );
+      Finder cancel = find.text('cancel');
 
-      await tester.tap(cancel.last);
+      await tester.tap(cancel);
       await tester.pump(const Duration(seconds: 1));
 
       expect(result, completion(equals(null)));

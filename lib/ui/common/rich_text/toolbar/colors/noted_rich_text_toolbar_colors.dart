@@ -30,6 +30,7 @@ final Map<NotedRichTextAttribute, List<Color>> _colors = {
   ],
 };
 
+// coverage:ignore-line
 final List<Color> _defaultColors = [
   black,
   white,

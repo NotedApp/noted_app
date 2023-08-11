@@ -11,9 +11,7 @@ class TestWrapper extends StatelessWidget {
     return MaterialApp(
       localizationsDelegates: Strings.localizationsDelegates,
       supportedLocales: Strings.supportedLocales,
-      home: Material(
-        child: child,
-      ),
+      home: Material(child: child),
     );
   }
 }
