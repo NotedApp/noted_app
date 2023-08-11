@@ -23,6 +23,8 @@
   "login_signingUp": "signing you up",
   "login_signingIn": "signing you in",
   "login_sendingPasswordReset": "sending you a password reset email",
+  "login_changingPassword": "updating your password",
+  "login_deletingAccount": "deleting your account",
   "login_email": "email",
   "login_password": "password",
   "login_confirmPassword": "confirm password",

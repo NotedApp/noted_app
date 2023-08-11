@@ -29,6 +29,8 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
     on<AuthSignInWithGithubEvent>(_onSignIn);
     on<AuthSignOutEvent>(_onSignOut);
     on<AuthSendPasswordResetEvent>(_onResetPassword);
+    on<AuthChangePasswordEvent>(_onChangePassword);
+    on<AuthDeleteAccountEvent>(_onDeleteAccount);
     on<AuthUserUpdatedEvent>(_onUserChanged);
 
     _userSubscription = _repository.userStream.listen((user) => add(AuthUserUpdatedEvent(user)));
@@ -101,6 +103,36 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
       emit(AuthState.unauthenticated());
     } catch (e) {
       emit(AuthState.unauthenticated(error: NotedException.fromObject(e)));
+    }
+  }
+
+  void _onChangePassword(AuthChangePasswordEvent event, Emitter<AuthState> emit) async {
+    if (state.status != AuthStatus.authenticated) {
+      return;
+    }
+
+    try {
+      emit(AuthState.authenticating(status: AuthStatus.changingPassword));
+      await _repository.changePassword();
+      emit(AuthState.authenticated(user: _repository.currentUser));
+    } catch (e) {
+      emit(AuthState.authenticated(user: _repository.currentUser, error: NotedException.fromObject(e)));
+    }
+  }
+
+  void _onDeleteAccount(AuthDeleteAccountEvent event, Emitter<AuthState> emit) async {
+    if (state.status != AuthStatus.authenticated) {
+      return;
+    }
+
+    try {
+      emit(AuthState.authenticating(status: AuthStatus.deletingAccount));
+      await _repository.deleteAccount();
+    } catch (e) {
+      NotedUser current = _repository.currentUser;
+      AuthStatus status = current.isEmpty ? AuthStatus.unauthenticated : AuthStatus.authenticated;
+      NotedException error = NotedException.fromObject(e);
+      emit(AuthState(user: current, status: status, error: error));
     }
   }
 
