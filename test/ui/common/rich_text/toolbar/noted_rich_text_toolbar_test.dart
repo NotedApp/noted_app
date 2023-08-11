@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:noted_app/theme/custom_colors.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/common/rich_text/noted_rich_text_attributes.dart';
 import 'package:noted_app/ui/common/rich_text/quill/quill_rich_text_controller.dart';
@@ -75,6 +76,22 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(controller.getLink(), 'test.com');
+    });
+
+    testWidgets('updates the text color', (tester) async {
+      await tester.pumpWidget(TestWrapper(child: NotedRichTextToolbar(controller: controller)));
+
+      await tester.tap(find.byIcon(NotedIcons.textColor));
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+      Finder color = find.byWidgetPredicate(
+        (widget) => widget is NotedColorPickerButton && widget.color == blueGrey500,
+      );
+
+      await tester.tap(color);
+      await tester.pumpAndSettle();
+
+      expect(controller.getColor(NotedRichTextAttribute.textColor), blueGrey500);
     });
   });
 }

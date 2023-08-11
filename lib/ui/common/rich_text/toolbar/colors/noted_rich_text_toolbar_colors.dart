@@ -30,7 +30,7 @@ final Map<NotedRichTextAttribute, List<Color>> _colors = {
   ],
 };
 
-// coverage:ignore-line
+// coverage:ignore-start
 final List<Color> _defaultColors = [
   black,
   white,
@@ -42,7 +42,7 @@ final List<Color> _defaultColors = [
   teal500,
   lightGreen500,
   orange500,
-];
+]; // coverage:ignore-end
 
 class _ToolbarColorPicker extends StatefulWidget {
   final NotedRichTextController controller;
