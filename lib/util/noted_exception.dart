@@ -43,6 +43,13 @@ enum ErrorCode {
   auth_passwordReset_failed,
   auth_passwordReset_invalidEmail,
 
+  auth_deleteAccount_failed,
+  auth_deleteAccount_reauthenticate,
+
+  auth_changePassword_failed,
+  auth_changePassword_reauthenticate,
+  auth_changePassword_weakPassword,
+
   // State management error codes.
   state_theme_customFetchFailed,
 }

@@ -113,6 +113,28 @@ class FirebaseAuthRepository extends AuthRepository {
     }
   }
 
+  @override
+  Future<void> changePassword({String password = ''}) async {
+    try {
+      await _firebaseAuth.currentUser?.updatePassword(password);
+    } on FirebaseAuthException catch (e) {
+      throw NotedException(_getChangePasswordErrorCode(e.code));
+    } catch (_) {
+      throw NotedException(ErrorCode.auth_changePassword_failed);
+    }
+  }
+
+  @override
+  Future<void> deleteAccount() async {
+    try {
+      await _firebaseAuth.currentUser?.delete();
+    } on FirebaseAuthException catch (e) {
+      throw NotedException(_getDeleteAccountErrorCode(e.code));
+    } catch (_) {
+      throw NotedException(ErrorCode.auth_deleteAccount_failed);
+    }
+  }
+
   ErrorCode _getCreateUserErrorCode(String code) {
     return switch (code) {
       'invalid-email' => ErrorCode.auth_createUser_invalidEmail,
@@ -148,6 +170,21 @@ class FirebaseAuthRepository extends AuthRepository {
       'invalid-email' => ErrorCode.auth_passwordReset_invalidEmail,
       'user-not-found' => ErrorCode.auth_passwordReset_invalidEmail,
       _ => ErrorCode.auth_passwordReset_failed,
+    };
+  }
+
+  ErrorCode _getChangePasswordErrorCode(String code) {
+    return switch (code) {
+      'requires-recent-login' => ErrorCode.auth_changePassword_reauthenticate,
+      'weak-password' => ErrorCode.auth_changePassword_weakPassword,
+      _ => ErrorCode.auth_deleteAccount_failed,
+    };
+  }
+
+  ErrorCode _getDeleteAccountErrorCode(String code) {
+    return switch (code) {
+      'requires-recent-login' => ErrorCode.auth_deleteAccount_reauthenticate,
+      _ => ErrorCode.auth_deleteAccount_failed,
     };
   }
 }
