@@ -18,10 +18,10 @@ class LoginLoading extends StatelessWidget {
         label: switch (status) {
           AuthStatus.unauthenticated => strings.unknown,
           AuthStatus.authenticated => strings.login_authenticated,
-          AuthStatus.signing_out => strings.login_signingOut,
-          AuthStatus.signing_in => strings.login_signingIn,
-          AuthStatus.signing_up => strings.login_signingUp,
-          AuthStatus.sending_password_reset => strings.login_sendingPasswordReset,
+          AuthStatus.signingOut => strings.login_signingOut,
+          AuthStatus.signingIn => strings.login_signingIn,
+          AuthStatus.signingUp => strings.login_signingUp,
+          AuthStatus.sendingPasswordReset => strings.login_sendingPasswordReset,
         },
       ),
     );

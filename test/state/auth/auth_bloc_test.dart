@@ -35,7 +35,7 @@ void main() {
       act: (bloc) => bloc.add(AuthSignUpWithEmailEvent('test@test.com', 'local')),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        AuthState.authenticating(status: AuthStatus.signing_up),
+        AuthState.authenticating(status: AuthStatus.signingUp),
         AuthState.authenticated(user: newUser),
       ],
     );
@@ -46,7 +46,7 @@ void main() {
       act: (bloc) => bloc.add(AuthSignUpWithEmailEvent('12', 'local')),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        AuthState.authenticating(status: AuthStatus.signing_up),
+        AuthState.authenticating(status: AuthStatus.signingUp),
         AuthState.unauthenticated(error: NotedException(ErrorCode.auth_createUser_invalidEmail)),
       ],
     );
@@ -57,7 +57,7 @@ void main() {
       act: (bloc) => bloc.add(AuthSignInWithEmailEvent('local-0@noted.com', 'local')),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        AuthState.authenticating(status: AuthStatus.signing_in),
+        AuthState.authenticating(status: AuthStatus.signingIn),
         AuthState.authenticated(user: local0),
       ],
     );
@@ -68,7 +68,7 @@ void main() {
       act: (bloc) => bloc.add(AuthSignInWithEmailEvent('test', 'test')),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        AuthState.authenticating(status: AuthStatus.signing_in),
+        AuthState.authenticating(status: AuthStatus.signingIn),
         AuthState.unauthenticated(error: NotedException(ErrorCode.auth_emailSignIn_invalidEmail)),
       ],
     );
@@ -79,7 +79,7 @@ void main() {
       act: (bloc) => bloc.add(AuthSignInWithGoogleEvent()),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        AuthState.authenticating(status: AuthStatus.signing_in),
+        AuthState.authenticating(status: AuthStatus.signingIn),
         AuthState.authenticated(user: google),
       ],
     );
@@ -93,7 +93,7 @@ void main() {
       },
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        AuthState.authenticating(status: AuthStatus.signing_in),
+        AuthState.authenticating(status: AuthStatus.signingIn),
         AuthState.unauthenticated(error: NotedException(ErrorCode.auth_googleSignIn_failed)),
       ],
     );
@@ -104,7 +104,7 @@ void main() {
       act: (bloc) => bloc.add(AuthSignInWithAppleEvent()),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        AuthState.authenticating(status: AuthStatus.signing_in),
+        AuthState.authenticating(status: AuthStatus.signingIn),
         AuthState.unauthenticated(error: NotedException.fromObject(UnimplementedError())),
       ],
     );
@@ -115,7 +115,7 @@ void main() {
       act: (bloc) => bloc.add(AuthSignInWithFacebookEvent()),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        AuthState.authenticating(status: AuthStatus.signing_in),
+        AuthState.authenticating(status: AuthStatus.signingIn),
         AuthState.unauthenticated(error: NotedException.fromObject(UnimplementedError())),
       ],
     );
@@ -126,7 +126,7 @@ void main() {
       act: (bloc) => bloc.add(AuthSignInWithGithubEvent()),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        AuthState.authenticating(status: AuthStatus.signing_in),
+        AuthState.authenticating(status: AuthStatus.signingIn),
         AuthState.unauthenticated(error: NotedException.fromObject(UnimplementedError())),
       ],
     );
@@ -140,7 +140,7 @@ void main() {
       act: (bloc) => bloc.add(AuthSignOutEvent()),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        AuthState.authenticating(status: AuthStatus.signing_out),
+        AuthState.authenticating(status: AuthStatus.signingOut),
         AuthState.unauthenticated(),
       ],
     );
@@ -155,7 +155,7 @@ void main() {
       act: (bloc) => bloc.add(AuthSignOutEvent()),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        AuthState.authenticating(status: AuthStatus.signing_out),
+        AuthState.authenticating(status: AuthStatus.signingOut),
         AuthState.authenticated(user: google, error: NotedException(ErrorCode.auth_signOut_failed)),
       ],
     );
@@ -166,7 +166,7 @@ void main() {
       act: (bloc) => bloc.add(AuthSendPasswordResetEvent('test')),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        AuthState.authenticating(status: AuthStatus.sending_password_reset),
+        AuthState.authenticating(status: AuthStatus.sendingPasswordReset),
         AuthState.unauthenticated(),
       ],
     );
@@ -180,7 +180,7 @@ void main() {
       act: (bloc) => bloc.add(AuthSendPasswordResetEvent('test')),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        AuthState.authenticating(status: AuthStatus.sending_password_reset),
+        AuthState.authenticating(status: AuthStatus.sendingPasswordReset),
         AuthState.unauthenticated(error: NotedException(ErrorCode.auth_passwordReset_failed)),
       ],
     );

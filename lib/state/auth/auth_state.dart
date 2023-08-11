@@ -4,10 +4,10 @@ import 'package:noted_models/noted_models.dart';
 
 enum AuthStatus {
   unauthenticated,
-  signing_out,
-  signing_up,
-  signing_in,
-  sending_password_reset,
+  signingOut,
+  signingUp,
+  signingIn,
+  sendingPasswordReset,
   authenticated,
 }
 
