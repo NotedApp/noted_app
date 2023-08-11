@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:noted_app/ui/common/noted_library.dart';
 
 class SettingsRow extends StatelessWidget {
   final IconData? icon;
   final String title;
   final Widget? trailing;
+  final bool hasArrow;
   final VoidCallback? onPressed;
 
   const SettingsRow({
     this.icon,
     required this.title,
     this.trailing,
+    this.hasArrow = false,
     this.onPressed,
     super.key,
   });
@@ -32,10 +35,10 @@ class SettingsRow extends StatelessWidget {
                   child: Icon(icon, size: 24, color: theme.colorScheme.tertiary),
                 ),
               Expanded(child: Text(title, style: theme.textTheme.bodyLarge)),
-              if (trailing != null)
+              if (trailing != null || hasArrow)
                 Padding(
                   padding: EdgeInsets.only(right: 12),
-                  child: trailing,
+                  child: trailing ?? Icon(NotedIcons.chevronRight, size: 24, color: theme.colorScheme.tertiary),
                 ),
             ],
           ),
