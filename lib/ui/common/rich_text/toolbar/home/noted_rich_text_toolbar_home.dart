@@ -65,21 +65,23 @@ class _ToolbarHome extends StatelessWidget {
           attribute: NotedRichTextAttribute.taskList,
           colors: colors,
         ),
-        NotedRichTextColorsButton(
+        NotedRichTextStateButton(
           controller: controller,
           attribute: NotedRichTextAttribute.textColor,
           colors: colors,
           onPressed: () => setToolbarState(_ToolbarState.textColor),
         ),
-        NotedRichTextColorsButton(
+        NotedRichTextStateButton(
           controller: controller,
           attribute: NotedRichTextAttribute.textBackground,
           colors: colors,
           onPressed: () => setToolbarState(_ToolbarState.highlightColor),
         ),
-        NotedRichTextLinkButton(
+        NotedRichTextStateButton(
           controller: controller,
+          attribute: NotedRichTextAttribute.link,
           colors: colors,
+          onPressed: () => setToolbarState(_ToolbarState.link),
         ),
       ],
     );

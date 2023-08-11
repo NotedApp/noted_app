@@ -30,15 +30,15 @@ void main() {
       expect(find.byType(NotedIconButton), findsNWidgets(13));
 
       await tester.tap(find.byIcon(NotedIcons.textColor));
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await tester.pumpAndSettle();
 
       expect(find.byType(NotedColorPickerButton), findsNWidgets(12));
 
       await tester.tap(find.byIcon(NotedIcons.chevronLeft));
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await tester.pumpAndSettle();
 
       await tester.tap(find.byIcon(NotedIcons.backgroundColor));
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      await tester.pumpAndSettle();
 
       expect(find.byType(NotedColorPickerButton), findsNWidgets(12));
     });
@@ -70,12 +70,15 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.enterText(find.byType(NotedTextField), 'test.com');
-      await tester.pumpAndSettle();
-
-      await tester.tap(find.text('confirm'));
+      await tester.testTextInput.receiveAction(TextInputAction.done);
       await tester.pumpAndSettle();
 
       expect(controller.getLink(), 'test.com');
+
+      await tester.tap(find.byIcon(NotedIcons.chevronLeft));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(NotedIconButton), findsNWidgets(13));
     });
 
     testWidgets('updates the text color', (tester) async {

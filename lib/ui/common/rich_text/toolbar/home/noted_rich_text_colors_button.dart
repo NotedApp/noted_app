@@ -4,13 +4,13 @@ import 'package:noted_app/ui/common/rich_text/noted_rich_text_attributes.dart';
 import 'package:noted_app/ui/common/rich_text/noted_rich_text_controller.dart';
 import 'package:noted_app/ui/common/rich_text/noted_rich_text_utils.dart';
 
-class NotedRichTextColorsButton extends StatelessWidget {
+class NotedRichTextStateButton extends StatelessWidget {
   final NotedRichTextController controller;
   final NotedRichTextAttribute attribute;
   final ColorScheme colors;
   final VoidCallback onPressed;
 
-  const NotedRichTextColorsButton({
+  const NotedRichTextStateButton({
     required this.controller,
     required this.attribute,
     required this.colors,
