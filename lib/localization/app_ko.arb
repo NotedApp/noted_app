@@ -51,6 +51,7 @@
   "login_error_passwordResetFailed": "failed to send a password reset email, please try again.",
   "login_error_passwordResetInvalidEmail": "couldn't find an account with this email.",
 
+  "settings_title": "settings",
   "settings_accountTitle": "accout",
   "settings_styleTitle": "style",
   "settings_colorTitle": "colors",
