@@ -71,7 +71,7 @@ class NotedTextField extends StatelessWidget {
         : NotedIconButton(
             type: NotedIconButtonType.simple,
             size: NotedWidgetSize.small,
-            icon: icon!,
+            icon: icon,
             onPressed: onIconPressed,
           );
 

@@ -2,17 +2,18 @@ part of '../noted_rich_text_toolbar.dart';
 
 class _ToolbarHome extends StatelessWidget {
   final NotedRichTextController controller;
+  final ToolbarStateCallback setToolbarState;
 
-  const _ToolbarHome({required this.controller, super.key});
+  const _ToolbarHome({required this.controller, required this.setToolbarState, super.key});
 
   @override
   Widget build(BuildContext context) {
     ColorScheme colors = Theme.of(context).colorScheme;
 
-    return Wrap(
-      alignment: WrapAlignment.spaceBetween,
-      spacing: 4,
-      runSpacing: 6,
+    return GridView.count(
+      crossAxisCount: 7,
+      mainAxisSpacing: 8,
+      crossAxisSpacing: 12,
       children: [
         NotedRichTextToggleButton(
           controller: controller,
@@ -68,11 +69,13 @@ class _ToolbarHome extends StatelessWidget {
           controller: controller,
           attribute: NotedRichTextAttribute.textColor,
           colors: colors,
+          onPressed: () => setToolbarState(_ToolbarState.textColor),
         ),
         NotedRichTextColorsButton(
           controller: controller,
           attribute: NotedRichTextAttribute.textBackground,
           colors: colors,
+          onPressed: () => setToolbarState(_ToolbarState.highlightColor),
         ),
         NotedRichTextLinkButton(
           controller: controller,

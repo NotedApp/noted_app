@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:noted_app/theme/custom_colors.dart';
+import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/common/rich_text/noted_rich_text_attributes.dart';
-import 'package:noted_app/ui/common/rich_text/noted_rich_text_controller.dart';
-import 'package:noted_app/ui/common/rich_text/toolbar/home/noted_rich_text_color_button.dart';
+import 'package:noted_app/ui/common/rich_text/toolbar/home/noted_rich_text_colors_button.dart';
 import 'package:noted_app/ui/common/rich_text/toolbar/home/noted_rich_text_link_button.dart';
 import 'package:noted_app/ui/common/rich_text/toolbar/home/noted_rich_text_toggle_button.dart';
+import 'package:noted_app/util/extensions.dart';
 
 part 'home/noted_rich_text_toolbar_home.dart';
 part 'colors/noted_rich_text_toolbar_colors.dart';
 
+typedef ToolbarStateCallback = void Function(_ToolbarState);
+
 enum _ToolbarState {
   home,
-  colors,
+  textColor,
+  highlightColor,
 }
 
 Key _homeKey = Key(_ToolbarState.home.name);
-Key _colorsKey = Key(_ToolbarState.colors.name);
+Key _textColorKey = Key(_ToolbarState.textColor.name);
+Key _highlightColorKey = Key(_ToolbarState.highlightColor.name);
 
 class NotedRichTextToolbar extends StatefulWidget {
   final NotedRichTextController controller;
@@ -28,12 +34,17 @@ class NotedRichTextToolbar extends StatefulWidget {
 class _NotedRichTextToolbarState extends State<NotedRichTextToolbar> {
   _ToolbarState state = _ToolbarState.home;
 
+  void setToolbarState(_ToolbarState newState) {
+    setState(() => state = newState);
+  }
+
   @override
   Widget build(BuildContext context) {
     ColorScheme colors = Theme.of(context).colorScheme;
 
     return Container(
       width: double.infinity,
+      height: 116,
       padding: const EdgeInsets.fromLTRB(14, 12, 14, 10),
       decoration: BoxDecoration(
         color: colors.secondary,
@@ -57,8 +68,25 @@ class _NotedRichTextToolbarState extends State<NotedRichTextToolbar> {
           child: child,
         ),
         child: switch (state) {
-          _ToolbarState.home => _ToolbarHome(controller: widget.controller, key: _homeKey),
-          _ToolbarState.colors => _ToolbarColorPicker(controller: widget.controller, key: _colorsKey),
+          _ToolbarState.home => _ToolbarHome(
+              controller: widget.controller,
+              setToolbarState: setToolbarState,
+              key: _homeKey,
+            ),
+          _ToolbarState.textColor => _ToolbarColorPicker(
+              controller: widget.controller,
+              attribute: NotedRichTextAttribute.textColor,
+              defaultColor: colors.onBackground,
+              setToolbarState: setToolbarState,
+              key: _textColorKey,
+            ),
+          _ToolbarState.highlightColor => _ToolbarColorPicker(
+              controller: widget.controller,
+              attribute: NotedRichTextAttribute.textBackground,
+              defaultColor: colors.background,
+              setToolbarState: setToolbarState,
+              key: _highlightColorKey,
+            ),
         },
       ),
     );
