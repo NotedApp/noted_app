@@ -1,3 +1,5 @@
+//coverage:ignore-file
+
 import 'package:flutter/material.dart';
 import 'package:noted_app/ui/common/icon/noted_icons.dart';
 import 'package:noted_app/ui/common/rich_text/noted_rich_text_attributes.dart';

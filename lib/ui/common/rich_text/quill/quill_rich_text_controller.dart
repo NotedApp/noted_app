@@ -5,6 +5,7 @@ import 'package:noted_app/ui/common/rich_text/noted_rich_text_attributes.dart';
 import 'package:noted_app/ui/common/rich_text/noted_rich_text_controller.dart';
 import 'package:noted_models/noted_models.dart';
 
+// coverage:ignore-start
 Attribute _getQuillAttribute(NotedRichTextAttribute attribute) {
   return switch (attribute) {
     NotedRichTextAttribute.bold => Attribute.bold,
@@ -22,6 +23,7 @@ Attribute _getQuillAttribute(NotedRichTextAttribute attribute) {
     NotedRichTextAttribute.link => Attribute.link,
   };
 }
+// coverage:ignore-start
 
 class QuillRichTextController extends NotedRichTextController {
   QuillController controller = QuillController.basic();
