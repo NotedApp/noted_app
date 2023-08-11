@@ -76,9 +76,7 @@ class _ToolbarColorPickerState extends State<_ToolbarColorPicker> {
   @override
   void initState() {
     selectedColor = widget._currentColor;
-
     widget.controller.addListener(setCurrentColor);
-
     super.initState();
   }
 

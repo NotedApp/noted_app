@@ -3,12 +3,12 @@ import 'package:noted_app/theme/custom_colors.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/common/rich_text/noted_rich_text_attributes.dart';
 import 'package:noted_app/ui/common/rich_text/toolbar/home/noted_rich_text_colors_button.dart';
-import 'package:noted_app/ui/common/rich_text/toolbar/home/noted_rich_text_link_button.dart';
 import 'package:noted_app/ui/common/rich_text/toolbar/home/noted_rich_text_toggle_button.dart';
 import 'package:noted_app/util/extensions.dart';
 
 part 'home/noted_rich_text_toolbar_home.dart';
 part 'colors/noted_rich_text_toolbar_colors.dart';
+part 'links/noted_rich_text_toolbar_links.dart';
 
 typedef ToolbarStateCallback = void Function(_ToolbarState);
 
@@ -16,11 +16,13 @@ enum _ToolbarState {
   home,
   textColor,
   highlightColor,
+  link,
 }
 
 Key _homeKey = Key(_ToolbarState.home.name);
 Key _textColorKey = Key(_ToolbarState.textColor.name);
 Key _highlightColorKey = Key(_ToolbarState.highlightColor.name);
+Key _linkKey = Key(_ToolbarState.link.name);
 
 class NotedRichTextToolbar extends StatefulWidget {
   final NotedRichTextController controller;
@@ -86,6 +88,11 @@ class _NotedRichTextToolbarState extends State<NotedRichTextToolbar> {
               defaultColor: colors.background,
               setToolbarState: setToolbarState,
               key: _highlightColorKey,
+            ),
+          _ToolbarState.link => _ToolbarLinkPicker(
+              controller: widget.controller,
+              setToolbarState: setToolbarState,
+              key: _linkKey,
             ),
         },
       ),

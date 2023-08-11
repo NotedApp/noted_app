@@ -13,16 +13,13 @@ class CatalogQuillRichText extends StatefulWidget {
 
 class _CatalogQuillRichTextState extends State<CatalogQuillRichText> {
   late final NotedRichTextController _textController;
-  late final FocusNode _focusNode;
-  PersistentBottomSheetController? _toolbarController;
+  final FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
 
     _textController = NotedRichTextController.quill();
-    _focusNode = FocusNode();
-    _focusNode.addListener(showToolbar);
   }
 
   @override
@@ -53,31 +50,18 @@ class _CatalogQuillRichTextState extends State<CatalogQuillRichText> {
       ),
     ];
 
-    return CatalogListWidget(children);
-  }
-
-  void showToolbar() {
-    if (_focusNode.context == null) {
-      return;
-    }
-
-    ScaffoldState scaffoldState = Scaffold.of(_focusNode.context!);
-
-    if (_focusNode.hasFocus && _toolbarController == null) {
-      _toolbarController = scaffoldState.showBottomSheet(
-        (context) => NotedRichTextToolbar(controller: _textController),
-      );
-    } else if (!_focusNode.hasFocus && _toolbarController != null) {
-      _toolbarController!.close();
-      _toolbarController = null;
-    }
+    return Column(
+      children: [
+        Expanded(child: CatalogListWidget(children)),
+        NotedRichTextToolbar(controller: _textController),
+      ],
+    );
   }
 
   @override
   void dispose() {
-    super.dispose();
-
-    _focusNode.removeListener(showToolbar);
+    _textController.dispose();
     _focusNode.dispose();
+    super.dispose();
   }
 }
