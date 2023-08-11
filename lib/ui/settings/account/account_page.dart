@@ -16,13 +16,9 @@ const ValueKey _loadingKey = const ValueKey('loading');
 class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = context.theme();
-    final Strings strings = context.strings();
-    final AuthBloc bloc = context.read();
-
     return NotedHeaderPage(
       hasBackButton: true,
-      title: strings.settings_accountTitle,
+      title: context.strings().settings_accountTitle,
       child: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state.status == AuthStatus.unauthenticated) {
@@ -41,49 +37,64 @@ class AccountPage extends StatelessWidget {
             child: child,
           ),
           child: switch (state.status) {
-            AuthStatus.authenticated => Column(
-                key: _contentKey,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SizedBox(height: 16),
-                  SettingsRow(
-                    icon: NotedIcons.email,
-                    title: strings.login_email,
-                    trailing: Text(
-                      state.user.email ?? strings.common_notAny,
-                      style: theme.textTheme.labelLarge,
-                    ),
-                  ),
-                  SettingsRow(
-                    icon: NotedIcons.key,
-                    title: strings.login_changePassword,
-                    hasArrow: true,
-                    onPressed: () => context.push('/settings/account/change-password'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),
-                    child: NotedTextButton(
-                      label: strings.login_signOut,
-                      type: NotedTextButtonType.filled,
-                      onPressed: () => bloc.add(AuthSignOutEvent()),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
-                    child: NotedTextButton(
-                      label: strings.login_deleteAccount,
-                      type: NotedTextButtonType.filled,
-                      onPressed: () => showUnimplementedSnackBar(context),
-                      foregroundColor: theme.colorScheme.onError,
-                      backgroundColor: theme.colorScheme.error,
-                    ),
-                  ),
-                ],
-              ),
+            AuthStatus.authenticated => _AccountPageContent(email: state.user.email, key: _contentKey),
             _ => LoginLoading(status: state.status, key: _loadingKey),
           },
         ),
       ),
+    );
+  }
+}
+
+class _AccountPageContent extends StatelessWidget {
+  final String? email;
+
+  const _AccountPageContent({required this.email, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final ThemeData theme = context.theme();
+    final AuthBloc bloc = context.read();
+    final Strings strings = context.strings();
+
+    return Column(
+      key: _contentKey,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SizedBox(height: 16),
+        SettingsRow(
+          icon: NotedIcons.email,
+          title: strings.login_email,
+          trailing: Text(
+            email ?? strings.common_notAny,
+            style: theme.textTheme.labelLarge,
+          ),
+        ),
+        SettingsRow(
+          icon: NotedIcons.key,
+          title: strings.login_changePassword,
+          hasArrow: true,
+          onPressed: () => context.push('/settings/account/change-password'),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),
+          child: NotedTextButton(
+            label: strings.login_signOut,
+            type: NotedTextButtonType.filled,
+            onPressed: () => bloc.add(AuthSignOutEvent()),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
+          child: NotedTextButton(
+            label: strings.login_deleteAccount,
+            type: NotedTextButtonType.filled,
+            onPressed: () => showUnimplementedSnackBar(context),
+            foregroundColor: theme.colorScheme.onError,
+            backgroundColor: theme.colorScheme.error,
+          ),
+        ),
+      ],
     );
   }
 }

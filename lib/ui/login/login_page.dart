@@ -108,7 +108,7 @@ class _LoginPageContent extends StatelessWidget {
           ],
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 64, vertical: 20),
+          padding: EdgeInsets.symmetric(horizontal: 36, vertical: 20),
           child: RichText(
             textAlign: TextAlign.center,
             text: TextSpan(
