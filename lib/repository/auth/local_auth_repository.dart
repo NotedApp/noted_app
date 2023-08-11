@@ -95,6 +95,29 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
   }
 
   @override
+  Future<void> deleteAccount() async {
+    await Future.delayed(Duration(milliseconds: _msDelay));
+
+    if (_shouldThrow) {
+      throw NotedException(ErrorCode.auth_deleteAccount_failed);
+    }
+
+    _localUsers.removeWhere((user) => user.id == _currentUser.id);
+    await _updateUser(NotedUser.empty(), ErrorCode.auth_deleteAccount_failed, delay: false);
+  }
+
+  @override
+  Future<void> changePassword({String password = ''}) async {
+    await Future.delayed(Duration(milliseconds: _msDelay));
+
+    if (_shouldThrow) {
+      throw NotedException(ErrorCode.auth_changePassword_failed);
+    }
+
+    _localPasswords.add(password);
+  }
+
+  @override
   FutureOr onDispose() async {
     await _userStreamController.close();
   }
