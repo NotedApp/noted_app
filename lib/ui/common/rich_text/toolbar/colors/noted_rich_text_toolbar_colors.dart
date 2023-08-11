@@ -26,7 +26,7 @@ final Map<NotedRichTextAttribute, List<Color>> _colors = {
     yellow200,
     orange200,
     brown200,
-    yellow200,
+    grey400,
   ],
 };
 
@@ -86,32 +86,33 @@ class _ToolbarColorPickerState extends State<_ToolbarColorPicker> {
   Widget build(BuildContext context) {
     ColorScheme colors = context.colorScheme();
 
+    Widget createButton(Color color) {
+      return NotedColorPickerButton(
+        color: color,
+        colors: colors,
+        isSelected: selectedColor == color,
+        onPressed: () => setColor(color == widget.defaultColor ? null : color),
+      );
+    }
+
     return Row(
       children: [
         NotedIconButton(
           icon: NotedIcons.chevronLeft,
           type: NotedIconButtonType.filled,
           size: NotedWidgetSize.small,
+          color: NotedWidgetColor.tertiary,
           onPressed: () => widget.setToolbarState(_ToolbarState.home),
         ),
-        SizedBox(width: 24),
+        SizedBox(width: 16),
         Expanded(
           child: GridView.count(
             crossAxisCount: 6,
             mainAxisSpacing: 8,
             crossAxisSpacing: 12,
-            children: widget._palette
-                .map(
-                  (color) => NotedColorPickerButton(
-                    color: color,
-                    colors: colors,
-                    isSelected: selectedColor == color,
-                    onPressed: () => setColor(color == widget.defaultColor ? null : color),
-                  ),
-                )
-                .toList(),
+            children: widget._palette.map(createButton).toList(),
           ),
-        )
+        ),
       ],
     );
   }
