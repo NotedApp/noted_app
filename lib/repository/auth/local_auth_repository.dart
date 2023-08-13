@@ -5,6 +5,26 @@ import 'package:noted_app/repository/auth/auth_repository.dart';
 import 'package:noted_app/util/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
+/// A list of [NotedUser]s who can be logged in in a local environment.
+const List<NotedUser> _localUsers = [
+  NotedUser(id: 'local-0', email: 'local-0@noted.com', name: 'shaquille.oatmeal'),
+  NotedUser(id: 'local-1', email: 'local-1@noted.com', name: 'averagestudent'),
+  NotedUser(id: 'local-2', email: 'local-2@noted.com', name: 'me_for_president'),
+  NotedUser(id: 'local-3', email: 'local-3@noted.com', name: 'chickenriceandbeans'),
+  NotedUser(id: 'local-4', email: 'local-4@noted.com', name: 'fluffycookie'),
+  NotedUser(id: 'local-5', email: 'local-5@noted.com', name: 'averagestudent'),
+  NotedUser(id: 'local-6', email: 'local-6@noted.com', name: 'LactoseTheIntolerant'),
+  NotedUser(id: 'local-7', email: 'local-7@noted.com', name: 'kim_chi'),
+  NotedUser(id: 'local-8', email: 'local-8@noted.com', name: 'just-a-harmless-potato'),
+  NotedUser(id: 'local-9', email: 'local-9@noted.com', name: 'dog'),
+  NotedUser(id: 'local-google', email: 'local-google@noted.com', name: 'googly_woogly'),
+];
+
+/// A list of [String]s that are accepted as passwords for all [_localUsers].
+const List<String> _localPasswords = [
+  'local',
+];
+
 /// An [AuthRepository] that uses mock data as its source of truth.
 class LocalAuthRepository extends AuthRepository implements Disposable {
   final StreamController<NotedUser> _userStreamController = StreamController.broadcast();
@@ -12,25 +32,8 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
   bool _shouldThrow = false;
   int _msDelay = 2000;
 
-  /// A list of [NotedUser]s who can be logged in in a local environment.
-  List<NotedUser> _localUsers = [
-    NotedUser(id: 'local-0', email: 'local-0@noted.com', name: 'shaquille.oatmeal'),
-    NotedUser(id: 'local-1', email: 'local-1@noted.com', name: 'averagestudent'),
-    NotedUser(id: 'local-2', email: 'local-2@noted.com', name: 'me_for_president'),
-    NotedUser(id: 'local-3', email: 'local-3@noted.com', name: 'chickenriceandbeans'),
-    NotedUser(id: 'local-4', email: 'local-4@noted.com', name: 'fluffycookie'),
-    NotedUser(id: 'local-5', email: 'local-5@noted.com', name: 'averagestudent'),
-    NotedUser(id: 'local-6', email: 'local-6@noted.com', name: 'LactoseTheIntolerant'),
-    NotedUser(id: 'local-7', email: 'local-7@noted.com', name: 'kim_chi'),
-    NotedUser(id: 'local-8', email: 'local-8@noted.com', name: 'just-a-harmless-potato'),
-    NotedUser(id: 'local-9', email: 'local-9@noted.com', name: 'dog'),
-    NotedUser(id: 'local-google', email: 'local-google@noted.com', name: 'googly_woogly'),
-  ];
-
-  /// A list of [String]s that are accepted as passwords for all [_localUsers].
-  List<String> _localPasswords = [
-    'local',
-  ];
+  List<NotedUser> _users = [..._localUsers];
+  List<String> _passwords = [..._localPasswords];
 
   @override
   NotedUser get currentUser => _currentUser;
@@ -51,13 +54,13 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
     }
 
     NotedUser user = NotedUser(
-      id: 'local-${_localUsers.length}',
+      id: 'local-${_users.length}',
       email: email,
-      name: 'Local ${_localUsers.length}',
+      name: 'Local ${_users.length}',
     );
 
-    _localUsers.add(user);
-    _localPasswords.add(password);
+    _users.add(user);
+    _passwords.add(password);
 
     await _updateUser(user, ErrorCode.auth_createUser_failed, delay: false);
   }
@@ -66,13 +69,13 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
   Future<void> signInWithEmailAndPassword({String email = '', String password = ''}) async {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
-    NotedUser user = _localUsers.firstWhere((user) => user.email == email, orElse: NotedUser.empty);
+    NotedUser user = _users.firstWhere((user) => user.email == email, orElse: NotedUser.empty);
 
     if (user.isEmpty) {
       throw NotedException(ErrorCode.auth_emailSignIn_invalidEmail);
     }
 
-    if (!_localPasswords.contains(password)) {
+    if (!_passwords.contains(password)) {
       throw NotedException(ErrorCode.auth_emailSignIn_invalidPassword);
     }
 
@@ -81,7 +84,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
 
   @override
   Future<void> signInWithGoogle() async {
-    NotedUser googleUser = _localUsers.firstWhere((user) => user.id == 'local-google');
+    NotedUser googleUser = _users.firstWhere((user) => user.id == 'local-google');
     await _updateUser(googleUser, ErrorCode.auth_googleSignIn_failed);
   }
 
@@ -122,7 +125,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
       throw NotedException(ErrorCode.auth_changePassword_failed);
     }
 
-    _localPasswords.add(password);
+    _passwords.add(password);
   }
 
   @override
@@ -133,7 +136,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
       throw NotedException(ErrorCode.auth_deleteAccount_failed);
     }
 
-    _localUsers.removeWhere((user) => user.id == _currentUser.id);
+    _users.removeWhere((user) => user.id == _currentUser.id);
     await _updateUser(NotedUser.empty(), ErrorCode.auth_deleteAccount_failed, delay: false);
   }
 
@@ -161,5 +164,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
     _shouldThrow = false;
     _msDelay = 2000;
     _currentUser = NotedUser.empty();
+    _users = [..._localUsers];
+    _passwords = [..._localPasswords];
   }
 }
