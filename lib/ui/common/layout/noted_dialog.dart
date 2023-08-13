@@ -5,16 +5,20 @@ class NotedDialog extends StatelessWidget {
   final String? title;
   final String? leftActionText;
   final VoidCallback? onLeftActionPressed;
+  final Color? leftActionColor;
   final String? rightActionText;
   final VoidCallback? onRightActionPressed;
+  final Color? rightActionColor;
   final Widget child;
 
   const NotedDialog({
     this.title,
     this.leftActionText,
     this.onLeftActionPressed,
+    this.leftActionColor,
     this.rightActionText,
     this.onRightActionPressed,
+    this.rightActionColor,
     required this.child,
     super.key,
   });
@@ -37,6 +41,7 @@ class NotedDialog extends StatelessWidget {
           NotedTextButton(
             label: leftActionText,
             onPressed: onLeftActionPressed,
+            foregroundColor: leftActionColor,
             type: NotedTextButtonType.simple,
           ),
         );
@@ -45,6 +50,7 @@ class NotedDialog extends StatelessWidget {
           NotedTextButton(
             label: rightActionText,
             onPressed: onRightActionPressed,
+            foregroundColor: rightActionColor,
             type: NotedTextButtonType.simple,
           ),
         );
@@ -55,6 +61,7 @@ class NotedDialog extends StatelessWidget {
           NotedTextButton(
             label: leftActionText,
             onPressed: onLeftActionPressed,
+            foregroundColor: leftActionColor,
             type: NotedTextButtonType.simple,
           ),
         );
@@ -65,6 +72,7 @@ class NotedDialog extends StatelessWidget {
           NotedTextButton(
             label: rightActionText,
             onPressed: onRightActionPressed,
+            foregroundColor: rightActionColor,
             type: NotedTextButtonType.simple,
           ),
         );

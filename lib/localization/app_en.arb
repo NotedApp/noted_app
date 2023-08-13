@@ -35,7 +35,9 @@
   "login_resetPasswordCta": "reset password",
   "login_changePassword": "change password",
   "login_signOut": "sign out",
+  "login_signedOut": "signed out",
   "login_deleteAccount": "delete account",
+  "login_deleteAccountWarning": "are you sure you want to delete your accont? this action cannot be undone.",
 
   "login_error_confirmPassword": "please confirm that your passwords match",
   "login_error_createUserFailed": "failed to create your account, please try again.",

@@ -67,22 +67,10 @@ class LoginFrame extends StatelessWidget {
                     stateListener?.call(context, state);
                   }
                 },
-                builder: (context, state) => AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 200),
-                  switchInCurve: Curves.easeIn,
-                  switchOutCurve: Curves.easeOut,
-                  transitionBuilder: (Widget child, Animation<double> animation) => SlideTransition(
-                    position: Tween(
-                      begin: child.key == _contentKey ? Offset(-1.0, 0.0) : Offset(1.0, 0.0),
-                      end: Offset(0.0, 0.0),
-                    ).animate(animation),
-                    child: child,
-                  ),
-                  child: switch (state.status) {
-                    AuthStatus.unauthenticated => contentBuilder(_contentKey),
-                    _ => LoginLoading(status: state.status, key: _loadingKey),
-                  },
-                ),
+                builder: (context, state) => switch (state.status) {
+                  AuthStatus.unauthenticated => contentBuilder(_contentKey),
+                  _ => LoginLoading(status: state.status, key: _loadingKey),
+                },
               ),
             ),
           ],

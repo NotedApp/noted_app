@@ -25,22 +25,10 @@ class AccountPage extends StatelessWidget {
             context.replace('/login');
           }
         },
-        builder: (context, state) => AnimatedSwitcher(
-          duration: const Duration(milliseconds: 200),
-          switchInCurve: Curves.easeIn,
-          switchOutCurve: Curves.easeOut,
-          transitionBuilder: (Widget child, Animation<double> animation) => SlideTransition(
-            position: Tween(
-              begin: child.key == _contentKey ? Offset(-1.0, 0.0) : Offset(1.0, 0.0),
-              end: Offset(0.0, 0.0),
-            ).animate(animation),
-            child: child,
-          ),
-          child: switch (state.status) {
-            AuthStatus.authenticated => _AccountPageContent(email: state.user.email, key: _contentKey),
-            _ => LoginLoading(status: state.status, key: _loadingKey),
-          },
-        ),
+        builder: (context, state) => switch (state.status) {
+          AuthStatus.authenticated => _AccountPageContent(email: state.user.email, key: _contentKey),
+          _ => LoginLoading(status: state.status, key: _loadingKey),
+        },
       ),
     );
   }
@@ -89,12 +77,34 @@ class _AccountPageContent extends StatelessWidget {
           child: NotedTextButton(
             label: strings.login_deleteAccount,
             type: NotedTextButtonType.filled,
-            onPressed: () => showUnimplementedSnackBar(context),
+            onPressed: () => _confirmDeleteAccount(context, strings, bloc),
             foregroundColor: theme.colorScheme.onError,
             backgroundColor: theme.colorScheme.error,
           ),
         ),
       ],
+    );
+  }
+
+  void _confirmDeleteAccount(
+    BuildContext context,
+    Strings strings,
+    AuthBloc bloc,
+  ) {
+    showDialog(
+      context: context,
+      builder: (context) => NotedDialog(
+        title: strings.login_deleteAccount,
+        leftActionText: strings.common_confirm,
+        onLeftActionPressed: () {
+          bloc.add(AuthDeleteAccountEvent());
+          Navigator.of(context).pop();
+        },
+        leftActionColor: context.colorScheme().error,
+        rightActionText: strings.common_cancel,
+        onRightActionPressed: () => Navigator.of(context).pop(),
+        child: Text(strings.login_deleteAccountWarning),
+      ),
     );
   }
 }

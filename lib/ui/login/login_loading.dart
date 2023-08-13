@@ -16,7 +16,7 @@ class LoginLoading extends StatelessWidget {
     return Center(
       child: NotedLoadingIndicator(
         label: switch (status) {
-          AuthStatus.unauthenticated => strings.unknown,
+          AuthStatus.unauthenticated => strings.login_signedOut,
           AuthStatus.authenticated => strings.login_authenticated,
           AuthStatus.signingOut => strings.login_signingOut,
           AuthStatus.signingIn => strings.login_signingIn,
