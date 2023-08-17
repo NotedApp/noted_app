@@ -113,7 +113,7 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
 
     try {
       emit(AuthState.authenticating(status: AuthStatus.changingPassword));
-      await _repository.changePassword();
+      await _repository.changePassword(password: event.password);
       emit(AuthState.authenticated(user: _repository.currentUser));
     } catch (e) {
       emit(AuthState.authenticated(user: _repository.currentUser, error: NotedException.fromObject(e)));
