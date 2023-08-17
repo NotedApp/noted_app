@@ -3,11 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/state/auth/auth_bloc.dart';
 import 'package:noted_app/state/auth/auth_event.dart';
+import 'package:noted_app/state/auth/auth_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/settings/account/account_frame.dart';
 import 'package:noted_app/ui/settings/settings_row.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
+import 'package:noted_app/util/noted_exception.dart';
 
 class AccountPage extends StatelessWidget {
   @override
@@ -17,6 +19,7 @@ class AccountPage extends StatelessWidget {
     final Strings strings = context.strings();
 
     return AccountFrame(
+      stateListener: _handleStateUpdate,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -56,6 +59,24 @@ class AccountPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _handleStateUpdate(BuildContext context, AuthState state) {
+    if (state.error != null && (ModalRoute.of(context)?.isCurrent ?? false)) {
+      final Strings strings = context.strings();
+      final String message = switch (state.error!.errorCode) {
+        ErrorCode.auth_deleteAccount_reauthenticate => strings.login_error_reauthenticate,
+        _ => strings.login_error_deleteAccountFailed,
+      };
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        NotedSnackBar.createWithText(
+          context: context,
+          text: message,
+          hasClose: true,
+        ),
+      );
+    }
   }
 
   void _confirmDeleteAccount(

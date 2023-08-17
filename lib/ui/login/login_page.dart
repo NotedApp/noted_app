@@ -26,10 +26,10 @@ class LoginPage extends StatelessWidget {
     if (state.error != null && (ModalRoute.of(context)?.isCurrent ?? false)) {
       final Strings strings = context.strings();
       final String message = switch (state.error!.errorCode) {
-        ErrorCode.auth_googleSignIn_disabled => strings.login_error_googleSignInDisabled,
+        ErrorCode.auth_googleSignIn_disabled => strings.login_error_accountDisabled,
         ErrorCode.auth_googleSignIn_existingAccount => strings.login_error_googleSignExistingAccount,
         ErrorCode.auth_googleSignIn_failed => strings.login_error_googleSignInFailed,
-        _ => strings.login_error_emailSignInFailed,
+        _ => strings.login_error_signInFailed,
       };
 
       ScaffoldMessenger.of(context).showSnackBar(

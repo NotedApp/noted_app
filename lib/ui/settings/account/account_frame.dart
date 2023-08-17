@@ -9,8 +9,9 @@ import 'package:noted_app/ui/router/noted_router.dart';
 
 class AccountFrame extends StatelessWidget {
   final Widget child;
+  final void Function(BuildContext, AuthState)? stateListener;
 
-  const AccountFrame({required this.child});
+  const AccountFrame({required this.child, this.stateListener});
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +22,8 @@ class AccountFrame extends StatelessWidget {
         listener: (context, state) {
           if (state.status == AuthStatus.unauthenticated) {
             context.replace('/login');
+          } else {
+            stateListener?.call(context, state);
           }
         },
         builder: (context, state) => switch (state.status) {

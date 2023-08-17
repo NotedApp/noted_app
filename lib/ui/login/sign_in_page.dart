@@ -133,9 +133,9 @@ class _SignInPageState extends State<SignInPage> {
         case ErrorCode.auth_emailSignIn_invalidPassword:
           setState(() => _passwordError = strings.login_error_emailSignInInvalidPassword);
         case ErrorCode.auth_emailSignIn_disabled:
-          message = strings.login_error_emailSignInDisabled;
+          message = strings.login_error_accountDisabled;
         default:
-          message = strings.login_error_emailSignInFailed;
+          message = strings.login_error_signInFailed;
       }
 
       if (message != null) {
