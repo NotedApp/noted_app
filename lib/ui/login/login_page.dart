@@ -9,7 +9,7 @@ import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/login/login_frame.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/util/noted_exception.dart';
-import 'package:noted_app/util/routing/noted_router.dart';
+import 'package:noted_app/ui/router/noted_router.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -26,10 +26,10 @@ class LoginPage extends StatelessWidget {
     if (state.error != null && (ModalRoute.of(context)?.isCurrent ?? false)) {
       final Strings strings = context.strings();
       final String message = switch (state.error!.errorCode) {
-        ErrorCode.auth_googleSignIn_disabled => strings.login_error_googleSignInDisabled,
+        ErrorCode.auth_googleSignIn_disabled => strings.login_error_accountDisabled,
         ErrorCode.auth_googleSignIn_existingAccount => strings.login_error_googleSignExistingAccount,
         ErrorCode.auth_googleSignIn_failed => strings.login_error_googleSignInFailed,
-        _ => strings.login_error_emailSignInFailed,
+        _ => strings.login_error_signInFailed,
       };
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -108,7 +108,7 @@ class _LoginPageContent extends StatelessWidget {
           ],
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 64, vertical: 20),
+          padding: EdgeInsets.symmetric(horizontal: 36, vertical: 20),
           child: RichText(
             textAlign: TextAlign.center,
             text: TextSpan(

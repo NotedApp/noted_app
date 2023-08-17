@@ -9,7 +9,7 @@ import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/login/login_frame.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/util/noted_exception.dart';
-import 'package:noted_app/util/routing/noted_router.dart';
+import 'package:noted_app/ui/router/noted_router.dart';
 
 class RegisterPage extends StatefulWidget {
   final String initialEmail;
@@ -131,9 +131,9 @@ class _RegisterPageState extends State<RegisterPage> {
         case ErrorCode.auth_createUser_invalidEmail:
           setState(() => _emailError = strings.login_error_createUserInvalidEmail);
         case ErrorCode.auth_createUser_weakPassword:
-          setState(() => _passwordError = strings.login_error_createUserWeakPassword);
+          setState(() => _passwordError = strings.login_error_weakPassword);
         case ErrorCode.auth_createUser_disabled:
-          message = strings.login_error_createUserDisabled;
+          message = strings.login_error_accountDisabled;
         case ErrorCode.auth_createUser_existingAccount:
           message = strings.login_error_createUserExistingAccount;
         default:

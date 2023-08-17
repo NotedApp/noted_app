@@ -57,7 +57,7 @@ class NotedSnackBar {
     ThemeData theme = Theme.of(context);
 
     Widget content = Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.fromLTRB(16, 16, 0, 16),
       child: Text(
         text,
         style: theme.textTheme.bodyMedium?.copyWith(

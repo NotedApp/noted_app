@@ -35,6 +35,14 @@ class AuthSendPasswordResetEvent extends AuthEvent {
   const AuthSendPasswordResetEvent(this.email);
 }
 
+class AuthChangePasswordEvent extends AuthEvent {
+  final String password;
+
+  const AuthChangePasswordEvent(this.password);
+}
+
+class AuthDeleteAccountEvent extends AuthEvent {}
+
 class AuthUserUpdatedEvent extends AuthEvent {
   final NotedUser user;
 

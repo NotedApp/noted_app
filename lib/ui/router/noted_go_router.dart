@@ -1,6 +1,6 @@
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:go_router/go_router.dart';
-import 'package:noted_app/util/routing/noted_router.dart';
+import 'package:noted_app/ui/router/noted_router.dart';
 
 class NotedGoRouter extends NotedRouter {
   @override

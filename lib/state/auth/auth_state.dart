@@ -8,6 +8,8 @@ enum AuthStatus {
   signingUp,
   signingIn,
   sendingPasswordReset,
+  changingPassword,
+  deletingAccount,
   authenticated,
 }
 

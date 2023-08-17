@@ -8,8 +8,8 @@ import 'package:noted_app/util/environment/test_firebase_options.dart';
 import 'package:noted_app/util/logging/firebase_logger.dart';
 import 'package:noted_app/util/logging/local_logger.dart';
 import 'package:noted_app/util/logging/noted_logger.dart';
-import 'package:noted_app/util/routing/noted_go_router.dart';
-import 'package:noted_app/util/routing/noted_router.dart';
+import 'package:noted_app/ui/router/noted_go_router.dart';
+import 'package:noted_app/ui/router/noted_router.dart';
 
 // coverage:ignore-file
 abstract class Environment {

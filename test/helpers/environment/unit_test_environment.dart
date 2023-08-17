@@ -4,7 +4,7 @@ import 'package:noted_app/util/environment/dependencies.dart';
 import 'package:noted_app/util/environment/environment.dart';
 import 'package:noted_app/util/logging/local_logger.dart';
 import 'package:noted_app/util/logging/noted_logger.dart';
-import 'package:noted_app/util/routing/noted_router.dart';
+import 'package:noted_app/ui/router/noted_router.dart';
 
 import 'test_router.dart';
 

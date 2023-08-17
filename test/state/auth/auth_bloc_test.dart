@@ -184,5 +184,63 @@ void main() {
         AuthState.unauthenticated(error: NotedException(ErrorCode.auth_passwordReset_failed)),
       ],
     );
+
+    blocTest(
+      'changes account password',
+      setUp: () async {
+        await getRepository().signInWithGoogle();
+      },
+      build: AuthBloc.new,
+      act: (bloc) => bloc.add(AuthChangePasswordEvent('test')),
+      wait: const Duration(milliseconds: 10),
+      expect: () => [
+        AuthState.authenticating(status: AuthStatus.changingPassword),
+        AuthState.authenticated(user: google),
+      ],
+    );
+
+    blocTest(
+      'changes account password and handles error',
+      setUp: () async {
+        await getRepository().signInWithGoogle();
+        getRepository().setShouldThrow(true);
+      },
+      build: AuthBloc.new,
+      act: (bloc) => bloc.add(AuthChangePasswordEvent('test')),
+      wait: const Duration(milliseconds: 10),
+      expect: () => [
+        AuthState.authenticating(status: AuthStatus.changingPassword),
+        AuthState.authenticated(user: google, error: NotedException(ErrorCode.auth_changePassword_failed)),
+      ],
+    );
+
+    blocTest(
+      'deletes current account',
+      setUp: () async {
+        await getRepository().signInWithGoogle();
+      },
+      build: AuthBloc.new,
+      act: (bloc) => bloc.add(AuthDeleteAccountEvent()),
+      wait: const Duration(milliseconds: 10),
+      expect: () => [
+        AuthState.authenticating(status: AuthStatus.deletingAccount),
+        AuthState.unauthenticated(),
+      ],
+    );
+
+    blocTest(
+      'deletes current account and handles error',
+      setUp: () async {
+        await getRepository().signInWithGoogle();
+        getRepository().setShouldThrow(true);
+      },
+      build: AuthBloc.new,
+      act: (bloc) => bloc.add(AuthDeleteAccountEvent()),
+      wait: const Duration(milliseconds: 10),
+      expect: () => [
+        AuthState.authenticating(status: AuthStatus.deletingAccount),
+        AuthState.authenticated(user: google, error: NotedException(ErrorCode.auth_deleteAccount_failed)),
+      ],
+    );
   });
 }

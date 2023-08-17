@@ -6,7 +6,7 @@ import 'package:noted_app/state/auth/auth_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/login/login_loading.dart';
 import 'package:noted_app/util/extensions.dart';
-import 'package:noted_app/util/routing/noted_router.dart';
+import 'package:noted_app/ui/router/noted_router.dart';
 
 const ValueKey _contentKey = const ValueKey('content');
 const ValueKey _loadingKey = const ValueKey('loading');
@@ -67,22 +67,10 @@ class LoginFrame extends StatelessWidget {
                     stateListener?.call(context, state);
                   }
                 },
-                builder: (context, state) => AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 200),
-                  switchInCurve: Curves.easeIn,
-                  switchOutCurve: Curves.easeOut,
-                  transitionBuilder: (Widget child, Animation<double> animation) => SlideTransition(
-                    position: Tween(
-                      begin: child.key == _contentKey ? Offset(-1.0, 0.0) : Offset(1.0, 0.0),
-                      end: Offset(0.0, 0.0),
-                    ).animate(animation),
-                    child: child,
-                  ),
-                  child: switch (state.status) {
-                    AuthStatus.unauthenticated => contentBuilder(_contentKey),
-                    _ => LoginLoading(status: state.status, key: _loadingKey),
-                  },
-                ),
+                builder: (context, state) => switch (state.status) {
+                  AuthStatus.unauthenticated => contentBuilder(_contentKey),
+                  _ => LoginLoading(status: state.status, key: _loadingKey),
+                },
               ),
             ),
           ],

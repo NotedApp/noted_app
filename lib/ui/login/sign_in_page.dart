@@ -9,7 +9,7 @@ import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/login/login_frame.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/util/noted_exception.dart';
-import 'package:noted_app/util/routing/noted_router.dart';
+import 'package:noted_app/ui/router/noted_router.dart';
 
 class SignInPage extends StatefulWidget {
   final String initialEmail;
@@ -133,9 +133,9 @@ class _SignInPageState extends State<SignInPage> {
         case ErrorCode.auth_emailSignIn_invalidPassword:
           setState(() => _passwordError = strings.login_error_emailSignInInvalidPassword);
         case ErrorCode.auth_emailSignIn_disabled:
-          message = strings.login_error_emailSignInDisabled;
+          message = strings.login_error_accountDisabled;
         default:
-          message = strings.login_error_emailSignInFailed;
+          message = strings.login_error_signInFailed;
       }
 
       if (message != null) {
