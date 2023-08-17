@@ -3,7 +3,7 @@ import 'package:noted_app/ui/common/button/noted_icon_button.dart';
 import 'package:noted_app/ui/common/icon/noted_icons.dart';
 import 'package:noted_app/ui/common/layout/noted_header.dart';
 import 'package:noted_app/ui/common/noted_widget_config.dart';
-import 'package:noted_app/util/routing/noted_router.dart';
+import 'package:noted_app/ui/router/noted_router.dart';
 
 class NotedHeaderPage extends StatelessWidget {
   final Widget child;

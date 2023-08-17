@@ -9,6 +9,7 @@ import 'package:noted_app/ui/login/register_page.dart';
 import 'package:noted_app/ui/login/sign_in_page.dart';
 import 'package:noted_app/ui/router/route_error_page.dart';
 import 'package:noted_app/ui/settings/account/account_page.dart';
+import 'package:noted_app/ui/settings/account/change_password_page.dart';
 import 'package:noted_app/ui/settings/settings_page.dart';
 
 GoRouter routerConfig = GoRouter(
@@ -28,6 +29,12 @@ GoRouter routerConfig = GoRouter(
             GoRoute(
               path: 'account',
               builder: (context, state) => AccountPage(),
+              routes: [
+                GoRoute(
+                  path: 'change-password',
+                  builder: (context, state) => ChangePasswordPage(),
+                ),
+              ],
             ),
             GoRoute(
               path: 'style',

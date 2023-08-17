@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/ui/common/input/noted_text_field.dart';
 import 'package:noted_app/ui/common/layout/noted_dialog.dart';
 import 'package:noted_app/util/extensions.dart';
-import 'package:noted_app/util/routing/noted_router.dart';
+import 'package:noted_app/ui/router/noted_router.dart';
 
 class NotedStringPicker extends StatefulWidget {
   final String initialValue;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:noted_app/util/routing/noted_router.dart';
+import 'package:noted_app/ui/router/noted_router.dart';
 
 class TestRouter extends NotedRouter {
   @override

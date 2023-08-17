@@ -9,7 +9,7 @@ import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/login/login_frame.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/util/noted_exception.dart';
-import 'package:noted_app/util/routing/noted_router.dart';
+import 'package:noted_app/ui/router/noted_router.dart';
 
 class RegisterPage extends StatefulWidget {
   final String initialEmail;
