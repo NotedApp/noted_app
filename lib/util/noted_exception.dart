@@ -28,27 +28,24 @@ enum ErrorCode {
   auth_createUser_disabled,
   auth_createUser_existingAccount,
   auth_createUser_weakPassword,
-
   auth_emailSignIn_failed,
   auth_emailSignIn_disabled,
   auth_emailSignIn_invalidEmail,
   auth_emailSignIn_invalidPassword,
-
   auth_googleSignIn_failed,
   auth_googleSignIn_existingAccount,
   auth_googleSignIn_disabled,
-
   auth_signOut_failed,
-
   auth_passwordReset_failed,
   auth_passwordReset_invalidEmail,
-
   auth_deleteAccount_failed,
   auth_deleteAccount_reauthenticate,
-
   auth_changePassword_failed,
   auth_changePassword_reauthenticate,
   auth_changePassword_weakPassword,
+
+  settings_fetch_failed,
+  settings_update_failed,
 
   // State management error codes.
   state_theme_customFetchFailed,

@@ -81,6 +81,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
+  cloud_firestore:
+    dependency: "direct main"
+    description:
+      name: cloud_firestore
+      sha256: "6ffb0e84efbaab16245994bcf61ba10a98ee1e73bac075cae8036ba6427a7ac0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.8.5"
+  cloud_firestore_platform_interface:
+    dependency: transitive
+    description:
+      name: cloud_firestore_platform_interface
+      sha256: "1487af8fd74a9ca754995cae1cf6bb2440ac4a93a5f7c7bbe7cc434231cc03c9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.15.4"
+  cloud_firestore_web:
+    dependency: transitive
+    description:
+      name: cloud_firestore_web
+      sha256: c3d37dad0b5637ab337acc4ab204e6d739e3be0e7972cdc85bdc4aac5145c92d
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.6.4"
   collection:
     dependency: transitive
     description:
@@ -385,10 +409,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: b3cadd2cd59a4103fd5f6bc572ca75111264698784e927aa471921c3477d5475
+      sha256: "2aa884667eeda3a1c461f31e72af1f77984ab0f29450d8fb12ec1f7bc53eea14"
       url: "https://pub.dev"
     source: hosted
-    version: "10.0.0"
+    version: "10.1.0"
   google_identity_services_web:
     dependency: transitive
     description:
@@ -433,10 +457,10 @@ packages:
     dependency: transitive
     description:
       name: google_sign_in_web
-      sha256: "69b9ce0e760945ff52337921a8b5871592b74c92f85e7632293310701eea68cc"
+      sha256: c4ef88c4033797908b8533e97216f51442909162bafc03dd42e8d1a057561c52
       url: "https://pub.dev"
     source: hosted
-    version: "0.12.0+2"
+    version: "0.12.0+3"
   http:
     dependency: transitive
     description:
@@ -579,7 +603,7 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: "8239f99e9f89c687ebd5bb3f79afaf295085623a"
+      resolved-ref: "45c32b240e19814184c21051af1a7028be69ce56"
       url: "https://github.com/NotedApp/noted_models.git"
     source: git
     version: "0.0.1"
