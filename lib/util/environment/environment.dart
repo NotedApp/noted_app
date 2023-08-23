@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:noted_app/repository/auth/auth_repository.dart';
 import 'package:noted_app/repository/auth/firebase_auth_repository.dart';
 import 'package:noted_app/repository/auth/local_auth_repository.dart';
+import 'package:noted_app/repository/settings/firebase_settings_repository.dart';
+import 'package:noted_app/repository/settings/local_settings_repository.dart';
+import 'package:noted_app/repository/settings/settings_repository.dart';
 import 'package:noted_app/util/environment/dependencies.dart';
 import 'package:noted_app/util/environment/test_firebase_options.dart';
 import 'package:noted_app/util/logging/firebase_logger.dart';
@@ -26,6 +29,7 @@ class LocalEnvironment extends Environment {
     NotedLogger? logger,
     NotedRouter? router,
     AuthRepository? authRepository,
+    SettingsRepository? settingsRepository,
   }) async {
     // Utilities.
     locator.registerSingleton<NotedLogger>(logger ?? LocalLogger());
@@ -33,6 +37,7 @@ class LocalEnvironment extends Environment {
 
     // Repositories.
     locator.registerSingleton<AuthRepository>(authRepository ?? LocalAuthRepository());
+    locator.registerSingleton<SettingsRepository>(settingsRepository ?? LocalSettingsRepository());
   }
 }
 
@@ -42,6 +47,7 @@ class TestEnvironment extends Environment {
     NotedLogger? logger,
     NotedRouter? router,
     AuthRepository? authRepository,
+    SettingsRepository? settingsRepository,
   }) async {
     await WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp(options: TestFirebaseOptions.currentPlatform);
@@ -52,6 +58,7 @@ class TestEnvironment extends Environment {
 
     // Repositories.
     locator.registerSingleton<AuthRepository>(authRepository ?? FirebaseAuthRepository());
+    locator.registerSingleton<SettingsRepository>(settingsRepository ?? FirebaseSettingsRepository());
   }
 }
 
@@ -61,6 +68,7 @@ class ProdEnvironment extends Environment {
     NotedLogger? logger,
     NotedRouter? router,
     AuthRepository? authRepository,
+    SettingsRepository? settingsRepository,
   }) async {
     throw UnimplementedError();
   }
