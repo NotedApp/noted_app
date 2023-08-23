@@ -32,14 +32,14 @@ void main() {
       // Test create with invalid email.
       await expectLater(
         () => repository.createUserWithEmailAndPassword(email: '12', password: 'password'),
-        throwsA(isA<NotedException>()),
+        throwsA(NotedException(ErrorCode.auth_createUser_invalidEmail)),
       );
       expect(repository.currentUser, NotedUser.empty());
 
       // Test create with invalid password.
       await expectLater(
         () => repository.createUserWithEmailAndPassword(email: 'email', password: '12'),
-        throwsA(isA<NotedException>()),
+        throwsA(NotedException(ErrorCode.auth_createUser_weakPassword)),
       );
       expect(repository.currentUser, NotedUser.empty());
 
@@ -62,14 +62,14 @@ void main() {
       // Test sign in with invalid email.
       await expectLater(
         () => repository.signInWithEmailAndPassword(email: 'test', password: 'password'),
-        throwsA(isA<NotedException>()),
+        throwsA(NotedException(ErrorCode.auth_emailSignIn_invalidEmail)),
       );
       expect(repository.currentUser, NotedUser.empty());
 
       // Test sign in with invalid password.
       await expectLater(
         () => repository.signInWithEmailAndPassword(email: 'email', password: 'test'),
-        throwsA(isA<NotedException>()),
+        throwsA(NotedException(ErrorCode.auth_emailSignIn_invalidPassword)),
       );
       expect(repository.currentUser, NotedUser.empty());
 
@@ -108,7 +108,10 @@ void main() {
     test('throws for a password reset email', () async {
       repository.setShouldThrow(true);
 
-      await expectLater(() => repository.sendPasswordResetEmail(email: 'test'), throwsA(isA<NotedException>()));
+      await expectLater(
+        () => repository.sendPasswordResetEmail(email: 'test'),
+        throwsA(NotedException(ErrorCode.auth_passwordReset_failed)),
+      );
       expect(repository.currentUser, NotedUser.empty());
     });
 
@@ -131,7 +134,10 @@ void main() {
 
       repository.setShouldThrow(true);
 
-      await expectLater(() => repository.changePassword(password: 'password'), throwsA(isA<NotedException>()));
+      await expectLater(
+        () => repository.changePassword(password: 'password'),
+        throwsA(NotedException(ErrorCode.auth_changePassword_failed)),
+      );
     });
 
     test('deletes the current account', () async {
@@ -143,7 +149,7 @@ void main() {
 
       await expectLater(
         () => repository.signInWithEmailAndPassword(email: 'local-0@noted.com', password: 'local'),
-        throwsA(isA<NotedException>()),
+        throwsA(NotedException(ErrorCode.auth_emailSignIn_invalidEmail)),
       );
     });
 
@@ -153,7 +159,10 @@ void main() {
 
       repository.setShouldThrow(true);
 
-      await expectLater(() => repository.deleteAccount(), throwsA(isA<NotedException>()));
+      await expectLater(
+        () => repository.deleteAccount(),
+        throwsA(NotedException(ErrorCode.auth_deleteAccount_failed)),
+      );
     });
 
     test('throws and resets when requested', () async {
@@ -161,7 +170,10 @@ void main() {
 
       repository.setShouldThrow(true);
 
-      await expectLater(() => repository.signInWithGoogle(), throwsA(isA<NotedException>()));
+      await expectLater(
+        () => repository.signInWithGoogle(),
+        throwsA(NotedException(ErrorCode.auth_googleSignIn_failed)),
+      );
       expect(repository.currentUser, NotedUser.empty());
 
       repository.reset();

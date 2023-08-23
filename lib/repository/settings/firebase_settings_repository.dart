@@ -27,9 +27,9 @@ class FirebaseSettingsRepository extends SettingsRepository {
         return settings;
       }
     } on FirebaseException catch (_) {
-      throw NotedException(ErrorCode.settings_fetchStyle_failed);
+      throw NotedException(ErrorCode.settings_fetch_failed);
     } catch (_) {
-      throw NotedException(ErrorCode.settings_fetchStyle_failed);
+      throw NotedException(ErrorCode.settings_fetch_failed);
     }
   }
 

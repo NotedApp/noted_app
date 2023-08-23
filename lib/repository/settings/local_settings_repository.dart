@@ -16,7 +16,7 @@ class LocalSettingsRepository extends SettingsRepository {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (_shouldThrow) {
-      throw NotedException(ErrorCode.settings_fetchStyle_failed);
+      throw NotedException(ErrorCode.settings_fetch_failed);
     }
 
     return _settings.copyWith();
