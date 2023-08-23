@@ -12,19 +12,22 @@ class SettingsLoadUserEvent extends SettingsEvent {
 }
 
 class SettingsUpdateStyleColorSchemeEvent extends SettingsEvent {
+  final String userId;
   final NotedColorSchemeName schemeName;
 
-  const SettingsUpdateStyleColorSchemeEvent(this.schemeName);
+  const SettingsUpdateStyleColorSchemeEvent(this.userId, this.schemeName);
 }
 
 class SettingsUpdateStyleCustomColorSchemeEvent extends SettingsEvent {
+  final String userId;
   final NotedColorScheme colorScheme;
 
-  const SettingsUpdateStyleCustomColorSchemeEvent(this.colorScheme);
+  const SettingsUpdateStyleCustomColorSchemeEvent(this.userId, this.colorScheme);
 }
 
 class SettingsUpdateStyleTextThemeEvent extends SettingsEvent {
+  final String userId;
   final NotedTextTheme textTheme;
 
-  const SettingsUpdateStyleTextThemeEvent(this.textTheme);
+  const SettingsUpdateStyleTextThemeEvent(this.userId, this.textTheme);
 }

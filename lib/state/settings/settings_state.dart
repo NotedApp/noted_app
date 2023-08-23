@@ -3,7 +3,6 @@ import 'package:noted_app/util/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 enum SettingsStatus {
-  initial,
   loading,
   loaded,
 }
@@ -14,8 +13,8 @@ final class SettingsState extends Equatable {
   final NotedException? error;
 
   const SettingsState({
-    this.status = SettingsStatus.initial,
-    this.settings = const NotedSettings(),
+    this.status = SettingsStatus.loaded,
+    required this.settings,
     this.error = null,
   });
 
