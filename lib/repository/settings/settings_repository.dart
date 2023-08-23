@@ -5,6 +5,6 @@ abstract class SettingsRepository {
   /// Fetches a user's settings.
   Future<NotedSettings> fetchSettings({required String userId});
 
-  /// Updates a user's settings.
-  Future<void> updateSettings({required String userId, required NotedSettings settings});
+  /// Updates a user's style settings.
+  Future<void> updateStyleSettings({required String userId, required NotedStyleSettings style});
 }

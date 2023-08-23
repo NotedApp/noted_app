@@ -44,8 +44,8 @@ enum ErrorCode {
   auth_changePassword_reauthenticate,
   auth_changePassword_weakPassword,
 
-  settings_fetch_failed,
-  settings_update_failed,
+  settings_fetchStyle_failed,
+  settings_updateStyle_failed,
 
   // State management error codes.
   state_theme_customFetchFailed,

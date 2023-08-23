@@ -16,21 +16,21 @@ class LocalSettingsRepository extends SettingsRepository {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (_shouldThrow) {
-      throw NotedException(ErrorCode.settings_fetch_failed);
+      throw NotedException(ErrorCode.settings_fetchStyle_failed);
     }
 
-    return _settings;
+    return _settings.copyWith();
   }
 
   @override
-  Future<void> updateSettings({required String userId, required NotedSettings settings}) async {
+  Future<void> updateStyleSettings({required String userId, required NotedStyleSettings style}) async {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (_shouldThrow) {
-      throw NotedException(ErrorCode.settings_update_failed);
+      throw NotedException(ErrorCode.settings_updateStyle_failed);
     }
 
-    _settings = settings.copyWith();
+    _settings = _settings.copyWith(style: style);
   }
 
   void setShouldThrow(bool shouldThrow) => _shouldThrow = shouldThrow;
