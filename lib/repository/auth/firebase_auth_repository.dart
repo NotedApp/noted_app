@@ -7,7 +7,6 @@ import 'package:noted_models/noted_models.dart';
 
 // TODO: Test this file.
 // coverage:ignore-file
-/// An [AuthRepository] that uses Firebase Authentication as its source of truth.
 class FirebaseAuthRepository extends AuthRepository {
   final FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
@@ -31,7 +30,7 @@ class FirebaseAuthRepository extends AuthRepository {
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
-      throw NotedException(_getCreateUserErrorCode(e.code));
+      throw NotedException(_getCreateUserErrorCode(e.code), message: e.code);
     } catch (_) {
       throw NotedException(ErrorCode.auth_createUser_failed);
     }
@@ -42,7 +41,7 @@ class FirebaseAuthRepository extends AuthRepository {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
-      throw NotedException(_getEmailSignInErrorCode(e.code));
+      throw NotedException(_getEmailSignInErrorCode(e.code), message: e.code);
     } catch (_) {
       throw NotedException(ErrorCode.auth_createUser_failed);
     }
@@ -69,7 +68,7 @@ class FirebaseAuthRepository extends AuthRepository {
 
       await _firebaseAuth.signInWithCredential(credential);
     } on FirebaseAuthException catch (e) {
-      throw NotedException(_getGoogleSignInErrorCode(e.code));
+      throw NotedException(_getGoogleSignInErrorCode(e.code), message: e.code);
     } catch (_) {
       throw NotedException(ErrorCode.auth_googleSignIn_failed);
     }
@@ -107,7 +106,7 @@ class FirebaseAuthRepository extends AuthRepository {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (e) {
-      throw NotedException(_getPasswordResetErrorCode(e.code));
+      throw NotedException(_getPasswordResetErrorCode(e.code), message: e.code);
     } catch (_) {
       throw NotedException(ErrorCode.auth_passwordReset_failed);
     }
@@ -118,7 +117,7 @@ class FirebaseAuthRepository extends AuthRepository {
     try {
       await _firebaseAuth.currentUser?.updatePassword(password);
     } on FirebaseAuthException catch (e) {
-      throw NotedException(_getChangePasswordErrorCode(e.code));
+      throw NotedException(_getChangePasswordErrorCode(e.code), message: e.code);
     } catch (_) {
       throw NotedException(ErrorCode.auth_changePassword_failed);
     }
@@ -129,7 +128,7 @@ class FirebaseAuthRepository extends AuthRepository {
     try {
       await _firebaseAuth.currentUser?.delete();
     } on FirebaseAuthException catch (e) {
-      throw NotedException(_getDeleteAccountErrorCode(e.code));
+      throw NotedException(_getDeleteAccountErrorCode(e.code), message: e.code);
     } catch (_) {
       throw NotedException(ErrorCode.auth_deleteAccount_failed);
     }
