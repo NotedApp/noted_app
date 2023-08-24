@@ -5,29 +5,22 @@ sealed class SettingsEvent extends NotedEvent implements TrackableEvent {
   const SettingsEvent();
 }
 
-class SettingsLoadUserEvent extends SettingsEvent {
-  final String userId;
-
-  const SettingsLoadUserEvent(this.userId);
-}
+class SettingsLoadUserEvent extends SettingsEvent {}
 
 class SettingsUpdateStyleColorSchemeEvent extends SettingsEvent {
-  final String userId;
   final NotedColorSchemeName schemeName;
 
-  const SettingsUpdateStyleColorSchemeEvent(this.userId, this.schemeName);
+  const SettingsUpdateStyleColorSchemeEvent(this.schemeName);
 }
 
 class SettingsUpdateStyleCustomColorSchemeEvent extends SettingsEvent {
-  final String userId;
   final NotedColorScheme colorScheme;
 
-  const SettingsUpdateStyleCustomColorSchemeEvent(this.userId, this.colorScheme);
+  const SettingsUpdateStyleCustomColorSchemeEvent(this.colorScheme);
 }
 
 class SettingsUpdateStyleTextThemeEvent extends SettingsEvent {
-  final String userId;
   final NotedTextTheme textTheme;
 
-  const SettingsUpdateStyleTextThemeEvent(this.userId, this.textTheme);
+  const SettingsUpdateStyleTextThemeEvent(this.textTheme);
 }

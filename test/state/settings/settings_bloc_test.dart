@@ -28,7 +28,7 @@ void main() {
     blocTest(
       'loads user',
       build: SettingsBloc.new,
-      act: (bloc) => bloc.add(SettingsLoadUserEvent('test')),
+      act: (bloc) => bloc.add(SettingsLoadUserEvent()),
       wait: const Duration(milliseconds: 10),
       expect: () => [
         SettingsState(status: SettingsStatus.loading, settings: NotedSettings()),
@@ -42,7 +42,7 @@ void main() {
         getRepository().setShouldThrow(true);
       },
       build: SettingsBloc.new,
-      act: (bloc) => bloc.add(SettingsLoadUserEvent('test')),
+      act: (bloc) => bloc.add(SettingsLoadUserEvent()),
       wait: const Duration(milliseconds: 10),
       expect: () => [
         SettingsState(status: SettingsStatus.loading, settings: NotedSettings()),
@@ -53,7 +53,7 @@ void main() {
     blocTest(
       'updates current color scheme name',
       build: SettingsBloc.new,
-      act: (bloc) => bloc.add(SettingsUpdateStyleColorSchemeEvent('test', NotedColorSchemeName.green)),
+      act: (bloc) => bloc.add(SettingsUpdateStyleColorSchemeEvent(NotedColorSchemeName.green)),
       wait: const Duration(milliseconds: 10),
       expect: () => [
         SettingsState(
@@ -68,7 +68,7 @@ void main() {
         getRepository().setShouldThrow(true);
       },
       build: SettingsBloc.new,
-      act: (bloc) => bloc.add(SettingsUpdateStyleColorSchemeEvent('test', NotedColorSchemeName.green)),
+      act: (bloc) => bloc.add(SettingsUpdateStyleColorSchemeEvent(NotedColorSchemeName.green)),
       wait: const Duration(milliseconds: 10),
       expect: () => [
         SettingsState(
@@ -84,7 +84,7 @@ void main() {
     blocTest(
       'updates custom color scheme',
       build: SettingsBloc.new,
-      act: (bloc) => bloc.add(SettingsUpdateStyleCustomColorSchemeEvent('test', NotedColorScheme.green)),
+      act: (bloc) => bloc.add(SettingsUpdateStyleCustomColorSchemeEvent(NotedColorScheme.green)),
       wait: const Duration(milliseconds: 10),
       expect: () => [
         SettingsState(
@@ -99,7 +99,7 @@ void main() {
         getRepository().setShouldThrow(true);
       },
       build: SettingsBloc.new,
-      act: (bloc) => bloc.add(SettingsUpdateStyleCustomColorSchemeEvent('test', NotedColorScheme.green)),
+      act: (bloc) => bloc.add(SettingsUpdateStyleCustomColorSchemeEvent(NotedColorScheme.green)),
       wait: const Duration(milliseconds: 10),
       expect: () => [
         SettingsState(
@@ -115,7 +115,7 @@ void main() {
     blocTest(
       'updates current text theme',
       build: SettingsBloc.new,
-      act: (bloc) => bloc.add(SettingsUpdateStyleTextThemeEvent('test', NotedTextTheme.roboto)),
+      act: (bloc) => bloc.add(SettingsUpdateStyleTextThemeEvent(NotedTextTheme.roboto)),
       wait: const Duration(milliseconds: 10),
       expect: () => [
         SettingsState(
@@ -130,7 +130,7 @@ void main() {
         getRepository().setShouldThrow(true);
       },
       build: SettingsBloc.new,
-      act: (bloc) => bloc.add(SettingsUpdateStyleTextThemeEvent('test', NotedTextTheme.roboto)),
+      act: (bloc) => bloc.add(SettingsUpdateStyleTextThemeEvent(NotedTextTheme.roboto)),
       wait: const Duration(milliseconds: 10),
       expect: () => [
         SettingsState(

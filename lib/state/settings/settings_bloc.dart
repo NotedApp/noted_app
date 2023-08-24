@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:noted_app/repository/auth/auth_repository.dart';
 import 'package:noted_app/repository/settings/settings_repository.dart';
 import 'package:noted_app/state/noted_bloc.dart';
 import 'package:noted_app/state/settings/settings_event.dart';
@@ -8,10 +9,12 @@ import 'package:noted_app/util/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 class SettingsBloc extends NotedBloc<SettingsEvent, SettingsState> {
-  final SettingsRepository _repository;
+  final SettingsRepository _settings;
+  final AuthRepository _auth;
 
-  SettingsBloc({SettingsRepository? settingsRepository})
-      : _repository = settingsRepository ?? locator<SettingsRepository>(),
+  SettingsBloc({SettingsRepository? settingsRepository, AuthRepository? authRepository})
+      : _settings = settingsRepository ?? locator<SettingsRepository>(),
+        _auth = authRepository ?? locator<AuthRepository>(),
         super(SettingsState(settings: NotedSettings()), 'settings') {
     on<SettingsLoadUserEvent>(_onLoadUser);
     on<SettingsUpdateStyleColorSchemeEvent>(_onUpdateStyleColorScheme);
@@ -25,8 +28,12 @@ class SettingsBloc extends NotedBloc<SettingsEvent, SettingsState> {
     }
 
     try {
+      if (_auth.currentUser.isEmpty) {
+        throw NotedException(ErrorCode.settings_fetch_failed, message: 'missing auth');
+      }
+
       emit(SettingsState(status: SettingsStatus.loading, settings: state.settings));
-      NotedSettings settings = await _repository.fetchSettings(userId: event.userId);
+      NotedSettings settings = await _settings.fetchSettings(userId: _auth.currentUser.id);
       emit(SettingsState(settings: settings));
     } catch (e) {
       emit(SettingsState(error: NotedException.fromObject(e), settings: state.settings));
@@ -38,7 +45,6 @@ class SettingsBloc extends NotedBloc<SettingsEvent, SettingsState> {
     Emitter<SettingsState> emit,
   ) async {
     await _updateStyleSetting(
-      event.userId,
       state.settings.style.copyWith(currentColorSchemeName: event.schemeName),
       emit,
     );
@@ -49,7 +55,6 @@ class SettingsBloc extends NotedBloc<SettingsEvent, SettingsState> {
     Emitter<SettingsState> emit,
   ) async {
     await _updateStyleSetting(
-      event.userId,
       state.settings.style.copyWith(customColorScheme: event.colorScheme),
       emit,
     );
@@ -60,20 +65,22 @@ class SettingsBloc extends NotedBloc<SettingsEvent, SettingsState> {
     Emitter<SettingsState> emit,
   ) async {
     await _updateStyleSetting(
-      event.userId,
       state.settings.style.copyWith(textTheme: event.textTheme),
       emit,
     );
   }
 
   Future<void> _updateStyleSetting(
-    String userId,
     NotedStyleSettings style,
     Emitter<SettingsState> emit,
   ) async {
     try {
+      if (_auth.currentUser.isEmpty) {
+        throw NotedException(ErrorCode.settings_updateStyle_failed, message: 'missing auth');
+      }
+
       emit(SettingsState(settings: state.settings.copyWith(style: style)));
-      await _repository.updateStyleSettings(userId: userId, style: style);
+      await _settings.updateStyleSettings(userId: _auth.currentUser.id, style: style);
     } catch (e) {
       emit(SettingsState(error: NotedException.fromObject(e), settings: state.settings));
     }
