@@ -113,6 +113,8 @@ extension NotedColorSchemeExtensions on NotedColorScheme {
       onPrimary: Color(onPrimary),
       secondary: Color(secondary),
       onSecondary: Color(onSecondary),
+      tertiary: Color(tertiary),
+      onTertiary: Color(onTertiary),
       error: Color(error),
       onError: Color(onError),
       background: Color(background),

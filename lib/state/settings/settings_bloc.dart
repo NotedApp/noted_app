@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noted_app/repository/auth/auth_repository.dart';
 import 'package:noted_app/repository/settings/settings_repository.dart';
@@ -11,6 +13,7 @@ import 'package:noted_models/noted_models.dart';
 class SettingsBloc extends NotedBloc<SettingsEvent, SettingsState> {
   final SettingsRepository _settings;
   final AuthRepository _auth;
+  late final StreamSubscription<NotedUser> _userSubscription;
 
   SettingsBloc({SettingsRepository? settingsRepository, AuthRepository? authRepository})
       : _settings = settingsRepository ?? locator<SettingsRepository>(),
@@ -20,6 +23,12 @@ class SettingsBloc extends NotedBloc<SettingsEvent, SettingsState> {
     on<SettingsUpdateStyleColorSchemeEvent>(_onUpdateStyleColorScheme);
     on<SettingsUpdateStyleCustomColorSchemeEvent>(_onUpdateStyleCustomColorScheme);
     on<SettingsUpdateStyleTextThemeEvent>(_onUpdateStyleTextTheme);
+
+    _userSubscription = _auth.userStream.listen((user) {
+      if (user.isNotEmpty) {
+        add(SettingsLoadUserEvent());
+      }
+    });
   }
 
   void _onLoadUser(SettingsLoadUserEvent event, Emitter<SettingsState> emit) async {
@@ -84,5 +93,11 @@ class SettingsBloc extends NotedBloc<SettingsEvent, SettingsState> {
     } catch (e) {
       emit(SettingsState(error: NotedException.fromObject(e), settings: state.settings));
     }
+  }
+
+  @override
+  Future<void> close() {
+    _userSubscription.cancel();
+    return super.close();
   }
 }

@@ -28,7 +28,6 @@ class NotedThemeBuilder extends StatelessWidget {
             brightness: colorScheme.brightness,
             colorScheme: colorScheme,
             textTheme: textTheme,
-            // textButtonTheme: _createTextButtonTheme(textTheme, colorScheme),
             useMaterial3: true,
           ),
         );
@@ -36,7 +35,3 @@ class NotedThemeBuilder extends StatelessWidget {
     );
   }
 }
-
-// TextButtonThemeData _createTextButtonTheme(TextTheme text, ColorScheme colors) {
-//   return TextButtonThemeData(style: ButtonStyle(backgroundColor: colors.primary.materialState()));
-// }

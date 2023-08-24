@@ -1,5 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:noted_app/repository/auth/local_auth_repository.dart';
 import 'package:noted_app/repository/settings/local_settings_repository.dart';
 import 'package:noted_app/repository/settings/settings_repository.dart';
 import 'package:noted_app/state/settings/settings_bloc.dart';
@@ -17,7 +18,15 @@ void main() {
     }
 
     setUpAll(() {
-      LocalEnvironment().configure();
+      LocalEnvironment().configure(
+        authRepository: LocalAuthRepository(
+          user: NotedUser(
+            id: 'test',
+            name: 'test',
+            email: 'test@test.com',
+          ),
+        ),
+      );
     });
 
     setUp(() {

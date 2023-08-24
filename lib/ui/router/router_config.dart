@@ -11,6 +11,9 @@ import 'package:noted_app/ui/router/route_error_page.dart';
 import 'package:noted_app/ui/settings/account/account_page.dart';
 import 'package:noted_app/ui/settings/account/change_password_page.dart';
 import 'package:noted_app/ui/settings/settings_page.dart';
+import 'package:noted_app/ui/settings/style/style_page.dart.dart';
+import 'package:noted_app/ui/settings/style/update_fonts_page.dart';
+import 'package:noted_app/ui/settings/style/update_theme_page.dart';
 
 GoRouter routerConfig = GoRouter(
   routes: [
@@ -38,7 +41,17 @@ GoRouter routerConfig = GoRouter(
             ),
             GoRoute(
               path: 'style',
-              builder: (context, state) => SettingsPage(),
+              builder: (context, state) => StylePage(),
+              routes: [
+                GoRoute(
+                  path: 'theme',
+                  builder: (context, state) => UpdateThemePage(),
+                ),
+                GoRoute(
+                  path: 'fonts',
+                  builder: (context, state) => UpdateFontsPage(),
+                ),
+              ],
             ),
             GoRoute(
               path: 'plugins',
