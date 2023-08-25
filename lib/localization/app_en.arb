@@ -83,7 +83,7 @@
   "settings_help_title": "help",
 
   "settings_error_fetchFailed": "failed to fetch user settings.",
-  "settings_error_updateFailed": "failed to update user settings.",
+  "settings_error_updateFailed": "failed to save user settings.",
 
   "editor_linkPickerTitle": "link to"
 }

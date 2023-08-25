@@ -4,11 +4,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/state/settings/settings_bloc.dart';
 import 'package:noted_app/state/settings/settings_event.dart';
 import 'package:noted_app/state/settings/settings_state.dart';
-import 'package:noted_app/ui/common/icon/noted_icons.dart';
-import 'package:noted_app/ui/common/layout/noted_card.dart';
-import 'package:noted_app/ui/common/layout/noted_header_page.dart';
-import 'package:noted_app/ui/common/noted_widget_config.dart';
+import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/util/extensions.dart';
+import 'package:noted_app/util/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 class UpdateThemePage extends StatelessWidget {
@@ -24,9 +22,21 @@ class UpdateThemePage extends StatelessWidget {
     return NotedHeaderPage(
       title: strings.settings_style_themeTitle,
       hasBackButton: true,
-      child: BlocBuilder<SettingsBloc, SettingsState>(
+      child: BlocConsumer<SettingsBloc, SettingsState>(
         buildWhen: (previous, current) =>
             previous.settings.style.colorSchemeName != current.settings.style.colorSchemeName,
+        listener: (context, state) {
+          if (state.error?.errorCode == ErrorCode.settings_updateStyle_failed &&
+              (ModalRoute.of(context)?.isCurrent ?? false)) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              NotedSnackBar.createWithText(
+                context: context,
+                text: strings.settings_error_updateFailed,
+                hasClose: true,
+              ),
+            );
+          }
+        },
         builder: (context, state) => ListView.separated(
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.fromLTRB(12, 16, 12, 128),
