@@ -94,7 +94,6 @@ extension NotedBuildContextExtensions on BuildContext {
     return Theme.of(this).colorScheme;
   }
 }
-// coverage:ignore-end
 
 extension NotedBrightnessExtensions on NotedBrightness {
   Brightness toMaterial() {
@@ -146,3 +145,4 @@ extension NotedTextThemeExtensions on NotedTextTheme {
     );
   }
 }
+// coverage:ignore-end

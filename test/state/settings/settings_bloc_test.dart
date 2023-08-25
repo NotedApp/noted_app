@@ -1,5 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:noted_app/repository/auth/auth_repository.dart';
 import 'package:noted_app/repository/auth/local_auth_repository.dart';
 import 'package:noted_app/repository/settings/local_settings_repository.dart';
 import 'package:noted_app/repository/settings/settings_repository.dart';
@@ -13,25 +14,20 @@ import 'package:noted_models/noted_models.dart';
 
 void main() {
   group('SettingsBloc', () {
-    LocalSettingsRepository getRepository() {
-      return locator<SettingsRepository>() as LocalSettingsRepository;
-    }
+    LocalSettingsRepository settings() => locator<SettingsRepository>() as LocalSettingsRepository;
+    LocalAuthRepository auth() => locator<AuthRepository>() as LocalAuthRepository;
 
     setUpAll(() {
-      LocalEnvironment().configure(
-        authRepository: LocalAuthRepository(
-          user: NotedUser(
-            id: 'test',
-            name: 'test',
-            email: 'test@test.com',
-          ),
-        ),
-      );
+      LocalEnvironment().configure(authRepository: LocalAuthRepository());
     });
 
-    setUp(() {
-      getRepository().reset();
-      getRepository().setMsDelay(1);
+    setUp(() async {
+      settings().reset();
+      settings().setMsDelay(1);
+
+      auth().reset();
+      auth().setMsDelay(1);
+      await auth().signInWithGoogle();
     });
 
     blocTest(
@@ -46,16 +42,54 @@ void main() {
     );
 
     blocTest(
+      'loads user on auth change',
+      setUp: () async => auth().signOut(),
+      build: SettingsBloc.new,
+      act: (bloc) => auth().signInWithGoogle(),
+      wait: const Duration(milliseconds: 20),
+      expect: () => [
+        SettingsState(status: SettingsStatus.loading, settings: NotedSettings()),
+        SettingsState(settings: NotedSettings()),
+      ],
+    );
+
+    blocTest(
       'loads user and handles error',
-      setUp: () async {
-        getRepository().setShouldThrow(true);
-      },
+      setUp: () => settings().setShouldThrow(true),
       build: SettingsBloc.new,
       act: (bloc) => bloc.add(SettingsLoadUserEvent()),
       wait: const Duration(milliseconds: 10),
       expect: () => [
         SettingsState(status: SettingsStatus.loading, settings: NotedSettings()),
         SettingsState(settings: NotedSettings(), error: NotedException(ErrorCode.settings_fetch_failed)),
+      ],
+    );
+
+    blocTest(
+      'load user fails with no auth',
+      setUp: () async => auth().signOut(),
+      build: SettingsBloc.new,
+      act: (bloc) => bloc.add(SettingsLoadUserEvent()),
+      wait: const Duration(milliseconds: 10),
+      expect: () => [
+        SettingsState(
+          settings: NotedSettings(),
+          error: NotedException(ErrorCode.settings_fetch_failed, message: 'missing auth'),
+        ),
+      ],
+    );
+
+    blocTest(
+      'update style fails with no auth',
+      setUp: () async => auth().signOut(),
+      build: SettingsBloc.new,
+      act: (bloc) => bloc.add(SettingsUpdateStyleColorSchemeEvent(NotedColorSchemeName.green)),
+      wait: const Duration(milliseconds: 10),
+      expect: () => [
+        SettingsState(
+          settings: NotedSettings(),
+          error: NotedException(ErrorCode.settings_updateStyle_failed, message: 'missing auth'),
+        ),
       ],
     );
 
@@ -73,9 +107,7 @@ void main() {
 
     blocTest(
       'updates current color scheme name and handles error',
-      setUp: () async {
-        getRepository().setShouldThrow(true);
-      },
+      setUp: () => settings().setShouldThrow(true),
       build: SettingsBloc.new,
       act: (bloc) => bloc.add(SettingsUpdateStyleColorSchemeEvent(NotedColorSchemeName.green)),
       wait: const Duration(milliseconds: 10),
@@ -104,9 +136,7 @@ void main() {
 
     blocTest(
       'updates custom color scheme and handles error',
-      setUp: () async {
-        getRepository().setShouldThrow(true);
-      },
+      setUp: () => settings().setShouldThrow(true),
       build: SettingsBloc.new,
       act: (bloc) => bloc.add(SettingsUpdateStyleCustomColorSchemeEvent(NotedColorScheme.green)),
       wait: const Duration(milliseconds: 10),
@@ -135,9 +165,7 @@ void main() {
 
     blocTest(
       'updates current text theme and handles error',
-      setUp: () async {
-        getRepository().setShouldThrow(true);
-      },
+      setUp: () => settings().setShouldThrow(true),
       build: SettingsBloc.new,
       act: (bloc) => bloc.add(SettingsUpdateStyleTextThemeEvent(NotedTextThemeName.roboto)),
       wait: const Duration(milliseconds: 10),
