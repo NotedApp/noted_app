@@ -66,7 +66,7 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         SettingsState(
-          settings: NotedSettings(style: NotedStyleSettings(currentColorSchemeName: NotedColorSchemeName.green)),
+          settings: NotedSettings(style: NotedStyleSettings(colorSchemeName: NotedColorSchemeName.green)),
         ),
       ],
     );
@@ -81,10 +81,10 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         SettingsState(
-          settings: NotedSettings(style: NotedStyleSettings(currentColorSchemeName: NotedColorSchemeName.green)),
+          settings: NotedSettings(style: NotedStyleSettings(colorSchemeName: NotedColorSchemeName.green)),
         ),
         SettingsState(
-          settings: NotedSettings(style: NotedStyleSettings(currentColorSchemeName: NotedColorSchemeName.green)),
+          settings: NotedSettings(style: NotedStyleSettings(colorSchemeName: NotedColorSchemeName.green)),
           error: NotedException(ErrorCode.settings_updateStyle_failed),
         ),
       ],
@@ -124,11 +124,11 @@ void main() {
     blocTest(
       'updates current text theme',
       build: SettingsBloc.new,
-      act: (bloc) => bloc.add(SettingsUpdateStyleTextThemeEvent(NotedTextTheme.roboto)),
+      act: (bloc) => bloc.add(SettingsUpdateStyleTextThemeEvent(NotedTextThemeName.roboto)),
       wait: const Duration(milliseconds: 10),
       expect: () => [
         SettingsState(
-          settings: NotedSettings(style: NotedStyleSettings(textTheme: NotedTextTheme.roboto)),
+          settings: NotedSettings(style: NotedStyleSettings(textThemeName: NotedTextThemeName.roboto)),
         ),
       ],
     );
@@ -139,14 +139,14 @@ void main() {
         getRepository().setShouldThrow(true);
       },
       build: SettingsBloc.new,
-      act: (bloc) => bloc.add(SettingsUpdateStyleTextThemeEvent(NotedTextTheme.roboto)),
+      act: (bloc) => bloc.add(SettingsUpdateStyleTextThemeEvent(NotedTextThemeName.roboto)),
       wait: const Duration(milliseconds: 10),
       expect: () => [
         SettingsState(
-          settings: NotedSettings(style: NotedStyleSettings(textTheme: NotedTextTheme.roboto)),
+          settings: NotedSettings(style: NotedStyleSettings(textThemeName: NotedTextThemeName.roboto)),
         ),
         SettingsState(
-          settings: NotedSettings(style: NotedStyleSettings(textTheme: NotedTextTheme.roboto)),
+          settings: NotedSettings(style: NotedStyleSettings(textThemeName: NotedTextThemeName.roboto)),
           error: NotedException(ErrorCode.settings_updateStyle_failed),
         ),
       ],

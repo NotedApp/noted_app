@@ -26,7 +26,7 @@ class UpdateThemePage extends StatelessWidget {
       hasBackButton: true,
       child: BlocBuilder<SettingsBloc, SettingsState>(
         buildWhen: (previous, current) =>
-            previous.settings.style.currentColorSchemeName != current.settings.style.currentColorSchemeName,
+            previous.settings.style.colorSchemeName != current.settings.style.colorSchemeName,
         builder: (context, state) => ListView.separated(
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.fromLTRB(12, 16, 12, 128),
@@ -39,7 +39,7 @@ class UpdateThemePage extends StatelessWidget {
             return ThemeSwitcherItem(
               title: _getSchemeName(strings, names[index]),
               colors: colors,
-              isSelected: state.settings.style.currentColorSchemeName == names[index],
+              isSelected: state.settings.style.colorSchemeName == names[index],
               onTap: () => bloc.add(SettingsUpdateStyleColorSchemeEvent(names[index])),
             );
           },

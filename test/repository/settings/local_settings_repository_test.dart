@@ -17,15 +17,15 @@ void main() {
       expect(settings, NotedSettings());
 
       NotedStyleSettings style = NotedStyleSettings(
-        currentColorSchemeName: NotedColorSchemeName.green,
-        textTheme: NotedTextTheme.roboto,
+        colorSchemeName: NotedColorSchemeName.green,
+        textThemeName: NotedTextThemeName.roboto,
       );
 
       await repository.updateStyleSettings(userId: 'test', style: style);
       NotedSettings updated = await repository.fetchSettings(userId: 'test');
 
-      expect(updated.style.currentColorSchemeName, NotedColorSchemeName.green);
-      expect(updated.style.textTheme, NotedTextTheme.roboto);
+      expect(updated.style.colorSchemeName, NotedColorSchemeName.green);
+      expect(updated.style.textThemeName, NotedTextThemeName.roboto);
     });
 
     test('handles fetch error', () async {

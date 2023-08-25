@@ -359,10 +359,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_quill
-      sha256: e5d517b957e839579ad44bb73e3ac1b315c9ce2d10eee6f2df44e38cb5e13510
+      sha256: "42a4daeb3e146ce4c4377a6bceacbcaeca1a186c30ac3b9f6378e3e09168a6f4"
       url: "https://pub.dev"
     source: hosted
-    version: "7.4.1"
+    version: "7.4.2"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -603,7 +603,7 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: bc02323673688eb2d0ae80b7530eeb7d77afcad4
+      resolved-ref: "7e66485c680db963053a4bfb46347477a43485fb"
       url: "https://github.com/NotedApp/noted_models.git"
     source: git
     version: "0.0.1"
@@ -960,10 +960,10 @@ packages:
     dependency: transitive
     description:
       name: vm_service
-      sha256: "0fae432c85c4ea880b33b497d32824b97795b04cdaa74d270219572a1f50268d"
+      sha256: c538be99af830f478718b51630ec1b6bee5e74e52c8a802d328d9e71d35d2583
       url: "https://pub.dev"
     source: hosted
-    version: "11.9.0"
+    version: "11.10.0"
   watcher:
     dependency: transitive
     description:

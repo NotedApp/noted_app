@@ -20,7 +20,7 @@ class SettingsUpdateStyleCustomColorSchemeEvent extends SettingsEvent {
 }
 
 class SettingsUpdateStyleTextThemeEvent extends SettingsEvent {
-  final NotedTextTheme textTheme;
+  final NotedTextThemeName themeName;
 
-  const SettingsUpdateStyleTextThemeEvent(this.textTheme);
+  const SettingsUpdateStyleTextThemeEvent(this.themeName);
 }

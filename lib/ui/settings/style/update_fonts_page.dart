@@ -29,14 +29,13 @@ class UpdateFontsPage extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.fromLTRB(12, 16, 12, 128),
           itemBuilder: (context, index) {
-            NotedTextTheme theme = NotedTextTheme.fromName(names[index]);
-            TextTheme font = theme.toMaterial();
+            TextTheme theme = NotedTextTheme.fromName(names[index]).toMaterial();
 
             return FontSwitcherItem(
               title: _getThemeName(strings, names[index]),
-              font: font,
-              isSelected: state.settings.style.textTheme == theme,
-              onTap: () => bloc.add(SettingsUpdateStyleTextThemeEvent(theme)),
+              font: theme,
+              isSelected: state.settings.style.textThemeName == names[index],
+              onTap: () => bloc.add(SettingsUpdateStyleTextThemeEvent(names[index])),
             );
           },
           separatorBuilder: (context, index) => const SizedBox(height: 8),

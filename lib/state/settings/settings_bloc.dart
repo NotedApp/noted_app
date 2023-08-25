@@ -54,7 +54,7 @@ class SettingsBloc extends NotedBloc<SettingsEvent, SettingsState> {
     Emitter<SettingsState> emit,
   ) async {
     await _updateStyleSetting(
-      state.settings.style.copyWith(currentColorSchemeName: event.schemeName),
+      state.settings.style.copyWith(colorSchemeName: event.schemeName),
       emit,
     );
   }
@@ -74,7 +74,7 @@ class SettingsBloc extends NotedBloc<SettingsEvent, SettingsState> {
     Emitter<SettingsState> emit,
   ) async {
     await _updateStyleSetting(
-      state.settings.style.copyWith(textTheme: event.textTheme),
+      state.settings.style.copyWith(textThemeName: event.themeName),
       emit,
     );
   }

@@ -5,60 +5,60 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "noted_app (debug mode)",
+      "name": "noted_prod (debug mode)",
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart"
     },
     {
-      "name": "noted_app (profile mode)",
+      "name": "noted_prod (profile mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "profile",
       "program": "lib/main.dart"
     },
     {
-      "name": "noted_app (release mode)",
+      "name": "noted_prod (release mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "release",
       "program": "lib/main.dart"
     },
     {
-      "name": "noted_app_test (debug mode)",
+      "name": "noted_test (debug mode)",
       "request": "launch",
       "type": "dart",
       "program": "lib/test.dart"
     },
     {
-      "name": "noted_app_test (profile mode)",
+      "name": "noted_test (profile mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "profile",
       "program": "lib/test.dart"
     },
     {
-      "name": "noted_app_test (release mode)",
+      "name": "noted_test (release mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "release",
       "program": "lib/test.dart"
     },
     {
-      "name": "noted_app_local (debug mode)",
+      "name": "noted_local (debug mode)",
       "request": "launch",
       "type": "dart",
       "program": "lib/local.dart"
     },
     {
-      "name": "noted_app_local (profile mode)",
+      "name": "noted_local (profile mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "profile",
       "program": "lib/local.dart"
     },
     {
-      "name": "noted_app_local (release mode)",
+      "name": "noted_local (release mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "release",

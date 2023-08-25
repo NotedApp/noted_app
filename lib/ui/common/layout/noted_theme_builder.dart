@@ -16,10 +16,10 @@ class NotedThemeBuilder extends StatelessWidget {
       buildWhen: (previous, current) {
         NotedStyleSettings old = previous.settings.style;
         NotedStyleSettings next = current.settings.style;
-        return old.currentColorScheme != next.currentColorScheme || old.textTheme != next.textTheme;
+        return old.colorScheme != next.colorScheme || old.textTheme != next.textTheme;
       },
       builder: (context, state) {
-        ColorScheme colorScheme = state.settings.style.currentColorScheme.toMaterial();
+        ColorScheme colorScheme = state.settings.style.colorScheme.toMaterial();
         TextTheme textTheme = state.settings.style.textTheme.toMaterial();
 
         return builder(
