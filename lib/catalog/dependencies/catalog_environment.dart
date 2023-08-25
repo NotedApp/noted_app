@@ -8,6 +8,13 @@ import 'package:noted_app/util/environment/environment.dart';
 import 'package:noted_app/util/logging/local_logger.dart';
 import 'package:noted_app/util/logging/noted_logger.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
+import 'package:noted_models/noted_models.dart';
+
+const NotedUser _catalogUser = NotedUser(
+  id: 'catalog',
+  name: 'catalog',
+  email: 'catalog@catalog.com',
+);
 
 class CatalogEnvironment extends Environment {
   @override
@@ -22,7 +29,7 @@ class CatalogEnvironment extends Environment {
     locator.registerSingleton<NotedRouter>(router ?? CatalogRouter());
 
     // Repositories.
-    locator.registerSingleton<AuthRepository>(authRepository ?? LocalAuthRepository());
+    locator.registerSingleton<AuthRepository>(authRepository ?? LocalAuthRepository(user: _catalogUser));
     locator.registerSingleton<SettingsRepository>(settingsRepository ?? LocalSettingsRepository());
   }
 }

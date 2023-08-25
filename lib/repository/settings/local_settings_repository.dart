@@ -11,6 +11,10 @@ class LocalSettingsRepository extends SettingsRepository {
   bool _shouldThrow = false;
   int _msDelay = 2000;
 
+  LocalSettingsRepository({int msDelay = 2000}) {
+    _msDelay = msDelay;
+  }
+
   @override
   Future<NotedSettings> fetchSettings({required String userId}) async {
     await Future.delayed(Duration(milliseconds: _msDelay));

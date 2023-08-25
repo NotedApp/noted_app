@@ -41,6 +41,14 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
   @override
   Stream<NotedUser> get userStream => _userStreamController.stream;
 
+  LocalAuthRepository({NotedUser user = const NotedUser.empty(), int msDelay = 2000}) {
+    if (user.isNotEmpty) {
+      _currentUser = user;
+    }
+
+    _msDelay = msDelay;
+  }
+
   @override
   Future<void> createUserWithEmailAndPassword({String email = '', String password = ''}) async {
     await Future.delayed(Duration(milliseconds: _msDelay));

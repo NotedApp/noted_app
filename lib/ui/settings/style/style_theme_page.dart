@@ -1,67 +1,67 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:noted_app/state/theme/theme_cubit.dart';
-import 'package:noted_app/state/theme/theme_state.dart';
-import 'package:noted_app/theme/color_schemes.dart';
-import 'package:noted_app/ui/common/icon/noted_icons.dart';
-import 'package:noted_app/ui/common/layout/noted_card.dart';
-import 'package:noted_app/ui/common/layout/noted_header_page.dart';
-import 'package:noted_app/ui/common/noted_widget_config.dart';
+import 'package:noted_app/state/settings/settings_bloc.dart';
+import 'package:noted_app/state/settings/settings_event.dart';
+import 'package:noted_app/ui/common/noted_library.dart';
+import 'package:noted_app/ui/settings/style/style_frame.dart';
 import 'package:noted_app/util/extensions.dart';
+import 'package:noted_models/noted_models.dart';
 
-class ColorSwitcher extends StatelessWidget {
+class StyleThemePage extends StatelessWidget {
   List<NotedColorSchemeName> get names => NotedColorSchemeName.values;
 
-  const ColorSwitcher({super.key});
+  const StyleThemePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    ThemeCubit cubit = context.read<ThemeCubit>();
+    SettingsBloc bloc = context.read<SettingsBloc>();
     Strings strings = context.strings();
 
-    return NotedHeaderPage(
-      title: strings.settings_colorTitle,
-      hasBackButton: true,
-      child: BlocBuilder<ThemeCubit, ThemeState>(
-        builder: (context, state) => ListView.separated(
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.fromLTRB(12, 12, 12, 128),
-          itemBuilder: (context, index) {
-            ColorScheme colors = NotedColorSchemes.fromName(names[index]);
-            return ColorSwitcherItem(
-              title: _getSchemeName(strings, names[index]),
-              colors: colors,
-              isSelected: state.colorSchemeName == names[index],
-              onTap: () => cubit.updateColorScheme(names[index]),
-            );
-          },
-          separatorBuilder: (context, index) => const SizedBox(height: 8),
-          itemCount: names.length,
-        ),
+    return StyleFrame(
+      title: strings.settings_style_themeTitle,
+      buildWhen: (previous, current) => previous.colorSchemeName != current.colorSchemeName,
+      builder: (context, state) => ListView.separated(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.fromLTRB(12, 16, 12, 128),
+        itemBuilder: (context, index) {
+          ColorScheme colors = NotedColorScheme.fromName(
+            names[index],
+            state.customColorScheme,
+          ).toMaterial();
+
+          return ThemeSwitcherItem(
+            title: _getSchemeName(strings, names[index]),
+            colors: colors,
+            isSelected: state.colorSchemeName == names[index],
+            onTap: () => bloc.add(SettingsUpdateStyleColorSchemeEvent(names[index])),
+          );
+        },
+        separatorBuilder: (context, index) => const SizedBox(height: 8),
+        itemCount: names.length,
       ),
     );
   }
 
   String _getSchemeName(Strings strings, NotedColorSchemeName name) {
     return switch (name) {
-      NotedColorSchemeName.blue => strings.settings_colorSchemeBlue,
-      NotedColorSchemeName.green => strings.settings_colorSchemeGreen,
-      NotedColorSchemeName.dark => strings.settings_colorSchemeDark,
-      NotedColorSchemeName.oled => strings.settings_colorSchemeOled,
-      NotedColorSchemeName.light => strings.settings_colorSchemeLight,
-      NotedColorSchemeName.custom => strings.settings_colorSchemeCustom,
+      NotedColorSchemeName.blue => strings.settings_style_blue,
+      NotedColorSchemeName.green => strings.settings_style_green,
+      NotedColorSchemeName.dark => strings.settings_style_dark,
+      NotedColorSchemeName.oled => strings.settings_style_oled,
+      NotedColorSchemeName.light => strings.settings_style_light,
+      NotedColorSchemeName.custom => strings.settings_style_custom,
     };
   }
 }
 
-class ColorSwitcherItem extends StatelessWidget {
+class ThemeSwitcherItem extends StatelessWidget {
   final String title;
   final ColorScheme colors;
   final bool isSelected;
   final VoidCallback? onTap;
 
-  const ColorSwitcherItem({
+  const ThemeSwitcherItem({
     required this.title,
     required this.colors,
     this.isSelected = false,

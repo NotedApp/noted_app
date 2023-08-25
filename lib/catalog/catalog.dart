@@ -4,8 +4,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/catalog/catalog_content.dart';
 import 'package:noted_app/catalog/catalog_renderer.dart';
 import 'package:noted_app/catalog/dependencies/catalog_environment.dart';
-import 'package:noted_app/state/theme/theme_cubit.dart';
-import 'package:noted_app/state/theme/theme_state.dart';
+import 'package:noted_app/state/settings/settings_bloc.dart';
+import 'package:noted_app/ui/common/layout/noted_theme_builder.dart';
 
 void main() {
   CatalogEnvironment().configure();
@@ -17,25 +17,18 @@ class CatalogApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => ThemeCubit(),
-      child: const CatalogAppView(),
-    );
-  }
-}
-
-class CatalogAppView extends StatelessWidget {
-  const CatalogAppView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<ThemeCubit, ThemeState>(
-      builder: (context, state) => MaterialApp(
-        title: 'noted catalog',
-        localizationsDelegates: Strings.localizationsDelegates,
-        supportedLocales: Strings.supportedLocales,
-        theme: state.themeData,
-        home: CatalogRenderer(CatalogContent.content, isRoot: true),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => SettingsBloc()),
+      ],
+      child: NotedThemeBuilder(
+        builder: (context, theme) => MaterialApp(
+          title: 'noted catalog',
+          localizationsDelegates: Strings.localizationsDelegates,
+          supportedLocales: Strings.supportedLocales,
+          theme: theme,
+          home: CatalogRenderer(CatalogContent.content, isRoot: true),
+        ),
       ),
     );
   }

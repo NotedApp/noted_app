@@ -69,7 +69,7 @@ class _NotedColorPickerState extends State<NotedColorPicker> {
               child: SizedBox(
                 width: double.infinity,
                 child: NotedTextButton(
-                  label: strings.settings_colorDefault,
+                  label: strings.settings_style_colorDefault,
                   type: NotedTextButtonType.outlined,
                   size: NotedWidgetSize.small,
                   onPressed: () {

@@ -17,7 +17,7 @@ class AccountFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     return NotedHeaderPage(
       hasBackButton: true,
-      title: context.strings().settings_accountTitle,
+      title: context.strings().settings_account_title,
       child: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state.status == AuthStatus.unauthenticated) {
