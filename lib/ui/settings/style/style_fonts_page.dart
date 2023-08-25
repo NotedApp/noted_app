@@ -3,55 +3,39 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/state/settings/settings_bloc.dart';
 import 'package:noted_app/state/settings/settings_event.dart';
-import 'package:noted_app/state/settings/settings_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
+import 'package:noted_app/ui/settings/style/style_frame.dart';
 import 'package:noted_app/util/extensions.dart';
-import 'package:noted_app/util/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
-class UpdateFontsPage extends StatelessWidget {
+class StyleFontsPage extends StatelessWidget {
   List<NotedTextThemeName> get names => NotedTextThemeName.values;
 
-  const UpdateFontsPage({super.key});
+  const StyleFontsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     SettingsBloc bloc = context.read<SettingsBloc>();
     Strings strings = context.strings();
 
-    return NotedHeaderPage(
+    return StyleFrame(
       title: strings.settings_style_fontsTitle,
-      hasBackButton: true,
-      child: BlocConsumer<SettingsBloc, SettingsState>(
-        buildWhen: (previous, current) => previous.settings.style.textThemeName != current.settings.style.textThemeName,
-        listener: (context, state) {
-          if (state.error?.errorCode == ErrorCode.settings_updateStyle_failed &&
-              (ModalRoute.of(context)?.isCurrent ?? false)) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              NotedSnackBar.createWithText(
-                context: context,
-                text: strings.settings_error_updateFailed,
-                hasClose: true,
-              ),
-            );
-          }
-        },
-        builder: (context, state) => ListView.separated(
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.fromLTRB(12, 16, 12, 128),
-          itemBuilder: (context, index) {
-            TextTheme theme = NotedTextTheme.fromName(names[index]).toMaterial();
+      buildWhen: (previous, current) => previous.textThemeName != current.textThemeName,
+      builder: (context, state) => ListView.separated(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.fromLTRB(12, 16, 12, 128),
+        itemBuilder: (context, index) {
+          TextTheme theme = NotedTextTheme.fromName(names[index]).toMaterial();
 
-            return FontSwitcherItem(
-              title: _getThemeName(strings, names[index]),
-              font: theme,
-              isSelected: state.settings.style.textThemeName == names[index],
-              onTap: () => bloc.add(SettingsUpdateStyleTextThemeEvent(names[index])),
-            );
-          },
-          separatorBuilder: (context, index) => const SizedBox(height: 8),
-          itemCount: names.length,
-        ),
+          return FontSwitcherItem(
+            title: _getThemeName(strings, names[index]),
+            font: theme,
+            isSelected: state.textThemeName == names[index],
+            onTap: () => bloc.add(SettingsUpdateStyleTextThemeEvent(names[index])),
+          );
+        },
+        separatorBuilder: (context, index) => const SizedBox(height: 8),
+        itemCount: names.length,
       ),
     );
   }

@@ -23,7 +23,7 @@ class LoginPage extends StatelessWidget {
   }
 
   void _handleStateUpdate(BuildContext context, AuthState state) {
-    if (state.error != null && (ModalRoute.of(context)?.isCurrent ?? false)) {
+    if (state.error != null && context.isCurrent()) {
       final Strings strings = context.strings();
       final String message = switch (state.error!.errorCode) {
         ErrorCode.auth_googleSignIn_disabled => strings.login_error_accountDisabled,

@@ -93,6 +93,10 @@ extension NotedBuildContextExtensions on BuildContext {
   ColorScheme colorScheme() {
     return Theme.of(this).colorScheme;
   }
+
+  bool isCurrent() {
+    return ModalRoute.of(this)?.isCurrent ?? false;
+  }
 }
 
 extension NotedBrightnessExtensions on NotedBrightness {

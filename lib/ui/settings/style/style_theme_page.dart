@@ -3,59 +3,42 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/state/settings/settings_bloc.dart';
 import 'package:noted_app/state/settings/settings_event.dart';
-import 'package:noted_app/state/settings/settings_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
+import 'package:noted_app/ui/settings/style/style_frame.dart';
 import 'package:noted_app/util/extensions.dart';
-import 'package:noted_app/util/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
-class UpdateThemePage extends StatelessWidget {
+class StyleThemePage extends StatelessWidget {
   List<NotedColorSchemeName> get names => NotedColorSchemeName.values;
 
-  const UpdateThemePage({super.key});
+  const StyleThemePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     SettingsBloc bloc = context.read<SettingsBloc>();
     Strings strings = context.strings();
 
-    return NotedHeaderPage(
+    return StyleFrame(
       title: strings.settings_style_themeTitle,
-      hasBackButton: true,
-      child: BlocConsumer<SettingsBloc, SettingsState>(
-        buildWhen: (previous, current) =>
-            previous.settings.style.colorSchemeName != current.settings.style.colorSchemeName,
-        listener: (context, state) {
-          if (state.error?.errorCode == ErrorCode.settings_updateStyle_failed &&
-              (ModalRoute.of(context)?.isCurrent ?? false)) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              NotedSnackBar.createWithText(
-                context: context,
-                text: strings.settings_error_updateFailed,
-                hasClose: true,
-              ),
-            );
-          }
-        },
-        builder: (context, state) => ListView.separated(
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.fromLTRB(12, 16, 12, 128),
-          itemBuilder: (context, index) {
-            ColorScheme colors = NotedColorScheme.fromName(
-              names[index],
-              state.settings.style.customColorScheme,
-            ).toMaterial();
+      buildWhen: (previous, current) => previous.colorSchemeName != current.colorSchemeName,
+      builder: (context, state) => ListView.separated(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.fromLTRB(12, 16, 12, 128),
+        itemBuilder: (context, index) {
+          ColorScheme colors = NotedColorScheme.fromName(
+            names[index],
+            state.customColorScheme,
+          ).toMaterial();
 
-            return ThemeSwitcherItem(
-              title: _getSchemeName(strings, names[index]),
-              colors: colors,
-              isSelected: state.settings.style.colorSchemeName == names[index],
-              onTap: () => bloc.add(SettingsUpdateStyleColorSchemeEvent(names[index])),
-            );
-          },
-          separatorBuilder: (context, index) => const SizedBox(height: 8),
-          itemCount: names.length,
-        ),
+          return ThemeSwitcherItem(
+            title: _getSchemeName(strings, names[index]),
+            colors: colors,
+            isSelected: state.colorSchemeName == names[index],
+            onTap: () => bloc.add(SettingsUpdateStyleColorSchemeEvent(names[index])),
+          );
+        },
+        separatorBuilder: (context, index) => const SizedBox(height: 8),
+        itemCount: names.length,
       ),
     );
   }

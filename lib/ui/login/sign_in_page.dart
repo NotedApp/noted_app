@@ -123,7 +123,7 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   void _handleStateUpdate(BuildContext context, AuthState state) {
-    if (state.error != null && (ModalRoute.of(context)?.isCurrent ?? false)) {
+    if (state.error != null && context.isCurrent()) {
       final Strings strings = context.strings();
       String? message;
 
