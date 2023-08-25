@@ -17,9 +17,7 @@ void main() {
     LocalSettingsRepository settings() => locator<SettingsRepository>() as LocalSettingsRepository;
     LocalAuthRepository auth() => locator<AuthRepository>() as LocalAuthRepository;
 
-    setUpAll(() {
-      LocalEnvironment().configure(authRepository: LocalAuthRepository());
-    });
+    setUpAll(() => LocalEnvironment().configure());
 
     setUp(() async {
       settings().reset();
