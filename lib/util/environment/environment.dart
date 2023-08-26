@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:noted_app/repository/auth/auth_repository.dart';
 import 'package:noted_app/repository/auth/firebase_auth_repository.dart';
 import 'package:noted_app/repository/auth/local_auth_repository.dart';
+import 'package:noted_app/repository/notebook/firebase_notebook_repository.dart';
+import 'package:noted_app/repository/notebook/local_notebook_repository.dart';
+import 'package:noted_app/repository/notebook/notebook_repository.dart';
 import 'package:noted_app/repository/settings/firebase_settings_repository.dart';
 import 'package:noted_app/repository/settings/local_settings_repository.dart';
 import 'package:noted_app/repository/settings/settings_repository.dart';
@@ -20,6 +23,8 @@ abstract class Environment {
     NotedLogger? logger,
     NotedRouter? router,
     AuthRepository? authRepository,
+    SettingsRepository? settingsRepository,
+    NotebookRepository? notebookRepository,
   });
 }
 
@@ -30,6 +35,7 @@ class LocalEnvironment extends Environment {
     NotedRouter? router,
     AuthRepository? authRepository,
     SettingsRepository? settingsRepository,
+    NotebookRepository? notebookRepository,
   }) async {
     // Utilities.
     locator.registerSingleton<NotedLogger>(logger ?? LocalLogger());
@@ -38,6 +44,7 @@ class LocalEnvironment extends Environment {
     // Repositories.
     locator.registerSingleton<AuthRepository>(authRepository ?? LocalAuthRepository());
     locator.registerSingleton<SettingsRepository>(settingsRepository ?? LocalSettingsRepository());
+    locator.registerSingleton<NotebookRepository>(notebookRepository ?? LocalNotebookRepository());
   }
 }
 
@@ -48,6 +55,7 @@ class TestEnvironment extends Environment {
     NotedRouter? router,
     AuthRepository? authRepository,
     SettingsRepository? settingsRepository,
+    NotebookRepository? notebookRepository,
   }) async {
     await WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp(options: TestFirebaseOptions.currentPlatform);
@@ -59,6 +67,7 @@ class TestEnvironment extends Environment {
     // Repositories.
     locator.registerSingleton<AuthRepository>(authRepository ?? FirebaseAuthRepository());
     locator.registerSingleton<SettingsRepository>(settingsRepository ?? FirebaseSettingsRepository());
+    locator.registerSingleton<NotebookRepository>(notebookRepository ?? FirebaseNotebookRepository());
   }
 }
 
@@ -69,6 +78,7 @@ class ProdEnvironment extends Environment {
     NotedRouter? router,
     AuthRepository? authRepository,
     SettingsRepository? settingsRepository,
+    NotebookRepository? notebookRepository,
   }) async {
     throw UnimplementedError();
   }

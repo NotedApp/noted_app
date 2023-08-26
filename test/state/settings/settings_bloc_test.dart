@@ -8,16 +8,17 @@ import 'package:noted_app/state/settings/settings_bloc.dart';
 import 'package:noted_app/state/settings/settings_event.dart';
 import 'package:noted_app/state/settings/settings_state.dart';
 import 'package:noted_app/util/environment/dependencies.dart';
-import 'package:noted_app/util/environment/environment.dart';
 import 'package:noted_app/util/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
+
+import '../../helpers/environment/unit_test_environment.dart';
 
 void main() {
   group('SettingsBloc', () {
     LocalSettingsRepository settings() => locator<SettingsRepository>() as LocalSettingsRepository;
     LocalAuthRepository auth() => locator<AuthRepository>() as LocalAuthRepository;
 
-    setUpAll(() => LocalEnvironment().configure());
+    setUpAll(() => UnitTestEnvironment().configure());
 
     setUp(() async {
       settings().reset();

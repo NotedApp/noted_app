@@ -6,9 +6,10 @@ import 'package:noted_app/state/auth/auth_bloc.dart';
 import 'package:noted_app/state/auth/auth_event.dart';
 import 'package:noted_app/state/auth/auth_state.dart';
 import 'package:noted_app/util/environment/dependencies.dart';
-import 'package:noted_app/util/environment/environment.dart';
 import 'package:noted_app/util/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
+
+import '../../helpers/environment/unit_test_environment.dart';
 
 void main() {
   group('AuthBloc', () {
@@ -21,7 +22,7 @@ void main() {
     }
 
     setUpAll(() {
-      LocalEnvironment().configure();
+      UnitTestEnvironment().configure();
     });
 
     setUp(() {

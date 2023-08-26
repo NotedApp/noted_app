@@ -1,6 +1,8 @@
 import 'package:noted_app/catalog/dependencies/catalog_router.dart';
 import 'package:noted_app/repository/auth/auth_repository.dart';
 import 'package:noted_app/repository/auth/local_auth_repository.dart';
+import 'package:noted_app/repository/notebook/local_notebook_repository.dart';
+import 'package:noted_app/repository/notebook/notebook_repository.dart';
 import 'package:noted_app/repository/settings/local_settings_repository.dart';
 import 'package:noted_app/repository/settings/settings_repository.dart';
 import 'package:noted_app/util/environment/dependencies.dart';
@@ -23,6 +25,7 @@ class CatalogEnvironment extends Environment {
     NotedRouter? router,
     AuthRepository? authRepository,
     SettingsRepository? settingsRepository,
+    NotebookRepository? notebookRepository,
   }) async {
     // Utilities.
     locator.registerSingleton<NotedLogger>(logger ?? LocalLogger());
@@ -31,5 +34,6 @@ class CatalogEnvironment extends Environment {
     // Repositories.
     locator.registerSingleton<AuthRepository>(authRepository ?? LocalAuthRepository(user: _catalogUser));
     locator.registerSingleton<SettingsRepository>(settingsRepository ?? LocalSettingsRepository());
+    locator.registerSingleton<NotebookRepository>(notebookRepository ?? LocalNotebookRepository());
   }
 }

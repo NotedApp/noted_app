@@ -4,7 +4,7 @@ import 'package:noted_models/spaces/notebook/notebook_note.dart';
 import 'package:uuid/uuid.dart';
 
 /// Default local notes.
-const Map<String, NotebookNote> _localNotes = {
+const Map<String, NotebookNote> localNotes = {
   'test-note-0': NotebookNote(
     id: 'test-note-0',
     title: 'Note 0',
@@ -23,7 +23,7 @@ const Map<String, NotebookNote> _localNotes = {
 
 /// A [NotebookRepository] that uses mock data as its source of truth.
 class LocalNotebookRepository extends NotebookRepository {
-  Map<String, NotebookNote> _notes = {..._localNotes};
+  Map<String, NotebookNote> _notes = {...localNotes};
   bool _shouldThrow = false;
   int _msDelay = 2000;
 
@@ -55,7 +55,7 @@ class LocalNotebookRepository extends NotebookRepository {
   Future<void> updateNote({required String userId, required NotebookNote note}) async {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
-    if (_shouldThrow || userId.isEmpty || !_notes.containsKey(note.id)) {
+    if (_shouldThrow || userId.isEmpty) {
       throw NotedException(ErrorCode.notebook_update_failed);
     }
 
@@ -78,6 +78,6 @@ class LocalNotebookRepository extends NotebookRepository {
   void reset() {
     _shouldThrow = false;
     _msDelay = 2000;
-    _notes = {..._localNotes};
+    _notes = {...localNotes};
   }
 }
