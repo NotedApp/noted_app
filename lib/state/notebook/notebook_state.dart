@@ -12,8 +12,6 @@ final class NotebookState extends Equatable {
   final List<NotebookNote> notes;
   final NotedException? error;
 
-  bool get isEmpty => status == NotebookStatus.loaded && notes.isEmpty && error == null;
-
   const NotebookState({this.status = NotebookStatus.loaded, this.notes = const [], this.error = null});
 
   @override
