@@ -24,3 +24,5 @@ class SettingsUpdateStyleTextThemeEvent extends SettingsEvent {
 
   const SettingsUpdateStyleTextThemeEvent(this.themeName);
 }
+
+class SettingsResetEvent extends SettingsEvent {}
