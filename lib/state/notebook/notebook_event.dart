@@ -20,7 +20,9 @@ class NotebookUpdateNoteEvent extends NotebookEvent {
 }
 
 class NotebookDeleteNoteEvent extends NotebookEvent {
-  final NotebookNote noteId;
+  final String noteId;
 
   const NotebookDeleteNoteEvent(this.noteId);
 }
+
+class NotebookResetEvent extends NotebookEvent {}
