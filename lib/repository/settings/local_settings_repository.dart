@@ -19,7 +19,7 @@ class LocalSettingsRepository extends SettingsRepository {
   Future<NotedSettings> fetchSettings({required String userId}) async {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
-    if (_shouldThrow) {
+    if (_shouldThrow || userId.isEmpty) {
       throw NotedException(ErrorCode.settings_fetch_failed);
     }
 
@@ -30,7 +30,7 @@ class LocalSettingsRepository extends SettingsRepository {
   Future<void> updateStyleSettings({required String userId, required NotedStyleSettings style}) async {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
-    if (_shouldThrow) {
+    if (_shouldThrow || userId.isEmpty) {
       throw NotedException(ErrorCode.settings_updateStyle_failed);
     }
 
