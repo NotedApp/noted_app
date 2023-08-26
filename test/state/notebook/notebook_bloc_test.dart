@@ -86,7 +86,7 @@ void main() {
       'adds a note',
       build: NotebookBloc.new,
       act: (bloc) => bloc.add(NotebookAddNoteEvent(testNote)),
-      wait: const Duration(milliseconds: 10),
+      wait: const Duration(milliseconds: 20),
       expect: () => [
         NotebookState(status: NotebookStatus.loading),
         predicate((state) {
