@@ -63,14 +63,14 @@ class LocalNotebookRepository extends NotebookRepository {
   }
 
   @override
-  Future<void> deleteNoted({required String userId, required NotebookNote note}) async {
+  Future<void> deleteNote({required String userId, required String noteId}) async {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (_shouldThrow || userId.isEmpty) {
-      throw NotedException(ErrorCode.notebook_fetch_failed);
+      throw NotedException(ErrorCode.notebook_delete_failed);
     }
 
-    _notes.remove(note.id);
+    _notes.remove(noteId);
   }
 
   void setShouldThrow(bool shouldThrow) => _shouldThrow = shouldThrow;

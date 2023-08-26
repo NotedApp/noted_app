@@ -55,9 +55,9 @@ class FirebaseNotebookRepository extends NotebookRepository {
   }
 
   @override
-  Future<void> deleteNoted({required String userId, required NotebookNote note}) async {
+  Future<void> deleteNote({required String userId, required String noteId}) async {
     try {
-      await notes(userId).doc(note.id).delete();
+      await notes(userId).doc(noteId).delete();
     } on FirebaseException catch (e) {
       throw NotedException(ErrorCode.notebook_delete_failed, message: e.code);
     } catch (_) {

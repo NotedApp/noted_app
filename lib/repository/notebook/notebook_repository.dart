@@ -12,5 +12,5 @@ abstract class NotebookRepository {
   Future<void> updateNote({required String userId, required NotebookNote note});
 
   /// Deletes the note with the given ID for the given user.
-  Future<void> deleteNoted({required String userId, required NotebookNote note});
+  Future<void> deleteNote({required String userId, required String noteId});
 }
