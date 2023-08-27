@@ -41,12 +41,12 @@ class NotebookBloc extends NotedBloc<NotebookEvent, NotebookState> {
 
     try {
       if (_auth.currentUser.isEmpty) {
-        throw NotedException(ErrorCode.notebook_fetch_failed, message: 'missing auth');
+        throw NotedException(ErrorCode.notebook_subscribe_failed, message: 'missing auth');
       }
 
       emit(NotebookState(status: NotebookStatus.loading));
-      List<NotebookNote> notes = await _notebook.fetchNotes(userId: _auth.currentUser.id);
-      emit(NotebookState(notes: notes));
+      // List<NotebookNote> notes = await _notebook.fetchNotes(userId: _auth.currentUser.id);
+      emit(NotebookState(notes: []));
     } catch (e) {
       emit(NotebookState(error: NotedException.fromObject(e)));
     }

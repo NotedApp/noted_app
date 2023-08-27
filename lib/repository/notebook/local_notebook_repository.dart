@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:get_it/get_it.dart';
 import 'package:noted_app/repository/notebook/notebook_repository.dart';
 import 'package:noted_app/util/noted_exception.dart';
 import 'package:noted_models/spaces/notebook/notebook_note.dart';
@@ -22,20 +25,21 @@ const Map<String, NotebookNote> localNotes = {
 };
 
 /// A [NotebookRepository] that uses mock data as its source of truth.
-class LocalNotebookRepository extends NotebookRepository {
+class LocalNotebookRepository extends NotebookRepository implements Disposable {
+  final StreamController<List<NotebookNote>> _notesController = StreamController();
   Map<String, NotebookNote> _notes = {...localNotes};
   bool _shouldThrow = false;
   int _msDelay = 2000;
 
   @override
-  Future<List<NotebookNote>> fetchNotes({required String userId}) async {
+  Future<Stream<List<NotebookNote>>> subscribeNotes({required String userId}) async {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (_shouldThrow || userId.isEmpty) {
-      throw NotedException(ErrorCode.notebook_fetch_failed);
+      throw NotedException(ErrorCode.notebook_subscribe_failed);
     }
 
-    return _notes.values.toList();
+    return _notesController.stream;
   }
 
   @override
@@ -46,8 +50,9 @@ class LocalNotebookRepository extends NotebookRepository {
       throw NotedException(ErrorCode.notebook_add_failed);
     }
 
-    String id = Uuid().v4();
+    String id = note.id.isEmpty ? Uuid().v4() : note.id;
     _notes[id] = note.copyWith(id: id);
+    _notesController.add(_notes.values.toList());
     return id;
   }
 
@@ -60,6 +65,7 @@ class LocalNotebookRepository extends NotebookRepository {
     }
 
     _notes[note.id] = note.copyWith();
+    _notesController.add(_notes.values.toList());
   }
 
   @override
@@ -71,6 +77,12 @@ class LocalNotebookRepository extends NotebookRepository {
     }
 
     _notes.remove(noteId);
+    _notesController.add(_notes.values.toList());
+  }
+
+  @override
+  FutureOr onDispose() async {
+    await _notesController.close();
   }
 
   void setShouldThrow(bool shouldThrow) => _shouldThrow = shouldThrow;

@@ -47,7 +47,7 @@ enum ErrorCode {
   settings_fetch_failed,
   settings_updateStyle_failed,
 
-  notebook_fetch_failed,
+  notebook_subscribe_failed,
   notebook_add_failed,
   notebook_update_failed,
   notebook_delete_failed,

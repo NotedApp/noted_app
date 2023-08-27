@@ -67,7 +67,7 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         NotebookState(status: NotebookStatus.loading),
-        NotebookState(error: NotedException(ErrorCode.notebook_fetch_failed)),
+        NotebookState(error: NotedException(ErrorCode.notebook_subscribe_failed)),
       ],
     );
 
@@ -78,7 +78,7 @@ void main() {
       act: (bloc) => bloc.add(NotebookLoadNotesEvent()),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        NotebookState(error: NotedException(ErrorCode.notebook_fetch_failed, message: 'missing auth')),
+        NotebookState(error: NotedException(ErrorCode.notebook_subscribe_failed, message: 'missing auth')),
       ],
     );
 
