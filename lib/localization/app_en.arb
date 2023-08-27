@@ -11,6 +11,8 @@
   "common_routeErrorCta": "back to home",
   "common_notAny": "n/a",
 
+  "editor_linkPickerTitle": "link to",
+
   "login_disclaimers": "by registering, you agree to noted's ",
   "login_termsOfUse": "terms of use",
   "login_and": " and ",
@@ -85,5 +87,5 @@
   "settings_error_fetchFailed": "failed to fetch user settings.",
   "settings_error_updateFailed": "failed to save user settings.",
 
-  "editor_linkPickerTitle": "link to"
+  "notebook_title": "notebook"
 }
