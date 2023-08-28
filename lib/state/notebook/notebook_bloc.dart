@@ -14,12 +14,14 @@ class NotebookBloc extends NotedBloc<NotebookEvent, NotebookState> {
   final NotebookRepository _notebook;
   final AuthRepository _auth;
   late final StreamSubscription<NotedUser> _userSubscription;
+  StreamSubscription<List<NotebookNote>>? _notesSubscription;
 
   NotebookBloc({NotebookRepository? notebookRepository, AuthRepository? authRepository})
       : _notebook = notebookRepository ?? locator<NotebookRepository>(),
         _auth = authRepository ?? locator<AuthRepository>(),
         super(NotebookState(), 'notebook') {
-    on<NotebookLoadNotesEvent>(_onLoadNotes);
+    on<NotebookSubscribeNotesEvent>(_onSubscribeNotes);
+    on<NotebookUpdateNotesEvent>(_onUpdateNotes);
     on<NotebookAddNoteEvent>(_onAddNote);
     on<NotebookUpdateNoteEvent>(_onUpdateNote);
     on<NotebookDeleteNoteEvent>(_onDeleteNote);
@@ -29,12 +31,12 @@ class NotebookBloc extends NotedBloc<NotebookEvent, NotebookState> {
       if (user.isEmpty) {
         add(NotebookResetEvent());
       } else {
-        add(NotebookLoadNotesEvent());
+        add(NotebookSubscribeNotesEvent());
       }
     });
   }
 
-  void _onLoadNotes(NotebookLoadNotesEvent event, Emitter<NotebookState> emit) async {
+  void _onSubscribeNotes(NotebookSubscribeNotesEvent event, Emitter<NotebookState> emit) async {
     if (state.status == NotebookStatus.loading) {
       return;
     }
@@ -44,12 +46,21 @@ class NotebookBloc extends NotedBloc<NotebookEvent, NotebookState> {
         throw NotedException(ErrorCode.notebook_subscribe_failed, message: 'missing auth');
       }
 
+      _notesSubscription?.cancel();
+      _notesSubscription = null;
+
       emit(NotebookState(status: NotebookStatus.loading));
-      // List<NotebookNote> notes = await _notebook.fetchNotes(userId: _auth.currentUser.id);
-      emit(NotebookState(notes: []));
+
+      _notesSubscription = (await _notebook.subscribeNotes(userId: _auth.currentUser.id)).listen((event) {
+        add(NotebookUpdateNotesEvent(event));
+      });
     } catch (e) {
       emit(NotebookState(error: NotedException.fromObject(e)));
     }
+  }
+
+  void _onUpdateNotes(NotebookUpdateNotesEvent event, Emitter<NotebookState> emit) async {
+    emit(NotebookState(notes: event.notes));
   }
 
   void _onAddNote(NotebookAddNoteEvent event, Emitter<NotebookState> emit) async {
@@ -59,7 +70,6 @@ class NotebookBloc extends NotedBloc<NotebookEvent, NotebookState> {
       }
 
       await _notebook.addNote(userId: _auth.currentUser.id, note: event.note);
-      add(NotebookLoadNotesEvent());
     } catch (e) {
       emit(NotebookState(error: NotedException.fromObject(e)));
     }
@@ -72,15 +82,6 @@ class NotebookBloc extends NotedBloc<NotebookEvent, NotebookState> {
       }
 
       await _notebook.updateNote(userId: _auth.currentUser.id, note: event.note);
-
-      int index = state.notes.indexWhere((note) => note.id == event.note.id);
-      if (index < 0) {
-        throw NotedException(ErrorCode.notebook_update_failed, message: 'missing note in state');
-      }
-
-      List<NotebookNote> updated = [...state.notes];
-      updated[index] = event.note;
-      emit(NotebookState(notes: updated));
     } catch (e) {
       emit(NotebookState(error: NotedException.fromObject(e)));
     }
@@ -93,7 +94,6 @@ class NotebookBloc extends NotedBloc<NotebookEvent, NotebookState> {
       }
 
       await _notebook.deleteNote(userId: _auth.currentUser.id, noteId: event.noteId);
-      add(NotebookLoadNotesEvent());
     } catch (e) {
       emit(NotebookState(error: NotedException.fromObject(e)));
     }
@@ -101,11 +101,15 @@ class NotebookBloc extends NotedBloc<NotebookEvent, NotebookState> {
 
   void _onReset(NotebookResetEvent event, Emitter<NotebookState> emit) async {
     emit(NotebookState());
+
+    _notesSubscription?.cancel();
+    _notesSubscription = null;
   }
 
   @override
   Future<void> close() {
     _userSubscription.cancel();
+    _notesSubscription?.cancel();
     return super.close();
   }
 }

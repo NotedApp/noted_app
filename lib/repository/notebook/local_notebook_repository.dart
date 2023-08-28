@@ -26,10 +26,14 @@ const Map<String, NotebookNote> localNotes = {
 
 /// A [NotebookRepository] that uses mock data as its source of truth.
 class LocalNotebookRepository extends NotebookRepository implements Disposable {
-  final StreamController<List<NotebookNote>> _notesController = StreamController();
+  late final StreamController<List<NotebookNote>> _notesController;
   Map<String, NotebookNote> _notes = {...localNotes};
   bool _shouldThrow = false;
   int _msDelay = 2000;
+
+  LocalNotebookRepository() {
+    _notesController = StreamController.broadcast(onListen: () => _notesController.add(_notes.values.toList()));
+  }
 
   @override
   Future<Stream<List<NotebookNote>>> subscribeNotes({required String userId}) async {
@@ -81,8 +85,8 @@ class LocalNotebookRepository extends NotebookRepository implements Disposable {
   }
 
   @override
-  FutureOr onDispose() async {
-    await _notesController.close();
+  FutureOr onDispose() {
+    _notesController.close();
   }
 
   void setShouldThrow(bool shouldThrow) => _shouldThrow = shouldThrow;

@@ -26,6 +26,7 @@ void main() {
       expectLater(
         stream,
         emitsInOrder([
+          [...localNotes.values],
           [...localNotes.values, testNote],
           [...localNotes.values, testNote.copyWith(title: 'test updated note')],
           [...localNotes.values],
@@ -102,27 +103,14 @@ void main() {
       repository.setShouldThrow(true);
 
       await expectLater(
-        () => repository.subscribeNotes(userId: 'test'),
-        throwsA(NotedException(ErrorCode.notebook_subscribe_failed)),
+        () => repository.addNote(userId: 'test', note: testNote),
+        throwsA(NotedException(ErrorCode.notebook_add_failed)),
       );
 
       repository.reset();
 
-      await repository.subscribeNotes(userId: 'test');
-    });
-
-    test('throws and resets when requested', () async {
-      repository.setShouldThrow(true);
-
-      await expectLater(
-        () => repository.subscribeNotes(userId: 'test'),
-        throwsA(NotedException(ErrorCode.notebook_subscribe_failed)),
-      );
-
-      repository.reset();
-
-      await repository.subscribeNotes(userId: 'test');
-      await repository.onDispose();
+      await repository.addNote(userId: 'test', note: testNote);
+      repository.onDispose();
     });
   });
 }

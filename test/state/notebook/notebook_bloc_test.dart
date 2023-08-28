@@ -16,6 +16,7 @@ import '../../helpers/mocks/mock_delta.dart';
 
 void main() {
   NotebookNote testNote = NotebookNote(id: 'test', title: 'test', document: testData0);
+  NotebookNote updatedTest = NotebookNote(id: 'test', title: 'updated', document: testData0);
 
   group('NotebookBloc', () {
     LocalNotebookRepository notebook() => locator<NotebookRepository>() as LocalNotebookRepository;
@@ -34,12 +35,20 @@ void main() {
     });
 
     blocTest(
-      'loads notes for a user',
+      'loads, adds, updates, and deletes notes for a user',
       build: NotebookBloc.new,
-      act: (bloc) => bloc.add(NotebookLoadNotesEvent()),
+      act: (bloc) {
+        bloc.add(NotebookSubscribeNotesEvent());
+        bloc.add(NotebookAddNoteEvent(testNote));
+        bloc.add(NotebookUpdateNoteEvent(updatedTest));
+        bloc.add(NotebookDeleteNoteEvent(testNote.id));
+      },
       wait: const Duration(milliseconds: 10),
       expect: () => [
         NotebookState(status: NotebookStatus.loading),
+        NotebookState(notes: localNotes.values.toList()),
+        NotebookState(notes: [...localNotes.values, testNote]),
+        NotebookState(notes: [...localNotes.values, updatedTest]),
         NotebookState(notes: localNotes.values.toList()),
       ],
     );
@@ -63,7 +72,7 @@ void main() {
       'loads notes for a user and handles error',
       setUp: () => notebook().setShouldThrow(true),
       build: NotebookBloc.new,
-      act: (bloc) => bloc.add(NotebookLoadNotesEvent()),
+      act: (bloc) => bloc.add(NotebookSubscribeNotesEvent()),
       wait: const Duration(milliseconds: 10),
       expect: () => [
         NotebookState(status: NotebookStatus.loading),
@@ -75,23 +84,10 @@ void main() {
       'loads notes for a user fails with no auth',
       setUp: () async => auth().signOut(),
       build: NotebookBloc.new,
-      act: (bloc) => bloc.add(NotebookLoadNotesEvent()),
+      act: (bloc) => bloc.add(NotebookSubscribeNotesEvent()),
       wait: const Duration(milliseconds: 10),
       expect: () => [
         NotebookState(error: NotedException(ErrorCode.notebook_subscribe_failed, message: 'missing auth')),
-      ],
-    );
-
-    blocTest(
-      'adds a note',
-      build: NotebookBloc.new,
-      act: (bloc) => bloc.add(NotebookAddNoteEvent(testNote)),
-      wait: const Duration(milliseconds: 20),
-      expect: () => [
-        NotebookState(status: NotebookStatus.loading),
-        predicate((state) {
-          return (state! as NotebookState).notes.length == 3;
-        }),
       ],
     );
 
@@ -118,36 +114,6 @@ void main() {
     );
 
     blocTest(
-      'updates a note',
-      build: NotebookBloc.new,
-      act: (bloc) async {
-        bloc.add(NotebookLoadNotesEvent());
-        bloc.add(NotebookUpdateNoteEvent(NotebookNote(id: 'test-note-0', title: 'test', document: [])));
-      },
-      wait: const Duration(milliseconds: 10),
-      expect: () => [
-        NotebookState(status: NotebookStatus.loading),
-        NotebookState(notes: localNotes.values.toList()),
-        NotebookState(
-          notes: [
-            localNotes['test-note-0']!.copyWith(title: 'test', document: []),
-            localNotes['test-note-1']!,
-          ],
-        ),
-      ],
-    );
-
-    blocTest(
-      'updates a note and handles a missing note',
-      build: NotebookBloc.new,
-      act: (bloc) => bloc.add(NotebookUpdateNoteEvent(NotebookNote(id: 'test-note-0', title: 'test', document: []))),
-      wait: const Duration(milliseconds: 10),
-      expect: () => [
-        NotebookState(error: NotedException(ErrorCode.notebook_update_failed, message: 'missing note in state')),
-      ],
-    );
-
-    blocTest(
       'updates a note and handles error',
       setUp: () => notebook().setShouldThrow(true),
       build: NotebookBloc.new,
@@ -166,22 +132,6 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         NotebookState(error: NotedException(ErrorCode.notebook_update_failed, message: 'missing auth')),
-      ],
-    );
-
-    blocTest(
-      'deletes a note',
-      build: NotebookBloc.new,
-      act: (bloc) async {
-        bloc.add(NotebookLoadNotesEvent());
-        bloc.add(NotebookDeleteNoteEvent('test-note-0'));
-      },
-      wait: const Duration(milliseconds: 10),
-      expect: () => [
-        NotebookState(status: NotebookStatus.loading),
-        NotebookState(notes: localNotes.values.toList()),
-        NotebookState(status: NotebookStatus.loading),
-        NotebookState(notes: [localNotes['test-note-1']!]),
       ],
     );
 
