@@ -5,7 +5,13 @@ sealed class NotebookEvent extends NotedEvent implements TrackableEvent {
   const NotebookEvent();
 }
 
-class NotebookLoadNotesEvent extends NotebookEvent {}
+class NotebookSubscribeNotesEvent extends NotebookEvent {}
+
+class NotebookUpdateNotesEvent extends NotebookEvent {
+  final List<NotebookNote> notes;
+
+  const NotebookUpdateNotesEvent(this.notes);
+}
 
 class NotebookAddNoteEvent extends NotebookEvent {
   final NotebookNote note;
