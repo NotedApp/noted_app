@@ -71,7 +71,7 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
       final Strings strings = context.strings();
       String? message;
 
-      switch (state.error!.errorCode) {
+      switch (state.error!.code) {
         case ErrorCode.auth_passwordReset_invalidEmail:
           setState(() => _emailError = strings.login_error_passwordResetInvalidEmail);
         default:

@@ -22,7 +22,7 @@ class StyleFrame extends StatelessWidget {
       child: BlocConsumer<SettingsBloc, SettingsState>(
         buildWhen: (previous, current) => buildWhen?.call(previous.settings.style, current.settings.style) ?? false,
         listener: (context, state) {
-          if (state.error?.errorCode == ErrorCode.settings_updateStyle_failed && context.isCurrent()) {
+          if (state.error?.code == ErrorCode.settings_updateStyle_failed && context.isCurrent()) {
             ScaffoldMessenger.of(context).showSnackBar(
               NotedSnackBar.createWithText(
                 context: context,

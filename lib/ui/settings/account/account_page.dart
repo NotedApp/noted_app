@@ -64,7 +64,7 @@ class AccountPage extends StatelessWidget {
   void _handleStateUpdate(BuildContext context, AuthState state) {
     if (state.error != null && context.isCurrent()) {
       final Strings strings = context.strings();
-      final String message = switch (state.error!.errorCode) {
+      final String message = switch (state.error!.code) {
         ErrorCode.auth_deleteAccount_reauthenticate => strings.login_error_reauthenticate,
         _ => strings.login_error_deleteAccountFailed,
       };

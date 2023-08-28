@@ -9,6 +9,7 @@ enum NotedIconButtonType {
 
 class NotedIconButton extends StatelessWidget {
   final IconData? icon;
+  final Widget? iconWidget;
   final NotedIconButtonType type;
   final NotedWidgetSize size;
   final NotedWidgetColor? color;
@@ -32,6 +33,7 @@ class NotedIconButton extends StatelessWidget {
   ///  - The colors can be override with [iconColor] and [backgroundColor].
   const NotedIconButton({
     required this.icon,
+    this.iconWidget,
     required this.type,
     this.size = NotedWidgetSize.medium,
     this.color,
@@ -74,7 +76,7 @@ class NotedIconButton extends StatelessWidget {
         onPressed: onPressed,
         onLongPress: onLongPress,
         style: style,
-        child: Icon(icon),
+        child: iconWidget ?? Icon(icon),
       ),
     );
   }

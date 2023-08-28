@@ -127,7 +127,7 @@ class _RegisterPageState extends State<RegisterPage> {
       final Strings strings = context.strings();
       String? message;
 
-      switch (state.error!.errorCode) {
+      switch (state.error!.code) {
         case ErrorCode.auth_createUser_invalidEmail:
           setState(() => _emailError = strings.login_error_createUserInvalidEmail);
         case ErrorCode.auth_createUser_weakPassword:

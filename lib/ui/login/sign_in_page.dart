@@ -127,7 +127,7 @@ class _SignInPageState extends State<SignInPage> {
       final Strings strings = context.strings();
       String? message;
 
-      switch (state.error!.errorCode) {
+      switch (state.error!.code) {
         case ErrorCode.auth_emailSignIn_invalidEmail:
           setState(() => _emailError = strings.login_error_emailSignInInvalidEmail);
         case ErrorCode.auth_emailSignIn_invalidPassword:

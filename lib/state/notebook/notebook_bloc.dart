@@ -71,6 +71,10 @@ class NotebookBloc extends NotedBloc<NotebookEvent, NotebookState> {
   }
 
   void _onAddNote(NotebookAddNoteEvent event, Emitter<NotebookState> emit) async {
+    if (state.status == NotebookStatus.adding) {
+      return;
+    }
+
     try {
       if (_auth.currentUser.isEmpty) {
         throw NotedException(ErrorCode.notebook_add_failed, message: 'missing auth');
@@ -97,6 +101,10 @@ class NotebookBloc extends NotedBloc<NotebookEvent, NotebookState> {
   }
 
   void _onDeleteNote(NotebookDeleteNoteEvent event, Emitter<NotebookState> emit) async {
+    if (state.status == NotebookStatus.deleting) {
+      return;
+    }
+
     try {
       if (_auth.currentUser.isEmpty) {
         throw NotedException(ErrorCode.notebook_delete_failed, message: 'missing auth');
