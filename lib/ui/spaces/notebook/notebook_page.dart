@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/state/notebook/notebook_bloc.dart';
+import 'package:noted_app/state/notebook/notebook_event.dart';
 import 'package:noted_app/state/notebook/notebook_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
@@ -11,11 +12,13 @@ import 'package:noted_app/ui/spaces/notebook/notebook_error.dart';
 import 'package:noted_app/ui/spaces/notebook/notebook_loading.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/util/noted_exception.dart';
+import 'package:noted_models/noted_models.dart';
 
 class NotebookPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Strings strings = context.strings();
+    NotebookBloc bloc = context.read();
 
     return NotedHeaderPage(
       title: strings.notebook_title,
@@ -28,6 +31,12 @@ class NotebookPage extends StatelessWidget {
           onPressed: () => context.push('/settings'),
         ),
       ],
+      floatingActionButton: NotedIconButton(
+        icon: NotedIcons.plus,
+        type: NotedIconButtonType.filled,
+        size: NotedWidgetSize.large,
+        onPressed: () => bloc.add(NotebookAddNoteEvent(NotebookNote.empty(id: ''))),
+      ),
       child: BlocConsumer<NotebookBloc, NotebookState>(
         listenWhen: (_, current) => current.error != null,
         listener: (context, state) => handleNotebookError,

@@ -28,7 +28,7 @@ const Map<String, NotebookNote> localNotes = {
 class LocalNotebookRepository extends NotebookRepository implements Disposable {
   late final StreamController<List<NotebookNote>> _notesController;
   Map<String, NotebookNote> _notes = {...localNotes};
-  bool _shouldThrow = true;
+  bool _shouldThrow = false;
   int _msDelay = 2000;
 
   LocalNotebookRepository() {
