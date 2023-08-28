@@ -35,20 +35,23 @@ void main() {
       act: (bloc) => bloc.add(SettingsLoadUserEvent()),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        SettingsState(status: SettingsStatus.loading, settings: NotedSettings()),
-        SettingsState(settings: NotedSettings()),
+        SettingsState(status: SettingsStatus.loading),
+        SettingsState(),
       ],
     );
 
     blocTest(
       'loads user on auth change',
-      setUp: () async => auth().signOut(),
       build: SettingsBloc.new,
-      act: (bloc) => auth().signInWithGoogle(),
+      act: (bloc) async {
+        await auth().signOut();
+        await auth().signInWithGoogle();
+      },
       wait: const Duration(milliseconds: 20),
       expect: () => [
-        SettingsState(status: SettingsStatus.loading, settings: NotedSettings()),
-        SettingsState(settings: NotedSettings()),
+        SettingsState(),
+        SettingsState(status: SettingsStatus.loading),
+        SettingsState(),
       ],
     );
 
@@ -59,8 +62,8 @@ void main() {
       act: (bloc) => bloc.add(SettingsLoadUserEvent()),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        SettingsState(status: SettingsStatus.loading, settings: NotedSettings()),
-        SettingsState(settings: NotedSettings(), error: NotedException(ErrorCode.settings_fetch_failed)),
+        SettingsState(status: SettingsStatus.loading),
+        SettingsState(error: NotedException(ErrorCode.settings_fetch_failed)),
       ],
     );
 
@@ -72,7 +75,6 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         SettingsState(
-          settings: NotedSettings(),
           error: NotedException(ErrorCode.settings_fetch_failed, message: 'missing auth'),
         ),
       ],
@@ -85,10 +87,7 @@ void main() {
       act: (bloc) => bloc.add(SettingsUpdateStyleColorSchemeEvent(NotedColorSchemeName.green)),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        SettingsState(
-          settings: NotedSettings(),
-          error: NotedException(ErrorCode.settings_updateStyle_failed, message: 'missing auth'),
-        ),
+        SettingsState(error: NotedException(ErrorCode.settings_updateStyle_failed, message: 'missing auth')),
       ],
     );
 

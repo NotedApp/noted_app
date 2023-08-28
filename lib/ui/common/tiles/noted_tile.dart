@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/ui/common/layout/noted_card.dart';
 import 'package:noted_app/ui/common/noted_widget_config.dart';
+import 'package:noted_app/util/extensions.dart';
 
 class NotedTile extends StatelessWidget {
   final Widget child;
@@ -12,7 +13,7 @@ class NotedTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return NotedCard(
       size: NotedWidgetSize.small,
-      color: Theme.of(context).colorScheme.background,
+      color: context.colorScheme().background,
       onTap: onTap,
       child: child,
     );

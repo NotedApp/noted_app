@@ -383,10 +383,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_quill
-      sha256: "42a4daeb3e146ce4c4377a6bceacbcaeca1a186c30ac3b9f6378e3e09168a6f4"
+      sha256: ce69f667d78e9d531863ba8f576cce6ab9794783df9ada8df99618830e76ab75
       url: "https://pub.dev"
     source: hosted
-    version: "7.4.2"
+    version: "7.4.3"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -627,7 +627,7 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: "7e66485c680db963053a4bfb46347477a43485fb"
+      resolved-ref: "47fd4f5292931cd4398d17f10072176e9d6e8622"
       url: "https://github.com/NotedApp/noted_models.git"
     source: git
     version: "0.0.1"
@@ -775,6 +775,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  shimmer:
+    dependency: "direct main"
+    description:
+      name: shimmer
+      sha256: "5f88c883a22e9f9f299e5ba0e4f7e6054857224976a5d9f839d4ebdc94a14ac9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   sky_engine:
     dependency: transitive
     description: flutter

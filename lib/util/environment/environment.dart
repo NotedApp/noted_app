@@ -11,7 +11,6 @@ import 'package:noted_app/repository/settings/local_settings_repository.dart';
 import 'package:noted_app/repository/settings/settings_repository.dart';
 import 'package:noted_app/util/environment/dependencies.dart';
 import 'package:noted_app/util/environment/test_firebase_options.dart';
-import 'package:noted_app/util/logging/firebase_logger.dart';
 import 'package:noted_app/util/logging/local_logger.dart';
 import 'package:noted_app/util/logging/noted_logger.dart';
 import 'package:noted_app/ui/router/noted_go_router.dart';
@@ -61,7 +60,7 @@ class TestEnvironment extends Environment {
     await Firebase.initializeApp(options: TestFirebaseOptions.currentPlatform);
 
     // Utilities.
-    locator.registerSingleton<NotedLogger>(logger ?? FirebaseLogger());
+    locator.registerSingleton<NotedLogger>(logger ?? LocalLogger());
     locator.registerSingleton<NotedRouter>(router ?? NotedGoRouter());
 
     // Repositories.

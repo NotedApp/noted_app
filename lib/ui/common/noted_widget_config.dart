@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 enum NotedWidgetSize {
   large,
   medium,
@@ -11,3 +13,5 @@ enum NotedWidgetColor {
 }
 
 const double buttonOverlayOpacity = 0.1;
+
+const ScrollPhysics notedScrollPhysics = BouncingScrollPhysics();

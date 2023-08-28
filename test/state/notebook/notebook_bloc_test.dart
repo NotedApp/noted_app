@@ -81,6 +81,25 @@ void main() {
     );
 
     blocTest(
+      'loads notes for a user and handles stream error',
+      build: NotebookBloc.new,
+      act: (bloc) async {
+        bloc.add(NotebookSubscribeNotesEvent());
+        await Future.delayed(const Duration(milliseconds: 5));
+        notebook().addStreamError();
+      },
+      wait: const Duration(milliseconds: 10),
+      expect: () => [
+        NotebookState(status: NotebookStatus.loading),
+        NotebookState(notes: localNotes.values.toList()),
+        NotebookState(
+          notes: localNotes.values.toList(),
+          error: NotedException(ErrorCode.notebook_parse_failed),
+        ),
+      ],
+    );
+
+    blocTest(
       'loads notes for a user fails with no auth',
       setUp: () async => auth().signOut(),
       build: NotebookBloc.new,

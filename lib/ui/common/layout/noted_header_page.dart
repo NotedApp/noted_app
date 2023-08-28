@@ -11,6 +11,7 @@ class NotedHeaderPage extends StatelessWidget {
   final VoidCallback? onBack;
   final String? title;
   final List<NotedIconButton>? trailingActions;
+  final NotedIconButton? floatingActionButton;
 
   const NotedHeaderPage({
     required this.child,
@@ -18,6 +19,7 @@ class NotedHeaderPage extends StatelessWidget {
     this.onBack,
     this.title,
     this.trailingActions,
+    this.floatingActionButton,
     super.key,
   });
 
@@ -38,6 +40,7 @@ class NotedHeaderPage extends StatelessWidget {
         trailingActions: trailingActions ?? [],
       ),
       body: child,
+      floatingActionButton: floatingActionButton,
     );
   }
 }

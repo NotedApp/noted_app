@@ -18,14 +18,17 @@ class SettingsBloc extends NotedBloc<SettingsEvent, SettingsState> {
   SettingsBloc({SettingsRepository? settingsRepository, AuthRepository? authRepository})
       : _settings = settingsRepository ?? locator<SettingsRepository>(),
         _auth = authRepository ?? locator<AuthRepository>(),
-        super(SettingsState(settings: NotedSettings()), 'settings') {
+        super(SettingsState(), 'settings') {
     on<SettingsLoadUserEvent>(_onLoadUser);
     on<SettingsUpdateStyleColorSchemeEvent>(_onUpdateStyleColorScheme);
     on<SettingsUpdateStyleCustomColorSchemeEvent>(_onUpdateStyleCustomColorScheme);
     on<SettingsUpdateStyleTextThemeEvent>(_onUpdateStyleTextTheme);
+    on<SettingsResetEvent>(_onReset);
 
     _userSubscription = _auth.userStream.listen((user) {
-      if (user.isNotEmpty) {
+      if (user.isEmpty) {
+        add(SettingsResetEvent());
+      } else {
         add(SettingsLoadUserEvent());
       }
     });
@@ -93,6 +96,10 @@ class SettingsBloc extends NotedBloc<SettingsEvent, SettingsState> {
     } catch (e) {
       emit(SettingsState(error: NotedException.fromObject(e), settings: state.settings));
     }
+  }
+
+  void _onReset(SettingsResetEvent event, Emitter<SettingsState> emit) async {
+    emit(SettingsState());
   }
 
   @override

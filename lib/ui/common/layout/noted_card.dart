@@ -21,15 +21,17 @@ class NotedCard extends StatelessWidget {
   Widget build(BuildContext context) {
     ColorScheme colors = Theme.of(context).colorScheme;
 
-    double borderRadius = switch (size) {
-      NotedWidgetSize.large => 24,
-      NotedWidgetSize.medium => 16,
-      NotedWidgetSize.small => 12,
-    };
+    BorderRadius borderRadius = BorderRadius.circular(
+      switch (size) {
+        NotedWidgetSize.large => 24,
+        NotedWidgetSize.medium => 16,
+        NotedWidgetSize.small => 12,
+      },
+    );
 
     ShapeBorder shape = RoundedRectangleBorder(
       side: BorderSide(color: colors.onBackground, width: 2),
-      borderRadius: BorderRadius.circular(borderRadius),
+      borderRadius: borderRadius,
     );
 
     return Card(
@@ -37,11 +39,7 @@ class NotedCard extends StatelessWidget {
       elevation: 4,
       shape: shape,
       margin: margin,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(borderRadius),
-        child: child,
-      ),
+      child: onTap == null ? child : InkWell(onTap: onTap, borderRadius: borderRadius, child: child),
     );
   }
 }

@@ -64,7 +64,6 @@ void main() {
       expect((large.shape! as RoundedRectangleBorder).borderRadius, equals(BorderRadius.circular(24)));
 
       await tester.tap(smallFinder);
-      await tester.tap(mediumFinder);
       await tester.tap(largeFinder);
 
       verify(() => onPressed()).called(2);

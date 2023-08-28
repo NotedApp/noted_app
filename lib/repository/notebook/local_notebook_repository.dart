@@ -89,6 +89,11 @@ class LocalNotebookRepository extends NotebookRepository implements Disposable {
     _notesController.close();
   }
 
+  /// Adds an error to the state stream for testing.
+  void addStreamError() {
+    _notesController.addError(NotedException(ErrorCode.notebook_parse_failed));
+  }
+
   void setShouldThrow(bool shouldThrow) => _shouldThrow = shouldThrow;
   void setMsDelay(int msDelay) => _msDelay = msDelay;
   void reset() {
