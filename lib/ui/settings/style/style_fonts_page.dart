@@ -15,7 +15,7 @@ class StyleFontsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SettingsBloc bloc = context.read<SettingsBloc>();
+    SettingsBloc bloc = context.watch<SettingsBloc>();
     Strings strings = context.strings();
 
     return StyleFrame(

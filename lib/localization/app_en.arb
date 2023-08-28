@@ -90,6 +90,9 @@
   "settings_error_updateFailed": "failed to save user settings.",
 
   "notebook_title": "notebook",
+  "notebook_edit_titlePlaceholder": "title",
+  "notebook_edit_textPlaceholder": "enter a note...",
+
   "notebook_error_failed": "can't load notes, please refresh and try again.",
   "notebook_error_empty": "get started by creating a note using the button below!",
   "notebook_error_addNoteFailed": "failed to add note, please try again.",

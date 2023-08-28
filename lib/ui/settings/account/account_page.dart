@@ -15,7 +15,7 @@ class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = context.theme();
-    final AuthBloc bloc = context.read();
+    final AuthBloc bloc = context.watch();
     final Strings strings = context.strings();
 
     return AccountFrame(

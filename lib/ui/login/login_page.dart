@@ -48,7 +48,7 @@ class _LoginPageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AuthBloc bloc = context.read();
+    final AuthBloc bloc = context.watch();
     final TextTheme theme = context.textTheme();
     final Strings strings = context.strings();
 

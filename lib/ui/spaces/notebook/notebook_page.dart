@@ -18,9 +18,11 @@ class NotebookPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Strings strings = context.strings();
-    NotebookBloc bloc = context.read();
+    NotebookBloc bloc = context.watch();
 
     return BlocConsumer<NotebookBloc, NotebookState>(
+      bloc: bloc,
+      listenWhen: (previous, current) => previous.error != current.error || previous.added != current.added,
       listener: (context, state) {
         if (state.error != null) {
           handleNotebookError(context, state);

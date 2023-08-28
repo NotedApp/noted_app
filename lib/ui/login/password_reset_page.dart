@@ -33,7 +33,7 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
 
   @override
   Widget build(BuildContext context) {
-    final AuthBloc bloc = context.read();
+    final AuthBloc bloc = context.watch();
     final Strings strings = context.strings();
 
     return LoginFrame(
