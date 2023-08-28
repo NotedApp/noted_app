@@ -18,7 +18,7 @@ class SettingsBloc extends NotedBloc<SettingsEvent, SettingsState> {
   SettingsBloc({SettingsRepository? settingsRepository, AuthRepository? authRepository})
       : _settings = settingsRepository ?? locator<SettingsRepository>(),
         _auth = authRepository ?? locator<AuthRepository>(),
-        super(SettingsState(settings: NotedSettings()), 'settings') {
+        super(SettingsState(), 'settings') {
     on<SettingsLoadUserEvent>(_onLoadUser);
     on<SettingsUpdateStyleColorSchemeEvent>(_onUpdateStyleColorScheme);
     on<SettingsUpdateStyleCustomColorSchemeEvent>(_onUpdateStyleCustomColorScheme);
