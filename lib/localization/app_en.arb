@@ -91,5 +91,8 @@
 
   "notebook_title": "notebook",
   "notebook_error_failed": "can't load notes, please refresh and try again.",
-  "notebook_error_empty": "get started by creating a note using the button below!"
+  "notebook_error_empty": "get started by creating a note using the button below!",
+  "notebook_error_addNoteFailed": "failed to add note, please try again.",
+  "notebook_error_updateNoteFailed": "failed to update note, please try again.",
+  "notebook_error_deleteNoteFailed": "failed to delete note, please try again."
 }

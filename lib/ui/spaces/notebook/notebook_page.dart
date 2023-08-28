@@ -29,23 +29,45 @@ class NotebookPage extends StatelessWidget {
         ),
       ],
       child: BlocConsumer<NotebookBloc, NotebookState>(
-          listenWhen: (_, current) => current.error != null,
-          listener: (context, state) => {},
-          builder: (context, state) {
-            if (state.status == NotebookStatus.loading) {
-              return NotebookLoading();
-            }
+        listenWhen: (_, current) => current.error != null,
+        listener: (context, state) => handleNotebookError,
+        builder: (context, state) {
+          if (state.status == NotebookStatus.loading) {
+            return NotebookLoading();
+          }
 
-            if (state.error?.errorCode == ErrorCode.notebook_subscribe_failed) {
-              return NotebookError();
-            }
+          if (state.error?.errorCode == ErrorCode.notebook_subscribe_failed) {
+            return NotebookError();
+          }
 
-            if (state.notes.isEmpty) {
-              return NotebookEmpty();
-            }
+          if (state.notes.isEmpty) {
+            return NotebookEmpty();
+          }
 
-            return NotebookContent(notes: state.notes);
-          }),
+          return NotebookContent(notes: state.notes);
+        },
+      ),
+    );
+  }
+}
+
+void handleNotebookError(BuildContext context, NotebookState state) {
+  Strings strings = context.strings();
+
+  final String? message = switch (state.error?.errorCode) {
+    ErrorCode.notebook_add_failed => strings.notebook_error_addNoteFailed,
+    ErrorCode.notebook_update_failed => strings.notebook_error_updateNoteFailed,
+    ErrorCode.notebook_delete_failed => strings.notebook_error_deleteNoteFailed,
+    _ => null,
+  };
+
+  if (message != null) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      NotedSnackBar.createWithText(
+        context: context,
+        text: message,
+        hasClose: true,
+      ),
     );
   }
 }

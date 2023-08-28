@@ -6,7 +6,7 @@ class NotebookEmpty extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32),
+        padding: const EdgeInsets.symmetric(horizontal: 64),
         child: Text(context.strings().notebook_error_empty, textAlign: TextAlign.center),
       ),
     );

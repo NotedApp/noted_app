@@ -14,7 +14,7 @@ class NotebookError extends StatelessWidget {
 
     return Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32),
+        padding: const EdgeInsets.symmetric(horizontal: 64),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
