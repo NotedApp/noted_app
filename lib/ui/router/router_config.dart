@@ -6,7 +6,6 @@ import 'package:noted_app/ui/login/login_page.dart';
 import 'package:noted_app/ui/login/password_reset_page.dart';
 import 'package:noted_app/ui/login/register_page.dart';
 import 'package:noted_app/ui/login/sign_in_page.dart';
-import 'package:noted_app/ui/notebook/notebook_page.dart';
 import 'package:noted_app/ui/router/route_error_page.dart';
 import 'package:noted_app/ui/settings/account/account_page.dart';
 import 'package:noted_app/ui/settings/account/change_password_page.dart';
@@ -14,6 +13,7 @@ import 'package:noted_app/ui/settings/settings_page.dart';
 import 'package:noted_app/ui/settings/style/style_page.dart.dart';
 import 'package:noted_app/ui/settings/style/style_fonts_page.dart';
 import 'package:noted_app/ui/settings/style/style_theme_page.dart';
+import 'package:noted_app/ui/spaces/notebook/notebook_page.dart';
 
 GoRouter routerConfig = GoRouter(
   routes: [_home, _login],

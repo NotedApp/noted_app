@@ -4,11 +4,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/state/notebook/notebook_bloc.dart';
 import 'package:noted_app/state/notebook/notebook_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
-import 'package:noted_app/ui/notebook/notebook_content.dart';
-import 'package:noted_app/ui/notebook/notebook_empty.dart';
-import 'package:noted_app/ui/notebook/notebook_error.dart';
-import 'package:noted_app/ui/notebook/notebook_loading.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
+import 'package:noted_app/ui/spaces/notebook/notebook_content.dart';
+import 'package:noted_app/ui/spaces/notebook/notebook_empty.dart';
+import 'package:noted_app/ui/spaces/notebook/notebook_error.dart';
+import 'package:noted_app/ui/spaces/notebook/notebook_loading.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/util/noted_exception.dart';
 
