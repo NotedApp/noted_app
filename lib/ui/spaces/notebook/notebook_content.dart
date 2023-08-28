@@ -15,6 +15,7 @@ class NotebookContent extends StatelessWidget {
       child: GridView.builder(
         itemCount: notes.length,
         physics: notedScrollPhysics,
+        padding: EdgeInsets.only(bottom: 128),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           mainAxisSpacing: 4,
