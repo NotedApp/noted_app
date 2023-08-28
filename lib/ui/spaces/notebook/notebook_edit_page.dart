@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get_it/get_it.dart';
 import 'package:noted_app/state/notebook/notebook_bloc.dart';
 import 'package:noted_app/state/notebook/notebook_event.dart';
 import 'package:noted_app/state/notebook/notebook_state.dart';
@@ -57,6 +60,7 @@ class _NotebookEditContent extends StatefulWidget {
 }
 
 class _NotebookEditContentState extends State<_NotebookEditContent> {
+  final Debouncer debouncer = Debouncer(interval: const Duration(milliseconds: 500));
   late final NotedRichTextController textController;
   late final TextEditingController titleController;
   final FocusNode focusNode = FocusNode();
@@ -68,6 +72,9 @@ class _NotebookEditContentState extends State<_NotebookEditContent> {
     NotebookNote initial = context.read<NotebookBloc>().state.notes.firstWhere((note) => note.id == widget.noteId);
     textController = NotedRichTextController.quill(initial: initial.document);
     titleController = TextEditingController(text: initial.title);
+
+    textController.addListener(_updateNote);
+    titleController.addListener(_updateNote);
   }
 
   @override
@@ -101,11 +108,43 @@ class _NotebookEditContentState extends State<_NotebookEditContent> {
     );
   }
 
+  void _updateNote() {
+    context.read<NotebookBloc>().add(
+          NotebookUpdateNoteEvent(
+            NotebookNote(
+              id: widget.noteId,
+              title: titleController.text,
+              document: textController.value,
+            ),
+          ),
+        );
+  }
+
   @override
   void dispose() {
+    debouncer.onDispose();
     textController.dispose();
     titleController.dispose();
     focusNode.dispose();
     super.dispose();
+  }
+}
+
+class Debouncer implements Disposable {
+  final Duration interval;
+  Timer? _timer;
+
+  bool get isActive => _timer?.isActive ?? false;
+
+  Debouncer({required this.interval});
+
+  void run(VoidCallback action) {
+    _timer?.cancel();
+    _timer = Timer(this.interval, action);
+  }
+
+  @override
+  FutureOr onDispose() {
+    _timer?.cancel();
   }
 }

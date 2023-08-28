@@ -40,6 +40,9 @@ class QuillRichTextController extends NotedRichTextController {
   }
 
   @override
+  List<dynamic> get value => controller.document.toDelta().toJson();
+
+  @override
   bool isAttributeToggled(NotedRichTextAttribute attribute) {
     Attribute quillAttribute = _getQuillAttribute(attribute);
 

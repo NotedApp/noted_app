@@ -66,6 +66,9 @@ void main() {
 
 class _MockController extends NotedRichTextController {
   @override
+  List get value => throw UnimplementedError();
+
+  @override
   Color? getColor(NotedRichTextAttribute attribute) {
     throw UnimplementedError();
   }
