@@ -18,7 +18,7 @@ class SettingsBloc extends NotedBloc<SettingsEvent, SettingsState> {
   SettingsBloc({SettingsRepository? settingsRepository, AuthRepository? authRepository})
       : _settings = settingsRepository ?? locator<SettingsRepository>(),
         _auth = authRepository ?? locator<AuthRepository>(),
-        super(SettingsState(), 'settings') {
+        super(const SettingsState(settings: NotedSettings()), 'settings') {
     on<SettingsLoadUserEvent>(_onLoadUser);
     on<SettingsUpdateStyleColorSchemeEvent>(_onUpdateStyleColorScheme);
     on<SettingsUpdateStyleCustomColorSchemeEvent>(_onUpdateStyleCustomColorScheme);
@@ -99,7 +99,7 @@ class SettingsBloc extends NotedBloc<SettingsEvent, SettingsState> {
   }
 
   void _onReset(SettingsResetEvent event, Emitter<SettingsState> emit) async {
-    emit(SettingsState());
+    emit(SettingsState(settings: NotedSettings()));
   }
 
   @override

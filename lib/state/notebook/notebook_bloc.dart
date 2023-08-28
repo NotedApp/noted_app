@@ -19,7 +19,7 @@ class NotebookBloc extends NotedBloc<NotebookEvent, NotebookState> {
   NotebookBloc({NotebookRepository? notebookRepository, AuthRepository? authRepository})
       : _notebook = notebookRepository ?? locator<NotebookRepository>(),
         _auth = authRepository ?? locator<AuthRepository>(),
-        super(NotebookState(), 'notebook') {
+        super(NotebookState(notes: const []), 'notebook') {
     on<NotebookSubscribeNotesEvent>(_onSubscribeNotes);
     on<NotebookUpdateNotesEvent>(_onUpdateNotes);
     on<NotebookUpdateErrorEvent>(_onUpdateError);
@@ -50,7 +50,7 @@ class NotebookBloc extends NotedBloc<NotebookEvent, NotebookState> {
       _notesSubscription?.cancel();
       _notesSubscription = null;
 
-      emit(NotebookState(status: NotebookStatus.loading));
+      emit(NotebookState(notes: const [], status: NotebookStatus.loading));
 
       _notesSubscription = (await _notebook.subscribeNotes(userId: _auth.currentUser.id)).listen((event) {
         add(NotebookUpdateNotesEvent(event));
@@ -58,7 +58,7 @@ class NotebookBloc extends NotedBloc<NotebookEvent, NotebookState> {
         add(NotebookUpdateErrorEvent(NotedException.fromObject(e)));
       });
     } catch (e) {
-      emit(NotebookState(error: NotedException.fromObject(e)));
+      emit(NotebookState(notes: state.notes, error: NotedException.fromObject(e)));
     }
   }
 
@@ -76,9 +76,11 @@ class NotebookBloc extends NotedBloc<NotebookEvent, NotebookState> {
         throw NotedException(ErrorCode.notebook_add_failed, message: 'missing auth');
       }
 
-      await _notebook.addNote(userId: _auth.currentUser.id, note: event.note);
+      emit(NotebookState(notes: state.notes, status: NotebookStatus.adding));
+      String id = await _notebook.addNote(userId: _auth.currentUser.id, note: event.note);
+      emit(NotebookState(notes: state.notes, added: id));
     } catch (e) {
-      emit(NotebookState(error: NotedException.fromObject(e)));
+      emit(NotebookState(notes: state.notes, error: NotedException.fromObject(e)));
     }
   }
 
@@ -90,7 +92,7 @@ class NotebookBloc extends NotedBloc<NotebookEvent, NotebookState> {
 
       await _notebook.updateNote(userId: _auth.currentUser.id, note: event.note);
     } catch (e) {
-      emit(NotebookState(error: NotedException.fromObject(e)));
+      emit(NotebookState(notes: state.notes, error: NotedException.fromObject(e)));
     }
   }
 
@@ -100,14 +102,16 @@ class NotebookBloc extends NotedBloc<NotebookEvent, NotebookState> {
         throw NotedException(ErrorCode.notebook_delete_failed, message: 'missing auth');
       }
 
+      emit(NotebookState(notes: state.notes, status: NotebookStatus.deleting));
       await _notebook.deleteNote(userId: _auth.currentUser.id, noteId: event.noteId);
+      emit(NotebookState(notes: state.notes, deleted: event.noteId));
     } catch (e) {
-      emit(NotebookState(error: NotedException.fromObject(e)));
+      emit(NotebookState(notes: state.notes, error: NotedException.fromObject(e)));
     }
   }
 
   void _onReset(NotebookResetEvent event, Emitter<NotebookState> emit) async {
-    emit(NotebookState());
+    emit(NotebookState(notes: const []));
 
     _notesSubscription?.cancel();
     _notesSubscription = null;
