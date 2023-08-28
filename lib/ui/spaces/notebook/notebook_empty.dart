@@ -7,10 +7,7 @@ class NotebookEmpty extends StatelessWidget {
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32),
-        child: Text(
-          context.strings().notebook_error_empty,
-          textAlign: TextAlign.center,
-        ),
+        child: Text(context.strings().notebook_error_empty, textAlign: TextAlign.center),
       ),
     );
   }

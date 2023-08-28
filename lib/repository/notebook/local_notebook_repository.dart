@@ -7,28 +7,28 @@ import 'package:noted_models/spaces/notebook/notebook_note.dart';
 import 'package:uuid/uuid.dart';
 
 /// Default local notes.
-const Map<String, NotebookNote> localNotes = {};
-//   'test-note-0': NotebookNote(
-//     id: 'test-note-0',
-//     title: 'Note 0',
-//     document: [
-//       {'insert': 'hello world\n'},
-//     ],
-//   ),
-//   'test-note-1': NotebookNote(
-//     id: 'test-note-1',
-//     title: 'Note 1',
-//     document: [
-//       {'insert': 'hello world\n'},
-//     ],
-//   ),
-// };
+const Map<String, NotebookNote> localNotes = {
+  'test-note-0': NotebookNote(
+    id: 'test-note-0',
+    title: 'Note 0',
+    document: [
+      {'insert': 'hello world\n'},
+    ],
+  ),
+  'test-note-1': NotebookNote(
+    id: 'test-note-1',
+    title: 'Note 1',
+    document: [
+      {'insert': 'hello world\n'},
+    ],
+  ),
+};
 
 /// A [NotebookRepository] that uses mock data as its source of truth.
 class LocalNotebookRepository extends NotebookRepository implements Disposable {
   late final StreamController<List<NotebookNote>> _notesController;
   Map<String, NotebookNote> _notes = {...localNotes};
-  bool _shouldThrow = false;
+  bool _shouldThrow = true;
   int _msDelay = 2000;
 
   LocalNotebookRepository() {

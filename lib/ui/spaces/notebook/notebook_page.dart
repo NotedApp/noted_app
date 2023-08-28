@@ -30,7 +30,6 @@ class NotebookPage extends StatelessWidget {
       ],
       child: BlocConsumer<NotebookBloc, NotebookState>(
           listenWhen: (_, current) => current.error != null,
-          buildWhen: (previous, current) => previous.notes != current.notes,
           listener: (context, state) => {},
           builder: (context, state) {
             if (state.status == NotebookStatus.loading) {
