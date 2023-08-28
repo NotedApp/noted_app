@@ -25,6 +25,22 @@ void main() {
       expect(black.withOpacity(0.5).toHex(), '#80000000');
       expect(grey100.toHex(withTag: false), 'fff5f5f5');
     });
+
+    test('color can have its value updates', () {
+      HSVColor original = HSVColor.fromColor(Colors.black);
+      HSVColor modified = original.withValue(original.value + 0.2);
+
+      expect(Colors.black.addValue(0.2), modified.toColor());
+    });
+  });
+
+  group('ThemeData Extensions', () {
+    test('theme can have shimmer colors', () {
+      ThemeData theme = ThemeData.from(colorScheme: ColorScheme.dark(background: Colors.red));
+
+      expect(theme.shimmerBase(), Colors.red.addValue(0.06));
+      expect(theme.shimmerHighlight(), Colors.red.addValue(0.04));
+    });
   });
 
   group('MaterialState Extensions', () {

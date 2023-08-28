@@ -32,5 +32,19 @@ void main() {
       expect((card.shape! as RoundedRectangleBorder).borderRadius, equals(BorderRadius.circular(12)));
       verify(() => onPressed()).called(1);
     });
+
+    testWidgets('loading tile renders as expected', (tester) async {
+      await tester.pumpWidget(
+        TestWrapper(
+          child: SizedBox(
+            height: 80,
+            child: NotedLoadingTile(),
+          ),
+        ),
+      );
+
+      Finder cardFinder = find.byType(Container);
+      expect(cardFinder, findsOneWidget);
+    });
   });
 }
