@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/theme/custom_colors.dart';
@@ -44,6 +45,16 @@ extension NotedColorExtensions on Color {
     buffer.write(blue.toRadixString(16).padLeft(2, '0'));
     return buffer.toString();
   }
+
+  Color addValue(double value) {
+    HSVColor hsv = HSVColor.fromColor(this);
+    return hsv.withValue(clampDouble(hsv.value + value, 0, 1)).toColor();
+  }
+}
+
+extension NotedThemeExtensions on ThemeData {
+  Color shimmerBase() => colorScheme.background.addValue(brightness == Brightness.dark ? 0.06 : -0.06);
+  Color shimmerHighlight() => colorScheme.background.addValue(brightness == Brightness.dark ? 0.04 : -0.04);
 }
 
 extension NotedDoubleExtensions on double {

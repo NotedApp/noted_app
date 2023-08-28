@@ -11,14 +11,14 @@ class NotebookContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(12, 16, 12, 128),
+      padding: EdgeInsets.fromLTRB(12, 16, 12, 0),
       child: GridView.builder(
         itemCount: notes.length,
         physics: notedScrollPhysics,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          mainAxisSpacing: 6,
-          crossAxisSpacing: 6,
+          mainAxisSpacing: 4,
+          crossAxisSpacing: 4,
         ),
         itemBuilder: (context, index) => NotebookNoteTile(note: notes[index]),
       ),
