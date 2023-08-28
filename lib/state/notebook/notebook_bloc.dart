@@ -22,6 +22,7 @@ class NotebookBloc extends NotedBloc<NotebookEvent, NotebookState> {
         super(NotebookState(), 'notebook') {
     on<NotebookSubscribeNotesEvent>(_onSubscribeNotes);
     on<NotebookUpdateNotesEvent>(_onUpdateNotes);
+    on<NotebookUpdateErrorEvent>(_onUpdateError);
     on<NotebookAddNoteEvent>(_onAddNote);
     on<NotebookUpdateNoteEvent>(_onUpdateNote);
     on<NotebookDeleteNoteEvent>(_onDeleteNote);
@@ -53,6 +54,8 @@ class NotebookBloc extends NotedBloc<NotebookEvent, NotebookState> {
 
       _notesSubscription = (await _notebook.subscribeNotes(userId: _auth.currentUser.id)).listen((event) {
         add(NotebookUpdateNotesEvent(event));
+      }, onError: (e) {
+        add(NotebookUpdateErrorEvent(NotedException.fromObject(e)));
       });
     } catch (e) {
       emit(NotebookState(error: NotedException.fromObject(e)));
@@ -61,6 +64,10 @@ class NotebookBloc extends NotedBloc<NotebookEvent, NotebookState> {
 
   void _onUpdateNotes(NotebookUpdateNotesEvent event, Emitter<NotebookState> emit) async {
     emit(NotebookState(notes: event.notes));
+  }
+
+  void _onUpdateError(NotebookUpdateErrorEvent event, Emitter<NotebookState> emit) async {
+    emit(NotebookState(notes: state.notes, error: event.error));
   }
 
   void _onAddNote(NotebookAddNoteEvent event, Emitter<NotebookState> emit) async {

@@ -35,7 +35,7 @@ class NotebookPage extends StatelessWidget {
         icon: NotedIcons.plus,
         type: NotedIconButtonType.filled,
         size: NotedWidgetSize.large,
-        onPressed: () => bloc.add(NotebookAddNoteEvent(NotebookNote.empty(id: ''))),
+        onPressed: () => bloc.add(NotebookAddNoteEvent(NotebookNote.emptyQuill())),
       ),
       child: BlocConsumer<NotebookBloc, NotebookState>(
         listenWhen: (_, current) => current.error != null,

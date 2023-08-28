@@ -23,11 +23,11 @@ class FirebaseNotebookRepository extends NotebookRepository {
         return event.snapshot.children.map((obj) {
           Object? val = obj.value;
 
-          if (val == null || val is! Map<String, dynamic>) {
-            throw NotedException(ErrorCode.notebook_subscribe_failed, message: 'parsing notes');
+          if (val == null || val is! Map) {
+            throw NotedException(ErrorCode.notebook_parse_failed);
           }
 
-          return NotebookNote.fromMap(val);
+          return NotebookNote.fromMap(Map<String, dynamic>.from(val));
         }).toList();
       });
     } catch (_) {
