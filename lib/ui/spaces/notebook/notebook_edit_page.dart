@@ -1,15 +1,13 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:get_it/get_it.dart';
 import 'package:noted_app/state/notebook/notebook_bloc.dart';
 import 'package:noted_app/state/notebook/notebook_event.dart';
 import 'package:noted_app/state/notebook/notebook_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
 import 'package:noted_app/ui/spaces/notebook/notebook_page.dart';
+import 'package:noted_app/util/debouncer.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_models/noted_models.dart';
 
@@ -38,7 +36,7 @@ class NotebookEditPage extends StatelessWidget {
         trailingActions: [
           NotedIconButton(
             icon: NotedIcons.trash,
-            iconWidget: isDeleting == NotebookStatus.deleting ? NotedLoadingIndicator() : null,
+            iconWidget: isDeleting ? NotedLoadingIndicator() : null,
             type: NotedIconButtonType.filled,
             size: NotedWidgetSize.small,
             onPressed: () => bloc.add(NotebookDeleteNoteEvent(noteId)),
@@ -92,19 +90,15 @@ class _NotebookEditContentState extends State<_NotebookEditContent> {
             hint: strings.notebook_edit_titlePlaceholder,
           ),
         ),
-        SizedBox(height: 8),
         Expanded(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: NotedRichTextEditor.quill(
-              controller: textController,
-              focusNode: focusNode,
-              placeholder: strings.notebook_edit_textPlaceholder,
-              autofocus: true,
-            ),
+          child: NotedRichTextEditor.quill(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+            controller: textController,
+            focusNode: focusNode,
+            placeholder: strings.notebook_edit_textPlaceholder,
+            autofocus: true,
           ),
         ),
-        SizedBox(height: 12),
         NotedRichTextToolbar(controller: textController),
       ],
     );
@@ -124,29 +118,10 @@ class _NotebookEditContentState extends State<_NotebookEditContent> {
 
   @override
   void dispose() {
-    debouncer.onDispose();
+    debouncer.dispose();
     textController.dispose();
     titleController.dispose();
     focusNode.dispose();
     super.dispose();
-  }
-}
-
-class Debouncer implements Disposable {
-  final Duration interval;
-  Timer? _timer;
-
-  bool get isActive => _timer?.isActive ?? false;
-
-  Debouncer({required this.interval});
-
-  void run(VoidCallback action) {
-    _timer?.cancel();
-    _timer = Timer(this.interval, action);
-  }
-
-  @override
-  FutureOr onDispose() {
-    _timer?.cancel();
   }
 }

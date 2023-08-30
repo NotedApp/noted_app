@@ -10,11 +10,19 @@ import 'package:noted_app/ui/spaces/notebook/notebook_content.dart';
 import 'package:noted_app/ui/spaces/notebook/notebook_empty.dart';
 import 'package:noted_app/ui/spaces/notebook/notebook_error.dart';
 import 'package:noted_app/ui/spaces/notebook/notebook_loading.dart';
+import 'package:noted_app/util/debouncer.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/util/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
-class NotebookPage extends StatelessWidget {
+class NotebookPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _NotebookPageState();
+}
+
+class _NotebookPageState extends State<NotebookPage> {
+  final Debouncer debouncer = Debouncer(interval: const Duration(milliseconds: 500));
+
   @override
   Widget build(BuildContext context) {
     Strings strings = context.strings();
@@ -46,7 +54,7 @@ class NotebookPage extends StatelessWidget {
           iconWidget: state.status == NotebookStatus.adding ? NotedLoadingIndicator() : null,
           type: NotedIconButtonType.filled,
           size: NotedWidgetSize.large,
-          onPressed: () => bloc.add(NotebookAddNoteEvent(NotebookNote.emptyQuill())),
+          onPressed: () => debouncer.run(() => bloc.add(NotebookAddNoteEvent(NotebookNote.emptyQuill()))),
         ),
         child: switch (state) {
           NotebookState(status: NotebookStatus.loading) => NotebookLoading(),
@@ -56,6 +64,11 @@ class NotebookPage extends StatelessWidget {
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }
 
