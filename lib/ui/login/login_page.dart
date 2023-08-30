@@ -25,7 +25,7 @@ class LoginPage extends StatelessWidget {
   void _handleStateUpdate(BuildContext context, AuthState state) {
     if (state.error != null && context.isCurrent()) {
       final Strings strings = context.strings();
-      final String message = switch (state.error!.errorCode) {
+      final String message = switch (state.error!.code) {
         ErrorCode.auth_googleSignIn_disabled => strings.login_error_accountDisabled,
         ErrorCode.auth_googleSignIn_existingAccount => strings.login_error_googleSignExistingAccount,
         ErrorCode.auth_googleSignIn_failed => strings.login_error_googleSignInFailed,
@@ -48,7 +48,7 @@ class _LoginPageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AuthBloc bloc = context.read();
+    final AuthBloc bloc = context.watch();
     final TextTheme theme = context.textTheme();
     final Strings strings = context.strings();
 

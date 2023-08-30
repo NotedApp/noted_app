@@ -3,17 +3,27 @@ import 'package:noted_app/util/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 enum NotebookStatus {
-  loading,
   loaded,
+  loading,
+  adding,
+  deleting,
 }
 
 final class NotebookState extends Equatable {
   final NotebookStatus status;
   final List<NotebookNote> notes;
+  final String added;
+  final String deleted;
   final NotedException? error;
 
-  const NotebookState({this.status = NotebookStatus.loaded, this.notes = const [], this.error = null});
+  const NotebookState({
+    this.status = NotebookStatus.loaded,
+    required this.notes,
+    this.added = '',
+    this.deleted = '',
+    this.error = null,
+  });
 
   @override
-  List<Object?> get props => [status, notes, error];
+  List<Object?> get props => [status, notes, added, deleted, error];
 }

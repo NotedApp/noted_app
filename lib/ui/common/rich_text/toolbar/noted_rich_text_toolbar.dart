@@ -46,8 +46,8 @@ class _NotedRichTextToolbarState extends State<NotedRichTextToolbar> {
 
     return Container(
       width: double.infinity,
-      height: 116,
-      padding: const EdgeInsets.fromLTRB(14, 12, 14, 10),
+      height: 112,
+      padding: const EdgeInsets.fromLTRB(14, 12, 14, 8),
       decoration: BoxDecoration(
         color: colors.secondary,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),

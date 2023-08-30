@@ -35,8 +35,8 @@ void main() {
       act: (bloc) => bloc.add(SettingsLoadUserEvent()),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        SettingsState(status: SettingsStatus.loading),
-        SettingsState(),
+        SettingsState(settings: NotedSettings(), status: SettingsStatus.loading),
+        SettingsState(settings: NotedSettings()),
       ],
     );
 
@@ -49,9 +49,9 @@ void main() {
       },
       wait: const Duration(milliseconds: 20),
       expect: () => [
-        SettingsState(),
-        SettingsState(status: SettingsStatus.loading),
-        SettingsState(),
+        SettingsState(settings: NotedSettings()),
+        SettingsState(settings: NotedSettings(), status: SettingsStatus.loading),
+        SettingsState(settings: NotedSettings()),
       ],
     );
 
@@ -62,8 +62,8 @@ void main() {
       act: (bloc) => bloc.add(SettingsLoadUserEvent()),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        SettingsState(status: SettingsStatus.loading),
-        SettingsState(error: NotedException(ErrorCode.settings_fetch_failed)),
+        SettingsState(settings: NotedSettings(), status: SettingsStatus.loading),
+        SettingsState(settings: NotedSettings(), error: NotedException(ErrorCode.settings_fetch_failed)),
       ],
     );
 
@@ -75,6 +75,7 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         SettingsState(
+          settings: NotedSettings(),
           error: NotedException(ErrorCode.settings_fetch_failed, message: 'missing auth'),
         ),
       ],
@@ -87,7 +88,10 @@ void main() {
       act: (bloc) => bloc.add(SettingsUpdateStyleColorSchemeEvent(NotedColorSchemeName.green)),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        SettingsState(error: NotedException(ErrorCode.settings_updateStyle_failed, message: 'missing auth')),
+        SettingsState(
+          settings: NotedSettings(),
+          error: NotedException(ErrorCode.settings_updateStyle_failed, message: 'missing auth'),
+        ),
       ],
     );
 

@@ -82,7 +82,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
   void _handleStateUpdate(BuildContext context, AuthState state) {
     if (state.error != null && context.isCurrent()) {
       final Strings strings = context.strings();
-      final String message = switch (state.error!.errorCode) {
+      final String message = switch (state.error!.code) {
         ErrorCode.auth_changePassword_reauthenticate => strings.login_error_reauthenticate,
         ErrorCode.auth_changePassword_weakPassword => strings.login_error_weakPassword,
         _ => strings.login_error_changePasswordFailed,

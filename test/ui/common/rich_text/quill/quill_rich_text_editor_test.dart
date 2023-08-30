@@ -5,6 +5,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/common/rich_text/noted_rich_text_attributes.dart';
 import 'package:noted_app/ui/common/rich_text/quill/quill_rich_text_editor.dart';
+import 'package:noted_models/rich_text/noted_document.dart';
 
 import '../../../../helpers/mocks/mock_callbacks.dart';
 import '../../../../helpers/test_wrapper.dart';
@@ -66,37 +67,29 @@ void main() {
 
 class _MockController extends NotedRichTextController {
   @override
-  Color? getColor(NotedRichTextAttribute attribute) {
-    throw UnimplementedError();
-  }
+  List get value => throw UnimplementedError();
 
   @override
-  String? getLink() {
-    throw UnimplementedError();
-  }
+  set value(NotedDocument document) => throw UnimplementedError();
 
   @override
-  void insertEmbed(NotedRichTextEmbed embed) {
-    throw UnimplementedError();
-  }
+  Color? getColor(NotedRichTextAttribute attribute) => throw UnimplementedError();
 
   @override
-  bool isAttributeToggled(NotedRichTextAttribute attribute) {
-    throw UnimplementedError();
-  }
+  String? getLink() => throw UnimplementedError();
 
   @override
-  void setAttribute(NotedRichTextAttribute attribute, bool value) {
-    throw UnimplementedError();
-  }
+  void insertEmbed(NotedRichTextEmbed embed) => throw UnimplementedError();
 
   @override
-  void setColor(NotedRichTextAttribute attribute, Color? value) {
-    throw UnimplementedError();
-  }
+  bool isAttributeToggled(NotedRichTextAttribute attribute) => throw UnimplementedError();
 
   @override
-  void setLink(String? value) {
-    throw UnimplementedError();
-  }
+  void setAttribute(NotedRichTextAttribute attribute, bool value) => throw UnimplementedError();
+
+  @override
+  void setColor(NotedRichTextAttribute attribute, Color? value) => throw UnimplementedError();
+
+  @override
+  void setLink(String? value) => throw UnimplementedError();
 }

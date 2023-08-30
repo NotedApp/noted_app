@@ -13,6 +13,7 @@ import 'package:noted_app/ui/settings/settings_page.dart';
 import 'package:noted_app/ui/settings/style/style_page.dart.dart';
 import 'package:noted_app/ui/settings/style/style_fonts_page.dart';
 import 'package:noted_app/ui/settings/style/style_theme_page.dart';
+import 'package:noted_app/ui/spaces/notebook/notebook_edit_page.dart';
 import 'package:noted_app/ui/spaces/notebook/notebook_page.dart';
 
 GoRouter routerConfig = GoRouter(
@@ -108,4 +109,10 @@ final GoRoute _settings = GoRoute(
 final GoRoute _notebook = GoRoute(
   path: 'notebook',
   builder: (context, state) => NotebookPage(),
+  routes: [
+    GoRoute(
+      path: ':noteId',
+      builder: (context, state) => NotebookEditPage(noteId: state.pathParameters['noteId'] ?? ''),
+    ),
+  ],
 );

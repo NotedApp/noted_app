@@ -14,7 +14,7 @@ final class SettingsState extends Equatable {
 
   const SettingsState({
     this.status = SettingsStatus.loaded,
-    this.settings = const NotedSettings(),
+    required this.settings,
     this.error = null,
   });
 

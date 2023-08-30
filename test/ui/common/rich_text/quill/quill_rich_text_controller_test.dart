@@ -18,9 +18,12 @@ void main() {
       ) as QuillRichTextController;
     });
 
-    test('creates a controller with initial data', () {
+    test('creates a controller with initial data, and updates data', () {
       controller.controller.updateSelection(TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.LOCAL);
       expect(controller.controller.getPlainText(), 'hello world');
+
+      controller.value = testData1;
+      expect(controller.value, testData1);
     });
 
     test('validates and updates bold formatting', () {

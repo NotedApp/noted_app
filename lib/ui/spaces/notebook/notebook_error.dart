@@ -10,7 +10,7 @@ class NotebookError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Strings strings = context.strings();
-    final NotebookBloc bloc = context.read();
+    final NotebookBloc bloc = context.watch();
 
     return Center(
       child: Padding(

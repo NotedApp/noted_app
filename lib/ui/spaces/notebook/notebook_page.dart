@@ -10,60 +10,73 @@ import 'package:noted_app/ui/spaces/notebook/notebook_content.dart';
 import 'package:noted_app/ui/spaces/notebook/notebook_empty.dart';
 import 'package:noted_app/ui/spaces/notebook/notebook_error.dart';
 import 'package:noted_app/ui/spaces/notebook/notebook_loading.dart';
+import 'package:noted_app/util/debouncer.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/util/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
-class NotebookPage extends StatelessWidget {
+class NotebookPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _NotebookPageState();
+}
+
+class _NotebookPageState extends State<NotebookPage> {
+  final Debouncer debouncer = Debouncer(interval: const Duration(milliseconds: 500));
+
   @override
   Widget build(BuildContext context) {
     Strings strings = context.strings();
-    NotebookBloc bloc = context.read();
+    NotebookBloc bloc = context.watch();
 
-    return NotedHeaderPage(
-      title: strings.notebook_title,
-      hasBackButton: false,
-      trailingActions: [
-        NotedIconButton(
-          icon: NotedIcons.settings,
+    VoidCallback addNote = () => debouncer.run(() => bloc.add(NotebookAddNoteEvent(NotebookNote.emptyQuill())));
+
+    return BlocConsumer<NotebookBloc, NotebookState>(
+      bloc: bloc,
+      listenWhen: (previous, current) => previous.error != current.error || previous.added != current.added,
+      listener: (context, state) {
+        if (state.error != null) {
+          handleNotebookError(context, state);
+        } else if (state.added.isNotEmpty) {
+          context.push('/notebook/${state.added}');
+        }
+      },
+      builder: (context, state) => NotedHeaderPage(
+        title: strings.notebook_title,
+        hasBackButton: false,
+        trailingActions: [
+          NotedIconButton(
+            icon: NotedIcons.settings,
+            type: NotedIconButtonType.filled,
+            size: NotedWidgetSize.small,
+            onPressed: () => context.push('/settings'),
+          ),
+        ],
+        floatingActionButton: NotedIconButton(
+          icon: NotedIcons.plus,
           type: NotedIconButtonType.filled,
-          size: NotedWidgetSize.small,
-          onPressed: () => context.push('/settings'),
+          size: NotedWidgetSize.large,
+          onPressed: state.status != NotebookStatus.adding ? addNote : null,
         ),
-      ],
-      floatingActionButton: NotedIconButton(
-        icon: NotedIcons.plus,
-        type: NotedIconButtonType.filled,
-        size: NotedWidgetSize.large,
-        onPressed: () => bloc.add(NotebookAddNoteEvent(NotebookNote.emptyQuill())),
-      ),
-      child: BlocConsumer<NotebookBloc, NotebookState>(
-        listenWhen: (_, current) => current.error != null,
-        listener: (context, state) => handleNotebookError,
-        builder: (context, state) {
-          if (state.status == NotebookStatus.loading) {
-            return NotebookLoading();
-          }
-
-          if (state.error?.errorCode == ErrorCode.notebook_subscribe_failed) {
-            return NotebookError();
-          }
-
-          if (state.notes.isEmpty) {
-            return NotebookEmpty();
-          }
-
-          return NotebookContent(notes: state.notes);
+        child: switch (state) {
+          NotebookState(status: NotebookStatus.loading) => NotebookLoading(),
+          NotebookState(error: NotedException(code: ErrorCode.notebook_subscribe_failed)) => NotebookError(),
+          NotebookState(notes: []) => NotebookEmpty(),
+          _ => NotebookContent(notes: state.notes),
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }
 
 void handleNotebookError(BuildContext context, NotebookState state) {
   Strings strings = context.strings();
 
-  final String? message = switch (state.error?.errorCode) {
+  final String? message = switch (state.error?.code) {
     ErrorCode.notebook_add_failed => strings.notebook_error_addNoteFailed,
     ErrorCode.notebook_update_failed => strings.notebook_error_updateNoteFailed,
     ErrorCode.notebook_delete_failed => strings.notebook_error_deleteNoteFailed,
