@@ -6,7 +6,9 @@ class NotedException with EquatableMixin implements Exception {
 
   NotedException(this.code, {this.message = ''});
 
+  // coverage:ignore-start
   NotedException.code({required this.code, this.message = ''});
+  // coverage:ignore-end
 
   factory NotedException.fromObject(Object e) {
     if (e is NotedException) {
