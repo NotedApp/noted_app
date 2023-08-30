@@ -49,22 +49,21 @@ class NotebookEditPage extends StatelessWidget {
     Strings strings = context.strings();
     NotebookBloc bloc = context.read();
 
-    bool result = await showDialog<bool>(
-          context: context,
-          builder: (context) => NotedDialog(
-            child: Text(strings.notebook_delete_confirmText),
-            leftActionText: strings.common_confirm,
-            onLeftActionPressed: () {
-              bloc.add(NotebookDeleteNoteEvent(noteId));
-              context.pop(true);
-            },
-            rightActionText: strings.common_cancel,
-            onRightActionPressed: () => context.pop(false),
-          ),
-        ) ??
-        false;
+    bool? result = await showDialog<bool>(
+      context: context,
+      builder: (context) => NotedDialog(
+        child: Text(strings.notebook_delete_confirmText),
+        leftActionText: strings.common_confirm,
+        onLeftActionPressed: () {
+          bloc.add(NotebookDeleteNoteEvent(noteId));
+          context.pop(true);
+        },
+        rightActionText: strings.common_cancel,
+        onRightActionPressed: () => context.pop(false),
+      ),
+    );
 
-    if (result) {
+    if (result ?? false) {
       context.pop();
     }
   }

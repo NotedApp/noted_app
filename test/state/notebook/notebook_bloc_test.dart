@@ -39,7 +39,7 @@ void main() {
       build: NotebookBloc.new,
       act: (bloc) async {
         bloc.add(NotebookSubscribeNotesEvent());
-        await Future.delayed(const Duration(milliseconds: 10));
+        await Future.delayed(const Duration(milliseconds: 15));
         bloc.add(NotebookAddNoteEvent(testNote));
         await Future.delayed(const Duration(milliseconds: 5));
         bloc.add(NotebookUpdateNoteEvent(updatedTest));
