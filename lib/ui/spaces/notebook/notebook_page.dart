@@ -28,6 +28,8 @@ class _NotebookPageState extends State<NotebookPage> {
     Strings strings = context.strings();
     NotebookBloc bloc = context.watch();
 
+    VoidCallback addNote = () => debouncer.run(() => bloc.add(NotebookAddNoteEvent(NotebookNote.emptyQuill())));
+
     return BlocConsumer<NotebookBloc, NotebookState>(
       bloc: bloc,
       listenWhen: (previous, current) => previous.error != current.error || previous.added != current.added,
@@ -51,10 +53,9 @@ class _NotebookPageState extends State<NotebookPage> {
         ],
         floatingActionButton: NotedIconButton(
           icon: NotedIcons.plus,
-          iconWidget: state.status == NotebookStatus.adding ? NotedLoadingIndicator() : null,
           type: NotedIconButtonType.filled,
           size: NotedWidgetSize.large,
-          onPressed: () => debouncer.run(() => bloc.add(NotebookAddNoteEvent(NotebookNote.emptyQuill()))),
+          onPressed: state.status != NotebookStatus.adding ? addNote : null,
         ),
         child: switch (state) {
           NotebookState(status: NotebookStatus.loading) => NotebookLoading(),

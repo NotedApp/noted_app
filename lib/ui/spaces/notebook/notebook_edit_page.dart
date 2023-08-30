@@ -18,11 +18,9 @@ class NotebookEditPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    NotebookBloc bloc = context.watch();
     bool isDeleting = context.select((NotebookBloc bloc) => bloc.state.status == NotebookStatus.deleting);
 
     return BlocListener<NotebookBloc, NotebookState>(
-      bloc: bloc,
       listenWhen: (previous, current) => previous.error != current.error || previous.deleted != current.deleted,
       listener: (context, state) {
         if (state.error != null) {
@@ -39,12 +37,36 @@ class NotebookEditPage extends StatelessWidget {
             iconWidget: isDeleting ? NotedLoadingIndicator() : null,
             type: NotedIconButtonType.filled,
             size: NotedWidgetSize.small,
-            onPressed: () => bloc.add(NotebookDeleteNoteEvent(noteId)),
+            onPressed: () => _confirmDeleteNote(context),
           ),
         ],
         child: _NotebookEditContent(noteId: noteId, key: ValueKey(noteId)),
       ),
     );
+  }
+
+  void _confirmDeleteNote(BuildContext context) async {
+    Strings strings = context.strings();
+    NotebookBloc bloc = context.read();
+
+    bool result = await showDialog<bool>(
+          context: context,
+          builder: (context) => NotedDialog(
+            child: Text(strings.notebook_delete_confirmText),
+            leftActionText: strings.common_confirm,
+            onLeftActionPressed: () {
+              bloc.add(NotebookDeleteNoteEvent(noteId));
+              context.pop(true);
+            },
+            rightActionText: strings.common_cancel,
+            onRightActionPressed: () => context.pop(false),
+          ),
+        ) ??
+        false;
+
+    if (result) {
+      context.pop();
+    }
   }
 }
 
