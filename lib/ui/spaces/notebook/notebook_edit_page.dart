@@ -100,9 +100,11 @@ class _NotebookEditContentState extends State<_NotebookEditContent> {
               controller: textController,
               focusNode: focusNode,
               placeholder: strings.notebook_edit_textPlaceholder,
+              autofocus: true,
             ),
           ),
         ),
+        SizedBox(height: 12),
         NotedRichTextToolbar(controller: textController),
       ],
     );

@@ -7,6 +7,7 @@ abstract class NotedRichTextEditor extends StatelessWidget {
   final FocusNode? focusNode;
   final String? placeholder;
   final bool readonly;
+  final bool autofocus;
   final EdgeInsetsGeometry padding;
   final VoidCallback? onTap;
 
@@ -15,6 +16,7 @@ abstract class NotedRichTextEditor extends StatelessWidget {
     this.focusNode,
     this.placeholder,
     this.readonly = false,
+    this.autofocus = false,
     this.padding = EdgeInsets.zero,
     this.onTap,
     super.key,
@@ -25,6 +27,7 @@ abstract class NotedRichTextEditor extends StatelessWidget {
     FocusNode? focusNode,
     String? placeholder,
     bool readonly = false,
+    bool autofocus = false,
     EdgeInsetsGeometry padding = EdgeInsets.zero,
     VoidCallback? onTap,
   }) {
@@ -33,6 +36,7 @@ abstract class NotedRichTextEditor extends StatelessWidget {
       focusNode: focusNode,
       placeholder: placeholder,
       readonly: readonly,
+      autofocus: autofocus,
       padding: padding,
       onTap: onTap,
     );

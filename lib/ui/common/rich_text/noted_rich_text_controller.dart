@@ -10,7 +10,9 @@ abstract class NotedRichTextController extends ChangeNotifier {
     return QuillRichTextController(initial: initial);
   }
 
-  List<dynamic> get value;
+  NotedDocument get value;
+
+  void set value(NotedDocument document);
 
   bool isAttributeToggled(NotedRichTextAttribute attribute);
 

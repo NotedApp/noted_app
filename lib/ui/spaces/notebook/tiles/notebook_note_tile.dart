@@ -62,9 +62,14 @@ class _NotebookNoteTileState extends State<NotebookNoteTile> {
   }
 
   @override
+  void didUpdateWidget(covariant NotebookNoteTile oldWidget) {
+    _textController.value = widget.note.document;
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   void dispose() {
     _textController.dispose();
-
     super.dispose();
   }
 }

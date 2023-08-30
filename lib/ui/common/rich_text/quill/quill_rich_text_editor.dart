@@ -9,6 +9,7 @@ class QuillRichTextEditor extends NotedRichTextEditor {
     super.focusNode,
     super.placeholder,
     super.readonly,
+    super.autofocus,
     super.padding,
     super.onTap,
     super.key,
@@ -29,13 +30,14 @@ class QuillRichTextEditor extends NotedRichTextEditor {
       scrollController: ScrollController(),
       scrollable: true,
       padding: padding,
-      autoFocus: false,
+      autoFocus: autofocus,
       readOnly: readonly,
       expands: true,
       placeholder: placeholder,
       showCursor: !readonly,
       keyboardAppearance: theme.brightness,
       onTapUp: _handleTap,
+      customStyles: _getStyles(context),
     );
   }
 
@@ -48,4 +50,84 @@ class QuillRichTextEditor extends NotedRichTextEditor {
 
     return false;
   }
+}
+
+DefaultStyles _getStyles(BuildContext context) {
+  const double defaultSize = 16;
+
+  final defaultTextStyle = DefaultTextStyle.of(context);
+  final baseStyle = defaultTextStyle.style.copyWith(
+    fontSize: defaultSize,
+    height: 1.3,
+    decoration: TextDecoration.none,
+  );
+  const baseSpacing = VerticalSpacing(6, 0);
+
+  return DefaultStyles(
+    h1: DefaultTextBlockStyle(
+      defaultTextStyle.style.copyWith(
+        fontSize: 34,
+        height: 1.15,
+        fontWeight: FontWeight.w300,
+        decoration: TextDecoration.none,
+      ),
+      const VerticalSpacing(16, 0),
+      const VerticalSpacing(0, 0),
+      null,
+    ),
+    h2: DefaultTextBlockStyle(
+      defaultTextStyle.style.copyWith(
+        fontSize: 24,
+        height: 1.15,
+        fontWeight: FontWeight.normal,
+        decoration: TextDecoration.none,
+      ),
+      const VerticalSpacing(8, 0),
+      const VerticalSpacing(0, 0),
+      null,
+    ),
+    h3: DefaultTextBlockStyle(
+      defaultTextStyle.style.copyWith(
+        fontSize: 20,
+        height: 1.25,
+        fontWeight: FontWeight.w500,
+        decoration: TextDecoration.none,
+      ),
+      const VerticalSpacing(8, 0),
+      const VerticalSpacing(0, 0),
+      null,
+    ),
+    placeHolder: DefaultTextBlockStyle(
+      baseStyle.copyWith(color: Colors.grey.withOpacity(0.6)),
+      const VerticalSpacing(0, 0),
+      const VerticalSpacing(0, 0),
+      null,
+    ),
+    paragraph: DefaultTextBlockStyle(
+      baseStyle,
+      const VerticalSpacing(0, 0),
+      const VerticalSpacing(0, 0),
+      null,
+    ),
+    lists: DefaultListBlockStyle(
+      baseStyle,
+      baseSpacing,
+      const VerticalSpacing(0, 6),
+      null,
+      null,
+    ),
+    quote: DefaultTextBlockStyle(
+      TextStyle(color: baseStyle.color!.withOpacity(0.6)),
+      baseSpacing,
+      const VerticalSpacing(6, 2),
+      BoxDecoration(
+        border: Border(
+          left: BorderSide(width: 4, color: Colors.grey.shade300),
+        ),
+      ),
+    ),
+    indent: DefaultTextBlockStyle(baseStyle, baseSpacing, const VerticalSpacing(0, 6), null),
+    align: DefaultTextBlockStyle(baseStyle, const VerticalSpacing(0, 0), const VerticalSpacing(0, 0), null),
+    leading: DefaultTextBlockStyle(baseStyle, const VerticalSpacing(0, 0), const VerticalSpacing(0, 0), null),
+  );
 }
