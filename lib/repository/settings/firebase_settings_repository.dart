@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:noted_app/repository/settings/settings_repository.dart';
-import 'package:noted_app/util/noted_exception.dart';
+import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 // TODO: Test this file.
@@ -29,9 +29,9 @@ class FirebaseSettingsRepository extends SettingsRepository {
         return settings;
       }
     } on FirebaseException catch (e) {
-      throw NotedException(ErrorCode.settings_fetch_failed, message: e.code);
+      throw NotedError(ErrorCode.settings_fetch_failed, message: e.code);
     } catch (_) {
-      throw NotedException(ErrorCode.settings_fetch_failed);
+      throw NotedError(ErrorCode.settings_fetch_failed);
     }
   }
 
@@ -41,9 +41,9 @@ class FirebaseSettingsRepository extends SettingsRepository {
       final Map<String, dynamic> data = {'style': style.toMap()};
       await _settings.doc(userId).set(data, SetOptions(merge: true));
     } on FirebaseException catch (e) {
-      throw NotedException(ErrorCode.settings_updateStyle_failed, message: e.code);
+      throw NotedError(ErrorCode.settings_updateStyle_failed, message: e.code);
     } catch (_) {
-      throw NotedException(ErrorCode.settings_updateStyle_failed);
+      throw NotedError(ErrorCode.settings_updateStyle_failed);
     }
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:noted_app/repository/auth/auth_repository.dart';
@@ -11,6 +13,10 @@ import 'package:noted_app/repository/settings/local_settings_repository.dart';
 import 'package:noted_app/repository/settings/settings_repository.dart';
 import 'package:noted_app/util/environment/dependencies.dart';
 import 'package:noted_app/util/environment/test_firebase_options.dart';
+import 'package:noted_app/util/errors/firebase_crash_handler.dart';
+import 'package:noted_app/util/errors/local_crash_handler.dart';
+import 'package:noted_app/util/errors/noted_crash_handler.dart';
+import 'package:noted_app/util/logging/firebase_logger.dart';
 import 'package:noted_app/util/logging/local_logger.dart';
 import 'package:noted_app/util/logging/noted_logger.dart';
 import 'package:noted_app/ui/router/noted_go_router.dart';
@@ -18,67 +24,109 @@ import 'package:noted_app/ui/router/noted_router.dart';
 
 // coverage:ignore-file
 abstract class Environment {
+  FirebaseOptions? get firebaseOptions;
+  NotedCrashHandler get crashHandler;
+  NotedLogger get logger;
+  NotedRouter get router;
+  AuthRepository get authRepository;
+  SettingsRepository get settingsRepository;
+  NotebookRepository get notebookRepository;
+
   Future<void> configure({
+    FirebaseOptions? firebaseOptions,
+    NotedCrashHandler? crashHandler,
     NotedLogger? logger,
     NotedRouter? router,
     AuthRepository? authRepository,
     SettingsRepository? settingsRepository,
     NotebookRepository? notebookRepository,
-  });
+  }) async {
+    FirebaseOptions? options = firebaseOptions ?? this.firebaseOptions;
+
+    await WidgetsFlutterBinding.ensureInitialized();
+
+    if (options != null) {
+      await Firebase.initializeApp(options: firebaseOptions);
+    }
+
+    // Utilities.
+    FlutterError.onError = crashHandler?.handleFlutterError ?? this.crashHandler.handleFlutterError;
+    PlatformDispatcher.instance.onError = crashHandler?.handleAsyncError ?? this.crashHandler.handleAsyncError;
+    locator.registerSingleton<NotedLogger>(logger ?? this.logger);
+    locator.registerSingleton<NotedRouter>(router ?? this.router);
+
+    // Repositories.
+    locator.registerSingleton<AuthRepository>(authRepository ?? this.authRepository);
+    locator.registerSingleton<SettingsRepository>(settingsRepository ?? this.settingsRepository);
+    locator.registerSingleton<NotebookRepository>(notebookRepository ?? this.notebookRepository);
+  }
 }
 
 class LocalEnvironment extends Environment {
   @override
-  Future<void> configure({
-    NotedLogger? logger,
-    NotedRouter? router,
-    AuthRepository? authRepository,
-    SettingsRepository? settingsRepository,
-    NotebookRepository? notebookRepository,
-  }) async {
-    // Utilities.
-    locator.registerSingleton<NotedLogger>(logger ?? LocalLogger());
-    locator.registerSingleton<NotedRouter>(router ?? NotedGoRouter());
+  FirebaseOptions? get firebaseOptions => null;
 
-    // Repositories.
-    locator.registerSingleton<AuthRepository>(authRepository ?? LocalAuthRepository());
-    locator.registerSingleton<SettingsRepository>(settingsRepository ?? LocalSettingsRepository());
-    locator.registerSingleton<NotebookRepository>(notebookRepository ?? LocalNotebookRepository());
-  }
+  @override
+  NotedCrashHandler get crashHandler => LocalCrashHandler();
+
+  @override
+  NotedLogger get logger => LocalLogger();
+
+  @override
+  NotedRouter get router => NotedGoRouter();
+
+  @override
+  AuthRepository get authRepository => LocalAuthRepository();
+
+  @override
+  SettingsRepository get settingsRepository => LocalSettingsRepository();
+
+  @override
+  NotebookRepository get notebookRepository => LocalNotebookRepository();
 }
 
 class TestEnvironment extends Environment {
   @override
-  Future<void> configure({
-    NotedLogger? logger,
-    NotedRouter? router,
-    AuthRepository? authRepository,
-    SettingsRepository? settingsRepository,
-    NotebookRepository? notebookRepository,
-  }) async {
-    await WidgetsFlutterBinding.ensureInitialized();
-    await Firebase.initializeApp(options: TestFirebaseOptions.currentPlatform);
+  FirebaseOptions? get firebaseOptions => TestFirebaseOptions.currentPlatform;
 
-    // Utilities.
-    locator.registerSingleton<NotedLogger>(logger ?? LocalLogger());
-    locator.registerSingleton<NotedRouter>(router ?? NotedGoRouter());
+  @override
+  NotedCrashHandler get crashHandler => FirebaseCrashHandler();
 
-    // Repositories.
-    locator.registerSingleton<AuthRepository>(authRepository ?? FirebaseAuthRepository());
-    locator.registerSingleton<SettingsRepository>(settingsRepository ?? FirebaseSettingsRepository());
-    locator.registerSingleton<NotebookRepository>(notebookRepository ?? FirebaseNotebookRepository());
-  }
+  @override
+  NotedLogger get logger => FirebaseLogger();
+
+  @override
+  NotedRouter get router => NotedGoRouter();
+
+  @override
+  AuthRepository get authRepository => FirebaseAuthRepository();
+
+  @override
+  SettingsRepository get settingsRepository => FirebaseSettingsRepository();
+
+  @override
+  NotebookRepository get notebookRepository => FirebaseNotebookRepository();
 }
 
 class ProdEnvironment extends Environment {
   @override
-  Future<void> configure({
-    NotedLogger? logger,
-    NotedRouter? router,
-    AuthRepository? authRepository,
-    SettingsRepository? settingsRepository,
-    NotebookRepository? notebookRepository,
-  }) async {
-    throw UnimplementedError();
-  }
+  FirebaseOptions? get firebaseOptions => throw UnimplementedError();
+
+  @override
+  NotedCrashHandler get crashHandler => throw UnimplementedError();
+
+  @override
+  NotedLogger get logger => throw UnimplementedError();
+
+  @override
+  NotedRouter get router => throw UnimplementedError();
+
+  @override
+  AuthRepository get authRepository => throw UnimplementedError();
+
+  @override
+  SettingsRepository get settingsRepository => throw UnimplementedError();
+
+  @override
+  NotebookRepository get notebookRepository => throw UnimplementedError();
 }

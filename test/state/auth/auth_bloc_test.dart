@@ -6,7 +6,7 @@ import 'package:noted_app/state/auth/auth_bloc.dart';
 import 'package:noted_app/state/auth/auth_event.dart';
 import 'package:noted_app/state/auth/auth_state.dart';
 import 'package:noted_app/util/environment/dependencies.dart';
-import 'package:noted_app/util/noted_exception.dart';
+import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 import '../../helpers/environment/unit_test_environment.dart';
@@ -48,7 +48,7 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         AuthState.authenticating(status: AuthStatus.signingUp),
-        AuthState.unauthenticated(error: NotedException(ErrorCode.auth_createUser_invalidEmail)),
+        AuthState.unauthenticated(error: NotedError(ErrorCode.auth_createUser_invalidEmail)),
       ],
     );
 
@@ -70,7 +70,7 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         AuthState.authenticating(status: AuthStatus.signingIn),
-        AuthState.unauthenticated(error: NotedException(ErrorCode.auth_emailSignIn_invalidEmail)),
+        AuthState.unauthenticated(error: NotedError(ErrorCode.auth_emailSignIn_invalidEmail)),
       ],
     );
 
@@ -95,7 +95,7 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         AuthState.authenticating(status: AuthStatus.signingIn),
-        AuthState.unauthenticated(error: NotedException(ErrorCode.auth_googleSignIn_failed)),
+        AuthState.unauthenticated(error: NotedError(ErrorCode.auth_googleSignIn_failed)),
       ],
     );
 
@@ -106,7 +106,7 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         AuthState.authenticating(status: AuthStatus.signingIn),
-        AuthState.unauthenticated(error: NotedException.fromObject(UnimplementedError())),
+        AuthState.unauthenticated(error: NotedError.fromObject(UnimplementedError())),
       ],
     );
 
@@ -117,7 +117,7 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         AuthState.authenticating(status: AuthStatus.signingIn),
-        AuthState.unauthenticated(error: NotedException.fromObject(UnimplementedError())),
+        AuthState.unauthenticated(error: NotedError.fromObject(UnimplementedError())),
       ],
     );
 
@@ -128,7 +128,7 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         AuthState.authenticating(status: AuthStatus.signingIn),
-        AuthState.unauthenticated(error: NotedException.fromObject(UnimplementedError())),
+        AuthState.unauthenticated(error: NotedError.fromObject(UnimplementedError())),
       ],
     );
 
@@ -157,7 +157,7 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         AuthState.authenticating(status: AuthStatus.signingOut),
-        AuthState.authenticated(user: google, error: NotedException(ErrorCode.auth_signOut_failed)),
+        AuthState.authenticated(user: google, error: NotedError(ErrorCode.auth_signOut_failed)),
       ],
     );
 
@@ -182,7 +182,7 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         AuthState.authenticating(status: AuthStatus.sendingPasswordReset),
-        AuthState.unauthenticated(error: NotedException(ErrorCode.auth_passwordReset_failed)),
+        AuthState.unauthenticated(error: NotedError(ErrorCode.auth_passwordReset_failed)),
       ],
     );
 
@@ -211,7 +211,7 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         AuthState.authenticating(status: AuthStatus.changingPassword),
-        AuthState.authenticated(user: google, error: NotedException(ErrorCode.auth_changePassword_failed)),
+        AuthState.authenticated(user: google, error: NotedError(ErrorCode.auth_changePassword_failed)),
       ],
     );
 
@@ -240,7 +240,7 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         AuthState.authenticating(status: AuthStatus.deletingAccount),
-        AuthState.authenticated(user: google, error: NotedException(ErrorCode.auth_deleteAccount_failed)),
+        AuthState.authenticated(user: google, error: NotedError(ErrorCode.auth_deleteAccount_failed)),
       ],
     );
   });

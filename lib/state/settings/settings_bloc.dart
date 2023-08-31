@@ -7,7 +7,7 @@ import 'package:noted_app/state/noted_bloc.dart';
 import 'package:noted_app/state/settings/settings_event.dart';
 import 'package:noted_app/state/settings/settings_state.dart';
 import 'package:noted_app/util/environment/dependencies.dart';
-import 'package:noted_app/util/noted_exception.dart';
+import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 class SettingsBloc extends NotedBloc<SettingsEvent, SettingsState> {
@@ -41,14 +41,14 @@ class SettingsBloc extends NotedBloc<SettingsEvent, SettingsState> {
 
     try {
       if (_auth.currentUser.isEmpty) {
-        throw NotedException(ErrorCode.settings_fetch_failed, message: 'missing auth');
+        throw NotedError(ErrorCode.settings_fetch_failed, message: 'missing auth');
       }
 
       emit(SettingsState(status: SettingsStatus.loading, settings: state.settings));
       NotedSettings settings = await _settings.fetchSettings(userId: _auth.currentUser.id);
       emit(SettingsState(settings: settings));
     } catch (e) {
-      emit(SettingsState(error: NotedException.fromObject(e), settings: state.settings));
+      emit(SettingsState(error: NotedError.fromObject(e), settings: state.settings));
     }
   }
 
@@ -88,13 +88,13 @@ class SettingsBloc extends NotedBloc<SettingsEvent, SettingsState> {
   ) async {
     try {
       if (_auth.currentUser.isEmpty) {
-        throw NotedException(ErrorCode.settings_updateStyle_failed, message: 'missing auth');
+        throw NotedError(ErrorCode.settings_updateStyle_failed, message: 'missing auth');
       }
 
       emit(SettingsState(settings: state.settings.copyWith(style: style)));
       await _settings.updateStyleSettings(userId: _auth.currentUser.id, style: style);
     } catch (e) {
-      emit(SettingsState(error: NotedException.fromObject(e), settings: state.settings));
+      emit(SettingsState(error: NotedError.fromObject(e), settings: state.settings));
     }
   }
 

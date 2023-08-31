@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "184474353635",
+    "firebase_url": "https://noted-app-test-default-rtdb.firebaseio.com",
     "project_id": "noted-app-test",
     "storage_bucket": "noted-app-test.appspot.com"
   },

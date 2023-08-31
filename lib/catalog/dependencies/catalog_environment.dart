@@ -1,3 +1,4 @@
+import 'package:firebase_core_platform_interface/firebase_core_platform_interface.dart';
 import 'package:noted_app/catalog/dependencies/catalog_router.dart';
 import 'package:noted_app/repository/auth/auth_repository.dart';
 import 'package:noted_app/repository/auth/local_auth_repository.dart';
@@ -5,8 +6,9 @@ import 'package:noted_app/repository/notebook/local_notebook_repository.dart';
 import 'package:noted_app/repository/notebook/notebook_repository.dart';
 import 'package:noted_app/repository/settings/local_settings_repository.dart';
 import 'package:noted_app/repository/settings/settings_repository.dart';
-import 'package:noted_app/util/environment/dependencies.dart';
 import 'package:noted_app/util/environment/environment.dart';
+import 'package:noted_app/util/errors/local_crash_handler.dart';
+import 'package:noted_app/util/errors/noted_crash_handler.dart';
 import 'package:noted_app/util/logging/local_logger.dart';
 import 'package:noted_app/util/logging/noted_logger.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
@@ -20,20 +22,23 @@ const NotedUser _catalogUser = NotedUser(
 
 class CatalogEnvironment extends Environment {
   @override
-  Future<void> configure({
-    NotedLogger? logger,
-    NotedRouter? router,
-    AuthRepository? authRepository,
-    SettingsRepository? settingsRepository,
-    NotebookRepository? notebookRepository,
-  }) async {
-    // Utilities.
-    locator.registerSingleton<NotedLogger>(logger ?? LocalLogger());
-    locator.registerSingleton<NotedRouter>(router ?? CatalogRouter());
+  FirebaseOptions? get firebaseOptions => null;
 
-    // Repositories.
-    locator.registerSingleton<AuthRepository>(authRepository ?? LocalAuthRepository(user: _catalogUser));
-    locator.registerSingleton<SettingsRepository>(settingsRepository ?? LocalSettingsRepository());
-    locator.registerSingleton<NotebookRepository>(notebookRepository ?? LocalNotebookRepository());
-  }
+  @override
+  NotedCrashHandler get crashHandler => LocalCrashHandler();
+
+  @override
+  NotedLogger get logger => LocalLogger();
+
+  @override
+  NotedRouter get router => CatalogRouter();
+
+  @override
+  AuthRepository get authRepository => LocalAuthRepository(user: _catalogUser);
+
+  @override
+  SettingsRepository get settingsRepository => LocalSettingsRepository();
+
+  @override
+  NotebookRepository get notebookRepository => LocalNotebookRepository();
 }

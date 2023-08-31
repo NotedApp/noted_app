@@ -7,7 +7,7 @@ import 'package:noted_app/state/notebook/notebook_event.dart';
 import 'package:noted_app/state/notebook/notebook_state.dart';
 import 'package:noted_app/state/noted_bloc.dart';
 import 'package:noted_app/util/environment/dependencies.dart';
-import 'package:noted_app/util/noted_exception.dart';
+import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 class NotebookBloc extends NotedBloc<NotebookEvent, NotebookState> {
@@ -44,7 +44,7 @@ class NotebookBloc extends NotedBloc<NotebookEvent, NotebookState> {
 
     try {
       if (_auth.currentUser.isEmpty) {
-        throw NotedException(ErrorCode.notebook_subscribe_failed, message: 'missing auth');
+        throw NotedError(ErrorCode.notebook_subscribe_failed, message: 'missing auth');
       }
 
       _notesSubscription?.cancel();
@@ -55,10 +55,10 @@ class NotebookBloc extends NotedBloc<NotebookEvent, NotebookState> {
       _notesSubscription = (await _notebook.subscribeNotes(userId: _auth.currentUser.id)).listen((event) {
         add(NotebookUpdateNotesEvent(event));
       }, onError: (e) {
-        add(NotebookUpdateErrorEvent(NotedException.fromObject(e)));
+        add(NotebookUpdateErrorEvent(NotedError.fromObject(e)));
       });
     } catch (e) {
-      emit(NotebookState(notes: state.notes, error: NotedException.fromObject(e)));
+      emit(NotebookState(notes: state.notes, error: NotedError.fromObject(e)));
     }
   }
 
@@ -77,26 +77,26 @@ class NotebookBloc extends NotedBloc<NotebookEvent, NotebookState> {
 
     try {
       if (_auth.currentUser.isEmpty) {
-        throw NotedException(ErrorCode.notebook_add_failed, message: 'missing auth');
+        throw NotedError(ErrorCode.notebook_add_failed, message: 'missing auth');
       }
 
       emit(NotebookState(notes: state.notes, status: NotebookStatus.adding));
       String id = await _notebook.addNote(userId: _auth.currentUser.id, note: event.note);
       emit(NotebookState(notes: state.notes, added: id));
     } catch (e) {
-      emit(NotebookState(notes: state.notes, error: NotedException.fromObject(e)));
+      emit(NotebookState(notes: state.notes, error: NotedError.fromObject(e)));
     }
   }
 
   void _onUpdateNote(NotebookUpdateNoteEvent event, Emitter<NotebookState> emit) async {
     try {
       if (_auth.currentUser.isEmpty) {
-        throw NotedException(ErrorCode.notebook_update_failed, message: 'missing auth');
+        throw NotedError(ErrorCode.notebook_update_failed, message: 'missing auth');
       }
 
       await _notebook.updateNote(userId: _auth.currentUser.id, note: event.note);
     } catch (e) {
-      emit(NotebookState(notes: state.notes, error: NotedException.fromObject(e)));
+      emit(NotebookState(notes: state.notes, error: NotedError.fromObject(e)));
     }
   }
 
@@ -107,14 +107,14 @@ class NotebookBloc extends NotedBloc<NotebookEvent, NotebookState> {
 
     try {
       if (_auth.currentUser.isEmpty) {
-        throw NotedException(ErrorCode.notebook_delete_failed, message: 'missing auth');
+        throw NotedError(ErrorCode.notebook_delete_failed, message: 'missing auth');
       }
 
       emit(NotebookState(notes: state.notes, status: NotebookStatus.deleting));
       await _notebook.deleteNote(userId: _auth.currentUser.id, noteId: event.noteId);
       emit(NotebookState(notes: state.notes, deleted: event.noteId));
     } catch (e) {
-      emit(NotebookState(notes: state.notes, error: NotedException.fromObject(e)));
+      emit(NotebookState(notes: state.notes, error: NotedError.fromObject(e)));
     }
   }
 

@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:noted_app/repository/settings/local_settings_repository.dart';
-import 'package:noted_app/util/noted_exception.dart';
+import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 void main() {
@@ -33,7 +33,7 @@ void main() {
 
       await expectLater(
         () => repository.fetchSettings(userId: 'test'),
-        throwsA(NotedException(ErrorCode.settings_fetch_failed)),
+        throwsA(NotedError(ErrorCode.settings_fetch_failed)),
       );
     });
 
@@ -42,7 +42,7 @@ void main() {
 
       await expectLater(
         () => repository.updateStyleSettings(userId: 'test', style: NotedStyleSettings()),
-        throwsA(NotedException(ErrorCode.settings_updateStyle_failed)),
+        throwsA(NotedError(ErrorCode.settings_updateStyle_failed)),
       );
     });
 
@@ -51,7 +51,7 @@ void main() {
 
       await expectLater(
         () => repository.fetchSettings(userId: 'test'),
-        throwsA(NotedException(ErrorCode.settings_fetch_failed)),
+        throwsA(NotedError(ErrorCode.settings_fetch_failed)),
       );
 
       repository.reset();

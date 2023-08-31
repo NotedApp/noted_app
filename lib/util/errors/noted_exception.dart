@@ -1,21 +1,17 @@
 import 'package:equatable/equatable.dart';
 
-class NotedException with EquatableMixin implements Exception {
+class NotedError with EquatableMixin implements Exception {
   final ErrorCode code;
   final String message;
 
-  NotedException(this.code, {this.message = ''});
+  NotedError(this.code, {this.message = ''});
 
-  // coverage:ignore-start
-  NotedException.code({required this.code, this.message = ''});
-  // coverage:ignore-end
-
-  factory NotedException.fromObject(Object e) {
-    if (e is NotedException) {
+  factory NotedError.fromObject(Object e) {
+    if (e is NotedError) {
       return e;
     }
 
-    return NotedException(ErrorCode.common_unknown, message: e.toString());
+    return NotedError(ErrorCode.common_unknown, message: e.toString());
   }
 
   @override

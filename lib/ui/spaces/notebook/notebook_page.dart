@@ -12,7 +12,7 @@ import 'package:noted_app/ui/spaces/notebook/notebook_error.dart';
 import 'package:noted_app/ui/spaces/notebook/notebook_loading.dart';
 import 'package:noted_app/util/debouncer.dart';
 import 'package:noted_app/util/extensions.dart';
-import 'package:noted_app/util/noted_exception.dart';
+import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 class NotebookPage extends StatefulWidget {
@@ -59,7 +59,7 @@ class _NotebookPageState extends State<NotebookPage> {
         ),
         child: switch (state) {
           NotebookState(status: NotebookStatus.loading) => NotebookLoading(),
-          NotebookState(error: NotedException(code: ErrorCode.notebook_subscribe_failed)) => NotebookError(),
+          NotebookState(error: NotedError(code: ErrorCode.notebook_subscribe_failed)) => NotebookError(),
           NotebookState(notes: []) => NotebookEmpty(),
           _ => NotebookContent(notes: state.notes),
         },

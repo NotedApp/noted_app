@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:get_it/get_it.dart';
 import 'package:noted_app/repository/auth/auth_repository.dart';
-import 'package:noted_app/util/noted_exception.dart';
+import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 /// A list of [NotedUser]s who can be logged in in a local environment.
@@ -54,11 +54,11 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (email.length < 3) {
-      throw NotedException(ErrorCode.auth_createUser_invalidEmail);
+      throw NotedError(ErrorCode.auth_createUser_invalidEmail);
     }
 
     if (password.length < 3) {
-      throw NotedException(ErrorCode.auth_createUser_weakPassword);
+      throw NotedError(ErrorCode.auth_createUser_weakPassword);
     }
 
     NotedUser user = NotedUser(
@@ -80,11 +80,11 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
     NotedUser user = _users.firstWhere((user) => user.email == email, orElse: NotedUser.empty);
 
     if (user.isEmpty) {
-      throw NotedException(ErrorCode.auth_emailSignIn_invalidEmail);
+      throw NotedError(ErrorCode.auth_emailSignIn_invalidEmail);
     }
 
     if (!_passwords.contains(password)) {
-      throw NotedException(ErrorCode.auth_emailSignIn_invalidPassword);
+      throw NotedError(ErrorCode.auth_emailSignIn_invalidPassword);
     }
 
     await _updateUser(user, ErrorCode.auth_emailSignIn_failed, delay: false);
@@ -121,7 +121,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (_shouldThrow) {
-      throw NotedException(ErrorCode.auth_passwordReset_failed);
+      throw NotedError(ErrorCode.auth_passwordReset_failed);
     }
   }
 
@@ -130,7 +130,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (_shouldThrow) {
-      throw NotedException(ErrorCode.auth_changePassword_failed);
+      throw NotedError(ErrorCode.auth_changePassword_failed);
     }
 
     _passwords.add(password);
@@ -141,7 +141,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (_shouldThrow) {
-      throw NotedException(ErrorCode.auth_deleteAccount_failed);
+      throw NotedError(ErrorCode.auth_deleteAccount_failed);
     }
 
     _users.removeWhere((user) => user.id == _currentUser.id);
@@ -159,7 +159,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
     }
 
     if (_shouldThrow) {
-      throw NotedException(error);
+      throw NotedError(error);
     }
 
     _currentUser = user;

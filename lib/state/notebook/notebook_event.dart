@@ -1,5 +1,5 @@
 import 'package:noted_app/state/noted_bloc.dart';
-import 'package:noted_app/util/noted_exception.dart';
+import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 sealed class NotebookEvent extends NotedEvent implements TrackableEvent {
@@ -15,7 +15,7 @@ class NotebookUpdateNotesEvent extends NotebookEvent {
 }
 
 class NotebookUpdateErrorEvent extends NotebookEvent {
-  final NotedException error;
+  final NotedError error;
 
   const NotebookUpdateErrorEvent(this.error);
 }
