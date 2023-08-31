@@ -24,7 +24,7 @@ import 'package:noted_app/ui/router/noted_router.dart';
 
 // coverage:ignore-file
 abstract class Environment {
-  FirebaseOptions get firebaseOptions;
+  FirebaseOptions? get firebaseOptions;
   NotedCrashHandler get crashHandler;
   NotedLogger get logger;
   NotedRouter get router;
@@ -41,8 +41,13 @@ abstract class Environment {
     SettingsRepository? settingsRepository,
     NotebookRepository? notebookRepository,
   }) async {
+    FirebaseOptions? options = firebaseOptions ?? this.firebaseOptions;
+
     await WidgetsFlutterBinding.ensureInitialized();
-    await Firebase.initializeApp(options: firebaseOptions);
+
+    if (options != null) {
+      await Firebase.initializeApp(options: firebaseOptions);
+    }
 
     // Utilities.
     FlutterError.onError = crashHandler?.handleFlutterError ?? this.crashHandler.handleFlutterError;
@@ -59,7 +64,7 @@ abstract class Environment {
 
 class LocalEnvironment extends Environment {
   @override
-  FirebaseOptions get firebaseOptions => TestFirebaseOptions.currentPlatform;
+  FirebaseOptions? get firebaseOptions => null;
 
   @override
   NotedCrashHandler get crashHandler => LocalCrashHandler();
@@ -82,7 +87,7 @@ class LocalEnvironment extends Environment {
 
 class TestEnvironment extends Environment {
   @override
-  FirebaseOptions get firebaseOptions => TestFirebaseOptions.currentPlatform;
+  FirebaseOptions? get firebaseOptions => TestFirebaseOptions.currentPlatform;
 
   @override
   NotedCrashHandler get crashHandler => FirebaseCrashHandler();
@@ -105,23 +110,23 @@ class TestEnvironment extends Environment {
 
 class ProdEnvironment extends Environment {
   @override
-  AuthRepository get authRepository => throw UnimplementedError();
+  FirebaseOptions? get firebaseOptions => throw UnimplementedError();
 
   @override
   NotedCrashHandler get crashHandler => throw UnimplementedError();
 
   @override
-  FirebaseOptions get firebaseOptions => throw UnimplementedError();
-
-  @override
   NotedLogger get logger => throw UnimplementedError();
-
-  @override
-  NotebookRepository get notebookRepository => throw UnimplementedError();
 
   @override
   NotedRouter get router => throw UnimplementedError();
 
   @override
+  AuthRepository get authRepository => throw UnimplementedError();
+
+  @override
   SettingsRepository get settingsRepository => throw UnimplementedError();
+
+  @override
+  NotebookRepository get notebookRepository => throw UnimplementedError();
 }

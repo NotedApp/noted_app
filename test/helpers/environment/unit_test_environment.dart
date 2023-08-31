@@ -6,7 +6,6 @@ import 'package:noted_app/repository/notebook/notebook_repository.dart';
 import 'package:noted_app/repository/settings/local_settings_repository.dart';
 import 'package:noted_app/repository/settings/settings_repository.dart';
 import 'package:noted_app/util/environment/environment.dart';
-import 'package:noted_app/util/environment/test_firebase_options.dart';
 import 'package:noted_app/util/errors/local_crash_handler.dart';
 import 'package:noted_app/util/errors/noted_crash_handler.dart';
 import 'package:noted_app/util/logging/local_logger.dart';
@@ -17,7 +16,7 @@ import 'test_router.dart';
 
 class UnitTestEnvironment extends Environment {
   @override
-  FirebaseOptions get firebaseOptions => TestFirebaseOptions.currentPlatform;
+  FirebaseOptions? get firebaseOptions => null;
 
   @override
   NotedCrashHandler get crashHandler => LocalCrashHandler();

@@ -13,8 +13,8 @@ class _FakeBuildContext extends Fake implements BuildContext {}
 void main() {
   MockRouter _mockRouter = MockRouter();
 
-  setUpAll(() {
-    UnitTestEnvironment().configure(router: _mockRouter);
+  setUpAll(() async {
+    await UnitTestEnvironment().configure(router: _mockRouter);
     registerFallbackValue(_FakeBuildContext());
 
     when(() => _mockRouter.push(captureAny(), captureAny())).thenAnswer((invocation) => Future.value());
