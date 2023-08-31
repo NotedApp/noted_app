@@ -8,7 +8,7 @@ import 'package:noted_app/state/notebook/notebook_bloc.dart';
 import 'package:noted_app/state/notebook/notebook_event.dart';
 import 'package:noted_app/state/notebook/notebook_state.dart';
 import 'package:noted_app/util/environment/dependencies.dart';
-import 'package:noted_app/util/noted_exception.dart';
+import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 import '../../helpers/environment/unit_test_environment.dart';
@@ -85,7 +85,7 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         NotebookState(notes: [], status: NotebookStatus.loading),
-        NotebookState(notes: [], error: NotedException(ErrorCode.notebook_subscribe_failed)),
+        NotebookState(notes: [], error: NotedError(ErrorCode.notebook_subscribe_failed)),
       ],
     );
 
@@ -103,7 +103,7 @@ void main() {
         NotebookState(notes: localNotes.values.toList()),
         NotebookState(
           notes: localNotes.values.toList(),
-          error: NotedException(ErrorCode.notebook_parse_failed),
+          error: NotedError(ErrorCode.notebook_parse_failed),
         ),
       ],
     );
@@ -115,7 +115,7 @@ void main() {
       act: (bloc) => bloc.add(NotebookSubscribeNotesEvent()),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        NotebookState(notes: [], error: NotedException(ErrorCode.notebook_subscribe_failed, message: 'missing auth')),
+        NotebookState(notes: [], error: NotedError(ErrorCode.notebook_subscribe_failed, message: 'missing auth')),
       ],
     );
 
@@ -127,7 +127,7 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         NotebookState(notes: [], status: NotebookStatus.adding),
-        NotebookState(notes: [], error: NotedException(ErrorCode.notebook_add_failed)),
+        NotebookState(notes: [], error: NotedError(ErrorCode.notebook_add_failed)),
       ],
     );
 
@@ -138,7 +138,7 @@ void main() {
       act: (bloc) => bloc.add(NotebookAddNoteEvent(testNote)),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        NotebookState(notes: [], error: NotedException(ErrorCode.notebook_add_failed, message: 'missing auth')),
+        NotebookState(notes: [], error: NotedError(ErrorCode.notebook_add_failed, message: 'missing auth')),
       ],
     );
 
@@ -149,7 +149,7 @@ void main() {
       act: (bloc) => bloc.add(NotebookUpdateNoteEvent(testNote)),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        NotebookState(notes: [], error: NotedException(ErrorCode.notebook_update_failed)),
+        NotebookState(notes: [], error: NotedError(ErrorCode.notebook_update_failed)),
       ],
     );
 
@@ -160,7 +160,7 @@ void main() {
       act: (bloc) => bloc.add(NotebookUpdateNoteEvent(testNote)),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        NotebookState(notes: [], error: NotedException(ErrorCode.notebook_update_failed, message: 'missing auth')),
+        NotebookState(notes: [], error: NotedError(ErrorCode.notebook_update_failed, message: 'missing auth')),
       ],
     );
 
@@ -172,7 +172,7 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         NotebookState(notes: [], status: NotebookStatus.deleting),
-        NotebookState(notes: [], error: NotedException(ErrorCode.notebook_delete_failed)),
+        NotebookState(notes: [], error: NotedError(ErrorCode.notebook_delete_failed)),
       ],
     );
 
@@ -183,7 +183,7 @@ void main() {
       act: (bloc) => bloc.add(NotebookDeleteNoteEvent('test-note-0')),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        NotebookState(notes: [], error: NotedException(ErrorCode.notebook_delete_failed, message: 'missing auth')),
+        NotebookState(notes: [], error: NotedError(ErrorCode.notebook_delete_failed, message: 'missing auth')),
       ],
     );
   });

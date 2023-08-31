@@ -9,7 +9,7 @@ import 'package:noted_app/ui/settings/account/account_frame.dart';
 import 'package:noted_app/ui/settings/settings_row.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
-import 'package:noted_app/util/noted_exception.dart';
+import 'package:noted_app/util/errors/noted_exception.dart';
 
 class AccountPage extends StatelessWidget {
   @override

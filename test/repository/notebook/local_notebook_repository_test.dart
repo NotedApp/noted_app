@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:noted_app/repository/notebook/local_notebook_repository.dart';
-import 'package:noted_app/util/noted_exception.dart';
+import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 const NotebookNote testNote = NotebookNote(
@@ -54,7 +54,7 @@ void main() {
 
       await expectLater(
         () => repository.subscribeNotes(userId: 'test'),
-        throwsA(NotedException(ErrorCode.notebook_subscribe_failed)),
+        throwsA(NotedError(ErrorCode.notebook_subscribe_failed)),
       );
     });
 
@@ -70,7 +70,7 @@ void main() {
             document: [],
           ),
         ),
-        throwsA(NotedException(ErrorCode.notebook_add_failed)),
+        throwsA(NotedError(ErrorCode.notebook_add_failed)),
       );
     });
 
@@ -86,7 +86,7 @@ void main() {
             document: [],
           ),
         ),
-        throwsA(NotedException(ErrorCode.notebook_update_failed)),
+        throwsA(NotedError(ErrorCode.notebook_update_failed)),
       );
     });
 
@@ -95,7 +95,7 @@ void main() {
 
       await expectLater(
         () => repository.deleteNote(userId: 'test', noteId: 'test-note-0'),
-        throwsA(NotedException(ErrorCode.notebook_delete_failed)),
+        throwsA(NotedError(ErrorCode.notebook_delete_failed)),
       );
     });
 
@@ -104,7 +104,7 @@ void main() {
 
       await expectLater(
         () => repository.addNote(userId: 'test', note: testNote),
-        throwsA(NotedException(ErrorCode.notebook_add_failed)),
+        throwsA(NotedError(ErrorCode.notebook_add_failed)),
       );
 
       repository.reset();

@@ -1,5 +1,5 @@
 import 'package:noted_app/repository/settings/settings_repository.dart';
-import 'package:noted_app/util/noted_exception.dart';
+import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 /// Default local settings.
@@ -20,7 +20,7 @@ class LocalSettingsRepository extends SettingsRepository {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (_shouldThrow || userId.isEmpty) {
-      throw NotedException(ErrorCode.settings_fetch_failed);
+      throw NotedError(ErrorCode.settings_fetch_failed);
     }
 
     return _settings.copyWith();
@@ -31,7 +31,7 @@ class LocalSettingsRepository extends SettingsRepository {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (_shouldThrow || userId.isEmpty) {
-      throw NotedException(ErrorCode.settings_updateStyle_failed);
+      throw NotedError(ErrorCode.settings_updateStyle_failed);
     }
 
     _settings = _settings.copyWith(style: style);

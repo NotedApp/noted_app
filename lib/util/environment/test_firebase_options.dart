@@ -52,6 +52,7 @@ class TestFirebaseOptions {
     messagingSenderId: '184474353635',
     projectId: 'noted-app-test',
     authDomain: 'noted-app-test.firebaseapp.com',
+    databaseURL: 'https://noted-app-test-default-rtdb.firebaseio.com',
     storageBucket: 'noted-app-test.appspot.com',
     measurementId: 'G-2Q9XNQB773',
   );
@@ -61,6 +62,7 @@ class TestFirebaseOptions {
     appId: '1:184474353635:android:fa731582671c4277a82ad6',
     messagingSenderId: '184474353635',
     projectId: 'noted-app-test',
+    databaseURL: 'https://noted-app-test-default-rtdb.firebaseio.com',
     storageBucket: 'noted-app-test.appspot.com',
   );
 
@@ -69,7 +71,9 @@ class TestFirebaseOptions {
     appId: '1:184474353635:ios:059b49a48c332e3da82ad6',
     messagingSenderId: '184474353635',
     projectId: 'noted-app-test',
+    databaseURL: 'https://noted-app-test-default-rtdb.firebaseio.com',
     storageBucket: 'noted-app-test.appspot.com',
+    androidClientId: '184474353635-rder74g48diccnjco42sq8o4hc6i9hum.apps.googleusercontent.com',
     iosClientId: '184474353635-i61nc15i69t27bgm9g1kc0hs1d1pvaus.apps.googleusercontent.com',
     iosBundleId: 'com.noted.notedApp',
   );

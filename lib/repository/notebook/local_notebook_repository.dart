@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:get_it/get_it.dart';
 import 'package:noted_app/repository/notebook/notebook_repository.dart';
-import 'package:noted_app/util/noted_exception.dart';
+import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/spaces/notebook/notebook_note.dart';
 import 'package:uuid/uuid.dart';
 
@@ -40,7 +40,7 @@ class LocalNotebookRepository extends NotebookRepository implements Disposable {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (_shouldThrow || userId.isEmpty) {
-      throw NotedException(ErrorCode.notebook_subscribe_failed);
+      throw NotedError(ErrorCode.notebook_subscribe_failed);
     }
 
     return _notesController.stream;
@@ -51,7 +51,7 @@ class LocalNotebookRepository extends NotebookRepository implements Disposable {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (_shouldThrow || userId.isEmpty) {
-      throw NotedException(ErrorCode.notebook_add_failed);
+      throw NotedError(ErrorCode.notebook_add_failed);
     }
 
     String id = note.id.isEmpty ? Uuid().v4() : note.id;
@@ -65,7 +65,7 @@ class LocalNotebookRepository extends NotebookRepository implements Disposable {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (_shouldThrow || userId.isEmpty) {
-      throw NotedException(ErrorCode.notebook_update_failed);
+      throw NotedError(ErrorCode.notebook_update_failed);
     }
 
     _notes[note.id] = note.copyWith();
@@ -77,7 +77,7 @@ class LocalNotebookRepository extends NotebookRepository implements Disposable {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (_shouldThrow || userId.isEmpty) {
-      throw NotedException(ErrorCode.notebook_delete_failed);
+      throw NotedError(ErrorCode.notebook_delete_failed);
     }
 
     _notes.remove(noteId);
@@ -91,7 +91,7 @@ class LocalNotebookRepository extends NotebookRepository implements Disposable {
 
   /// Adds an error to the state stream for testing.
   void addStreamError() {
-    _notesController.addError(NotedException(ErrorCode.notebook_parse_failed));
+    _notesController.addError(NotedError(ErrorCode.notebook_parse_failed));
   }
 
   void setShouldThrow(bool shouldThrow) => _shouldThrow = shouldThrow;

@@ -1,6 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:noted_app/repository/notebook/notebook_repository.dart';
-import 'package:noted_app/util/noted_exception.dart';
+import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/spaces/notebook/notebook_note.dart';
 
 // TODO: Test this file.
@@ -24,14 +24,14 @@ class FirebaseNotebookRepository extends NotebookRepository {
           Object? val = obj.value;
 
           if (val == null || val is! Map) {
-            throw NotedException(ErrorCode.notebook_parse_failed);
+            throw NotedError(ErrorCode.notebook_parse_failed);
           }
 
           return NotebookNote.fromMap(Map<String, dynamic>.from(val));
         }).toList();
       });
     } catch (_) {
-      throw NotedException(ErrorCode.notebook_subscribe_failed);
+      throw NotedError(ErrorCode.notebook_subscribe_failed);
     }
   }
 
@@ -41,14 +41,14 @@ class FirebaseNotebookRepository extends NotebookRepository {
       DatabaseReference ref = _notes(userId).push();
 
       if (ref.key?.isEmpty ?? true) {
-        throw NotedException(ErrorCode.notebook_add_failed, message: 'empty database key');
+        throw NotedError(ErrorCode.notebook_add_failed, message: 'empty database key');
       }
 
       NotebookNote toAdd = note.copyWith(id: ref.key);
       await ref.set(toAdd.toMap());
       return ref.key!;
     } catch (_) {
-      throw NotedException(ErrorCode.notebook_add_failed);
+      throw NotedError(ErrorCode.notebook_add_failed);
     }
   }
 
@@ -57,7 +57,7 @@ class FirebaseNotebookRepository extends NotebookRepository {
     try {
       await _notes(userId).child(note.id).set(note.toMap());
     } catch (_) {
-      throw NotedException(ErrorCode.notebook_update_failed);
+      throw NotedError(ErrorCode.notebook_update_failed);
     }
   }
 
@@ -66,7 +66,7 @@ class FirebaseNotebookRepository extends NotebookRepository {
     try {
       await _notes(userId).child(noteId).remove();
     } catch (_) {
-      throw NotedException(ErrorCode.notebook_delete_failed);
+      throw NotedError(ErrorCode.notebook_delete_failed);
     }
   }
 }

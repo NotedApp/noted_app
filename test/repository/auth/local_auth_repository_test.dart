@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:noted_app/repository/auth/local_auth_repository.dart';
-import 'package:noted_app/util/noted_exception.dart';
+import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 void main() {
@@ -32,14 +32,14 @@ void main() {
       // Test create with invalid email.
       await expectLater(
         () => repository.createUserWithEmailAndPassword(email: '12', password: 'password'),
-        throwsA(NotedException(ErrorCode.auth_createUser_invalidEmail)),
+        throwsA(NotedError(ErrorCode.auth_createUser_invalidEmail)),
       );
       expect(repository.currentUser, NotedUser.empty());
 
       // Test create with invalid password.
       await expectLater(
         () => repository.createUserWithEmailAndPassword(email: 'email', password: '12'),
-        throwsA(NotedException(ErrorCode.auth_createUser_weakPassword)),
+        throwsA(NotedError(ErrorCode.auth_createUser_weakPassword)),
       );
       expect(repository.currentUser, NotedUser.empty());
 
@@ -62,14 +62,14 @@ void main() {
       // Test sign in with invalid email.
       await expectLater(
         () => repository.signInWithEmailAndPassword(email: 'test', password: 'password'),
-        throwsA(NotedException(ErrorCode.auth_emailSignIn_invalidEmail)),
+        throwsA(NotedError(ErrorCode.auth_emailSignIn_invalidEmail)),
       );
       expect(repository.currentUser, NotedUser.empty());
 
       // Test sign in with invalid password.
       await expectLater(
         () => repository.signInWithEmailAndPassword(email: 'email', password: 'test'),
-        throwsA(NotedException(ErrorCode.auth_emailSignIn_invalidPassword)),
+        throwsA(NotedError(ErrorCode.auth_emailSignIn_invalidPassword)),
       );
       expect(repository.currentUser, NotedUser.empty());
 
@@ -110,7 +110,7 @@ void main() {
 
       await expectLater(
         () => repository.sendPasswordResetEmail(email: 'test'),
-        throwsA(NotedException(ErrorCode.auth_passwordReset_failed)),
+        throwsA(NotedError(ErrorCode.auth_passwordReset_failed)),
       );
       expect(repository.currentUser, NotedUser.empty());
     });
@@ -136,7 +136,7 @@ void main() {
 
       await expectLater(
         () => repository.changePassword(password: 'password'),
-        throwsA(NotedException(ErrorCode.auth_changePassword_failed)),
+        throwsA(NotedError(ErrorCode.auth_changePassword_failed)),
       );
     });
 
@@ -149,7 +149,7 @@ void main() {
 
       await expectLater(
         () => repository.signInWithEmailAndPassword(email: 'local-0@noted.com', password: 'local'),
-        throwsA(NotedException(ErrorCode.auth_emailSignIn_invalidEmail)),
+        throwsA(NotedError(ErrorCode.auth_emailSignIn_invalidEmail)),
       );
     });
 
@@ -161,7 +161,7 @@ void main() {
 
       await expectLater(
         () => repository.deleteAccount(),
-        throwsA(NotedException(ErrorCode.auth_deleteAccount_failed)),
+        throwsA(NotedError(ErrorCode.auth_deleteAccount_failed)),
       );
     });
 
@@ -172,7 +172,7 @@ void main() {
 
       await expectLater(
         () => repository.signInWithGoogle(),
-        throwsA(NotedException(ErrorCode.auth_googleSignIn_failed)),
+        throwsA(NotedError(ErrorCode.auth_googleSignIn_failed)),
       );
       expect(repository.currentUser, NotedUser.empty());
 

@@ -4,7 +4,7 @@ import 'package:noted_app/state/settings/settings_bloc.dart';
 import 'package:noted_app/state/settings/settings_state.dart';
 import 'package:noted_app/ui/common/layout/layout.dart';
 import 'package:noted_app/util/extensions.dart';
-import 'package:noted_app/util/noted_exception.dart';
+import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 class StyleFrame extends StatelessWidget {

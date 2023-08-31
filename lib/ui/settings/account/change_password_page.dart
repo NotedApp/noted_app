@@ -7,7 +7,7 @@ import 'package:noted_app/state/auth/auth_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/settings/account/account_frame.dart';
 import 'package:noted_app/util/extensions.dart';
-import 'package:noted_app/util/noted_exception.dart';
+import 'package:noted_app/util/errors/noted_exception.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   const ChangePasswordPage();

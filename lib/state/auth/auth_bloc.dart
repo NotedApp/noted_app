@@ -6,7 +6,7 @@ import 'package:noted_app/state/auth/auth_event.dart';
 import 'package:noted_app/state/auth/auth_state.dart';
 import 'package:noted_app/state/noted_bloc.dart';
 import 'package:noted_app/util/environment/dependencies.dart';
-import 'package:noted_app/util/noted_exception.dart';
+import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
@@ -45,7 +45,7 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
       emit(AuthState.authenticating(status: AuthStatus.signingUp));
       await _repository.createUserWithEmailAndPassword(email: event.email, password: event.password);
     } catch (e) {
-      emit(AuthState.unauthenticated(error: NotedException.fromObject(e)));
+      emit(AuthState.unauthenticated(error: NotedError.fromObject(e)));
     }
   }
 
@@ -72,7 +72,7 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
           throw StateError('Auth bloc handled a non-sign-in event as a sign-in event.'); // coverage:ignore-line
       }
     } catch (e) {
-      emit(AuthState.unauthenticated(error: NotedException.fromObject(e)));
+      emit(AuthState.unauthenticated(error: NotedError.fromObject(e)));
     }
   }
 
@@ -87,7 +87,7 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
     } catch (e) {
       NotedUser current = _repository.currentUser;
       AuthStatus status = current.isEmpty ? AuthStatus.unauthenticated : AuthStatus.authenticated;
-      NotedException error = NotedException.fromObject(e);
+      NotedError error = NotedError.fromObject(e);
       emit(AuthState(user: current, status: status, error: error));
     }
   }
@@ -102,7 +102,7 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
       await _repository.sendPasswordResetEmail(email: event.email);
       emit(AuthState.unauthenticated());
     } catch (e) {
-      emit(AuthState.unauthenticated(error: NotedException.fromObject(e)));
+      emit(AuthState.unauthenticated(error: NotedError.fromObject(e)));
     }
   }
 
@@ -116,7 +116,7 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
       await _repository.changePassword(password: event.password);
       emit(AuthState.authenticated(user: _repository.currentUser));
     } catch (e) {
-      emit(AuthState.authenticated(user: _repository.currentUser, error: NotedException.fromObject(e)));
+      emit(AuthState.authenticated(user: _repository.currentUser, error: NotedError.fromObject(e)));
     }
   }
 
@@ -131,7 +131,7 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
     } catch (e) {
       NotedUser current = _repository.currentUser;
       AuthStatus status = current.isEmpty ? AuthStatus.unauthenticated : AuthStatus.authenticated;
-      NotedException error = NotedException.fromObject(e);
+      NotedError error = NotedError.fromObject(e);
       emit(AuthState(user: current, status: status, error: error));
     }
   }

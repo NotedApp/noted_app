@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:noted_app/repository/auth/auth_repository.dart';
-import 'package:noted_app/util/noted_exception.dart';
+import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 // TODO: Test this file.
@@ -30,9 +30,9 @@ class FirebaseAuthRepository extends AuthRepository {
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
-      throw NotedException(_getCreateUserErrorCode(e.code), message: e.code);
+      throw NotedError(_getCreateUserErrorCode(e.code), message: e.code);
     } catch (_) {
-      throw NotedException(ErrorCode.auth_createUser_failed);
+      throw NotedError(ErrorCode.auth_createUser_failed);
     }
   }
 
@@ -41,9 +41,9 @@ class FirebaseAuthRepository extends AuthRepository {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
-      throw NotedException(_getEmailSignInErrorCode(e.code), message: e.code);
+      throw NotedError(_getEmailSignInErrorCode(e.code), message: e.code);
     } catch (_) {
-      throw NotedException(ErrorCode.auth_createUser_failed);
+      throw NotedError(ErrorCode.auth_createUser_failed);
     }
   }
 
@@ -68,9 +68,9 @@ class FirebaseAuthRepository extends AuthRepository {
 
       await _firebaseAuth.signInWithCredential(credential);
     } on FirebaseAuthException catch (e) {
-      throw NotedException(_getGoogleSignInErrorCode(e.code), message: e.code);
+      throw NotedError(_getGoogleSignInErrorCode(e.code), message: e.code);
     } catch (_) {
-      throw NotedException(ErrorCode.auth_googleSignIn_failed);
+      throw NotedError(ErrorCode.auth_googleSignIn_failed);
     }
   }
 
@@ -97,7 +97,7 @@ class FirebaseAuthRepository extends AuthRepository {
         _googleSignIn.signOut(),
       ]);
     } catch (_) {
-      throw NotedException(ErrorCode.auth_signOut_failed);
+      throw NotedError(ErrorCode.auth_signOut_failed);
     }
   }
 
@@ -106,9 +106,9 @@ class FirebaseAuthRepository extends AuthRepository {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (e) {
-      throw NotedException(_getPasswordResetErrorCode(e.code), message: e.code);
+      throw NotedError(_getPasswordResetErrorCode(e.code), message: e.code);
     } catch (_) {
-      throw NotedException(ErrorCode.auth_passwordReset_failed);
+      throw NotedError(ErrorCode.auth_passwordReset_failed);
     }
   }
 
@@ -117,9 +117,9 @@ class FirebaseAuthRepository extends AuthRepository {
     try {
       await _firebaseAuth.currentUser?.updatePassword(password);
     } on FirebaseAuthException catch (e) {
-      throw NotedException(_getChangePasswordErrorCode(e.code), message: e.code);
+      throw NotedError(_getChangePasswordErrorCode(e.code), message: e.code);
     } catch (_) {
-      throw NotedException(ErrorCode.auth_changePassword_failed);
+      throw NotedError(ErrorCode.auth_changePassword_failed);
     }
   }
 
@@ -128,9 +128,9 @@ class FirebaseAuthRepository extends AuthRepository {
     try {
       await _firebaseAuth.currentUser?.delete();
     } on FirebaseAuthException catch (e) {
-      throw NotedException(_getDeleteAccountErrorCode(e.code), message: e.code);
+      throw NotedError(_getDeleteAccountErrorCode(e.code), message: e.code);
     } catch (_) {
-      throw NotedException(ErrorCode.auth_deleteAccount_failed);
+      throw NotedError(ErrorCode.auth_deleteAccount_failed);
     }
   }
 

@@ -8,7 +8,7 @@ import 'package:noted_app/state/settings/settings_bloc.dart';
 import 'package:noted_app/state/settings/settings_event.dart';
 import 'package:noted_app/state/settings/settings_state.dart';
 import 'package:noted_app/util/environment/dependencies.dart';
-import 'package:noted_app/util/noted_exception.dart';
+import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 import '../../helpers/environment/unit_test_environment.dart';
@@ -63,7 +63,7 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         SettingsState(settings: NotedSettings(), status: SettingsStatus.loading),
-        SettingsState(settings: NotedSettings(), error: NotedException(ErrorCode.settings_fetch_failed)),
+        SettingsState(settings: NotedSettings(), error: NotedError(ErrorCode.settings_fetch_failed)),
       ],
     );
 
@@ -76,7 +76,7 @@ void main() {
       expect: () => [
         SettingsState(
           settings: NotedSettings(),
-          error: NotedException(ErrorCode.settings_fetch_failed, message: 'missing auth'),
+          error: NotedError(ErrorCode.settings_fetch_failed, message: 'missing auth'),
         ),
       ],
     );
@@ -90,7 +90,7 @@ void main() {
       expect: () => [
         SettingsState(
           settings: NotedSettings(),
-          error: NotedException(ErrorCode.settings_updateStyle_failed, message: 'missing auth'),
+          error: NotedError(ErrorCode.settings_updateStyle_failed, message: 'missing auth'),
         ),
       ],
     );
@@ -119,7 +119,7 @@ void main() {
         ),
         SettingsState(
           settings: NotedSettings(style: NotedStyleSettings(colorSchemeName: NotedColorSchemeName.green)),
-          error: NotedException(ErrorCode.settings_updateStyle_failed),
+          error: NotedError(ErrorCode.settings_updateStyle_failed),
         ),
       ],
     );
@@ -148,7 +148,7 @@ void main() {
         ),
         SettingsState(
           settings: NotedSettings(style: NotedStyleSettings(customColorScheme: NotedColorScheme.green)),
-          error: NotedException(ErrorCode.settings_updateStyle_failed),
+          error: NotedError(ErrorCode.settings_updateStyle_failed),
         ),
       ],
     );
@@ -177,7 +177,7 @@ void main() {
         ),
         SettingsState(
           settings: NotedSettings(style: NotedStyleSettings(textThemeName: NotedTextThemeName.roboto)),
-          error: NotedException(ErrorCode.settings_updateStyle_failed),
+          error: NotedError(ErrorCode.settings_updateStyle_failed),
         ),
       ],
     );
