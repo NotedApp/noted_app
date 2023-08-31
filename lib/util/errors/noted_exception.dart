@@ -6,10 +6,6 @@ class NotedError with EquatableMixin implements Exception {
 
   NotedError(this.code, {this.message = ''});
 
-  // coverage:ignore-start
-  NotedError.code({required this.code, this.message = ''});
-  // coverage:ignore-end
-
   factory NotedError.fromObject(Object e) {
     if (e is NotedError) {
       return e;

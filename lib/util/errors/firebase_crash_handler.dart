@@ -2,6 +2,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/src/foundation/assertions.dart';
 import 'package:noted_app/util/errors/noted_crash_handler.dart';
 
+// coverage:ignore-file
 class FirebaseCrashHandler extends NotedCrashHandler {
   final FirebaseCrashlytics _crashlytics;
 

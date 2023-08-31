@@ -2,6 +2,7 @@ import 'package:flutter/src/foundation/assertions.dart';
 import 'package:noted_app/util/errors/noted_crash_handler.dart';
 import 'dart:developer' as developer;
 
+// coverage:ignore-file
 class LocalCrashHandler extends NotedCrashHandler {
   @override
   void handleFlutterError(FlutterErrorDetails details) {
