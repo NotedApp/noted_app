@@ -7,7 +7,6 @@ import 'package:noted_app/state/notebook/notebook_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
 import 'package:noted_app/ui/spaces/notebook/notebook_page.dart';
-import 'package:noted_app/util/debouncer.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_models/noted_models.dart';
 
@@ -79,7 +78,6 @@ class _NotebookEditContent extends StatefulWidget {
 }
 
 class _NotebookEditContentState extends State<_NotebookEditContent> {
-  final Debouncer debouncer = Debouncer(interval: const Duration(milliseconds: 500));
   late final NotedRichTextController textController;
   late final TextEditingController titleController;
   final FocusNode focusNode = FocusNode();
@@ -139,7 +137,6 @@ class _NotebookEditContentState extends State<_NotebookEditContent> {
 
   @override
   void dispose() {
-    debouncer.dispose();
     textController.dispose();
     titleController.dispose();
     focusNode.dispose();
