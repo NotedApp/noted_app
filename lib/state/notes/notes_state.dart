@@ -2,22 +2,22 @@ import 'package:equatable/equatable.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
-enum NotebookStatus {
+enum NotesStatus {
   loaded,
   loading,
   adding,
   deleting,
 }
 
-final class NotebookState extends Equatable {
-  final NotebookStatus status;
-  final List<NotebookNote> notes;
+final class NotesState extends Equatable {
+  final NotesStatus status;
+  final List<NotedNote> notes;
   final String added;
   final String deleted;
   final NotedError? error;
 
-  const NotebookState({
-    this.status = NotebookStatus.loaded,
+  const NotesState({
+    this.status = NotesStatus.loaded,
     required this.notes,
     this.added = '',
     this.deleted = '',

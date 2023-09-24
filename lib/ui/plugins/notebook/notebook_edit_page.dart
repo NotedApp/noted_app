@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:noted_app/state/notebook/notebook_bloc.dart';
-import 'package:noted_app/state/notebook/notebook_event.dart';
-import 'package:noted_app/state/notebook/notebook_state.dart';
+import 'package:noted_app/state/notes/notes_bloc.dart';
+import 'package:noted_app/state/notes/notes_event.dart';
+import 'package:noted_app/state/notes/notes_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
-import 'package:noted_app/ui/spaces/notebook/notebook_page.dart';
-import 'package:noted_app/util/debouncer.dart';
+import 'package:noted_app/ui/plugins/notebook/notebook_page.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_models/noted_models.dart';
 
@@ -18,9 +17,9 @@ class NotebookEditPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isDeleting = context.select((NotebookBloc bloc) => bloc.state.status == NotebookStatus.deleting);
+    bool isDeleting = context.select((NotesBloc bloc) => bloc.state.status == NotesStatus.deleting);
 
-    return BlocListener<NotebookBloc, NotebookState>(
+    return BlocListener<NotesBloc, NotesState>(
       listenWhen: (previous, current) => previous.error != current.error || previous.deleted != current.deleted,
       listener: (context, state) {
         if (state.error != null) {
@@ -47,7 +46,7 @@ class NotebookEditPage extends StatelessWidget {
 
   void _confirmDeleteNote(BuildContext context) async {
     Strings strings = context.strings();
-    NotebookBloc bloc = context.read();
+    NotesBloc bloc = context.read();
 
     bool? result = await showDialog<bool>(
       context: context,
@@ -55,7 +54,7 @@ class NotebookEditPage extends StatelessWidget {
         child: Text(strings.notebook_delete_confirmText),
         leftActionText: strings.common_confirm,
         onLeftActionPressed: () {
-          bloc.add(NotebookDeleteNoteEvent(noteId));
+          bloc.add(NotesDeleteEvent(noteId));
           context.pop(true);
         },
         rightActionText: strings.common_cancel,
@@ -79,7 +78,6 @@ class _NotebookEditContent extends StatefulWidget {
 }
 
 class _NotebookEditContentState extends State<_NotebookEditContent> {
-  final Debouncer debouncer = Debouncer(interval: const Duration(milliseconds: 500));
   late final NotedRichTextController textController;
   late final TextEditingController titleController;
   final FocusNode focusNode = FocusNode();
@@ -88,7 +86,8 @@ class _NotebookEditContentState extends State<_NotebookEditContent> {
   void initState() {
     super.initState();
 
-    NotebookNote initial = context.read<NotebookBloc>().state.notes.firstWhere((note) => note.id == widget.noteId);
+    NotebookNote initial =
+        context.read<NotesBloc>().state.notes.firstWhere((note) => note.id == widget.noteId) as NotebookNote;
     textController = NotedRichTextController.quill(initial: initial.document);
     titleController = TextEditingController(text: initial.title);
 
@@ -126,8 +125,8 @@ class _NotebookEditContentState extends State<_NotebookEditContent> {
   }
 
   void _updateNote() {
-    context.read<NotebookBloc>().add(
-          NotebookUpdateNoteEvent(
+    context.read<NotesBloc>().add(
+          NotesUpdateNoteEvent(
             NotebookNote(
               id: widget.noteId,
               title: titleController.text,
@@ -139,7 +138,6 @@ class _NotebookEditContentState extends State<_NotebookEditContent> {
 
   @override
   void dispose() {
-    debouncer.dispose();
     textController.dispose();
     titleController.dispose();
     focusNode.dispose();

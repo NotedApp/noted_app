@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:noted_app/repository/auth/auth_repository.dart';
 import 'package:noted_app/repository/auth/firebase_auth_repository.dart';
 import 'package:noted_app/repository/auth/local_auth_repository.dart';
-import 'package:noted_app/repository/notebook/firebase_notebook_repository.dart';
-import 'package:noted_app/repository/notebook/local_notebook_repository.dart';
-import 'package:noted_app/repository/notebook/notebook_repository.dart';
+import 'package:noted_app/repository/notes/firebase_notebook_repository.dart';
+import 'package:noted_app/repository/notes/local_notebook_repository.dart';
+import 'package:noted_app/repository/notes/notes_repository.dart';
 import 'package:noted_app/repository/settings/firebase_settings_repository.dart';
 import 'package:noted_app/repository/settings/local_settings_repository.dart';
 import 'package:noted_app/repository/settings/settings_repository.dart';
@@ -30,7 +30,7 @@ abstract class Environment {
   NotedRouter get router;
   AuthRepository get authRepository;
   SettingsRepository get settingsRepository;
-  NotebookRepository get notebookRepository;
+  NotesRepository get notebookRepository;
 
   Future<void> configure({
     FirebaseOptions? firebaseOptions,
@@ -39,7 +39,7 @@ abstract class Environment {
     NotedRouter? router,
     AuthRepository? authRepository,
     SettingsRepository? settingsRepository,
-    NotebookRepository? notebookRepository,
+    NotesRepository? notebookRepository,
   }) async {
     FirebaseOptions? options = firebaseOptions ?? this.firebaseOptions;
 
@@ -58,7 +58,7 @@ abstract class Environment {
     // Repositories.
     locator.registerSingleton<AuthRepository>(authRepository ?? this.authRepository);
     locator.registerSingleton<SettingsRepository>(settingsRepository ?? this.settingsRepository);
-    locator.registerSingleton<NotebookRepository>(notebookRepository ?? this.notebookRepository);
+    locator.registerSingleton<NotesRepository>(notebookRepository ?? this.notebookRepository);
   }
 }
 
@@ -82,7 +82,7 @@ class LocalEnvironment extends Environment {
   SettingsRepository get settingsRepository => LocalSettingsRepository();
 
   @override
-  NotebookRepository get notebookRepository => LocalNotebookRepository();
+  NotesRepository get notebookRepository => LocalNotesRepository();
 }
 
 class TestEnvironment extends Environment {
@@ -105,7 +105,7 @@ class TestEnvironment extends Environment {
   SettingsRepository get settingsRepository => FirebaseSettingsRepository();
 
   @override
-  NotebookRepository get notebookRepository => FirebaseNotebookRepository();
+  NotesRepository get notebookRepository => FirebaseNotesRepository();
 }
 
 class ProdEnvironment extends Environment {
@@ -128,5 +128,5 @@ class ProdEnvironment extends Environment {
   SettingsRepository get settingsRepository => throw UnimplementedError();
 
   @override
-  NotebookRepository get notebookRepository => throw UnimplementedError();
+  NotesRepository get notebookRepository => throw UnimplementedError();
 }

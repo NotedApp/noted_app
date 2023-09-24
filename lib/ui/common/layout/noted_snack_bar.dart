@@ -31,7 +31,7 @@ class NotedSnackBar {
       icon: NotedIcons.close,
       type: NotedIconButtonType.simple,
       size: NotedWidgetSize.small,
-      onPressed: onClose ?? () => ScaffoldMessenger.of(context).hideCurrentSnackBar(),
+      onPressed: onClose ?? () => ScaffoldMessenger.maybeOf(context)?.hideCurrentSnackBar(),
     );
 
     Row contentRow = Row(
