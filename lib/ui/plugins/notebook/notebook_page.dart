@@ -52,6 +52,7 @@ class _NotebookPageState extends State<NotebookPage> {
           ),
         ],
         floatingActionButton: NotedIconButton(
+          iconWidget: state.status == NotesStatus.adding ? NotedLoadingIndicator() : null,
           icon: NotedIcons.plus,
           type: NotedIconButtonType.filled,
           size: NotedWidgetSize.large,
