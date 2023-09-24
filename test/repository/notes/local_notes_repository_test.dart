@@ -19,9 +19,9 @@ void main() {
     repository.setMsDelay(1);
   });
 
-  group('LocalNotebookRepository', () {
+  group('LocalNotesRepository', () {
     test('creates, updates, and deletes notes', () async {
-      Stream<List<NotebookNote>> stream = await repository.subscribeNotes(userId: 'test');
+      Stream<List<NotedNote>> stream = await repository.subscribeNotes(userId: 'test');
 
       expectLater(
         stream,

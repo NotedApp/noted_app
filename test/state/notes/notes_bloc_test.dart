@@ -18,15 +18,15 @@ void main() {
   NotebookNote testNote = NotebookNote(id: 'test', title: 'test', document: testData0);
   NotebookNote updatedTest = NotebookNote(id: 'test', title: 'updated', document: testData0);
 
-  group('NotebookBloc', () {
-    LocalNotesRepository notebook() => locator<NotesRepository>() as LocalNotesRepository;
+  group('NotesBloc', () {
+    LocalNotesRepository notes() => locator<NotesRepository>() as LocalNotesRepository;
     LocalAuthRepository auth() => locator<AuthRepository>() as LocalAuthRepository;
 
     setUpAll(() => UnitTestEnvironment().configure());
 
     setUp(() async {
-      notebook().reset();
-      notebook().setMsDelay(1);
+      notes().reset();
+      notes().setMsDelay(1);
 
       auth().reset();
       auth().setMsDelay(1);
@@ -38,13 +38,13 @@ void main() {
       'loads, adds, updates, and deletes notes for a user',
       build: NotesBloc.new,
       act: (bloc) async {
-        bloc.add(NotebookSubscribeNotesEvent());
+        bloc.add(NotesSubscribeEvent());
         await Future.delayed(const Duration(milliseconds: 15));
-        bloc.add(NotebookAddNoteEvent(testNote));
+        bloc.add(NotesAddEvent(testNote));
         await Future.delayed(const Duration(milliseconds: 5));
-        bloc.add(NotebookUpdateNoteEvent(updatedTest));
+        bloc.add(NotesUpdateNoteEvent(updatedTest));
         await Future.delayed(const Duration(milliseconds: 5));
-        bloc.add(NotebookDeleteNoteEvent(testNote.id));
+        bloc.add(NotesDeleteEvent(testNote.id));
       },
       wait: const Duration(milliseconds: 10),
       expect: () => [
@@ -79,9 +79,9 @@ void main() {
 
     blocTest(
       'loads notes for a user and handles error',
-      setUp: () => notebook().setShouldThrow(true),
+      setUp: () => notes().setShouldThrow(true),
       build: NotesBloc.new,
-      act: (bloc) => bloc.add(NotebookSubscribeNotesEvent()),
+      act: (bloc) => bloc.add(NotesSubscribeEvent()),
       wait: const Duration(milliseconds: 10),
       expect: () => [
         NotesState(notes: [], status: NotesStatus.loading),
@@ -93,9 +93,9 @@ void main() {
       'loads notes for a user and handles stream error',
       build: NotesBloc.new,
       act: (bloc) async {
-        bloc.add(NotebookSubscribeNotesEvent());
+        bloc.add(NotesSubscribeEvent());
         await Future.delayed(const Duration(milliseconds: 5));
-        notebook().addStreamError();
+        notes().addStreamError();
       },
       wait: const Duration(milliseconds: 10),
       expect: () => [
@@ -112,7 +112,7 @@ void main() {
       'loads notes for a user fails with no auth',
       setUp: () async => auth().signOut(),
       build: NotesBloc.new,
-      act: (bloc) => bloc.add(NotebookSubscribeNotesEvent()),
+      act: (bloc) => bloc.add(NotesSubscribeEvent()),
       wait: const Duration(milliseconds: 10),
       expect: () => [
         NotesState(notes: [], error: NotedError(ErrorCode.notes_subscribe_failed, message: 'missing auth')),
@@ -121,9 +121,9 @@ void main() {
 
     blocTest(
       'adds a note and handles error',
-      setUp: () => notebook().setShouldThrow(true),
+      setUp: () => notes().setShouldThrow(true),
       build: NotesBloc.new,
-      act: (bloc) => bloc.add(NotebookAddNoteEvent(testNote)),
+      act: (bloc) => bloc.add(NotesAddEvent(testNote)),
       wait: const Duration(milliseconds: 10),
       expect: () => [
         NotesState(notes: [], status: NotesStatus.adding),
@@ -135,7 +135,7 @@ void main() {
       'adds a note fails with no auth',
       setUp: () async => auth().signOut(),
       build: NotesBloc.new,
-      act: (bloc) => bloc.add(NotebookAddNoteEvent(testNote)),
+      act: (bloc) => bloc.add(NotesAddEvent(testNote)),
       wait: const Duration(milliseconds: 10),
       expect: () => [
         NotesState(notes: [], error: NotedError(ErrorCode.notes_add_failed, message: 'missing auth')),
@@ -144,9 +144,9 @@ void main() {
 
     blocTest(
       'updates a note and handles error',
-      setUp: () => notebook().setShouldThrow(true),
+      setUp: () => notes().setShouldThrow(true),
       build: NotesBloc.new,
-      act: (bloc) => bloc.add(NotebookUpdateNoteEvent(testNote)),
+      act: (bloc) => bloc.add(NotesUpdateNoteEvent(testNote)),
       wait: const Duration(milliseconds: 10),
       expect: () => [
         NotesState(notes: [], error: NotedError(ErrorCode.notes_update_failed)),
@@ -157,7 +157,7 @@ void main() {
       'updates a note fails with no auth',
       setUp: () async => auth().signOut(),
       build: NotesBloc.new,
-      act: (bloc) => bloc.add(NotebookUpdateNoteEvent(testNote)),
+      act: (bloc) => bloc.add(NotesUpdateNoteEvent(testNote)),
       wait: const Duration(milliseconds: 10),
       expect: () => [
         NotesState(notes: [], error: NotedError(ErrorCode.notes_update_failed, message: 'missing auth')),
@@ -166,9 +166,9 @@ void main() {
 
     blocTest(
       'deletes a note and handles error',
-      setUp: () => notebook().setShouldThrow(true),
+      setUp: () => notes().setShouldThrow(true),
       build: NotesBloc.new,
-      act: (bloc) => bloc.add(NotebookDeleteNoteEvent('test-note-0')),
+      act: (bloc) => bloc.add(NotesDeleteEvent('test-note-0')),
       wait: const Duration(milliseconds: 10),
       expect: () => [
         NotesState(notes: [], status: NotesStatus.deleting),
@@ -180,7 +180,7 @@ void main() {
       'deletes a note fails with no auth',
       setUp: () async => auth().signOut(),
       build: NotesBloc.new,
-      act: (bloc) => bloc.add(NotebookDeleteNoteEvent('test-note-0')),
+      act: (bloc) => bloc.add(NotesDeleteEvent('test-note-0')),
       wait: const Duration(milliseconds: 10),
       expect: () => [
         NotesState(notes: [], error: NotedError(ErrorCode.notes_delete_failed, message: 'missing auth')),

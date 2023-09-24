@@ -6,7 +6,7 @@ import 'package:noted_app/state/notes/notes_event.dart';
 import 'package:noted_app/state/notes/notes_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
-import 'package:noted_app/ui/spaces/notebook/notebook_page.dart';
+import 'package:noted_app/ui/plugins/notebook/notebook_page.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_models/noted_models.dart';
 

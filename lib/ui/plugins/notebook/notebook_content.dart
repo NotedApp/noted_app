@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
+import 'package:noted_app/ui/router/noted_router.dart';
 import 'package:noted_models/noted_models.dart';
 
 class NotebookContent extends StatelessWidget {
@@ -20,7 +21,10 @@ class NotebookContent extends StatelessWidget {
           mainAxisSpacing: 4,
           crossAxisSpacing: 4,
         ),
-        itemBuilder: (context, index) => buildNotedTile(context, notes[index]),
+        itemBuilder: (context, index) => buildNotedTile(
+          notes[index],
+          () => context.push('/notebook/${notes[index].id}'),
+        ),
       ),
     );
   }

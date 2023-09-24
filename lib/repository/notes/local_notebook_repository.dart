@@ -32,7 +32,9 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
   int _msDelay = 2000;
 
   LocalNotesRepository() {
-    _notesController = StreamController.broadcast();
+    _notesController = StreamController.broadcast(
+      onListen: () => _notesController.add(_notes.values.toList()),
+    );
   }
 
   @override
