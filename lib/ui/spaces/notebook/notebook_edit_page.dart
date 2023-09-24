@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:noted_app/state/notebook/notebook_bloc.dart';
-import 'package:noted_app/state/notebook/notebook_event.dart';
-import 'package:noted_app/state/notebook/notebook_state.dart';
+import 'package:noted_app/state/notes/notes_bloc.dart';
+import 'package:noted_app/state/notes/notes_event.dart';
+import 'package:noted_app/state/notes/notes_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
 import 'package:noted_app/ui/spaces/notebook/notebook_page.dart';
@@ -17,9 +17,9 @@ class NotebookEditPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isDeleting = context.select((NotebookBloc bloc) => bloc.state.status == NotebookStatus.deleting);
+    bool isDeleting = context.select((NotesBloc bloc) => bloc.state.status == NotesStatus.deleting);
 
-    return BlocListener<NotebookBloc, NotebookState>(
+    return BlocListener<NotesBloc, NotesState>(
       listenWhen: (previous, current) => previous.error != current.error || previous.deleted != current.deleted,
       listener: (context, state) {
         if (state.error != null) {
@@ -46,7 +46,7 @@ class NotebookEditPage extends StatelessWidget {
 
   void _confirmDeleteNote(BuildContext context) async {
     Strings strings = context.strings();
-    NotebookBloc bloc = context.read();
+    NotesBloc bloc = context.read();
 
     bool? result = await showDialog<bool>(
       context: context,
@@ -86,7 +86,7 @@ class _NotebookEditContentState extends State<_NotebookEditContent> {
   void initState() {
     super.initState();
 
-    NotebookNote initial = context.read<NotebookBloc>().state.notes.firstWhere((note) => note.id == widget.noteId);
+    NotebookNote initial = context.read<NotesBloc>().state.notes.firstWhere((note) => note.id == widget.noteId);
     textController = NotedRichTextController.quill(initial: initial.document);
     titleController = TextEditingController(text: initial.title);
 
@@ -124,7 +124,7 @@ class _NotebookEditContentState extends State<_NotebookEditContent> {
   }
 
   void _updateNote() {
-    context.read<NotebookBloc>().add(
+    context.read<NotesBloc>().add(
           NotebookUpdateNoteEvent(
             NotebookNote(
               id: widget.noteId,

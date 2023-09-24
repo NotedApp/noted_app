@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:noted_app/state/notebook/notebook_bloc.dart';
-import 'package:noted_app/state/notebook/notebook_event.dart';
+import 'package:noted_app/state/notes/notes_bloc.dart';
+import 'package:noted_app/state/notes/notes_event.dart';
 import 'package:noted_app/ui/common/button/button.dart';
 import 'package:noted_app/util/extensions.dart';
 
@@ -10,7 +10,7 @@ class NotebookError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Strings strings = context.strings();
-    final NotebookBloc bloc = context.watch();
+    final NotesBloc bloc = context.watch();
 
     return Center(
       child: Padding(

@@ -4,9 +4,9 @@ import 'package:noted_app/repository/auth/auth_repository.dart';
 import 'package:noted_app/repository/auth/local_auth_repository.dart';
 import 'package:noted_app/repository/notes/local_notebook_repository.dart';
 import 'package:noted_app/repository/notes/notes_repository.dart';
-import 'package:noted_app/state/notebook/notebook_bloc.dart';
-import 'package:noted_app/state/notebook/notebook_event.dart';
-import 'package:noted_app/state/notebook/notebook_state.dart';
+import 'package:noted_app/state/notes/notes_bloc.dart';
+import 'package:noted_app/state/notes/notes_event.dart';
+import 'package:noted_app/state/notes/notes_state.dart';
 import 'package:noted_app/util/environment/dependencies.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
@@ -36,7 +36,7 @@ void main() {
 
     blocTest(
       'loads, adds, updates, and deletes notes for a user',
-      build: NotebookBloc.new,
+      build: NotesBloc.new,
       act: (bloc) async {
         bloc.add(NotebookSubscribeNotesEvent());
         await Future.delayed(const Duration(milliseconds: 15));
@@ -48,50 +48,50 @@ void main() {
       },
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        NotebookState(notes: [], status: NotebookStatus.loading),
-        NotebookState(notes: localNotes.values.toList()),
-        NotebookState(notes: localNotes.values.toList(), status: NotebookStatus.adding),
-        NotebookState(notes: localNotes.values.toList(), added: testNote.id),
-        NotebookState(notes: [...localNotes.values, testNote]),
-        NotebookState(notes: [...localNotes.values, updatedTest]),
-        NotebookState(notes: [...localNotes.values, updatedTest], status: NotebookStatus.deleting),
-        NotebookState(notes: [...localNotes.values, updatedTest], deleted: testNote.id),
-        NotebookState(notes: localNotes.values.toList()),
+        NotesState(notes: [], status: NotesStatus.loading),
+        NotesState(notes: localNotes.values.toList()),
+        NotesState(notes: localNotes.values.toList(), status: NotesStatus.adding),
+        NotesState(notes: localNotes.values.toList(), added: testNote.id),
+        NotesState(notes: [...localNotes.values, testNote]),
+        NotesState(notes: [...localNotes.values, updatedTest]),
+        NotesState(notes: [...localNotes.values, updatedTest], status: NotesStatus.deleting),
+        NotesState(notes: [...localNotes.values, updatedTest], deleted: testNote.id),
+        NotesState(notes: localNotes.values.toList()),
       ],
     );
 
     blocTest(
       'loads notes on auth change',
-      build: NotebookBloc.new,
+      build: NotesBloc.new,
       act: (bloc) async {
         await auth().signOut();
         await auth().signInWithGoogle();
       },
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        NotebookState(
+        NotesState(
           notes: [],
         ),
-        NotebookState(notes: [], status: NotebookStatus.loading),
-        NotebookState(notes: localNotes.values.toList()),
+        NotesState(notes: [], status: NotesStatus.loading),
+        NotesState(notes: localNotes.values.toList()),
       ],
     );
 
     blocTest(
       'loads notes for a user and handles error',
       setUp: () => notebook().setShouldThrow(true),
-      build: NotebookBloc.new,
+      build: NotesBloc.new,
       act: (bloc) => bloc.add(NotebookSubscribeNotesEvent()),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        NotebookState(notes: [], status: NotebookStatus.loading),
-        NotebookState(notes: [], error: NotedError(ErrorCode.notes_subscribe_failed)),
+        NotesState(notes: [], status: NotesStatus.loading),
+        NotesState(notes: [], error: NotedError(ErrorCode.notes_subscribe_failed)),
       ],
     );
 
     blocTest(
       'loads notes for a user and handles stream error',
-      build: NotebookBloc.new,
+      build: NotesBloc.new,
       act: (bloc) async {
         bloc.add(NotebookSubscribeNotesEvent());
         await Future.delayed(const Duration(milliseconds: 5));
@@ -99,9 +99,9 @@ void main() {
       },
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        NotebookState(notes: [], status: NotebookStatus.loading),
-        NotebookState(notes: localNotes.values.toList()),
-        NotebookState(
+        NotesState(notes: [], status: NotesStatus.loading),
+        NotesState(notes: localNotes.values.toList()),
+        NotesState(
           notes: localNotes.values.toList(),
           error: NotedError(ErrorCode.notes_parse_failed),
         ),
@@ -111,79 +111,79 @@ void main() {
     blocTest(
       'loads notes for a user fails with no auth',
       setUp: () async => auth().signOut(),
-      build: NotebookBloc.new,
+      build: NotesBloc.new,
       act: (bloc) => bloc.add(NotebookSubscribeNotesEvent()),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        NotebookState(notes: [], error: NotedError(ErrorCode.notes_subscribe_failed, message: 'missing auth')),
+        NotesState(notes: [], error: NotedError(ErrorCode.notes_subscribe_failed, message: 'missing auth')),
       ],
     );
 
     blocTest(
       'adds a note and handles error',
       setUp: () => notebook().setShouldThrow(true),
-      build: NotebookBloc.new,
+      build: NotesBloc.new,
       act: (bloc) => bloc.add(NotebookAddNoteEvent(testNote)),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        NotebookState(notes: [], status: NotebookStatus.adding),
-        NotebookState(notes: [], error: NotedError(ErrorCode.notes_add_failed)),
+        NotesState(notes: [], status: NotesStatus.adding),
+        NotesState(notes: [], error: NotedError(ErrorCode.notes_add_failed)),
       ],
     );
 
     blocTest(
       'adds a note fails with no auth',
       setUp: () async => auth().signOut(),
-      build: NotebookBloc.new,
+      build: NotesBloc.new,
       act: (bloc) => bloc.add(NotebookAddNoteEvent(testNote)),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        NotebookState(notes: [], error: NotedError(ErrorCode.notes_add_failed, message: 'missing auth')),
+        NotesState(notes: [], error: NotedError(ErrorCode.notes_add_failed, message: 'missing auth')),
       ],
     );
 
     blocTest(
       'updates a note and handles error',
       setUp: () => notebook().setShouldThrow(true),
-      build: NotebookBloc.new,
+      build: NotesBloc.new,
       act: (bloc) => bloc.add(NotebookUpdateNoteEvent(testNote)),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        NotebookState(notes: [], error: NotedError(ErrorCode.notes_update_failed)),
+        NotesState(notes: [], error: NotedError(ErrorCode.notes_update_failed)),
       ],
     );
 
     blocTest(
       'updates a note fails with no auth',
       setUp: () async => auth().signOut(),
-      build: NotebookBloc.new,
+      build: NotesBloc.new,
       act: (bloc) => bloc.add(NotebookUpdateNoteEvent(testNote)),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        NotebookState(notes: [], error: NotedError(ErrorCode.notes_update_failed, message: 'missing auth')),
+        NotesState(notes: [], error: NotedError(ErrorCode.notes_update_failed, message: 'missing auth')),
       ],
     );
 
     blocTest(
       'deletes a note and handles error',
       setUp: () => notebook().setShouldThrow(true),
-      build: NotebookBloc.new,
+      build: NotesBloc.new,
       act: (bloc) => bloc.add(NotebookDeleteNoteEvent('test-note-0')),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        NotebookState(notes: [], status: NotebookStatus.deleting),
-        NotebookState(notes: [], error: NotedError(ErrorCode.notes_delete_failed)),
+        NotesState(notes: [], status: NotesStatus.deleting),
+        NotesState(notes: [], error: NotedError(ErrorCode.notes_delete_failed)),
       ],
     );
 
     blocTest(
       'deletes a note fails with no auth',
       setUp: () async => auth().signOut(),
-      build: NotebookBloc.new,
+      build: NotesBloc.new,
       act: (bloc) => bloc.add(NotebookDeleteNoteEvent('test-note-0')),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        NotebookState(notes: [], error: NotedError(ErrorCode.notes_delete_failed, message: 'missing auth')),
+        NotesState(notes: [], error: NotedError(ErrorCode.notes_delete_failed, message: 'missing auth')),
       ],
     );
   });

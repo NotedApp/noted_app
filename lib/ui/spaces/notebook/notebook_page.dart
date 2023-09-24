@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:noted_app/state/notebook/notebook_bloc.dart';
-import 'package:noted_app/state/notebook/notebook_event.dart';
-import 'package:noted_app/state/notebook/notebook_state.dart';
+import 'package:noted_app/state/notes/notes_bloc.dart';
+import 'package:noted_app/state/notes/notes_event.dart';
+import 'package:noted_app/state/notes/notes_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
 import 'package:noted_app/ui/spaces/notebook/notebook_content.dart';
@@ -26,11 +26,11 @@ class _NotebookPageState extends State<NotebookPage> {
   @override
   Widget build(BuildContext context) {
     Strings strings = context.strings();
-    NotebookBloc bloc = context.watch();
+    NotesBloc bloc = context.watch();
 
     VoidCallback addNote = () => debouncer.run(() => bloc.add(NotebookAddNoteEvent(NotebookNote.emptyQuill())));
 
-    return BlocConsumer<NotebookBloc, NotebookState>(
+    return BlocConsumer<NotesBloc, NotesState>(
       bloc: bloc,
       listenWhen: (previous, current) => previous.error != current.error || previous.added != current.added,
       listener: (context, state) {
@@ -55,12 +55,12 @@ class _NotebookPageState extends State<NotebookPage> {
           icon: NotedIcons.plus,
           type: NotedIconButtonType.filled,
           size: NotedWidgetSize.large,
-          onPressed: state.status != NotebookStatus.adding ? addNote : null,
+          onPressed: state.status != NotesStatus.adding ? addNote : null,
         ),
         child: switch (state) {
-          NotebookState(status: NotebookStatus.loading) => NotebookLoading(),
-          NotebookState(error: NotedError(code: ErrorCode.notes_subscribe_failed)) => NotebookError(),
-          NotebookState(notes: []) => NotebookEmpty(),
+          NotesState(status: NotesStatus.loading) => NotebookLoading(),
+          NotesState(error: NotedError(code: ErrorCode.notes_subscribe_failed)) => NotebookError(),
+          NotesState(notes: []) => NotebookEmpty(),
           _ => NotebookContent(notes: state.notes),
         },
       ),
@@ -73,7 +73,7 @@ class _NotebookPageState extends State<NotebookPage> {
   }
 }
 
-void handleNotebookError(BuildContext context, NotebookState state) {
+void handleNotebookError(BuildContext context, NotesState state) {
   Strings strings = context.strings();
 
   final String? message = switch (state.error?.code) {
