@@ -643,7 +643,7 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: "47fd4f5292931cd4398d17f10072176e9d6e8622"
+      resolved-ref: ca7de1e09cefdf5040cc06a9d8b430785290784d
       url: "https://github.com/NotedApp/noted_models.git"
     source: git
     version: "0.0.1"

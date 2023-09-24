@@ -59,7 +59,7 @@ class _NotebookPageState extends State<NotebookPage> {
         ),
         child: switch (state) {
           NotebookState(status: NotebookStatus.loading) => NotebookLoading(),
-          NotebookState(error: NotedError(code: ErrorCode.notebook_subscribe_failed)) => NotebookError(),
+          NotebookState(error: NotedError(code: ErrorCode.notes_subscribe_failed)) => NotebookError(),
           NotebookState(notes: []) => NotebookEmpty(),
           _ => NotebookContent(notes: state.notes),
         },
@@ -77,9 +77,9 @@ void handleNotebookError(BuildContext context, NotebookState state) {
   Strings strings = context.strings();
 
   final String? message = switch (state.error?.code) {
-    ErrorCode.notebook_add_failed => strings.notebook_error_addNoteFailed,
-    ErrorCode.notebook_update_failed => strings.notebook_error_updateNoteFailed,
-    ErrorCode.notebook_delete_failed => strings.notebook_error_deleteNoteFailed,
+    ErrorCode.notes_add_failed => strings.notebook_error_addNoteFailed,
+    ErrorCode.notes_update_failed => strings.notebook_error_updateNoteFailed,
+    ErrorCode.notes_delete_failed => strings.notebook_error_deleteNoteFailed,
     _ => null,
   };
 

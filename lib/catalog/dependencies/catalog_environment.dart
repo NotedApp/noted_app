@@ -2,8 +2,8 @@ import 'package:firebase_core_platform_interface/firebase_core_platform_interfac
 import 'package:noted_app/catalog/dependencies/catalog_router.dart';
 import 'package:noted_app/repository/auth/auth_repository.dart';
 import 'package:noted_app/repository/auth/local_auth_repository.dart';
-import 'package:noted_app/repository/notebook/local_notebook_repository.dart';
-import 'package:noted_app/repository/notebook/notebook_repository.dart';
+import 'package:noted_app/repository/notes/local_notebook_repository.dart';
+import 'package:noted_app/repository/notes/notes_repository.dart';
 import 'package:noted_app/repository/settings/local_settings_repository.dart';
 import 'package:noted_app/repository/settings/settings_repository.dart';
 import 'package:noted_app/util/environment/environment.dart';
@@ -40,5 +40,5 @@ class CatalogEnvironment extends Environment {
   SettingsRepository get settingsRepository => LocalSettingsRepository();
 
   @override
-  NotebookRepository get notebookRepository => LocalNotebookRepository();
+  NotesRepository get notebookRepository => LocalNotesRepository();
 }

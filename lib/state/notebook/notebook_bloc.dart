@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noted_app/repository/auth/auth_repository.dart';
-import 'package:noted_app/repository/notebook/notebook_repository.dart';
+import 'package:noted_app/repository/notes/notes_repository.dart';
 import 'package:noted_app/state/notebook/notebook_event.dart';
 import 'package:noted_app/state/notebook/notebook_state.dart';
 import 'package:noted_app/state/noted_bloc.dart';
@@ -11,13 +11,13 @@ import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 class NotebookBloc extends NotedBloc<NotebookEvent, NotebookState> {
-  final NotebookRepository _notebook;
+  final NotesRepository _notebook;
   final AuthRepository _auth;
   late final StreamSubscription<NotedUser> _userSubscription;
   StreamSubscription<List<NotebookNote>>? _notesSubscription;
 
-  NotebookBloc({NotebookRepository? notebookRepository, AuthRepository? authRepository})
-      : _notebook = notebookRepository ?? locator<NotebookRepository>(),
+  NotebookBloc({NotesRepository? notebookRepository, AuthRepository? authRepository})
+      : _notebook = notebookRepository ?? locator<NotesRepository>(),
         _auth = authRepository ?? locator<AuthRepository>(),
         super(NotebookState(notes: const []), 'notebook') {
     on<NotebookSubscribeNotesEvent>(_onSubscribeNotes);
@@ -44,7 +44,7 @@ class NotebookBloc extends NotedBloc<NotebookEvent, NotebookState> {
 
     try {
       if (_auth.currentUser.isEmpty) {
-        throw NotedError(ErrorCode.notebook_subscribe_failed, message: 'missing auth');
+        throw NotedError(ErrorCode.notes_subscribe_failed, message: 'missing auth');
       }
 
       _notesSubscription?.cancel();
@@ -77,7 +77,7 @@ class NotebookBloc extends NotedBloc<NotebookEvent, NotebookState> {
 
     try {
       if (_auth.currentUser.isEmpty) {
-        throw NotedError(ErrorCode.notebook_add_failed, message: 'missing auth');
+        throw NotedError(ErrorCode.notes_add_failed, message: 'missing auth');
       }
 
       emit(NotebookState(notes: state.notes, status: NotebookStatus.adding));
@@ -91,7 +91,7 @@ class NotebookBloc extends NotedBloc<NotebookEvent, NotebookState> {
   void _onUpdateNote(NotebookUpdateNoteEvent event, Emitter<NotebookState> emit) async {
     try {
       if (_auth.currentUser.isEmpty) {
-        throw NotedError(ErrorCode.notebook_update_failed, message: 'missing auth');
+        throw NotedError(ErrorCode.notes_update_failed, message: 'missing auth');
       }
 
       await _notebook.updateNote(userId: _auth.currentUser.id, note: event.note);
@@ -107,7 +107,7 @@ class NotebookBloc extends NotedBloc<NotebookEvent, NotebookState> {
 
     try {
       if (_auth.currentUser.isEmpty) {
-        throw NotedError(ErrorCode.notebook_delete_failed, message: 'missing auth');
+        throw NotedError(ErrorCode.notes_delete_failed, message: 'missing auth');
       }
 
       emit(NotebookState(notes: state.notes, status: NotebookStatus.deleting));

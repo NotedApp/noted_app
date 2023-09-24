@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:get_it/get_it.dart';
-import 'package:noted_app/repository/notebook/notebook_repository.dart';
+import 'package:noted_app/repository/notes/notes_repository.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
-import 'package:noted_models/spaces/notebook/notebook_note.dart';
+import 'package:noted_models/noted_models.dart';
 import 'package:uuid/uuid.dart';
 
 /// Default local notes.
-const Map<String, NotebookNote> localNotes = {
+const Map<String, NotedNote> localNotes = {
   'test-note-0': NotebookNote(
     id: 'test-note-0',
     title: 'Note 0',
@@ -24,34 +24,34 @@ const Map<String, NotebookNote> localNotes = {
   ),
 };
 
-/// A [NotebookRepository] that uses mock data as its source of truth.
-class LocalNotebookRepository extends NotebookRepository implements Disposable {
-  late final StreamController<List<NotebookNote>> _notesController;
-  Map<String, NotebookNote> _notes = {...localNotes};
+/// A [NotesRepository] that uses mock data as its source of truth.
+class LocalNotesRepository extends NotesRepository implements Disposable {
+  late final StreamController<List<NotedNote>> _notesController;
+  Map<String, NotedNote> _notes = {...localNotes};
   bool _shouldThrow = false;
   int _msDelay = 2000;
 
-  LocalNotebookRepository() {
-    _notesController = StreamController.broadcast(onListen: () => _notesController.add(_notes.values.toList()));
+  LocalNotesRepository() {
+    _notesController = StreamController.broadcast();
   }
 
   @override
-  Future<Stream<List<NotebookNote>>> subscribeNotes({required String userId}) async {
+  Future<Stream<List<NotedNote>>> subscribeNotes({required String userId}) async {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (_shouldThrow || userId.isEmpty) {
-      throw NotedError(ErrorCode.notebook_subscribe_failed);
+      throw NotedError(ErrorCode.notes_subscribe_failed);
     }
 
     return _notesController.stream;
   }
 
   @override
-  Future<String> addNote({required String userId, required NotebookNote note}) async {
+  Future<String> addNote({required String userId, required NotedNote note}) async {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (_shouldThrow || userId.isEmpty) {
-      throw NotedError(ErrorCode.notebook_add_failed);
+      throw NotedError(ErrorCode.notes_add_failed);
     }
 
     String id = note.id.isEmpty ? Uuid().v4() : note.id;
@@ -61,11 +61,11 @@ class LocalNotebookRepository extends NotebookRepository implements Disposable {
   }
 
   @override
-  Future<void> updateNote({required String userId, required NotebookNote note}) async {
+  Future<void> updateNote({required String userId, required NotedNote note}) async {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (_shouldThrow || userId.isEmpty) {
-      throw NotedError(ErrorCode.notebook_update_failed);
+      throw NotedError(ErrorCode.notes_update_failed);
     }
 
     _notes[note.id] = note.copyWith();
@@ -77,7 +77,7 @@ class LocalNotebookRepository extends NotebookRepository implements Disposable {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (_shouldThrow || userId.isEmpty) {
-      throw NotedError(ErrorCode.notebook_delete_failed);
+      throw NotedError(ErrorCode.notes_delete_failed);
     }
 
     _notes.remove(noteId);
@@ -91,7 +91,7 @@ class LocalNotebookRepository extends NotebookRepository implements Disposable {
 
   /// Adds an error to the state stream for testing.
   void addStreamError() {
-    _notesController.addError(NotedError(ErrorCode.notebook_parse_failed));
+    _notesController.addError(NotedError(ErrorCode.notes_parse_failed));
   }
 
   void setShouldThrow(bool shouldThrow) => _shouldThrow = shouldThrow;
