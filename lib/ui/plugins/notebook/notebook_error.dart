@@ -23,7 +23,7 @@ class NotebookError extends StatelessWidget {
             NotedTextButton(
               label: strings.common_refresh,
               type: NotedTextButtonType.filled,
-              onPressed: () => bloc.add(NotebookSubscribeNotesEvent()),
+              onPressed: () => bloc.add(NotesSubscribeEvent()),
             ),
           ],
         ),

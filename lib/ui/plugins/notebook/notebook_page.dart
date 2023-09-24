@@ -6,10 +6,10 @@ import 'package:noted_app/state/notes/notes_event.dart';
 import 'package:noted_app/state/notes/notes_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
-import 'package:noted_app/ui/spaces/notebook/notebook_content.dart';
-import 'package:noted_app/ui/spaces/notebook/notebook_empty.dart';
-import 'package:noted_app/ui/spaces/notebook/notebook_error.dart';
-import 'package:noted_app/ui/spaces/notebook/notebook_loading.dart';
+import 'package:noted_app/ui/plugins/notebook/notebook_content.dart';
+import 'package:noted_app/ui/plugins/notebook/notebook_empty.dart';
+import 'package:noted_app/ui/plugins/notebook/notebook_error.dart';
+import 'package:noted_app/ui/plugins/notebook/notebook_loading.dart';
 import 'package:noted_app/util/debouncer.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
@@ -28,7 +28,7 @@ class _NotebookPageState extends State<NotebookPage> {
     Strings strings = context.strings();
     NotesBloc bloc = context.watch();
 
-    VoidCallback addNote = () => debouncer.run(() => bloc.add(NotebookAddNoteEvent(NotebookNote.emptyQuill())));
+    VoidCallback addNote = () => debouncer.run(() => bloc.add(NotesAddEvent(NotebookNote.emptyQuill())));
 
     return BlocConsumer<NotesBloc, NotesState>(
       bloc: bloc,

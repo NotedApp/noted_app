@@ -54,7 +54,7 @@ class NotebookEditPage extends StatelessWidget {
         child: Text(strings.notebook_delete_confirmText),
         leftActionText: strings.common_confirm,
         onLeftActionPressed: () {
-          bloc.add(NotebookDeleteNoteEvent(noteId));
+          bloc.add(NotesDeleteEvent(noteId));
           context.pop(true);
         },
         rightActionText: strings.common_cancel,
@@ -86,7 +86,8 @@ class _NotebookEditContentState extends State<_NotebookEditContent> {
   void initState() {
     super.initState();
 
-    NotebookNote initial = context.read<NotesBloc>().state.notes.firstWhere((note) => note.id == widget.noteId);
+    NotebookNote initial =
+        context.read<NotesBloc>().state.notes.firstWhere((note) => note.id == widget.noteId) as NotebookNote;
     textController = NotedRichTextController.quill(initial: initial.document);
     titleController = TextEditingController(text: initial.title);
 
@@ -125,7 +126,7 @@ class _NotebookEditContentState extends State<_NotebookEditContent> {
 
   void _updateNote() {
     context.read<NotesBloc>().add(
-          NotebookUpdateNoteEvent(
+          NotesUpdateNoteEvent(
             NotebookNote(
               id: widget.noteId,
               title: titleController.text,
