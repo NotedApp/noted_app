@@ -39,7 +39,13 @@ class NotedCard extends StatelessWidget {
       elevation: 4,
       shape: shape,
       margin: margin,
-      child: onTap == null ? child : InkWell(onTap: onTap, borderRadius: borderRadius, child: child),
+      child: onTap == null
+          ? child
+          : InkWell(
+              onTap: onTap,
+              borderRadius: borderRadius,
+              child: child,
+            ),
     );
   }
 }

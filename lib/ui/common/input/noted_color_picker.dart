@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:noted_app/theme/custom_colors.dart';
+import 'package:noted_app/ui/common/custom_colors.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/ui/common/button/noted_text_button.dart';
 import 'package:noted_app/ui/common/icon/noted_icons.dart';

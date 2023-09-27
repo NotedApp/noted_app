@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:noted_app/theme/custom_colors.dart';
+import 'package:noted_app/ui/common/custom_colors.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 
 import '../../../helpers/environment/unit_test_environment.dart';

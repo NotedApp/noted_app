@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:noted_app/theme/custom_colors.dart';
+import 'package:noted_app/ui/common/custom_colors.dart';
 import 'package:noted_app/util/extensions.dart';
 
 void main() {
