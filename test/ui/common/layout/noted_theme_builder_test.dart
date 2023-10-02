@@ -15,7 +15,7 @@ import '../../../helpers/test_wrapper.dart';
 
 void main() {
   group('Noted Theme Builder', () {
-    final NotedUser test = NotedUser(id: 'test');
+    final UserModel test = UserModel(id: 'test');
 
     setUpAll(() async {
       UnitTestEnvironment().configure(
@@ -43,7 +43,7 @@ void main() {
         ),
       );
 
-      bloc.add(SettingsUpdateStyleColorSchemeEvent(NotedColorSchemeName.green));
+      bloc.add(SettingsUpdateStyleColorSchemeEvent(ColorSchemeModelName.green));
       await tester.pump(const Duration(milliseconds: 10));
 
       verify(() => themeCallback(any())).called(2);

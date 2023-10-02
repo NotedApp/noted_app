@@ -44,7 +44,7 @@ class AuthChangePasswordEvent extends AuthEvent {
 class AuthDeleteAccountEvent extends AuthEvent {}
 
 class AuthUserUpdatedEvent extends AuthEvent {
-  final NotedUser user;
+  final UserModel user;
 
   const AuthUserUpdatedEvent(this.user);
 }

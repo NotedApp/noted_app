@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/ui/common/custom_colors.dart';
-import 'package:noted_models/noted_models.dart';
+import 'package:noted_models/noted_models.dart' as Models;
 
 extension NotedColorExtensions on Color {
   MaterialStateProperty<Color> materialState() {
@@ -110,16 +110,16 @@ extension NotedBuildContextExtensions on BuildContext {
   }
 }
 
-extension NotedBrightnessExtensions on NotedBrightness {
+extension NotedBrightnessExtensions on Models.Brightness {
   Brightness toMaterial() {
     return switch (this) {
-      NotedBrightness.light => Brightness.light,
+      Models.Brightness.light => Brightness.light,
       _ => Brightness.dark,
     };
   }
 }
 
-extension NotedColorSchemeExtensions on NotedColorScheme {
+extension ColorSchemeModelExtensions on Models.ColorSchemeModel {
   ColorScheme toMaterial() {
     return ColorScheme(
       brightness: brightness.toMaterial(),
@@ -139,7 +139,7 @@ extension NotedColorSchemeExtensions on NotedColorScheme {
   }
 }
 
-extension NotedTextThemeExtensions on NotedTextTheme {
+extension TextThemeModelExtensions on Models.TextThemeModel {
   TextTheme toMaterial() {
     return TextTheme(
       displayLarge: TextStyle(fontFamily: fontFamily, fontSize: 57, height: 64 / 57, fontWeight: FontWeight.normal),

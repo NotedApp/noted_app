@@ -13,8 +13,8 @@ import 'package:noted_models/noted_models.dart';
 class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
   final NotesRepository _notes;
   final AuthRepository _auth;
-  late final StreamSubscription<NotedUser> _userSubscription;
-  StreamSubscription<List<NotedNote>>? _notesSubscription;
+  late final StreamSubscription<UserModel> _userSubscription;
+  StreamSubscription<List<NoteModel>>? _notesSubscription;
 
   NotesBloc({NotesRepository? notesRepository, AuthRepository? authRepository})
       : _notes = notesRepository ?? locator<NotesRepository>(),

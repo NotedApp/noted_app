@@ -15,19 +15,19 @@ enum AuthStatus {
 
 final class AuthState extends Equatable {
   final AuthStatus status;
-  final NotedUser user;
+  final UserModel user;
   final NotedError? error;
 
   const AuthState({
     this.status = AuthStatus.unauthenticated,
-    this.user = const NotedUser.empty(),
+    this.user = const UserModel.empty(),
     this.error = null,
   });
 
   const AuthState.unauthenticated({NotedError? error}) : this(error: error);
 
   const AuthState.authenticated({
-    required NotedUser user,
+    required UserModel user,
     NotedError? error,
   }) : this(status: AuthStatus.authenticated, user: user, error: error);
 

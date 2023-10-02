@@ -7,13 +7,13 @@ List<dynamic> _testData0 = [
   }
 ];
 
-NotebookNote testNote0 = NotebookNote(
+NotebookNoteModel testNote0 = NotebookNoteModel(
   id: 'test-0',
   title: '',
   document: _testData0,
 );
 
-NotebookNote testNote1 = NotebookNote(
+NotebookNoteModel testNote1 = NotebookNoteModel(
   id: 'test-1',
   title: 'Test Note',
   document: _testData0,

@@ -4,7 +4,7 @@ import 'package:noted_app/ui/router/noted_router.dart';
 import 'package:noted_models/noted_models.dart';
 
 class NotebookContent extends StatelessWidget {
-  final List<NotedNote> notes;
+  final List<NoteModel> notes;
 
   NotebookContent({required this.notes});
 

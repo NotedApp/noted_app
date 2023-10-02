@@ -9,7 +9,7 @@ import 'package:noted_app/util/extensions.dart';
 import 'package:noted_models/noted_models.dart';
 
 class StyleFontsPage extends StatelessWidget {
-  List<NotedTextThemeName> get names => NotedTextThemeName.values;
+  List<TextThemeModelName> get names => TextThemeModelName.values;
 
   const StyleFontsPage({super.key});
 
@@ -25,7 +25,7 @@ class StyleFontsPage extends StatelessWidget {
         physics: notedScrollPhysics,
         padding: const EdgeInsets.fromLTRB(12, 16, 12, 128),
         itemBuilder: (context, index) {
-          TextTheme theme = NotedTextTheme.fromName(names[index]).toMaterial();
+          TextTheme theme = TextThemeModel.fromName(names[index]).toMaterial();
 
           return FontSwitcherItem(
             title: _getThemeName(strings, names[index]),
@@ -40,12 +40,12 @@ class StyleFontsPage extends StatelessWidget {
     );
   }
 
-  String _getThemeName(Strings strings, NotedTextThemeName name) {
+  String _getThemeName(Strings strings, TextThemeModelName name) {
     return switch (name) {
-      NotedTextThemeName.poppins => strings.settings_style_poppins,
-      NotedTextThemeName.roboto => strings.settings_style_roboto,
-      NotedTextThemeName.lora => strings.settings_style_lora,
-      NotedTextThemeName.vollkorn => strings.settings_style_vollkorn,
+      TextThemeModelName.poppins => strings.settings_style_poppins,
+      TextThemeModelName.roboto => strings.settings_style_roboto,
+      TextThemeModelName.lora => strings.settings_style_lora,
+      TextThemeModelName.vollkorn => strings.settings_style_vollkorn,
     };
   }
 }

@@ -9,8 +9,8 @@ import 'package:noted_models/noted_models.dart';
 
 class StyleFrame extends StatelessWidget {
   final String title;
-  final Widget Function(BuildContext, NotedStyleSettings) builder;
-  final bool Function(NotedStyleSettings, NotedStyleSettings)? buildWhen;
+  final Widget Function(BuildContext, StyleSettingsModel) builder;
+  final bool Function(StyleSettingsModel, StyleSettingsModel)? buildWhen;
 
   const StyleFrame({required this.title, required this.builder, this.buildWhen});
 

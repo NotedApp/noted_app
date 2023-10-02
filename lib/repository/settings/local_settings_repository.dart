@@ -3,11 +3,11 @@ import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 /// Default local settings.
-const NotedSettings _localSettings = NotedSettings();
+const SettingsModel _localSettings = SettingsModel();
 
 /// A [SettingsRepository] that uses mock data as its source of truth.
 class LocalSettingsRepository extends SettingsRepository {
-  NotedSettings _settings = _localSettings.copyWith();
+  SettingsModel _settings = _localSettings.copyWith();
   bool _shouldThrow = false;
   int _msDelay = 2000;
 
@@ -16,7 +16,7 @@ class LocalSettingsRepository extends SettingsRepository {
   }
 
   @override
-  Future<NotedSettings> fetchSettings({required String userId}) async {
+  Future<SettingsModel> fetchSettings({required String userId}) async {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (_shouldThrow || userId.isEmpty) {
@@ -27,7 +27,7 @@ class LocalSettingsRepository extends SettingsRepository {
   }
 
   @override
-  Future<void> updateStyleSettings({required String userId, required NotedStyleSettings style}) async {
+  Future<void> updateStyleSettings({required String userId, required StyleSettingsModel style}) async {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (_shouldThrow || userId.isEmpty) {

@@ -86,8 +86,8 @@ class _NotebookEditContentState extends State<_NotebookEditContent> {
   void initState() {
     super.initState();
 
-    NotebookNote initial =
-        context.read<NotesBloc>().state.notes.firstWhere((note) => note.id == widget.noteId) as NotebookNote;
+    NotebookNoteModel initial =
+        context.read<NotesBloc>().state.notes.firstWhere((note) => note.id == widget.noteId) as NotebookNoteModel;
     textController = NotedRichTextController.quill(initial: initial.document);
     titleController = TextEditingController(text: initial.title);
 
@@ -127,7 +127,7 @@ class _NotebookEditContentState extends State<_NotebookEditContent> {
   void _updateNote() {
     context.read<NotesBloc>().add(
           NotesUpdateNoteEvent(
-            NotebookNote(
+            NotebookNoteModel(
               id: widget.noteId,
               title: titleController.text,
               document: textController.value,

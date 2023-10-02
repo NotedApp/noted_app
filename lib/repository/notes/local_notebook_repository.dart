@@ -7,15 +7,15 @@ import 'package:noted_models/noted_models.dart';
 import 'package:uuid/uuid.dart';
 
 /// Default local notes.
-const Map<String, NotedNote> localNotes = {
-  'test-note-0': NotebookNote(
+const Map<String, NoteModel> localNotes = {
+  'test-note-0': NotebookNoteModel(
     id: 'test-note-0',
     title: 'Note 0',
     document: [
       {'insert': 'hello world\n'},
     ],
   ),
-  'test-note-1': NotebookNote(
+  'test-note-1': NotebookNoteModel(
     id: 'test-note-1',
     title: 'Note 1',
     document: [
@@ -26,8 +26,8 @@ const Map<String, NotedNote> localNotes = {
 
 /// A [NotesRepository] that uses mock data as its source of truth.
 class LocalNotesRepository extends NotesRepository implements Disposable {
-  late final StreamController<List<NotedNote>> _notesController;
-  Map<String, NotedNote> _notes = {...localNotes};
+  late final StreamController<List<NoteModel>> _notesController;
+  Map<String, NoteModel> _notes = {...localNotes};
   bool _shouldThrow = false;
   int _msDelay = 2000;
 
@@ -38,7 +38,7 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
   }
 
   @override
-  Future<Stream<List<NotedNote>>> subscribeNotes({required String userId}) async {
+  Future<Stream<List<NoteModel>>> subscribeNotes({required String userId}) async {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (_shouldThrow || userId.isEmpty) {
@@ -49,7 +49,7 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
   }
 
   @override
-  Future<String> addNote({required String userId, required NotedNote note}) async {
+  Future<String> addNote({required String userId, required NoteModel note}) async {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (_shouldThrow || userId.isEmpty) {
@@ -63,7 +63,7 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
   }
 
   @override
-  Future<void> updateNote({required String userId, required NotedNote note}) async {
+  Future<void> updateNote({required String userId, required NoteModel note}) async {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (_shouldThrow || userId.isEmpty) {

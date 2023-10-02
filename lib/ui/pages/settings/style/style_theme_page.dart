@@ -9,7 +9,7 @@ import 'package:noted_app/util/extensions.dart';
 import 'package:noted_models/noted_models.dart';
 
 class StyleThemePage extends StatelessWidget {
-  List<NotedColorSchemeName> get names => NotedColorSchemeName.values;
+  List<ColorSchemeModelName> get names => ColorSchemeModelName.values;
 
   const StyleThemePage({super.key});
 
@@ -25,7 +25,7 @@ class StyleThemePage extends StatelessWidget {
         physics: notedScrollPhysics,
         padding: const EdgeInsets.fromLTRB(12, 16, 12, 128),
         itemBuilder: (context, index) {
-          ColorScheme colors = NotedColorScheme.fromName(
+          ColorScheme colors = ColorSchemeModel.fromName(
             names[index],
             state.customColorScheme,
           ).toMaterial();
@@ -43,14 +43,14 @@ class StyleThemePage extends StatelessWidget {
     );
   }
 
-  String _getSchemeName(Strings strings, NotedColorSchemeName name) {
+  String _getSchemeName(Strings strings, ColorSchemeModelName name) {
     return switch (name) {
-      NotedColorSchemeName.blue => strings.settings_style_blue,
-      NotedColorSchemeName.green => strings.settings_style_green,
-      NotedColorSchemeName.dark => strings.settings_style_dark,
-      NotedColorSchemeName.oled => strings.settings_style_oled,
-      NotedColorSchemeName.light => strings.settings_style_light,
-      NotedColorSchemeName.custom => strings.settings_style_custom,
+      ColorSchemeModelName.blue => strings.settings_style_blue,
+      ColorSchemeModelName.green => strings.settings_style_green,
+      ColorSchemeModelName.dark => strings.settings_style_dark,
+      ColorSchemeModelName.oled => strings.settings_style_oled,
+      ColorSchemeModelName.light => strings.settings_style_light,
+      ColorSchemeModelName.custom => strings.settings_style_custom,
     };
   }
 }

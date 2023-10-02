@@ -14,8 +14,8 @@ class NotedThemeBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsBloc, SettingsState>(
       buildWhen: (previous, current) {
-        NotedStyleSettings old = previous.settings.style;
-        NotedStyleSettings next = current.settings.style;
+        StyleSettingsModel old = previous.settings.style;
+        StyleSettingsModel next = current.settings.style;
         return old.colorScheme != next.colorScheme || old.textTheme != next.textTheme;
       },
       builder: (context, state) {

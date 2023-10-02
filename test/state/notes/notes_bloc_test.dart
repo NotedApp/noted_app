@@ -15,8 +15,8 @@ import '../../helpers/environment/unit_test_environment.dart';
 import '../../helpers/mocks/mock_delta.dart';
 
 void main() {
-  NotebookNote testNote = NotebookNote(id: 'test', title: 'test', document: testData0);
-  NotebookNote updatedTest = NotebookNote(id: 'test', title: 'updated', document: testData0);
+  NotebookNoteModel testNote = NotebookNoteModel(id: 'test', title: 'test', document: testData0);
+  NotebookNoteModel updatedTest = NotebookNoteModel(id: 'test', title: 'updated', document: testData0);
 
   group('NotesBloc', () {
     LocalNotesRepository notes() => locator<NotesRepository>() as LocalNotesRepository;

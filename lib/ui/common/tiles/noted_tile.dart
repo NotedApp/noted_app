@@ -22,8 +22,8 @@ class NotedTile extends StatelessWidget {
   }
 }
 
-Widget buildNotedTile(NotedNote note, VoidCallback onTap) {
+Widget buildNotedTile(NoteModel note, VoidCallback onTap) {
   return switch (note) {
-    NotebookNote() => NotebookNoteTile(note: note, onTap: onTap),
+    NotebookNoteModel() => NotebookNoteModelTile(note: note, onTap: onTap),
   };
 }

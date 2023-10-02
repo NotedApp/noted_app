@@ -58,7 +58,7 @@ void main() {
                 width: 300,
                 height: 300,
                 child: buildNotedTile(
-                  NotebookNote(
+                  NotebookNoteModel(
                     id: 'notebook',
                     title: 'notebook',
                     document: [
@@ -73,7 +73,7 @@ void main() {
         ),
       );
 
-      Finder notebookFinder = find.byType(NotebookNoteTile);
+      Finder notebookFinder = find.byType(NotebookNoteModelTile);
 
       await tester.tap(notebookFinder);
 

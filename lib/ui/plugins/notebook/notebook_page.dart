@@ -28,7 +28,7 @@ class _NotebookPageState extends State<NotebookPage> {
     Strings strings = context.strings();
     NotesBloc bloc = context.watch();
 
-    VoidCallback addNote = () => debouncer.run(() => bloc.add(NotesAddEvent(NotebookNote.emptyQuill())));
+    VoidCallback addNote = () => debouncer.run(() => bloc.add(NotesAddEvent(NotebookNoteModel.emptyQuill())));
 
     return BlocConsumer<NotesBloc, NotesState>(
       bloc: bloc,

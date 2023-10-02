@@ -5,7 +5,7 @@ import 'package:noted_app/repository/notes/local_notebook_repository.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
-const NotebookNote testNote = NotebookNote(
+const NotebookNoteModel testNote = NotebookNoteModel(
   id: 'test-0',
   title: 'test note',
   document: [],
@@ -21,7 +21,7 @@ void main() {
 
   group('LocalNotesRepository', () {
     test('creates, updates, and deletes notes', () async {
-      Stream<List<NotedNote>> stream = await repository.subscribeNotes(userId: 'test');
+      Stream<List<NoteModel>> stream = await repository.subscribeNotes(userId: 'test');
 
       expectLater(
         stream,
@@ -64,7 +64,7 @@ void main() {
       await expectLater(
         () => repository.addNote(
           userId: 'test',
-          note: NotebookNote(
+          note: NotebookNoteModel(
             id: '',
             title: 'test note',
             document: [],
@@ -80,7 +80,7 @@ void main() {
       await expectLater(
         () => repository.updateNote(
           userId: 'test',
-          note: NotebookNote(
+          note: NotebookNoteModel(
             id: 'test-note-0',
             title: 'test note',
             document: [],

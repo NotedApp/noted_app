@@ -13,12 +13,12 @@ import 'package:noted_models/noted_models.dart';
 class SettingsBloc extends NotedBloc<SettingsEvent, SettingsState> {
   final SettingsRepository _settings;
   final AuthRepository _auth;
-  late final StreamSubscription<NotedUser> _userSubscription;
+  late final StreamSubscription<UserModel> _userSubscription;
 
   SettingsBloc({SettingsRepository? settingsRepository, AuthRepository? authRepository})
       : _settings = settingsRepository ?? locator<SettingsRepository>(),
         _auth = authRepository ?? locator<AuthRepository>(),
-        super(const SettingsState(settings: NotedSettings()), 'settings') {
+        super(const SettingsState(settings: SettingsModel()), 'settings') {
     on<SettingsLoadUserEvent>(_onLoadUser);
     on<SettingsUpdateStyleColorSchemeEvent>(_onUpdateStyleColorScheme);
     on<SettingsUpdateStyleCustomColorSchemeEvent>(_onUpdateStyleCustomColorScheme);
@@ -45,7 +45,7 @@ class SettingsBloc extends NotedBloc<SettingsEvent, SettingsState> {
       }
 
       emit(SettingsState(status: SettingsStatus.loading, settings: state.settings));
-      NotedSettings settings = await _settings.fetchSettings(userId: _auth.currentUser.id);
+      SettingsModel settings = await _settings.fetchSettings(userId: _auth.currentUser.id);
       emit(SettingsState(settings: settings));
     } catch (e) {
       emit(SettingsState(error: NotedError.fromObject(e), settings: state.settings));
@@ -83,7 +83,7 @@ class SettingsBloc extends NotedBloc<SettingsEvent, SettingsState> {
   }
 
   Future<void> _updateStyleSetting(
-    NotedStyleSettings style,
+    StyleSettingsModel style,
     Emitter<SettingsState> emit,
   ) async {
     try {
@@ -99,7 +99,7 @@ class SettingsBloc extends NotedBloc<SettingsEvent, SettingsState> {
   }
 
   void _onReset(SettingsResetEvent event, Emitter<SettingsState> emit) async {
-    emit(SettingsState(settings: NotedSettings()));
+    emit(SettingsState(settings: SettingsModel()));
   }
 
   @override

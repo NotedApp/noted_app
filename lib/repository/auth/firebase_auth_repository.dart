@@ -18,11 +18,11 @@ class FirebaseAuthRepository extends AuthRepository {
         _googleSignIn = googleSignIn ?? GoogleSignIn.standard();
 
   @override
-  NotedUser get currentUser => _firebaseAuth.currentUser?._toNoted ?? NotedUser.empty();
+  UserModel get currentUser => _firebaseAuth.currentUser?._toNoted ?? UserModel.empty();
 
   @override
-  Stream<NotedUser> get userStream {
-    return _firebaseAuth.authStateChanges().map((firebaseUser) => firebaseUser?._toNoted ?? NotedUser.empty());
+  Stream<UserModel> get userStream {
+    return _firebaseAuth.authStateChanges().map((firebaseUser) => firebaseUser?._toNoted ?? UserModel.empty());
   }
 
   @override
@@ -189,8 +189,8 @@ class FirebaseAuthRepository extends AuthRepository {
 }
 
 extension on User {
-  NotedUser get _toNoted {
-    return NotedUser(
+  UserModel get _toNoted {
+    return UserModel(
       id: uid,
       email: email,
       name: displayName,

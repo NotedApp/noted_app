@@ -11,7 +11,7 @@ enum NotesStatus {
 
 final class NotesState extends Equatable {
   final NotesStatus status;
-  final List<NotedNote> notes;
+  final List<NoteModel> notes;
   final String added;
   final String deleted;
   final NotedError? error;
