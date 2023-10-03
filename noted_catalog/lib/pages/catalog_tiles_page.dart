@@ -9,9 +9,10 @@ class CatalogTilesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-      crossAxisSpacing: 8,
-      mainAxisSpacing: 8,
+      padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+      childAspectRatio: 0.8,
+      crossAxisSpacing: 2,
+      mainAxisSpacing: 2,
       crossAxisCount: 2,
       shrinkWrap: true,
       children: [

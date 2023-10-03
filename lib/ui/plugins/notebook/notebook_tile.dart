@@ -52,11 +52,12 @@ class _NotebookTileState extends State<NotebookTile> {
     }
 
     return NotedTile(
+      tags: widget.note.tags,
+      onTap: widget.onTap ?? () => context.push('notes/${widget.note.id}'),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 12),
         child: child,
       ),
-      onTap: widget.onTap ?? () => context.push('notes/${widget.note.id}'),
     );
   }
 

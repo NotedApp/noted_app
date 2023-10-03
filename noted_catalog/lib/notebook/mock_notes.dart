@@ -11,10 +11,18 @@ NotebookNoteModel testNote0 = NotebookNoteModel(
   id: 'test-0',
   title: '',
   document: _testData0,
+  tags: {'test'},
 );
 
 NotebookNoteModel testNote1 = NotebookNoteModel(
   id: 'test-1',
-  title: 'Test Note',
+  title: 'Test Note 1',
   document: _testData0,
+);
+
+NotebookNoteModel testNote2 = NotebookNoteModel(
+  id: 'test-2',
+  title: 'Test Note 2',
+  document: _testData0,
+  tags: {'test'},
 );
