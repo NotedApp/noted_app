@@ -25,6 +25,10 @@ jobs:
       - name: update dependencies
         run: flutter pub get
 
+      - name: update catalog dependencies
+        working-directory: ./noted_catalog
+        run: flutter pub get
+
       - name: analyze
         run: flutter analyze
 
