@@ -6,28 +6,30 @@ import 'package:noted_app/state/auth/auth_bloc.dart';
 import 'package:noted_app/state/auth/auth_event.dart';
 import 'package:noted_app/state/auth/auth_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
-import 'package:noted_app/ui/login/login_frame.dart';
+import 'package:noted_app/ui/pages/login/login_frame.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
 
-class RegisterPage extends StatefulWidget {
+class SignInPage extends StatefulWidget {
   final String initialEmail;
   final String initialPassword;
 
-  RegisterPage({this.initialEmail = '', this.initialPassword = '', super.key});
+  SignInPage({
+    this.initialEmail = '',
+    this.initialPassword = '',
+    super.key,
+  });
 
   @override
-  State<StatefulWidget> createState() => _RegisterPageState();
+  State<StatefulWidget> createState() => _SignInPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _SignInPageState extends State<SignInPage> {
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
-  late final TextEditingController _confirmController;
   String? _emailError = null;
   String? _passwordError = null;
-  String? _confirmError = null;
   bool _showPassword = false;
 
   @override
@@ -36,11 +38,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
     _emailController = TextEditingController(text: widget.initialEmail);
     _passwordController = TextEditingController(text: widget.initialPassword);
-    _confirmController = TextEditingController();
 
     _emailController.addListener(() => setState(() => _emailError = null));
     _passwordController.addListener(() => setState(() => _passwordError = null));
-    _confirmController.addListener(() => setState(() => _confirmError = null));
   }
 
   @override
@@ -50,7 +50,7 @@ class _RegisterPageState extends State<RegisterPage> {
     final Strings strings = context.strings();
 
     return LoginFrame(
-      headerTitle: context.strings().login_register,
+      headerTitle: context.strings().login_signIn,
       stateListener: _handleStateUpdate,
       contentBuilder: (key) => Column(
         key: key,
@@ -81,22 +81,22 @@ class _RegisterPageState extends State<RegisterPage> {
             onIconPressed: () => setState(() => _showPassword = !_showPassword),
           ),
           SizedBox(height: 12),
-          NotedTextField(
-            controller: _confirmController,
-            name: strings.login_confirmPassword,
-            hint: strings.login_confirmPassword,
-            errorText: _confirmError,
-            showErrorText: true,
-            keyboardType: TextInputType.visiblePassword,
-            type: NotedTextFieldType.standard,
-            autocorrect: false,
-            obscureText: !_showPassword,
+          NotedTextButton(
+            label: strings.login_signIn,
+            type: NotedTextButtonType.filled,
+            onPressed: () => bloc.add(
+              AuthSignInWithEmailEvent(
+                _emailController.text,
+                _passwordController.text,
+              ),
+            ),
           ),
           SizedBox(height: 12),
           NotedTextButton(
             label: strings.login_register,
             type: NotedTextButtonType.filled,
-            onPressed: () => _tryRegister(context, bloc),
+            color: NotedWidgetColor.secondary,
+            onPressed: () => context.push('/login/register'),
           ),
           Padding(
             padding: EdgeInsets.fromLTRB(36, 14, 36, 18),
@@ -105,13 +105,13 @@ class _RegisterPageState extends State<RegisterPage> {
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text: strings.login_existingAccount,
+                    text: strings.login_forgotPassword,
                     style: theme.labelSmall,
                   ),
                   TextSpan(
-                    text: strings.login_signIn,
+                    text: strings.login_resetPassword,
                     style: theme.labelSmall?.copyWith(decoration: TextDecoration.underline),
-                    recognizer: TapGestureRecognizer()..onTap = () => context.push('/login/sign-in'),
+                    recognizer: TapGestureRecognizer()..onTap = () => context.push('/login/reset-password'),
                   ),
                 ],
               ),
@@ -128,16 +128,14 @@ class _RegisterPageState extends State<RegisterPage> {
       String? message;
 
       switch (state.error!.code) {
-        case ErrorCode.auth_createUser_invalidEmail:
-          setState(() => _emailError = strings.login_error_createUserInvalidEmail);
-        case ErrorCode.auth_createUser_weakPassword:
-          setState(() => _passwordError = strings.login_error_weakPassword);
-        case ErrorCode.auth_createUser_disabled:
+        case ErrorCode.auth_emailSignIn_invalidEmail:
+          setState(() => _emailError = strings.login_error_emailSignInInvalidEmail);
+        case ErrorCode.auth_emailSignIn_invalidPassword:
+          setState(() => _passwordError = strings.login_error_emailSignInInvalidPassword);
+        case ErrorCode.auth_emailSignIn_disabled:
           message = strings.login_error_accountDisabled;
-        case ErrorCode.auth_createUser_existingAccount:
-          message = strings.login_error_createUserExistingAccount;
         default:
-          message = strings.login_error_createUserFailed;
+          message = strings.login_error_signInFailed;
       }
 
       if (message != null) {
@@ -152,20 +150,10 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-  void _tryRegister(BuildContext context, AuthBloc bloc) {
-    if (_passwordController.text != _confirmController.text) {
-      setState(() => _confirmError = context.strings().login_error_confirmPassword);
-      return;
-    }
-
-    bloc.add(AuthSignUpWithEmailEvent(_emailController.text, _passwordController.text));
-  }
-
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
-    _confirmController.dispose();
     super.dispose();
   }
 }
