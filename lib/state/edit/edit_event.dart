@@ -6,6 +6,12 @@ sealed class EditEvent extends NotedEvent implements TrackableEvent {
   const EditEvent();
 }
 
+class EditLoadEvent extends EditEvent {
+  final String id;
+
+  const EditLoadEvent(this.id);
+}
+
 class EditAddEvent extends EditEvent {
   final NoteModel note;
 
@@ -18,12 +24,10 @@ class EditUpdateEvent extends EditEvent {
   const EditUpdateEvent(this.note);
 }
 
-class EditDeleteEvent extends EditEvent {}
-
-class EditLoadEvent extends EditEvent {
+class EditDeleteEvent extends EditEvent {
   final String id;
 
-  const EditLoadEvent(this.id);
+  const EditDeleteEvent(this.id);
 }
 
 class EditRemoteUpdateEvent extends EditEvent {
@@ -37,3 +41,5 @@ class EditRemoteUpdateErrorEvent extends EditEvent {
 
   const EditRemoteUpdateErrorEvent(this.error);
 }
+
+class EditCloseEvent extends EditEvent {}

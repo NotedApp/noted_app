@@ -3,12 +3,13 @@ import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 enum EditStatus {
+  initial,
   empty,
-  loaded,
   loading,
-  adding,
+  loaded,
   updating,
   deleting,
+  deleted,
 }
 
 final class EditState extends Equatable {
@@ -17,7 +18,7 @@ final class EditState extends Equatable {
   final NotedError? error;
 
   const EditState({
-    this.status = EditStatus.loading,
+    this.status = EditStatus.initial,
     required this.note,
     this.error = null,
   });
