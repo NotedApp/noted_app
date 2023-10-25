@@ -27,8 +27,25 @@ class FirebaseNotesRepository extends NotesRepository {
             throw NotedError(ErrorCode.notes_parse_failed);
           }
 
-          return NotebookNoteModel.fromMap(Map<String, dynamic>.from(val));
+          return NoteModel.fromMap(Map<String, dynamic>.from(val));
         }).toList();
+      });
+    } catch (_) {
+      throw NotedError(ErrorCode.notes_subscribe_failed);
+    }
+  }
+
+  @override
+  Future<Stream<NoteModel>> subscribeNote({required String userId, required String noteId}) async {
+    try {
+      return _notes(userId).child(noteId).onValue.map((event) {
+        Object? val = event.snapshot.value;
+
+        if (val == null || val is! Map) {
+          throw NotedError(ErrorCode.notes_parse_failed);
+        }
+
+        return NoteModel.fromMap(Map<String, dynamic>.from(val));
       });
     } catch (_) {
       throw NotedError(ErrorCode.notes_subscribe_failed);

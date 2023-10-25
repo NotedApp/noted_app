@@ -27,6 +27,7 @@ const Map<String, NoteModel> localNotes = {
 /// A [NotesRepository] that uses mock data as its source of truth.
 class LocalNotesRepository extends NotesRepository implements Disposable {
   late final StreamController<List<NoteModel>> _notesController;
+  late final StreamController<NoteModel> _noteController;
   Map<String, NoteModel> _notes = {...localNotes};
   bool _shouldThrow = false;
   int _msDelay = 2000;
@@ -34,6 +35,10 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
   LocalNotesRepository() {
     _notesController = StreamController.broadcast(
       onListen: () => _notesController.add(_notes.values.toList()),
+    );
+
+    _noteController = StreamController.broadcast(
+      onListen: () => _noteController.add(_notes.values.firstOrNull ?? NotebookNoteModel.emptyQuill()),
     );
   }
 
@@ -46,6 +51,17 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
     }
 
     return _notesController.stream;
+  }
+
+  @override
+  Future<Stream<NoteModel>> subscribeNote({required String userId, required String noteId}) async {
+    await Future.delayed(Duration(milliseconds: _msDelay));
+
+    if (_shouldThrow || userId.isEmpty) {
+      throw NotedError(ErrorCode.notes_subscribe_failed);
+    }
+
+    return _noteController.stream;
   }
 
   @override

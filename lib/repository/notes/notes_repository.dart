@@ -5,6 +5,9 @@ abstract class NotesRepository {
   /// Subscribes to the notebook notes for the given user.
   Future<Stream<List<NoteModel>>> subscribeNotes({required String userId});
 
+  /// Subscribes to a specific note for the given user.
+  Future<Stream<NoteModel>> subscribeNote({required String userId, required String noteId});
+
   /// Adds a note for the given user, returning the ID of the note that was added.
   Future<String> addNote({required String userId, required NoteModel note});
 

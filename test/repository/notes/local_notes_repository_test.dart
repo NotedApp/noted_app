@@ -23,6 +23,8 @@ void main() {
     test('creates, updates, and deletes notes', () async {
       Stream<List<NoteModel>> stream = await repository.subscribeNotes(userId: 'test');
 
+      Stream<NoteModel> singleStream = await repository.subscribeNote(userId: 'test', noteId: 'test');
+
       expectLater(
         stream,
         emitsInOrder([
@@ -32,6 +34,8 @@ void main() {
           [...localNotes.values],
         ]),
       );
+
+      expectLater(singleStream, emitsInOrder([localNotes.values.firstOrNull]));
 
       await repository.addNote(
         userId: 'test',
@@ -54,6 +58,15 @@ void main() {
 
       await expectLater(
         () => repository.subscribeNotes(userId: 'test'),
+        throwsA(NotedError(ErrorCode.notes_subscribe_failed)),
+      );
+    });
+
+    test('handles fetch single error', () async {
+      repository.setShouldThrow(true);
+
+      await expectLater(
+        () => repository.subscribeNote(userId: 'test', noteId: 'test'),
         throwsA(NotedError(ErrorCode.notes_subscribe_failed)),
       );
     });
