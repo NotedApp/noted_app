@@ -633,7 +633,7 @@ packages:
     dependency: "direct dev"
     description:
       path: "."
-      ref: master
+      ref: "v1.0.0"
       resolved-ref: "18456db1668349e6ffc7a2b551edfb856c1754c2"
       url: "https://github.com/NotedApp/noted_lints.git"
     source: git
@@ -642,8 +642,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: master
-      resolved-ref: ca7de1e09cefdf5040cc06a9d8b430785290784d
+      ref: "v0.0.2-alpha"
+      resolved-ref: "5e0a4bbfed14bad3b134af3f3ed0e13a84aa5ebe"
       url: "https://github.com/NotedApp/noted_models.git"
     source: git
     version: "0.0.1"
