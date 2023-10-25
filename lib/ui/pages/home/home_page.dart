@@ -23,16 +23,12 @@ class HomePage extends StatelessWidget {
     Strings strings = context.strings();
     NotesBloc bloc = context.watch();
 
-    VoidCallback addNote = () => debouncer.run(() => bloc.add(NotesAddEvent(NotebookNoteModel.emptyQuill())));
-
     return BlocConsumer<NotesBloc, NotesState>(
       bloc: bloc,
       listenWhen: (previous, current) => previous.error != current.error || previous.added != current.added,
       listener: (context, state) {
         if (state.error != null) {
           handleNotesError(context, state);
-        } else if (state.added.isNotEmpty) {
-          context.push('/notes/${state.added}');
         }
       },
       builder: (context, state) => NotedHeaderPage(
@@ -51,10 +47,12 @@ class HomePage extends StatelessWidget {
           icon: NotedIcons.plus,
           type: NotedIconButtonType.filled,
           size: NotedWidgetSize.large,
-          onPressed: state.status != NotesStatus.adding ? addNote : null,
+          onPressed: () => _handleAddNote(context, bloc, debouncer),
         ),
         child: switch (state) {
           NotesState(status: NotesStatus.loading) => HomeLoading(),
+          NotesState(status: NotesStatus.adding) => HomeLoading(),
+          NotesState(status: NotesStatus.deleting) => HomeLoading(),
           NotesState(error: NotedError(code: ErrorCode.notes_subscribe_failed)) => HomeError(),
           NotesState(notes: []) => HomeEmpty(),
           _ => HomeContent(notes: state.notes),
@@ -83,4 +81,9 @@ void handleNotesError(BuildContext context, NotesState state) {
       ),
     );
   }
+}
+
+void _handleAddNote(BuildContext context, NotesBloc bloc, Debouncer debouncer) {
+  debouncer.run(() => bloc.add(NotesAddEvent(NotebookNoteModel.emptyQuill())));
+  context.push('/notes/add');
 }

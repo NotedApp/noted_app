@@ -22,7 +22,7 @@ class StyleFontsPage extends StatelessWidget {
       title: strings.settings_style_fontsTitle,
       buildWhen: (previous, current) => previous.textThemeName != current.textThemeName,
       builder: (context, state) => ListView.separated(
-        physics: notedScrollPhysics,
+        physics: NotedWidgetConfig.scrollPhysics,
         padding: const EdgeInsets.fromLTRB(12, 16, 12, 128),
         itemBuilder: (context, index) {
           TextTheme theme = TextThemeModel.fromName(names[index]).toMaterial();

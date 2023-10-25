@@ -110,8 +110,12 @@ final GoRoute _notes = GoRoute(
   builder: (context, state) => HomePage(),
   routes: [
     GoRoute(
+      path: 'add',
+      builder: (context, state) => EditPage(initialId: null),
+    ),
+    GoRoute(
       path: ':noteId',
-      builder: (context, state) => EditPage(noteId: state.pathParameters['noteId'] ?? ''),
+      builder: (context, state) => EditPage(initialId: state.pathParameters['noteId']),
     ),
   ],
 );

@@ -22,7 +22,7 @@ class StyleThemePage extends StatelessWidget {
       title: strings.settings_style_themeTitle,
       buildWhen: (previous, current) => previous.colorSchemeName != current.colorSchemeName,
       builder: (context, state) => ListView.separated(
-        physics: notedScrollPhysics,
+        physics: NotedWidgetConfig.scrollPhysics,
         padding: const EdgeInsets.fromLTRB(12, 16, 12, 128),
         itemBuilder: (context, index) {
           ColorScheme colors = ColorSchemeModel.fromName(

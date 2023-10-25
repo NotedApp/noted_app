@@ -108,7 +108,7 @@ class NotedColorPickerButton extends StatelessWidget {
         onPressed: onPressed,
         style: ButtonStyle(
           iconColor: color.getBW().materialState(),
-          overlayColor: color.getBW().withOpacity(buttonOverlayOpacity).materialState(),
+          overlayColor: color.getBW().withOpacity(NotedWidgetConfig.buttonOverlayOpacity).materialState(),
           backgroundColor: color.materialState(),
           iconSize: 28.toDouble().materialState(),
           padding: EdgeInsets.zero.materialState(),

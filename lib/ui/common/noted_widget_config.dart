@@ -12,6 +12,10 @@ enum NotedWidgetColor {
   tertiary,
 }
 
-const double buttonOverlayOpacity = 0.1;
+abstract class NotedWidgetConfig {
+  static const double buttonOverlayOpacity = 0.1;
 
-const ScrollPhysics notedScrollPhysics = BouncingScrollPhysics();
+  static const double tileAspectRatio = 0.8;
+
+  static const ScrollPhysics scrollPhysics = BouncingScrollPhysics();
+}
