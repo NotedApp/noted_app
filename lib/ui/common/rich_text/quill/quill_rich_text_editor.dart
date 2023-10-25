@@ -24,20 +24,23 @@ class QuillRichTextEditor extends NotedRichTextEditor {
     ThemeData theme = Theme.of(context);
     QuillController quillController = (controller as QuillRichTextController).controller;
 
-    return QuillEditor(
-      controller: quillController,
-      focusNode: focusNode ?? FocusNode(),
-      scrollController: ScrollController(),
-      scrollable: true,
-      padding: padding,
-      autoFocus: autofocus,
-      readOnly: readonly,
-      expands: true,
-      placeholder: placeholder,
-      showCursor: !readonly,
-      keyboardAppearance: theme.brightness,
-      onTapUp: _handleTap,
-      customStyles: _getStyles(context),
+    return QuillProvider(
+      configurations: QuillConfigurations(controller: quillController),
+      child: QuillEditor(
+        configurations: QuillEditorConfigurations(
+          padding: padding,
+          autoFocus: autofocus,
+          readOnly: readonly,
+          expands: true,
+          placeholder: placeholder,
+          showCursor: !readonly,
+          keyboardAppearance: theme.brightness,
+          onTapUp: _handleTap,
+          customStyles: _getStyles(context),
+        ),
+        focusNode: focusNode ?? FocusNode(),
+        scrollController: ScrollController(),
+      ),
     );
   }
 

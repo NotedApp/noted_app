@@ -1,0 +1,99 @@
+name: noted_catalog
+description: A catalog of common noted components.
+publish_to: "none"
+version: 1.0.0
+
+environment:
+  sdk: ">=3.1.3 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+  noted_app:
+    path: ../../noted_app
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  noted_lints:
+    git:
+      url: https://github.com/NotedApp/noted_lints.git
+      ref: v1.0.0
+
+flutter:
+  uses-material-design: true
+  generate: true
+
+  assets:
+    - assets/svg/woman_climbing.svg
+    - assets/svg/woman_reading.svg
+
+  fonts:
+    - family: NotedIcons
+      fonts:
+        - asset: fonts/icons/NotedIcons.ttf
+    - family: Poppins
+      fonts:
+        - asset: fonts/poppins/Poppins-Regular.ttf
+        - asset: fonts/poppins/Poppins-Italic.ttf
+          style: italic
+        - asset: fonts/poppins/Poppins-Medium.ttf
+          weight: 500
+        - asset: fonts/poppins/Poppins-MediumItalic.ttf
+          style: italic
+          weight: 500
+        - asset: fonts/poppins/Poppins-Bold.ttf
+          weight: 700
+        - asset: fonts/poppins/Poppins-BoldItalic.ttf
+          style: italic
+          weight: 700
+    - family: Roboto
+      fonts:
+        - asset: fonts/roboto/Roboto-Regular.ttf
+        - asset: fonts/roboto/Roboto-Italic.ttf
+          style: italic
+        - asset: fonts/roboto/Roboto-Medium.ttf
+          weight: 500
+        - asset: fonts/roboto/Roboto-MediumItalic.ttf
+          style: italic
+          weight: 500
+        - asset: fonts/roboto/Roboto-Bold.ttf
+          weight: 700
+        - asset: fonts/roboto/Roboto-BoldItalic.ttf
+          style: italic
+          weight: 700
+    - family: Lora
+      fonts:
+        - asset: fonts/lora/Lora-Regular.ttf
+        - asset: fonts/lora/Lora-Italic.ttf
+          style: italic
+        - asset: fonts/lora/Lora-Medium.ttf
+          weight: 500
+        - asset: fonts/lora/Lora-MediumItalic.ttf
+          style: italic
+          weight: 500
+        - asset: fonts/lora/Lora-Bold.ttf
+          weight: 700
+        - asset: fonts/lora/Lora-BoldItalic.ttf
+          style: italic
+          weight: 700
+    - family: Vollkorn
+      fonts:
+        - asset: fonts/vollkorn/Vollkorn-Regular.ttf
+        - asset: fonts/vollkorn/Vollkorn-Italic.ttf
+          style: italic
+        - asset: fonts/vollkorn/Vollkorn-Medium.ttf
+          weight: 500
+        - asset: fonts/vollkorn/Vollkorn-MediumItalic.ttf
+          style: italic
+          weight: 500
+        - asset: fonts/vollkorn/Vollkorn-Bold.ttf
+          weight: 700
+        - asset: fonts/vollkorn/Vollkorn-BoldItalic.ttf
+          style: italic
+          weight: 700
