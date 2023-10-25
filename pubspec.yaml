@@ -2,7 +2,7 @@ name: noted_app
 description: An app that helps you keep track of the things that you care about.
 publish_to: "none"
 
-version: 0.0.1+1
+version: 0.0.1
 
 environment:
   sdk: ">=3.0.1 <4.0.0"

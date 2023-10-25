@@ -1,0 +1,30 @@
+name: noted_catalog
+description: A catalog of common noted components.
+publish_to: "none"
+version: 1.0.0
+
+environment:
+  sdk: ">=3.1.3 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+  noted_app:
+    path: ../../noted_app
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  noted_lints:
+    git:
+      url: https://github.com/NotedApp/noted_lints.git
+      ref: v1.0.0
+
+flutter:
+  uses-material-design: true
+  generate: true

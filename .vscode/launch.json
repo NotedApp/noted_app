@@ -68,14 +68,14 @@
       "name": "noted_catalog (debug mode)",
       "request": "launch",
       "type": "dart",
-      "program": "lib/catalog/catalog.dart"
+      "program": "noted_catalog/lib/catalog.dart"
     },
     {
       "name": "noted_catalog (release mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "release",
-      "program": "lib/catalog/catalog.dart"
+      "program": "noted_catalog/lib/catalog.dart"
     }
   ]
 }
