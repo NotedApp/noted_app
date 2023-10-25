@@ -1,25 +1,4 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-import 'package:noted_app/ui/common/noted_library.dart';
-import 'package:noted_app/util/extensions.dart';
-import 'package:noted_app/ui/router/noted_router.dart';
-
-class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return NotedHeaderPage(
-      hasBackButton: false,
-      child: Center(child: Text('hello world')),
-      title: context.strings().app_title,
-      trailingActions: [
-        NotedIconButton(
-          icon: NotedIcons.settings,
-          type: NotedIconButtonType.filled,
-          size: NotedWidgetSize.small,
-          onPressed: () => context.push('/settings'),
-        ),
-      ],
-=======
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/state/notes/notes_bloc.dart';
@@ -102,7 +81,6 @@ void handleNotesError(BuildContext context, NotesState state) {
         text: message,
         hasClose: true,
       ),
->>>>>>> d8b6287 (#132: move pages and change notebook pages to home pages)
     );
   }
 }

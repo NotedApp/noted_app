@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:noted_app/state/auth/auth_bloc.dart';
 import 'package:noted_app/state/auth/auth_state.dart';
+import 'package:noted_app/ui/pages/edit/edit_page.dart';
 import 'package:noted_app/ui/pages/home/home_page.dart';
 import 'package:noted_app/ui/pages/login/login_page.dart';
 import 'package:noted_app/ui/pages/login/password_reset_page.dart';
@@ -14,7 +15,6 @@ import 'package:noted_app/ui/pages/settings/settings_page.dart';
 import 'package:noted_app/ui/pages/settings/style/style_page.dart.dart';
 import 'package:noted_app/ui/pages/settings/style/style_fonts_page.dart';
 import 'package:noted_app/ui/pages/settings/style/style_theme_page.dart';
-import 'package:noted_app/ui/plugins/notebook/notebook_edit_page.dart';
 
 GoRouter routerConfig = GoRouter(
   routes: [_home, _login],
@@ -111,7 +111,7 @@ final GoRoute _notes = GoRoute(
   routes: [
     GoRoute(
       path: ':noteId',
-      builder: (context, state) => NotebookEditPage(noteId: state.pathParameters['noteId'] ?? ''),
+      builder: (context, state) => EditPage(noteId: state.pathParameters['noteId'] ?? ''),
     ),
   ],
 );

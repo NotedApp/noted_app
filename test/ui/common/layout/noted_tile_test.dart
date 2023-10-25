@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
-import 'package:noted_app/ui/plugins/notebook/tiles/notebook_note_tile.dart';
+import 'package:noted_app/ui/plugins/notebook/notebook_note_tile.dart';
 import 'package:noted_models/noted_models.dart';
 
 import '../../../helpers/mocks/mock_callbacks.dart';

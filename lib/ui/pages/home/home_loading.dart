@@ -5,7 +5,7 @@ class HomeLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(16, 20, 16, 0),
+      padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
       child: LoadingProvider(
         child: GridView.count(
           physics: NeverScrollableScrollPhysics(),
