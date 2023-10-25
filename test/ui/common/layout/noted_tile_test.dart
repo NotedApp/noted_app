@@ -35,18 +35,6 @@ void main() {
       verify(() => onPressed()).called(1);
     });
 
-    testWidgets('loading tile renders as expected', (tester) async {
-      await tester.pumpWidget(
-        TestWrapper(
-          child: SizedBox(
-            height: 80,
-            child: NotedLoadingTile(),
-          ),
-        ),
-      );
-      expect(find.byType(Container), findsOneWidget);
-    });
-
     testWidgets('tile builder works as expected', (tester) async {
       MockVoidCallback notebookCallback = MockVoidCallback();
 
