@@ -6,7 +6,7 @@ import 'package:noted_app/state/notes/notes_event.dart';
 import 'package:noted_app/ui/common/button/button.dart';
 import 'package:noted_app/util/extensions.dart';
 
-class NotebookError extends StatelessWidget {
+class HomeError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Strings strings = context.strings();
@@ -18,7 +18,7 @@ class NotebookError extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(strings.notebook_error_failed, textAlign: TextAlign.center),
+            Text(strings.notes_error_failed, textAlign: TextAlign.center),
             SizedBox(height: 12),
             NotedTextButton(
               label: strings.common_refresh,

@@ -3,10 +3,10 @@ import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
 import 'package:noted_models/noted_models.dart';
 
-class NotebookContent extends StatelessWidget {
+class HomeContent extends StatelessWidget {
   final List<NoteModel> notes;
 
-  NotebookContent({required this.notes});
+  HomeContent({required this.notes});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class NotebookContent extends StatelessWidget {
         ),
         itemBuilder: (context, index) => buildNotedTile(
           notes[index],
-          () => context.push('/notebook/${notes[index].id}'),
+          () => context.push('/notes/${notes[index].id}'),
         ),
       ),
     );

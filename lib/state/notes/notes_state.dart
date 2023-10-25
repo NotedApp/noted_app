@@ -20,4 +20,8 @@ final class NotesState extends Equatable {
 
   @override
   List<Object?> get props => [status, notes, error];
+
+  NoteModel getNote(String id) {
+    return notes.firstWhere((element) => element.id == id);
+  }
 }

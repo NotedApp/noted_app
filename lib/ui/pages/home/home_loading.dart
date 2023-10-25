@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 
-class NotebookLoading extends StatelessWidget {
+class HomeLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(

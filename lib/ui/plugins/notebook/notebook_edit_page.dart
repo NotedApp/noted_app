@@ -5,8 +5,8 @@ import 'package:noted_app/state/notes/notes_bloc.dart';
 import 'package:noted_app/state/notes/notes_event.dart';
 import 'package:noted_app/state/notes/notes_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
+import 'package:noted_app/ui/pages/home/home_page.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
-import 'package:noted_app/ui/plugins/notebook/notebook_page.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_models/noted_models.dart';
 
@@ -17,13 +17,11 @@ class NotebookEditPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isDeleting = context.select((NotesBloc bloc) => bloc.state.status == NotesStatus.deleting);
-
     return BlocListener<NotesBloc, NotesState>(
       listenWhen: (previous, current) => previous.error != current.error || previous.deleted != current.deleted,
       listener: (context, state) {
         if (state.error != null) {
-          handleNotebookError(context, state);
+          handleNotesError(context, state);
         } else if (state.deleted.isNotEmpty) {
           context.pop();
         }
@@ -33,13 +31,12 @@ class NotebookEditPage extends StatelessWidget {
         trailingActions: [
           NotedIconButton(
             icon: NotedIcons.trash,
-            iconWidget: isDeleting ? NotedLoadingIndicator() : null,
             type: NotedIconButtonType.filled,
             size: NotedWidgetSize.small,
             onPressed: () => _confirmDeleteNote(context),
           ),
         ],
-        child: _NotebookEditContent(noteId: noteId, key: ValueKey(noteId)),
+        child: _NotebookEditContent(noteId: noteId),
       ),
     );
   }
@@ -51,7 +48,7 @@ class NotebookEditPage extends StatelessWidget {
     bool? result = await showDialog<bool>(
       context: context,
       builder: (context) => NotedDialog(
-        child: Text(strings.notebook_delete_confirmText),
+        child: Text(strings.notes_delete_confirmText),
         leftActionText: strings.common_confirm,
         onLeftActionPressed: () {
           bloc.add(NotesDeleteEvent(noteId));
@@ -71,7 +68,7 @@ class NotebookEditPage extends StatelessWidget {
 class _NotebookEditContent extends StatefulWidget {
   final String noteId;
 
-  const _NotebookEditContent({required this.noteId, super.key});
+  const _NotebookEditContent({required this.noteId});
 
   @override
   State<StatefulWidget> createState() => _NotebookEditContentState();
@@ -86,8 +83,8 @@ class _NotebookEditContentState extends State<_NotebookEditContent> {
   void initState() {
     super.initState();
 
-    NotebookNoteModel initial =
-        context.read<NotesBloc>().state.notes.firstWhere((note) => note.id == widget.noteId) as NotebookNoteModel;
+    NotebookNoteModel initial = context.read<NotesBloc>().state.getNote(widget.noteId) as NotebookNoteModel;
+
     textController = NotedRichTextController.quill(initial: initial.document);
     titleController = TextEditingController(text: initial.title);
 
@@ -107,7 +104,7 @@ class _NotebookEditContentState extends State<_NotebookEditContent> {
           child: NotedTextField(
             type: NotedTextFieldType.title,
             controller: titleController,
-            hint: strings.notebook_edit_titlePlaceholder,
+            hint: strings.notes_edit_titlePlaceholder,
           ),
         ),
         Expanded(
@@ -115,7 +112,7 @@ class _NotebookEditContentState extends State<_NotebookEditContent> {
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
             controller: textController,
             focusNode: focusNode,
-            placeholder: strings.notebook_edit_textPlaceholder,
+            placeholder: strings.notes_edit_textPlaceholder,
             autofocus: true,
           ),
         ),
