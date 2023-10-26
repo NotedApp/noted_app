@@ -24,11 +24,7 @@ class EditUpdateEvent extends EditEvent {
   const EditUpdateEvent(this.note);
 }
 
-class EditDeleteEvent extends EditEvent {
-  final String id;
-
-  const EditDeleteEvent(this.id);
-}
+class EditDeleteEvent extends EditEvent {}
 
 class EditRemoteUpdateEvent extends EditEvent {
   final NoteModel note;

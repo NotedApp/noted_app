@@ -4,7 +4,6 @@ import 'package:get_it/get_it.dart';
 import 'package:noted_app/repository/notes/notes_repository.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
-import 'package:uuid/uuid.dart';
 
 /// Default local notes.
 const Map<String, NoteModel> localNotes = {
@@ -27,7 +26,7 @@ const Map<String, NoteModel> localNotes = {
 /// A [NotesRepository] that uses mock data as its source of truth.
 class LocalNotesRepository extends NotesRepository implements Disposable {
   late final StreamController<List<NoteModel>> _notesController;
-  late final StreamController<NoteModel> _noteController;
+  late final Map<String, StreamController<NoteModel>> _controllers;
   Map<String, NoteModel> _notes = {...localNotes};
   bool _shouldThrow = false;
   int _msDelay = 2000;
@@ -37,8 +36,11 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
       onListen: () => _notesController.add(_notes.values.toList()),
     );
 
-    _noteController = StreamController.broadcast(
-      onListen: () => _noteController.add(_notes.values.firstOrNull ?? NotebookNoteModel.emptyQuill()),
+    _controllers = _notes.map(
+      (key, value) => MapEntry(
+        key,
+        StreamController.broadcast(onListen: () => _controllers[key]?.add(value)),
+      ),
     );
   }
 
@@ -57,11 +59,11 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
   Future<Stream<NoteModel>> subscribeNote({required String userId, required String noteId}) async {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
-    if (_shouldThrow || userId.isEmpty) {
+    if (_shouldThrow || userId.isEmpty || _controllers[noteId] == null) {
       throw NotedError(ErrorCode.notes_subscribe_failed);
     }
 
-    return _noteController.stream;
+    return (_controllers[noteId]?.stream)!;
   }
 
   @override
@@ -72,8 +74,13 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
       throw NotedError(ErrorCode.notes_add_failed);
     }
 
-    String id = note.id.isEmpty ? Uuid().v4() : note.id;
+    String id = note.id.isEmpty ? 'note-${_notes.length}' : note.id;
     _notes[id] = note.copyWith(id: id);
+
+    _controllers[id] = StreamController.broadcast(
+      onListen: () => _controllers[id]?.add(note.copyWith(id: id)),
+    );
+
     _notesController.add(_notes.values.toList());
     return id;
   }
@@ -87,6 +94,7 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
     }
 
     _notes[note.id] = note.copyWith();
+    _controllers[note.id]?.add(note.copyWith());
     _notesController.add(_notes.values.toList());
   }
 
@@ -99,17 +107,23 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
     }
 
     _notes.remove(noteId);
+    _controllers[noteId]?.close();
+    _controllers.remove(noteId);
     _notesController.add(_notes.values.toList());
   }
 
   @override
   FutureOr onDispose() {
+    _controllers.values.forEach((element) => element.close());
     _notesController.close();
   }
 
   /// Adds an error to the state stream for testing.
   void addStreamError() {
     _notesController.addError(NotedError(ErrorCode.notes_parse_failed));
+    _controllers.values.forEach((element) {
+      element.addError(NotedError(ErrorCode.notes_parse_failed));
+    });
   }
 
   void setShouldThrow(bool shouldThrow) => _shouldThrow = shouldThrow;

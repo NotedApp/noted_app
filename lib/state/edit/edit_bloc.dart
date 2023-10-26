@@ -41,55 +41,48 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
     }
   }
 
-  void _onSubscribeNote(String noteId, Emitter<EditState> emit) async {
-    try {
-      if (_auth.currentUser.isEmpty) {
-        throw NotedError(ErrorCode.notes_subscribe_failed, message: 'missing auth');
-      }
+  Future _subscribeNote(String noteId, Emitter<EditState> emit) async {
+    _noteSubscription?.cancel();
+    _noteSubscription = null;
 
-      _noteSubscription?.cancel();
-      _noteSubscription = null;
-
-      _noteSubscription = (await _notes.subscribeNote(userId: _auth.currentUser.id, noteId: noteId)).listen((event) {
-        add(EditRemoteUpdateEvent(event));
-      }, onError: (e) {
-        add(EditRemoteUpdateErrorEvent(NotedError.fromObject(e)));
-      });
-    } catch (e) {
-      emit(EditState(note: state.note, status: EditStatus.loaded, error: NotedError.fromObject(e)));
-    }
+    Stream<NoteModel> stream = await _notes.subscribeNote(userId: _auth.currentUser.id, noteId: noteId);
+    _noteSubscription = stream.listen((event) {
+      add(EditRemoteUpdateEvent(event));
+    }, onError: (e) {
+      add(EditRemoteUpdateErrorEvent(NotedError.fromObject(e)));
+    });
   }
 
   void _onLoadNote(EditLoadEvent event, Emitter<EditState> emit) async {
-    if (state.status != EditStatus.initial) {
-      return;
-    }
-
     try {
+      if (state.status != EditStatus.initial) {
+        throw NotedError(ErrorCode.notes_subscribe_failed, message: 'invalid status: ${state.status}');
+      }
+
       if (_auth.currentUser.isEmpty) {
         throw NotedError(ErrorCode.notes_subscribe_failed, message: 'missing auth');
       }
 
       emit(EditState(note: state.note, status: EditStatus.loading));
-      _onSubscribeNote(event.id, emit);
+      await _subscribeNote(event.id, emit);
     } catch (e) {
       emit(EditState(note: null, status: EditStatus.loaded, error: NotedError.fromObject(e)));
     }
   }
 
   void _onAddNote(EditAddEvent event, Emitter<EditState> emit) async {
-    if (state.status != EditStatus.initial) {
-      return;
-    }
-
     try {
+      if (state.status != EditStatus.initial) {
+        throw NotedError(ErrorCode.notes_add_failed, message: 'invalid status: ${state.status}');
+      }
+
       if (_auth.currentUser.isEmpty) {
-        throw NotedError(ErrorCode.notes_subscribe_failed, message: 'missing auth');
+        throw NotedError(ErrorCode.notes_add_failed, message: 'missing auth');
       }
 
       emit(EditState(note: state.note, status: EditStatus.loading));
       String id = await _notes.addNote(userId: _auth.currentUser.id, note: event.note);
-      _onSubscribeNote(id, emit);
+      await _subscribeNote(id, emit);
     } catch (e) {
       emit(EditState(note: null, status: EditStatus.loaded, error: NotedError.fromObject(e)));
     }
@@ -109,17 +102,17 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
   }
 
   void _onDeleteNote(EditDeleteEvent event, Emitter<EditState> emit) async {
-    if (state.status == EditStatus.deleting) {
-      return;
-    }
-
     try {
+      if (![EditStatus.loaded, EditStatus.updating].contains(state.status)) {
+        throw NotedError(ErrorCode.notes_delete_failed, message: 'invalid status: ${state.status}');
+      }
+
       if (_auth.currentUser.isEmpty) {
         throw NotedError(ErrorCode.notes_delete_failed, message: 'missing auth');
       }
 
       emit(EditState(note: state.note, status: EditStatus.deleting));
-      await _notes.deleteNote(userId: _auth.currentUser.id, noteId: event.id);
+      await _notes.deleteNote(userId: _auth.currentUser.id, noteId: state.note?.id ?? '');
       emit(EditState(note: null, status: EditStatus.deleted));
     } catch (e) {
       emit(EditState(note: state.note, status: EditStatus.loaded, error: NotedError.fromObject(e)));
