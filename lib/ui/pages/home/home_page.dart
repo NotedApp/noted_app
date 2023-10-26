@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(
             NotedSnackBar.createWithText(
               context: context,
-              text: strings.notes_error_updateNoteFailed,
+              text: strings.edit_error_updateNoteFailed,
               hasClose: true,
             ),
           );

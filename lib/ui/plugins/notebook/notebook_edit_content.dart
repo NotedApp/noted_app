@@ -44,7 +44,7 @@ class _NotebookEditContentState extends State<NotebookEditContent> {
           child: NotedTextField(
             type: NotedTextFieldType.title,
             controller: titleController,
-            hint: strings.notes_edit_titlePlaceholder,
+            hint: strings.edit_titlePlaceholder,
           ),
         ),
         Expanded(
@@ -52,7 +52,7 @@ class _NotebookEditContentState extends State<NotebookEditContent> {
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
             controller: textController,
             focusNode: focusNode,
-            placeholder: strings.notes_edit_textPlaceholder,
+            placeholder: strings.edit_textPlaceholder,
             autofocus: true,
           ),
         ),

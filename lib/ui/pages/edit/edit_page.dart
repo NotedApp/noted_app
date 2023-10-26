@@ -18,6 +18,8 @@ class EditPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Strings strings = context.strings();
+
     return BlocProvider(
       create: (context) => EditBloc(noteId: initialId),
       child: BlocConsumer<EditBloc, EditState>(
@@ -48,7 +50,11 @@ class EditPage extends StatelessWidget {
               EditState(status: EditStatus.loading) => EditLoading(),
               EditState(status: EditStatus.deleting) => EditLoading(),
               EditState(status: EditStatus.deleted) => EditLoading(),
-              EditState(note: null) => EditLoading(), // TODO: Make this edit empty.
+              EditState(note: null) => NotedErrorWidget(
+                  text: strings.edit_error_empty,
+                  ctaText: strings.router_errorCta,
+                  ctaCallback: () => context.pop(),
+                ),
               _ => EditContent(note: state.note!),
             },
           );
@@ -64,7 +70,7 @@ class EditPage extends StatelessWidget {
     showDialog<bool>(
       context: context,
       builder: (context) => NotedDialog(
-        child: Text(strings.notes_delete_confirmText),
+        child: Text(strings.edit_delete_confirmText),
         leftActionText: strings.common_confirm,
         onLeftActionPressed: () {
           bloc.add(EditDeleteEvent());
@@ -81,9 +87,10 @@ void _handleEditError(BuildContext context, NotedError? error) {
   Strings strings = context.strings();
 
   final String? message = switch (error?.code) {
-    ErrorCode.notes_add_failed => strings.notes_error_addNoteFailed,
-    ErrorCode.notes_update_failed => strings.notes_error_updateNoteFailed,
-    ErrorCode.notes_delete_failed => strings.notes_error_deleteNoteFailed,
+    ErrorCode.notes_add_failed => strings.edit_error_addNoteFailed,
+    ErrorCode.notes_subscribe_failed => strings.edit_error_loadNoteFailed,
+    ErrorCode.notes_update_failed => strings.edit_error_updateNoteFailed,
+    ErrorCode.notes_delete_failed => strings.edit_error_deleteNoteFailed,
     _ => null,
   };
 

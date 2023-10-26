@@ -17,17 +17,10 @@ class RouteErrorPage extends StatelessWidget {
         children: [
           Expanded(child: NotedImageHeader(title: strings.router_errorTitle), flex: 4),
           Spacer(),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 48),
-            child: Text(strings.router_errorText, textAlign: TextAlign.center),
-          ),
-          SizedBox(height: 16),
-          Align(
-            child: NotedTextButton(
-              label: strings.router_errorCta,
-              type: NotedTextButtonType.filled,
-              onPressed: () => context.replace('/'),
-            ),
+          NotedErrorWidget(
+            text: strings.router_errorText,
+            ctaText: strings.router_errorCta,
+            ctaCallback: () => context.replace('/'),
           ),
           Spacer()
         ],

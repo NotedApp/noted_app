@@ -90,13 +90,17 @@
   "settings_error_updateFailed": "failed to save user settings.",
 
   "notes_title": "noted.",
-  "notes_edit_titlePlaceholder": "title",
-  "notes_edit_textPlaceholder": "enter a note...",
-  "notes_delete_confirmText": "are you sure you want to delete this note? recently deleted notes can be recovered in the app settings.",
 
   "notes_error_failed": "can't load notes, please refresh and try again.",
   "notes_error_empty": "get started by creating a note using the button below!",
-  "notes_error_addNoteFailed": "failed to add note, please try again.",
-  "notes_error_updateNoteFailed": "failed to update note, please try again.",
-  "notes_error_deleteNoteFailed": "failed to delete note, please try again."
+
+  "edit_titlePlaceholder": "title",
+  "edit_textPlaceholder": "enter a note...",
+  "edit_delete_confirmText": "are you sure you want to delete this note? recently deleted notes can be recovered in the app settings.",
+
+  "edit_error_loadNoteFailed": "failed to load note, please try again.",
+  "edit_error_addNoteFailed": "failed to add note, please try again.",
+  "edit_error_updateNoteFailed": "failed to update note, please try again.",
+  "edit_error_deleteNoteFailed": "failed to delete note, please try again.",
+  "edit_error_empty": "we can't find the note you're looking for"
 }

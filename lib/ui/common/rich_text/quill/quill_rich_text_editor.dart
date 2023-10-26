@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:noted_app/ui/common/rich_text/noted_rich_text_editor.dart';
 import 'package:noted_app/ui/common/rich_text/quill/quill_rich_text_controller.dart';
+import 'package:noted_app/util/extensions.dart';
 
 class QuillRichTextEditor extends NotedRichTextEditor {
   const QuillRichTextEditor({
@@ -58,13 +59,14 @@ class QuillRichTextEditor extends NotedRichTextEditor {
 DefaultStyles _getStyles(BuildContext context) {
   const double defaultSize = 16;
 
-  final defaultTextStyle = DefaultTextStyle.of(context);
-  final baseStyle = defaultTextStyle.style.copyWith(
+  final ColorScheme scheme = context.colorScheme();
+  final DefaultTextStyle defaultTextStyle = DefaultTextStyle.of(context);
+  final TextStyle baseStyle = defaultTextStyle.style.copyWith(
     fontSize: defaultSize,
     height: 1.3,
     decoration: TextDecoration.none,
   );
-  const baseSpacing = VerticalSpacing(6, 0);
+  const VerticalSpacing baseSpacing = VerticalSpacing(6, 0);
 
   return DefaultStyles(
     h1: DefaultTextBlockStyle(
@@ -101,7 +103,7 @@ DefaultStyles _getStyles(BuildContext context) {
       null,
     ),
     placeHolder: DefaultTextBlockStyle(
-      baseStyle.copyWith(color: Colors.grey.withOpacity(0.6)),
+      baseStyle.copyWith(color: scheme.onBackground.withOpacity(0.4)),
       const VerticalSpacing(0, 0),
       const VerticalSpacing(0, 0),
       null,
@@ -120,14 +122,18 @@ DefaultStyles _getStyles(BuildContext context) {
       null,
     ),
     quote: DefaultTextBlockStyle(
-      TextStyle(color: baseStyle.color!.withOpacity(0.6)),
+      TextStyle(color: scheme.onBackground.withOpacity(0.6)),
       baseSpacing,
       const VerticalSpacing(6, 2),
       BoxDecoration(
         border: Border(
-          left: BorderSide(width: 4, color: Colors.grey.shade300),
+          left: BorderSide(width: 4, color: scheme.onBackground.withOpacity(0.3)),
         ),
       ),
+    ),
+    link: TextStyle(
+      color: scheme.tertiary,
+      decoration: TextDecoration.underline,
     ),
     indent: DefaultTextBlockStyle(baseStyle, baseSpacing, const VerticalSpacing(0, 6), null),
     align: DefaultTextBlockStyle(baseStyle, const VerticalSpacing(0, 0), const VerticalSpacing(0, 0), null),
