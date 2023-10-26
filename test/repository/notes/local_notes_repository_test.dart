@@ -23,7 +23,7 @@ void main() {
     test('creates, updates, and deletes notes', () async {
       Stream<List<NoteModel>> stream = await repository.subscribeNotes(userId: 'test');
 
-      Stream<NoteModel> singleStream = await repository.subscribeNote(userId: 'test', noteId: 'test');
+      Stream<NoteModel> singleStream = await repository.subscribeNote(userId: 'test', noteId: 'test-note-0');
 
       expectLater(
         stream,

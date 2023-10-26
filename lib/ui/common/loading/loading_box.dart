@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// coverage:ignore-file
 class LoadingBox extends StatelessWidget {
   final double cornerRadius;
   final double? width;

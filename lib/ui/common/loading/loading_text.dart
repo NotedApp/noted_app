@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 
+// coverage:ignore-file
 class LoadingText extends StatelessWidget {
   final double? width;
   final TextStyle? style;

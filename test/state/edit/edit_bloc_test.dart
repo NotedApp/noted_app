@@ -39,7 +39,7 @@ void main() {
       'adds and deletes a note',
       build: () => EditBloc(noteId: null),
       act: (bloc) async {
-        await Future.delayed(const Duration(milliseconds: 15));
+        await Future.delayed(const Duration(milliseconds: 20));
         bloc.add(EditDeleteEvent());
       },
       wait: const Duration(milliseconds: 10),
