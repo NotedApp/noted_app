@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
+import 'package:noted_app/ui/router/router_config.dart';
 import 'package:noted_models/noted_models.dart';
 
 class NotebookTile extends StatefulWidget {
@@ -53,7 +54,7 @@ class _NotebookTileState extends State<NotebookTile> {
 
     return NotedTile(
       tags: widget.note.tags,
-      onTap: widget.onTap ?? () => context.push('notes/${widget.note.id}'),
+      onTap: widget.onTap ?? () => context.push(NotesEditRoute(noteId: widget.note.id)),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 12),
         child: child,

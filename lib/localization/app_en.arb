@@ -83,6 +83,7 @@
   "settings_style_roboto": "roboto",
   "settings_style_lora": "lora",
   "settings_style_vollkorn": "vollkorn",
+  "settings_tags_title": "tags",
   "settings_plugins_title": "plugins",
   "settings_deleted_title": "deleted",
   "settings_subscriptions_title": "subscriptions",
@@ -90,6 +91,7 @@
 
   "settings_error_fetchFailed": "failed to fetch user settings.",
   "settings_error_updateFailed": "failed to save user settings.",
+  "settings_error_tags_empty": "get started by creating a tag using the button below!",
 
   "notes_title": "noted.",
 

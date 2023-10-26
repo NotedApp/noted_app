@@ -24,18 +24,22 @@ sealed class NotedRoute extends Equatable {
   static const String _notes_add = 'add';
   static const String _notes_noteId = 'noteId';
 
-  String get route => _parts.join('/');
+  String get route => (_isHomeRoute ? NotedRoute._home : '') + _parts.join('/');
   List<String> get _parts;
+  bool get _isHomeRoute => true;
 
   const NotedRoute();
 
   @override
-  List<Object?> get props => _parts;
+  List<Object?> get props => [_isHomeRoute, ..._parts];
 }
 
 // Login Page
 
 class LoginRoute extends NotedRoute {
+  @override
+  bool get _isHomeRoute => false;
+
   @override
   List<String> get _parts => [
         NotedRoute._login,
@@ -43,6 +47,9 @@ class LoginRoute extends NotedRoute {
 }
 
 class LoginSignInRoute extends NotedRoute {
+  @override
+  bool get _isHomeRoute => false;
+
   @override
   List<String> get _parts => [
         NotedRoute._login,
@@ -52,6 +59,9 @@ class LoginSignInRoute extends NotedRoute {
 
 class LoginRegisterRoute extends NotedRoute {
   @override
+  bool get _isHomeRoute => false;
+
+  @override
   List<String> get _parts => [
         NotedRoute._login,
         NotedRoute._login_register,
@@ -59,6 +69,9 @@ class LoginRegisterRoute extends NotedRoute {
 }
 
 class LoginResetPasswordRoute extends NotedRoute {
+  @override
+  bool get _isHomeRoute => false;
+
   @override
   List<String> get _parts => [
         NotedRoute._login,
@@ -70,9 +83,7 @@ class LoginResetPasswordRoute extends NotedRoute {
 
 class HomeRoute extends NotedRoute {
   @override
-  List<String> get _parts => [
-        NotedRoute._home,
-      ];
+  List<String> get _parts => [];
 }
 
 // Settings Page
