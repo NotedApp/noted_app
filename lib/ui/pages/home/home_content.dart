@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
+import 'package:noted_app/ui/router/router_config.dart';
 import 'package:noted_models/noted_models.dart';
 
 class HomeContent extends StatelessWidget {
@@ -24,7 +25,7 @@ class HomeContent extends StatelessWidget {
         ),
         itemBuilder: (context, index) => NotedTile.buildTile(
           note: notes[index],
-          onTap: () => context.push('/notes/${notes[index].id}'),
+          onTap: () => context.push(NotesEditRoute(noteId: notes[index].id)),
         ),
       ),
     );

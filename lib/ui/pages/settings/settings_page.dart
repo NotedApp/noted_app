@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/pages/settings/settings_row.dart';
+import 'package:noted_app/ui/router/router_config.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -23,15 +24,24 @@ class SettingsPage extends StatelessWidget {
             icon: NotedIcons.account,
             title: strings.settings_account_title,
             hasArrow: true,
-            onPressed: () => context.push('/settings/account'),
+            onPressed: () => context.push(SettingsAccountRoute()),
           ),
           SettingsRow(
             icon: NotedIcons.brush,
             title: strings.settings_style_title,
             hasArrow: true,
-            onPressed: () => context.push('/settings/style'),
+            onPressed: () => context.push(SettingsStyleRoute()),
           ),
           SettingsRow(
+<<<<<<< HEAD
+=======
+            icon: NotedIcons.tag,
+            title: strings.settings_tags_title,
+            hasArrow: true,
+            onPressed: () => context.push(SettingsTagsRoute()),
+          ),
+          SettingsRow(
+>>>>>>> 3af688b (#132: updated router references to use objects)
             icon: NotedIcons.plug,
             title: strings.settings_plugins_title,
             hasArrow: true,

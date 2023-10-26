@@ -5,6 +5,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/router/noted_go_router.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
+import 'package:noted_app/ui/router/router_config.dart';
 
 import '../../helpers/environment/unit_test_environment.dart';
 import '../../helpers/mocks/fake_classes.dart';
@@ -36,12 +37,12 @@ void main() {
                   NotedIconButton(
                     icon: NotedIcons.account,
                     type: NotedIconButtonType.filled,
-                    onPressed: () => NotedRouterExtensions(context).push('test/route'),
+                    onPressed: () => NotedRouterExtensions(context).push(SettingsAccountRoute()),
                   ),
                   NotedIconButton(
-                    icon: NotedIcons.alarmClock,
+                    icon: NotedIcons.brush,
                     type: NotedIconButtonType.filled,
-                    onPressed: () => NotedRouterExtensions(context).replace('test/route'),
+                    onPressed: () => NotedRouterExtensions(context).replace(SettingsStyleRoute()),
                   ),
                   NotedIconButton(
                     icon: NotedIcons.animation,
@@ -56,11 +57,11 @@ void main() {
       );
 
       await tester.tap(find.byIcon(NotedIcons.account));
-      await tester.tap(find.byIcon(NotedIcons.alarmClock));
+      await tester.tap(find.byIcon(NotedIcons.brush));
       await tester.tap(find.byIcon(NotedIcons.animation));
 
-      verify(() => _mockRouter.push('test/route')).called(1);
-      verify(() => _mockRouter.pushReplacement('test/route')).called(1);
+      verify(() => _mockRouter.push('settings/account')).called(1);
+      verify(() => _mockRouter.pushReplacement('settings/style')).called(1);
       verify(() => _mockRouter.pop('result')).called(1);
     });
   });

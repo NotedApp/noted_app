@@ -9,6 +9,7 @@ import 'package:noted_app/ui/pages/home/home_empty.dart';
 import 'package:noted_app/ui/pages/home/home_error.dart';
 import 'package:noted_app/ui/pages/home/home_loading.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
+import 'package:noted_app/ui/router/router_config.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 
@@ -40,14 +41,14 @@ class HomePage extends StatelessWidget {
             icon: NotedIcons.settings,
             type: NotedIconButtonType.filled,
             size: NotedWidgetSize.small,
-            onPressed: () => context.push('/settings'),
+            onPressed: () => context.push(SettingsRoute()),
           ),
         ],
         floatingActionButton: NotedIconButton(
           icon: NotedIcons.plus,
           type: NotedIconButtonType.filled,
           size: NotedWidgetSize.large,
-          onPressed: () => context.push('/notes/add'),
+          onPressed: () => context.push(NotesAddRoute()),
         ),
         child: switch (state) {
           NotesState(status: NotesStatus.loading) => HomeLoading(),

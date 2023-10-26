@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
+import 'package:noted_app/ui/router/router_config.dart';
 
 class TestRouter extends NotedRouter {
   @override
@@ -8,8 +9,8 @@ class TestRouter extends NotedRouter {
   }
 
   @override
-  Future<T?> push<T extends Object?>(BuildContext context, String route) => Future.value();
+  Future<T?> push<T extends Object?>(BuildContext context, NotedRoute route) => Future.value();
 
   @override
-  Future<T?> replace<T extends Object?>(BuildContext context, String route) => Future.value();
+  Future<T?> replace<T extends Object?>(BuildContext context, NotedRoute route) => Future.value();
 }

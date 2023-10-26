@@ -7,6 +7,7 @@ import 'package:noted_app/state/auth/auth_event.dart';
 import 'package:noted_app/state/auth/auth_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/pages/login/login_frame.dart';
+import 'package:noted_app/ui/router/router_config.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
@@ -59,14 +60,14 @@ class _LoginPageContent extends StatelessWidget {
         NotedTextButton(
           label: strings.login_signIn,
           type: NotedTextButtonType.filled,
-          onPressed: () => context.push('/login/sign-in'),
+          onPressed: () => context.push(LoginSignInRoute()),
         ),
         SizedBox(height: 12),
         NotedTextButton(
           label: strings.login_register,
           type: NotedTextButtonType.filled,
           color: NotedWidgetColor.secondary,
-          onPressed: () => context.push('/login/register'),
+          onPressed: () => context.push(LoginRegisterRoute()),
         ),
         SizedBox(height: 16),
         Row(

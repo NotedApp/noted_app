@@ -2,6 +2,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:noted_app/ui/router/route_error_page.dart';
+import 'package:noted_app/ui/router/router_config.dart';
 
 import '../../helpers/environment/unit_test_environment.dart';
 import '../../helpers/mocks/fake_classes.dart';
@@ -14,6 +15,7 @@ void main() {
 
     setUpAll(() {
       UnitTestEnvironment().configure(router: _mockRouter);
+      registerFallbackValue(LoginRoute());
       registerFallbackValue(FakeBuildContext());
       when(() => _mockRouter.replace(captureAny(), captureAny())).thenAnswer((invocation) => Future.value());
     });
@@ -30,7 +32,7 @@ void main() {
       expect(find.text('sorry, we seem to be lost!'), findsOneWidget);
       expect(action, findsOneWidget);
 
-      verify(() => _mockRouter.replace(captureAny(), '/')).called(1);
+      verify(() => _mockRouter.replace(captureAny(), HomeRoute())).called(1);
     });
   });
 }
