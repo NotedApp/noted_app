@@ -7,4 +7,5 @@ export './noted_image_header.dart';
 export './noted_loading_indicator.dart';
 export './noted_snack_bar.dart';
 export './noted_tab_bar.dart';
+export './noted_tag.dart';
 export './noted_theme_builder.dart';

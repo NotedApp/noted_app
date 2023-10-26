@@ -12,7 +12,15 @@ extension NotedColorExtensions on Color {
   /// Returns black or white, depending on the intensity of the color. This value can be used to generate a dynamic on
   /// surface color for the given color.
   Color getBW() {
-    return (red * 0.3 + green * 0.6 + blue * 0.1) > 186 ? black : white;
+    return this.isLight() ? black : white;
+  }
+
+  bool isLight() {
+    return (red * 0.3 + green * 0.6 + blue * 0.1) > 186;
+  }
+
+  bool isDark() {
+    return !this.isLight();
   }
 
   static Color fromHex(String hexString) {
