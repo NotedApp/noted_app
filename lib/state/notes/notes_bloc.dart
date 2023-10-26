@@ -23,9 +23,6 @@ class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
     on<NotesSubscribeEvent>(_onSubscribeNotes);
     on<NotesUpdateEvent>(_onUpdateNotes);
     on<NotesUpdateErrorEvent>(_onUpdateError);
-    on<NotesAddEvent>(_onAddNote);
-    on<NotesUpdateNoteEvent>(_onUpdateNote);
-    on<NotesDeleteEvent>(_onDeleteNote);
     on<NotesResetEvent>(_onReset);
 
     _userSubscription = _auth.userStream.listen((user) {
@@ -68,54 +65,6 @@ class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
 
   void _onUpdateError(NotesUpdateErrorEvent event, Emitter<NotesState> emit) async {
     emit(NotesState(notes: state.notes, error: event.error));
-  }
-
-  void _onAddNote(NotesAddEvent event, Emitter<NotesState> emit) async {
-    if (state.status == NotesStatus.adding) {
-      return;
-    }
-
-    try {
-      if (_auth.currentUser.isEmpty) {
-        throw NotedError(ErrorCode.notes_add_failed, message: 'missing auth');
-      }
-
-      emit(NotesState(notes: state.notes, status: NotesStatus.adding));
-      String id = await _notes.addNote(userId: _auth.currentUser.id, note: event.note);
-      emit(NotesState(notes: state.notes, added: id));
-    } catch (e) {
-      emit(NotesState(notes: state.notes, error: NotedError.fromObject(e)));
-    }
-  }
-
-  void _onUpdateNote(NotesUpdateNoteEvent event, Emitter<NotesState> emit) async {
-    try {
-      if (_auth.currentUser.isEmpty) {
-        throw NotedError(ErrorCode.notes_update_failed, message: 'missing auth');
-      }
-
-      await _notes.updateNote(userId: _auth.currentUser.id, note: event.note);
-    } catch (e) {
-      emit(NotesState(notes: state.notes, error: NotedError.fromObject(e)));
-    }
-  }
-
-  void _onDeleteNote(NotesDeleteEvent event, Emitter<NotesState> emit) async {
-    if (state.status == NotesStatus.deleting) {
-      return;
-    }
-
-    try {
-      if (_auth.currentUser.isEmpty) {
-        throw NotedError(ErrorCode.notes_delete_failed, message: 'missing auth');
-      }
-
-      emit(NotesState(notes: state.notes, status: NotesStatus.deleting));
-      await _notes.deleteNote(userId: _auth.currentUser.id, noteId: event.noteId);
-      emit(NotesState(notes: state.notes, deleted: event.noteId));
-    } catch (e) {
-      emit(NotesState(notes: state.notes, error: NotedError.fromObject(e)));
-    }
   }
 
   void _onReset(NotesResetEvent event, Emitter<NotesState> emit) async {
