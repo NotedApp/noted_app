@@ -13,19 +13,19 @@ void main() {
 
   group('LocalSettingsRepository', () {
     test('fetches settings and sets settings', () async {
-      NotedSettings settings = await repository.fetchSettings(userId: 'test');
-      expect(settings, NotedSettings());
+      SettingsModel settings = await repository.fetchSettings(userId: 'test');
+      expect(settings, SettingsModel());
 
-      NotedStyleSettings style = NotedStyleSettings(
-        colorSchemeName: NotedColorSchemeName.green,
-        textThemeName: NotedTextThemeName.roboto,
+      StyleSettingsModel style = StyleSettingsModel(
+        colorSchemeName: ColorSchemeModelName.green,
+        textThemeName: TextThemeModelName.roboto,
       );
 
       await repository.updateStyleSettings(userId: 'test', style: style);
-      NotedSettings updated = await repository.fetchSettings(userId: 'test');
+      SettingsModel updated = await repository.fetchSettings(userId: 'test');
 
-      expect(updated.style.colorSchemeName, NotedColorSchemeName.green);
-      expect(updated.style.textThemeName, NotedTextThemeName.roboto);
+      expect(updated.style.colorSchemeName, ColorSchemeModelName.green);
+      expect(updated.style.textThemeName, TextThemeModelName.roboto);
     });
 
     test('handles fetch error', () async {
@@ -41,7 +41,7 @@ void main() {
       repository.setShouldThrow(true);
 
       await expectLater(
-        () => repository.updateStyleSettings(userId: 'test', style: NotedStyleSettings()),
+        () => repository.updateStyleSettings(userId: 'test', style: StyleSettingsModel()),
         throwsA(NotedError(ErrorCode.settings_updateStyle_failed)),
       );
     });
@@ -56,8 +56,8 @@ void main() {
 
       repository.reset();
 
-      NotedSettings settings = await repository.fetchSettings(userId: 'test');
-      expect(settings, NotedSettings());
+      SettingsModel settings = await repository.fetchSettings(userId: 'test');
+      expect(settings, SettingsModel());
     });
   });
 }

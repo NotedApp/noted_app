@@ -1,5 +1,6 @@
 export './noted_card.dart';
 export './noted_dialog.dart';
+export './noted_error_widget.dart';
 export './noted_header_page.dart';
 export './noted_header.dart';
 export './noted_image_header.dart';

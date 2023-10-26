@@ -2,19 +2,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:noted_app/state/auth/auth_bloc.dart';
 import 'package:noted_app/state/auth/auth_state.dart';
-import 'package:noted_app/ui/login/login_page.dart';
-import 'package:noted_app/ui/login/password_reset_page.dart';
-import 'package:noted_app/ui/login/register_page.dart';
-import 'package:noted_app/ui/login/sign_in_page.dart';
+import 'package:noted_app/ui/pages/edit/edit_page.dart';
+import 'package:noted_app/ui/pages/home/home_page.dart';
+import 'package:noted_app/ui/pages/login/login_page.dart';
+import 'package:noted_app/ui/pages/login/password_reset_page.dart';
+import 'package:noted_app/ui/pages/login/register_page.dart';
+import 'package:noted_app/ui/pages/login/sign_in_page.dart';
 import 'package:noted_app/ui/router/route_error_page.dart';
-import 'package:noted_app/ui/settings/account/account_page.dart';
-import 'package:noted_app/ui/settings/account/change_password_page.dart';
-import 'package:noted_app/ui/settings/settings_page.dart';
-import 'package:noted_app/ui/settings/style/style_page.dart.dart';
-import 'package:noted_app/ui/settings/style/style_fonts_page.dart';
-import 'package:noted_app/ui/settings/style/style_theme_page.dart';
-import 'package:noted_app/ui/plugins/notebook/notebook_edit_page.dart';
-import 'package:noted_app/ui/plugins/notebook/notebook_page.dart';
+import 'package:noted_app/ui/pages/settings/account/account_page.dart';
+import 'package:noted_app/ui/pages/settings/account/change_password_page.dart';
+import 'package:noted_app/ui/pages/settings/settings_page.dart';
+import 'package:noted_app/ui/pages/settings/style/style_page.dart.dart';
+import 'package:noted_app/ui/pages/settings/style/style_fonts_page.dart';
+import 'package:noted_app/ui/pages/settings/style/style_theme_page.dart';
 
 GoRouter routerConfig = GoRouter(
   routes: [_home, _login],
@@ -47,15 +47,14 @@ final GoRoute _login = GoRoute(
 
 final GoRoute _home = GoRoute(
   path: '/',
-  // TODO: convert this back to a home page, rather than a notebook page.
-  builder: (context, state) => NotebookPage(),
+  builder: (context, state) => HomePage(),
   redirect: (context, state) {
     AuthBloc auth = context.read<AuthBloc>();
     return auth.state.status != AuthStatus.authenticated ? '/login' : null;
   },
   routes: [
     _settings,
-    _notebook,
+    _notes,
   ],
 );
 
@@ -106,13 +105,17 @@ final GoRoute _settings = GoRoute(
   ],
 );
 
-final GoRoute _notebook = GoRoute(
-  path: 'notebook',
-  builder: (context, state) => NotebookPage(),
+final GoRoute _notes = GoRoute(
+  path: 'notes',
+  builder: (context, state) => HomePage(),
   routes: [
     GoRoute(
+      path: 'add',
+      builder: (context, state) => EditPage(initialId: null),
+    ),
+    GoRoute(
       path: ':noteId',
-      builder: (context, state) => NotebookEditPage(noteId: state.pathParameters['noteId'] ?? ''),
+      builder: (context, state) => EditPage(initialId: state.pathParameters['noteId']),
     ),
   ],
 );

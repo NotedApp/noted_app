@@ -4,13 +4,13 @@ import 'package:noted_models/noted_models.dart';
 abstract class AuthRepository {
   /// Returns the current user.
   ///
-  /// Returns [NotedUser.empty] if the user is not authenticated.
-  NotedUser get currentUser;
+  /// Returns [UserModel.empty] if the user is not authenticated.
+  UserModel get currentUser;
 
   /// A [Stream] that emits a new user whenever the user's authentication state changes.
   ///
-  /// Emits [NotedUser.empty] if the user is not authenticated.
-  Stream<NotedUser> get userStream;
+  /// Emits [UserModel.empty] if the user is not authenticated.
+  Stream<UserModel> get userStream;
 
   /// Creates a new user with the provided [email] and [password].
   Future<void> createUserWithEmailAndPassword({String email, String password});

@@ -9,7 +9,7 @@ sealed class NotesEvent extends NotedEvent implements TrackableEvent {
 class NotesSubscribeEvent extends NotesEvent {}
 
 class NotesUpdateEvent extends NotesEvent {
-  final List<NotedNote> notes;
+  final List<NoteModel> notes;
 
   const NotesUpdateEvent(this.notes);
 }
@@ -18,24 +18,6 @@ class NotesUpdateErrorEvent extends NotesEvent {
   final NotedError error;
 
   const NotesUpdateErrorEvent(this.error);
-}
-
-class NotesAddEvent extends NotesEvent {
-  final NotedNote note;
-
-  const NotesAddEvent(this.note);
-}
-
-class NotesUpdateNoteEvent extends NotesEvent {
-  final NotedNote note;
-
-  const NotesUpdateNoteEvent(this.note);
-}
-
-class NotesDeleteEvent extends NotesEvent {
-  final String noteId;
-
-  const NotesDeleteEvent(this.noteId);
 }
 
 class NotesResetEvent extends NotesEvent {}

@@ -56,7 +56,7 @@ class NotedTextButton extends StatelessWidget {
     ButtonStyle style = builder.styleOf(theme.colorScheme, theme.textTheme).copyWith(
           foregroundColor: foregroundColor?.materialState(),
           backgroundColor: backgroundColor?.materialState(),
-          overlayColor: foregroundColor?.withOpacity(buttonOverlayOpacity).materialState(),
+          overlayColor: foregroundColor?.withOpacity(NotedWidgetConfig.buttonOverlayOpacity).materialState(),
           iconColor: foregroundColor?.materialState(),
         );
 
@@ -128,7 +128,7 @@ class _FilledTextButtonBuilder extends _NotedTextButtonBuilder {
       textStyle: textStyle?.materialState(),
       backgroundColor: buttonColors.$2.materialState(),
       foregroundColor: buttonColors.$1.materialState(),
-      overlayColor: buttonColors.$1.withOpacity(buttonOverlayOpacity).materialState(),
+      overlayColor: buttonColors.$1.withOpacity(NotedWidgetConfig.buttonOverlayOpacity).materialState(),
       elevation: 3.toDouble().materialState(),
       padding: padding.materialState(),
       iconColor: buttonColors.$1.materialState(),
@@ -182,7 +182,7 @@ class _OutlinedTextButtonBuilder extends _NotedTextButtonBuilder {
       textStyle: textStyle?.materialState(),
       foregroundColor: buttonColors.$1.materialState(),
       backgroundColor: buttonColors.$2.materialState(),
-      overlayColor: buttonColors.$1.withOpacity(buttonOverlayOpacity).materialState(),
+      overlayColor: buttonColors.$1.withOpacity(NotedWidgetConfig.buttonOverlayOpacity).materialState(),
       elevation: 0.toDouble().materialState(),
       padding: padding.materialState(),
       iconColor: buttonColors.$1.materialState(),
@@ -233,7 +233,7 @@ class _SimpleTextButtonBuilder extends _NotedTextButtonBuilder {
       textStyle: textStyle?.materialState(),
       foregroundColor: buttonColors.$1.materialState(),
       backgroundColor: buttonColors.$2.materialState(),
-      overlayColor: buttonColors.$1.withOpacity(buttonOverlayOpacity).materialState(),
+      overlayColor: buttonColors.$1.withOpacity(NotedWidgetConfig.buttonOverlayOpacity).materialState(),
       elevation: 0.toDouble().materialState(),
       padding: padding.materialState(),
       iconColor: buttonColors.$1.materialState(),

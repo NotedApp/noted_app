@@ -5,6 +5,7 @@ import 'package:noted_app/ui/common/layout/noted_theme_builder.dart';
 import 'package:noted_catalog/catalog_content.dart';
 import 'package:noted_catalog/catalog_renderer.dart';
 import 'package:noted_catalog/dependencies/catalog_environment.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   CatalogEnvironment().configure();
@@ -24,6 +25,8 @@ class CatalogApp extends StatelessWidget {
         builder: (context, theme) => MaterialApp(
           title: 'noted catalog',
           theme: theme,
+          localizationsDelegates: Strings.localizationsDelegates,
+          supportedLocales: Strings.supportedLocales,
           home: CatalogRenderer(CatalogContent.content, isRoot: true),
         ),
       ),

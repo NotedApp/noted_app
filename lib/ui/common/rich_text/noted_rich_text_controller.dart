@@ -6,13 +6,13 @@ import 'package:noted_models/noted_models.dart';
 abstract class NotedRichTextController extends ChangeNotifier {
   NotedRichTextController();
 
-  factory NotedRichTextController.quill({NotedDocument? initial}) {
+  factory NotedRichTextController.quill({DocumentModel? initial}) {
     return QuillRichTextController(initial: initial);
   }
 
-  NotedDocument get value;
+  DocumentModel get value;
 
-  void set value(NotedDocument document);
+  void set value(DocumentModel document);
 
   bool isAttributeToggled(NotedRichTextAttribute attribute);
 

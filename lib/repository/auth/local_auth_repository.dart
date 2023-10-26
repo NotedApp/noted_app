@@ -5,19 +5,19 @@ import 'package:noted_app/repository/auth/auth_repository.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
-/// A list of [NotedUser]s who can be logged in in a local environment.
-const List<NotedUser> _localUsers = [
-  NotedUser(id: 'local-0', email: 'local-0@noted.com', name: 'shaquille.oatmeal'),
-  NotedUser(id: 'local-1', email: 'local-1@noted.com', name: 'averagestudent'),
-  NotedUser(id: 'local-2', email: 'local-2@noted.com', name: 'me_for_president'),
-  NotedUser(id: 'local-3', email: 'local-3@noted.com', name: 'chickenriceandbeans'),
-  NotedUser(id: 'local-4', email: 'local-4@noted.com', name: 'fluffycookie'),
-  NotedUser(id: 'local-5', email: 'local-5@noted.com', name: 'averagestudent'),
-  NotedUser(id: 'local-6', email: 'local-6@noted.com', name: 'LactoseTheIntolerant'),
-  NotedUser(id: 'local-7', email: 'local-7@noted.com', name: 'kim_chi'),
-  NotedUser(id: 'local-8', email: 'local-8@noted.com', name: 'just-a-harmless-potato'),
-  NotedUser(id: 'local-9', email: 'local-9@noted.com', name: 'dog'),
-  NotedUser(id: 'local-google', email: 'local-google@noted.com', name: 'googly_woogly'),
+/// A list of [UserModel]s who can be logged in in a local environment.
+const List<UserModel> _localUsers = [
+  UserModel(id: 'local-0', email: 'local-0@noted.com', name: 'shaquille.oatmeal'),
+  UserModel(id: 'local-1', email: 'local-1@noted.com', name: 'averagestudent'),
+  UserModel(id: 'local-2', email: 'local-2@noted.com', name: 'me_for_president'),
+  UserModel(id: 'local-3', email: 'local-3@noted.com', name: 'chickenriceandbeans'),
+  UserModel(id: 'local-4', email: 'local-4@noted.com', name: 'fluffycookie'),
+  UserModel(id: 'local-5', email: 'local-5@noted.com', name: 'averagestudent'),
+  UserModel(id: 'local-6', email: 'local-6@noted.com', name: 'LactoseTheIntolerant'),
+  UserModel(id: 'local-7', email: 'local-7@noted.com', name: 'kim_chi'),
+  UserModel(id: 'local-8', email: 'local-8@noted.com', name: 'just-a-harmless-potato'),
+  UserModel(id: 'local-9', email: 'local-9@noted.com', name: 'dog'),
+  UserModel(id: 'local-google', email: 'local-google@noted.com', name: 'googly_woogly'),
 ];
 
 /// A list of [String]s that are accepted as passwords for all [_localUsers].
@@ -27,21 +27,21 @@ const List<String> _localPasswords = [
 
 /// An [AuthRepository] that uses mock data as its source of truth.
 class LocalAuthRepository extends AuthRepository implements Disposable {
-  final StreamController<NotedUser> _userStreamController = StreamController.broadcast();
-  NotedUser _currentUser = NotedUser.empty();
+  final StreamController<UserModel> _userStreamController = StreamController.broadcast();
+  UserModel _currentUser = UserModel.empty();
   bool _shouldThrow = false;
   int _msDelay = 2000;
 
-  List<NotedUser> _users = [..._localUsers];
+  List<UserModel> _users = [..._localUsers];
   List<String> _passwords = [..._localPasswords];
 
   @override
-  NotedUser get currentUser => _currentUser;
+  UserModel get currentUser => _currentUser;
 
   @override
-  Stream<NotedUser> get userStream => _userStreamController.stream;
+  Stream<UserModel> get userStream => _userStreamController.stream;
 
-  LocalAuthRepository({NotedUser user = const NotedUser.empty(), int msDelay = 2000}) {
+  LocalAuthRepository({UserModel user = const UserModel.empty(), int msDelay = 2000}) {
     if (user.isNotEmpty) {
       _currentUser = user;
     }
@@ -61,7 +61,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
       throw NotedError(ErrorCode.auth_createUser_weakPassword);
     }
 
-    NotedUser user = NotedUser(
+    UserModel user = UserModel(
       id: 'local-${_users.length}',
       email: email,
       name: 'Local ${_users.length}',
@@ -77,7 +77,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
   Future<void> signInWithEmailAndPassword({String email = '', String password = ''}) async {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
-    NotedUser user = _users.firstWhere((user) => user.email == email, orElse: NotedUser.empty);
+    UserModel user = _users.firstWhere((user) => user.email == email, orElse: UserModel.empty);
 
     if (user.isEmpty) {
       throw NotedError(ErrorCode.auth_emailSignIn_invalidEmail);
@@ -92,7 +92,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
 
   @override
   Future<void> signInWithGoogle() async {
-    NotedUser googleUser = _users.firstWhere((user) => user.id == 'local-google');
+    UserModel googleUser = _users.firstWhere((user) => user.id == 'local-google');
     await _updateUser(googleUser, ErrorCode.auth_googleSignIn_failed);
   }
 
@@ -113,7 +113,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
 
   @override
   Future<void> signOut() async {
-    await _updateUser(NotedUser.empty(), ErrorCode.auth_signOut_failed);
+    await _updateUser(UserModel.empty(), ErrorCode.auth_signOut_failed);
   }
 
   @override
@@ -145,7 +145,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
     }
 
     _users.removeWhere((user) => user.id == _currentUser.id);
-    await _updateUser(NotedUser.empty(), ErrorCode.auth_deleteAccount_failed, delay: false);
+    await _updateUser(UserModel.empty(), ErrorCode.auth_deleteAccount_failed, delay: false);
   }
 
   @override
@@ -153,7 +153,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
     await _userStreamController.close();
   }
 
-  Future<void> _updateUser(NotedUser user, ErrorCode error, {bool delay = true}) async {
+  Future<void> _updateUser(UserModel user, ErrorCode error, {bool delay = true}) async {
     if (delay) {
       await Future.delayed(Duration(milliseconds: _msDelay));
     }
@@ -171,7 +171,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
   void reset() {
     _shouldThrow = false;
     _msDelay = 2000;
-    _currentUser = NotedUser.empty();
+    _currentUser = UserModel.empty();
     _users = [..._localUsers];
     _passwords = [..._localPasswords];
   }

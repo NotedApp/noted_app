@@ -5,7 +5,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/common/rich_text/noted_rich_text_attributes.dart';
 import 'package:noted_app/ui/common/rich_text/quill/quill_rich_text_editor.dart';
-import 'package:noted_models/rich_text/noted_document.dart';
+import 'package:noted_models/noted_models.dart';
 
 import '../../../../helpers/mocks/mock_callbacks.dart';
 import '../../../../helpers/test_wrapper.dart';
@@ -70,7 +70,7 @@ class _MockController extends NotedRichTextController {
   List get value => throw UnimplementedError();
 
   @override
-  set value(NotedDocument document) => throw UnimplementedError();
+  set value(DocumentModel document) => throw UnimplementedError();
 
   @override
   Color? getColor(NotedRichTextAttribute attribute) => throw UnimplementedError();

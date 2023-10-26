@@ -11,7 +11,7 @@ import 'package:noted_models/noted_models.dart';
 
 class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
   final AuthRepository _repository;
-  late final StreamSubscription<NotedUser> _userSubscription;
+  late final StreamSubscription<UserModel> _userSubscription;
 
   AuthBloc({AuthRepository? authRepository})
       : _repository = authRepository ?? locator<AuthRepository>(),
@@ -85,7 +85,7 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
       emit(AuthState.authenticating(status: AuthStatus.signingOut));
       await _repository.signOut();
     } catch (e) {
-      NotedUser current = _repository.currentUser;
+      UserModel current = _repository.currentUser;
       AuthStatus status = current.isEmpty ? AuthStatus.unauthenticated : AuthStatus.authenticated;
       NotedError error = NotedError.fromObject(e);
       emit(AuthState(user: current, status: status, error: error));
@@ -129,7 +129,7 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
       emit(AuthState.authenticating(status: AuthStatus.deletingAccount));
       await _repository.deleteAccount();
     } catch (e) {
-      NotedUser current = _repository.currentUser;
+      UserModel current = _repository.currentUser;
       AuthStatus status = current.isEmpty ? AuthStatus.unauthenticated : AuthStatus.authenticated;
       NotedError error = NotedError.fromObject(e);
       emit(AuthState(user: current, status: status, error: error));

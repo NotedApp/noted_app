@@ -61,7 +61,7 @@ class NotedIconButton extends StatelessWidget {
     ButtonStyle style = builder.styleOf(colorScheme).copyWith(
           iconColor: iconColor?.materialState(),
           backgroundColor: backgroundColor?.materialState(),
-          overlayColor: iconColor?.withOpacity(buttonOverlayOpacity).materialState(),
+          overlayColor: iconColor?.withOpacity(NotedWidgetConfig.buttonOverlayOpacity).materialState(),
           padding: EdgeInsets.zero.materialState(),
           minimumSize: Size.zero.materialState(),
           shape: shape.materialState(),
@@ -113,7 +113,7 @@ class _SimpleIconButtonBuilder extends _NotedIconButtonBuilder {
     return ButtonStyle(
       iconColor: buttonColors.$1.materialState(),
       backgroundColor: buttonColors.$2.materialState(),
-      overlayColor: buttonColors.$1.withOpacity(buttonOverlayOpacity).materialState(),
+      overlayColor: buttonColors.$1.withOpacity(NotedWidgetConfig.buttonOverlayOpacity).materialState(),
       iconSize: iconSize.materialState(),
       fixedSize: Size.square(sizeOf()).materialState(),
       elevation: 0.toDouble().materialState(),
@@ -151,7 +151,7 @@ class _FilledIconButtonBuilder extends _NotedIconButtonBuilder {
     return ButtonStyle(
       iconColor: buttonColors.$1.materialState(),
       backgroundColor: buttonColors.$2.materialState(),
-      overlayColor: buttonColors.$1.withOpacity(buttonOverlayOpacity).materialState(),
+      overlayColor: buttonColors.$1.withOpacity(NotedWidgetConfig.buttonOverlayOpacity).materialState(),
       iconSize: iconSize.materialState(),
       fixedSize: Size.square(sizeOf()).materialState(),
       elevation: 2.toDouble().materialState(),

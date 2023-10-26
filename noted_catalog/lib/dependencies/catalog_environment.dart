@@ -14,7 +14,7 @@ import 'package:noted_app/ui/router/noted_router.dart';
 import 'package:noted_catalog/dependencies/catalog_router.dart';
 import 'package:noted_models/noted_models.dart';
 
-const NotedUser _catalogUser = NotedUser(
+const UserModel _catalogUser = UserModel(
   id: 'catalog',
   name: 'catalog',
   email: 'catalog@catalog.com',

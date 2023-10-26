@@ -17,7 +17,7 @@ class FirebaseNotesRepository extends NotesRepository {
   }
 
   @override
-  Future<Stream<List<NotedNote>>> subscribeNotes({required String userId}) async {
+  Future<Stream<List<NoteModel>>> subscribeNotes({required String userId}) async {
     try {
       return _notes(userId).onValue.map((event) {
         return event.snapshot.children.map((obj) {
@@ -27,7 +27,7 @@ class FirebaseNotesRepository extends NotesRepository {
             throw NotedError(ErrorCode.notes_parse_failed);
           }
 
-          return NotebookNote.fromMap(Map<String, dynamic>.from(val));
+          return NoteModel.fromMap(Map<String, dynamic>.from(val));
         }).toList();
       });
     } catch (_) {
@@ -36,7 +36,24 @@ class FirebaseNotesRepository extends NotesRepository {
   }
 
   @override
-  Future<String> addNote({required String userId, required NotedNote note}) async {
+  Future<Stream<NoteModel>> subscribeNote({required String userId, required String noteId}) async {
+    try {
+      return _notes(userId).child(noteId).onValue.map((event) {
+        Object? val = event.snapshot.value;
+
+        if (val == null || val is! Map) {
+          throw NotedError(ErrorCode.notes_parse_failed);
+        }
+
+        return NoteModel.fromMap(Map<String, dynamic>.from(val));
+      });
+    } catch (_) {
+      throw NotedError(ErrorCode.notes_subscribe_failed);
+    }
+  }
+
+  @override
+  Future<String> addNote({required String userId, required NoteModel note}) async {
     try {
       DatabaseReference ref = _notes(userId).push();
 
@@ -44,7 +61,7 @@ class FirebaseNotesRepository extends NotesRepository {
         throw NotedError(ErrorCode.notes_add_failed, message: 'empty database key');
       }
 
-      NotedNote toAdd = note.copyWith(id: ref.key);
+      NoteModel toAdd = note.copyWith(id: ref.key);
       await ref.set(toAdd.toMap());
       return ref.key!;
     } catch (_) {
@@ -53,7 +70,7 @@ class FirebaseNotesRepository extends NotesRepository {
   }
 
   @override
-  Future<void> updateNote({required String userId, required NotedNote note}) async {
+  Future<void> updateNote({required String userId, required NoteModel note}) async {
     try {
       await _notes(userId).child(note.id).set(note.toMap());
     } catch (_) {

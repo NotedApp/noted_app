@@ -8,19 +8,19 @@ sealed class SettingsEvent extends NotedEvent implements TrackableEvent {
 class SettingsLoadUserEvent extends SettingsEvent {}
 
 class SettingsUpdateStyleColorSchemeEvent extends SettingsEvent {
-  final NotedColorSchemeName schemeName;
+  final ColorSchemeModelName schemeName;
 
   const SettingsUpdateStyleColorSchemeEvent(this.schemeName);
 }
 
 class SettingsUpdateStyleCustomColorSchemeEvent extends SettingsEvent {
-  final NotedColorScheme colorScheme;
+  final ColorSchemeModel colorScheme;
 
   const SettingsUpdateStyleCustomColorSchemeEvent(this.colorScheme);
 }
 
 class SettingsUpdateStyleTextThemeEvent extends SettingsEvent {
-  final NotedTextThemeName themeName;
+  final TextThemeModelName themeName;
 
   const SettingsUpdateStyleTextThemeEvent(this.themeName);
 }

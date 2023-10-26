@@ -15,16 +15,16 @@ class FirebaseSettingsRepository extends SettingsRepository {
   }) : _firestore = firestore ?? FirebaseFirestore.instance;
 
   @override
-  Future<NotedSettings> fetchSettings({required String userId}) async {
+  Future<SettingsModel> fetchSettings({required String userId}) async {
     try {
       final DocumentSnapshot snapshot = await _settings.doc(userId).get();
 
       if (snapshot.exists) {
         final Object? data = snapshot.data();
         final Map<String, dynamic>? map = data == null ? null : data as Map<String, dynamic>;
-        return map == null ? NotedSettings() : NotedSettings.fromMap(map);
+        return map == null ? SettingsModel() : SettingsModel.fromMap(map);
       } else {
-        final NotedSettings settings = NotedSettings();
+        final SettingsModel settings = SettingsModel();
         await _settings.doc(userId).set(settings);
         return settings;
       }
@@ -36,7 +36,7 @@ class FirebaseSettingsRepository extends SettingsRepository {
   }
 
   @override
-  Future<void> updateStyleSettings({required String userId, required NotedStyleSettings style}) async {
+  Future<void> updateStyleSettings({required String userId, required StyleSettingsModel style}) async {
     try {
       final Map<String, dynamic> data = {'style': style.toMap()};
       await _settings.doc(userId).set(data, SetOptions(merge: true));

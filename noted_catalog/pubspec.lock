@@ -577,8 +577,8 @@ packages:
     dependency: transitive
     description:
       path: "."
-      ref: "v0.0.2-alpha"
-      resolved-ref: "5e0a4bbfed14bad3b134af3f3ed0e13a84aa5ebe"
+      ref: "v0.0.4-alpha"
+      resolved-ref: "33ea9da0b5b8530d148c2ff38cc1bfc7f930c12e"
       url: "https://github.com/NotedApp/noted_models.git"
     source: git
     version: "0.0.1"

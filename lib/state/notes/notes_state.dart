@@ -5,25 +5,19 @@ import 'package:noted_models/noted_models.dart';
 enum NotesStatus {
   loaded,
   loading,
-  adding,
-  deleting,
 }
 
 final class NotesState extends Equatable {
   final NotesStatus status;
-  final List<NotedNote> notes;
-  final String added;
-  final String deleted;
+  final List<NoteModel> notes;
   final NotedError? error;
 
   const NotesState({
     this.status = NotesStatus.loaded,
     required this.notes,
-    this.added = '',
-    this.deleted = '',
     this.error = null,
   });
 
   @override
-  List<Object?> get props => [status, notes, added, deleted, error];
+  List<Object?> get props => [status, notes, error];
 }

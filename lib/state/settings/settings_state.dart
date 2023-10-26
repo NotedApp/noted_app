@@ -9,7 +9,7 @@ enum SettingsStatus {
 
 final class SettingsState extends Equatable {
   final SettingsStatus status;
-  final NotedSettings settings;
+  final SettingsModel settings;
   final NotedError? error;
 
   const SettingsState({

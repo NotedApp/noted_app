@@ -13,9 +13,9 @@ import '../../helpers/environment/unit_test_environment.dart';
 
 void main() {
   group('AuthBloc', () {
-    NotedUser newUser = NotedUser(id: 'local-11', email: 'test@test.com', name: 'Local 11');
-    NotedUser local0 = NotedUser(id: 'local-0', email: 'local-0@noted.com', name: 'shaquille.oatmeal');
-    NotedUser google = NotedUser(id: 'local-google', email: 'local-google@noted.com', name: 'googly_woogly');
+    UserModel newUser = UserModel(id: 'local-11', email: 'test@test.com', name: 'Local 11');
+    UserModel local0 = UserModel(id: 'local-0', email: 'local-0@noted.com', name: 'shaquille.oatmeal');
+    UserModel google = UserModel(id: 'local-google', email: 'local-google@noted.com', name: 'googly_woogly');
 
     LocalAuthRepository getRepository() {
       return locator<AuthRepository>() as LocalAuthRepository;

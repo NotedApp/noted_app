@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:noted_app/theme/custom_colors.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/common/rich_text/noted_rich_text_attributes.dart';
 import 'package:noted_app/ui/common/rich_text/toolbar/home/noted_rich_text_colors_button.dart';

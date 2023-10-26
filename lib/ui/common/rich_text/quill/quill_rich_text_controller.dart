@@ -28,7 +28,7 @@ Attribute _getQuillAttribute(NotedRichTextAttribute attribute) {
 class QuillRichTextController extends NotedRichTextController {
   QuillController controller = QuillController.basic();
 
-  QuillRichTextController({NotedDocument? initial}) {
+  QuillRichTextController({DocumentModel? initial}) {
     if (initial != null) {
       controller = QuillController(
         document: Document.fromDelta(Delta.fromJson(initial)),
@@ -43,7 +43,7 @@ class QuillRichTextController extends NotedRichTextController {
   List<dynamic> get value => controller.document.toDelta().toJson();
 
   @override
-  set value(NotedDocument document) => controller.document = Document.fromJson(document);
+  set value(DocumentModel document) => controller.document = Document.fromJson(document);
 
   @override
   bool isAttributeToggled(NotedRichTextAttribute attribute) {
