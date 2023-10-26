@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 abstract class NotedIcons {
   static const _fontFamily = 'NotedIcons';
@@ -59,63 +59,5 @@ abstract class NotedIcons {
   static const IconData stats = IconData(0xe835, fontFamily: _fontFamily);
   static const IconData strikethrough = IconData(0xe836, fontFamily: _fontFamily);
   static const IconData taskList = IconData(0xe837, fontFamily: _fontFamily);
-
-  static const List<IconData> iconList = [
-    textColor,
-    text,
-    trash,
-    underline,
-    unorderedList,
-    unpinned,
-    video,
-    account,
-    alarmClock,
-    animation,
-    apple,
-    backgroundColor,
-    basketball,
-    bell,
-    bold,
-    book,
-    brush,
-    camera,
-    check,
-    chevronDown,
-    chevronLeft,
-    chevronRight,
-    chevronUp,
-    close,
-    coin,
-    creditCard,
-    email,
-    eyeClosed,
-    eye,
-    eyedropper,
-    facebook,
-    github,
-    google,
-    h1,
-    h2,
-    h3,
-    help,
-    info,
-    italic,
-    key,
-    link,
-    mic,
-    mountain,
-    orderedList,
-    pencil,
-    paw,
-    phone,
-    pinned,
-    pizza,
-    plug,
-    plus,
-    settings,
-    star,
-    stats,
-    strikethrough,
-    taskList,
-  ];
+  static const IconData tag = IconData(0xe838, fontFamily: _fontFamily);
 }

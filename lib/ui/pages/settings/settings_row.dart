@@ -37,7 +37,7 @@ class SettingsRow extends StatelessWidget {
               Expanded(child: Text(title, style: theme.textTheme.bodyLarge)),
               if (trailing != null || hasArrow)
                 Padding(
-                  padding: EdgeInsets.only(right: 12),
+                  padding: EdgeInsets.only(left: 12),
                   child: trailing ?? Icon(NotedIcons.chevronRight, size: 24, color: theme.colorScheme.tertiary),
                 ),
             ],

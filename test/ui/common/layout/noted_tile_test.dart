@@ -45,7 +45,7 @@ void main() {
               SizedBox(
                 width: 300,
                 height: 300,
-                child: buildNotedTile(
+                child: NotedTile.buildTile(
                   note: NotebookNoteModel(
                     id: 'notebook',
                     title: 'notebook',

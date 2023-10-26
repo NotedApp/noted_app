@@ -11,6 +11,12 @@ class NotedTile extends StatelessWidget {
 
   const NotedTile({required this.child, this.tags = const {}, this.onTap, super.key});
 
+  static Widget buildTile({required NoteModel note, required VoidCallback onTap}) {
+    return switch (note) {
+      NotebookNoteModel() => NotebookTile(note: note, onTap: onTap),
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget contents = tags.isNotEmpty ? Column(children: [Expanded(child: child), _NotedTagRow(tags: tags)]) : child;
@@ -22,12 +28,6 @@ class NotedTile extends StatelessWidget {
       child: contents,
     );
   }
-}
-
-Widget buildNotedTile({required NoteModel note, required VoidCallback onTap}) {
-  return switch (note) {
-    NotebookNoteModel() => NotebookTile(note: note, onTap: onTap),
-  };
 }
 
 class _NotedTagRow extends StatelessWidget {
