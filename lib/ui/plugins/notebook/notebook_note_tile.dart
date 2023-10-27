@@ -35,7 +35,7 @@ class _NotebookNoteModelTileState extends State<NotebookNoteModelTile> {
         padding: EdgeInsets.only(bottom: 36),
         onTap: widget.onTap,
         header: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 12, 0, 4),
+          padding: const EdgeInsets.fromLTRB(0, 12, 0, 6),
           child: Text(
             widget.note.title,
             style: Theme.of(context).textTheme.titleMedium,

@@ -30,6 +30,8 @@ class _NotebookEditContentState extends State<NotebookEditContent> {
 
     textController.addListener(_updateNote);
     titleController.addListener(_updateNote);
+
+    focusNode.addListener(() => setState(() => {}));
   }
 
   @override
@@ -38,25 +40,24 @@ class _NotebookEditContentState extends State<NotebookEditContent> {
 
     return Column(
       children: [
-        SizedBox(height: 16),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: NotedTextField(
-            type: NotedTextFieldType.title,
-            controller: titleController,
-            hint: strings.edit_titlePlaceholder,
-          ),
-        ),
         Expanded(
-          child: NotedEditor.quill(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+          child: NotedHeaderEditor(
             controller: textController,
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 36),
             focusNode: focusNode,
             placeholder: strings.edit_textPlaceholder,
             autofocus: true,
+            header: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: NotedTextField(
+                type: NotedTextFieldType.title,
+                controller: titleController,
+                hint: strings.edit_titlePlaceholder,
+              ),
+            ),
           ),
         ),
-        NotedEditorToolbar(controller: textController),
+        if (focusNode.hasFocus) NotedEditorToolbar(controller: textController),
       ],
     );
   }

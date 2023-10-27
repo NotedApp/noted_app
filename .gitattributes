@@ -1,2 +1,6 @@
 # All files should have lf file endings.
 * text eol=lf
+
+# Binary files that shouldn't be modified.
+*.png binary
+*.ttf binary
