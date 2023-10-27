@@ -1,7 +1,7 @@
-part of '../noted_rich_text_toolbar.dart';
+part of '../noted_editor_toolbar.dart';
 
 class _ToolbarHome extends StatelessWidget {
-  final NotedRichTextController controller;
+  final NotedEditorController controller;
   final ToolbarStateCallback setToolbarState;
 
   const _ToolbarHome({required this.controller, required this.setToolbarState, super.key});
@@ -15,71 +15,71 @@ class _ToolbarHome extends StatelessWidget {
       mainAxisSpacing: 8,
       crossAxisSpacing: 12,
       children: [
-        NotedRichTextToggleButton(
+        NotedEditorToggleButton(
           controller: controller,
-          attribute: NotedRichTextAttribute.bold,
+          attribute: NotedEditorAttribute.bold,
           colors: colors,
         ),
-        NotedRichTextToggleButton(
+        NotedEditorToggleButton(
           controller: controller,
-          attribute: NotedRichTextAttribute.italic,
+          attribute: NotedEditorAttribute.italic,
           colors: colors,
         ),
-        NotedRichTextToggleButton(
+        NotedEditorToggleButton(
           controller: controller,
-          attribute: NotedRichTextAttribute.underline,
+          attribute: NotedEditorAttribute.underline,
           colors: colors,
         ),
-        NotedRichTextToggleButton(
+        NotedEditorToggleButton(
           controller: controller,
-          attribute: NotedRichTextAttribute.strikethrough,
+          attribute: NotedEditorAttribute.strikethrough,
           colors: colors,
         ),
-        NotedRichTextToggleButton(
+        NotedEditorToggleButton(
           controller: controller,
-          attribute: NotedRichTextAttribute.h1,
+          attribute: NotedEditorAttribute.h1,
           colors: colors,
         ),
-        NotedRichTextToggleButton(
+        NotedEditorToggleButton(
           controller: controller,
-          attribute: NotedRichTextAttribute.h2,
+          attribute: NotedEditorAttribute.h2,
           colors: colors,
         ),
-        NotedRichTextToggleButton(
+        NotedEditorToggleButton(
           controller: controller,
-          attribute: NotedRichTextAttribute.h3,
+          attribute: NotedEditorAttribute.h3,
           colors: colors,
         ),
-        NotedRichTextToggleButton(
+        NotedEditorToggleButton(
           controller: controller,
-          attribute: NotedRichTextAttribute.ul,
+          attribute: NotedEditorAttribute.ul,
           colors: colors,
         ),
-        NotedRichTextToggleButton(
+        NotedEditorToggleButton(
           controller: controller,
-          attribute: NotedRichTextAttribute.ol,
+          attribute: NotedEditorAttribute.ol,
           colors: colors,
         ),
-        NotedRichTextToggleButton(
+        NotedEditorToggleButton(
           controller: controller,
-          attribute: NotedRichTextAttribute.taskList,
+          attribute: NotedEditorAttribute.taskList,
           colors: colors,
         ),
-        NotedRichTextStateButton(
+        NotedEditorStateButton(
           controller: controller,
-          attribute: NotedRichTextAttribute.textColor,
+          attribute: NotedEditorAttribute.textColor,
           colors: colors,
           onPressed: () => setToolbarState(_ToolbarState.textColor),
         ),
-        NotedRichTextStateButton(
+        NotedEditorStateButton(
           controller: controller,
-          attribute: NotedRichTextAttribute.textBackground,
+          attribute: NotedEditorAttribute.textBackground,
           colors: colors,
           onPressed: () => setToolbarState(_ToolbarState.highlightColor),
         ),
-        NotedRichTextStateButton(
+        NotedEditorStateButton(
           controller: controller,
-          attribute: NotedRichTextAttribute.link,
+          attribute: NotedEditorAttribute.link,
           colors: colors,
           onPressed: () => setToolbarState(_ToolbarState.link),
         ),

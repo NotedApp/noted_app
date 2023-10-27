@@ -10,7 +10,7 @@ import 'package:noted_catalog/pages/catalog_text_style_page.dart';
 import 'package:noted_catalog/pages/catalog_tiles_page.dart';
 import 'package:noted_catalog/pages/input/catalog_misc_input_page.dart';
 import 'package:noted_catalog/pages/input/catalog_text_input_page.dart';
-import 'package:noted_catalog/pages/rich_text/catalog_quill_rich_text.dart';
+import 'package:noted_catalog/pages/editor/catalog_quill_editor.dart';
 
 sealed class CatalogNode {
   final String title;
@@ -39,7 +39,7 @@ class CatalogContent {
       CatalogLeaf(title: 'icons', page: const CatalogIconsPage()),
       CatalogLeaf(title: 'tiles', page: const CatalogTilesPage()),
       CatalogLeaf(title: 'layout', page: CatalogLayoutPage()),
-      CatalogLeaf(title: 'rich text', page: const CatalogQuillRichText()),
+      CatalogLeaf(title: 'editor', page: const CatalogQuillEditor()),
       CatalogBranch(title: 'buttons', children: [
         CatalogLeaf(title: 'icon', page: const CatalogIconButtonPage()),
         CatalogLeaf(title: 'text', page: const CatalogTextButtonPage()),

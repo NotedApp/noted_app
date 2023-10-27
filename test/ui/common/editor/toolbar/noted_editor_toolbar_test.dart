@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:noted_app/ui/common/editor/noted_editor_attributes.dart';
+import 'package:noted_app/ui/common/editor/quill/quill_editor_controller.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
-import 'package:noted_app/ui/common/rich_text/noted_rich_text_attributes.dart';
-import 'package:noted_app/ui/common/rich_text/quill/quill_rich_text_controller.dart';
 
 import '../../../../helpers/environment/unit_test_environment.dart';
 import '../../../../helpers/mocks/mock_delta.dart';
@@ -14,17 +14,17 @@ void main() {
     UnitTestEnvironment().configure();
   });
 
-  group('Quill Rich Text Toolbar', () {
-    late QuillRichTextController controller;
+  group('Quill Editor Toolbar', () {
+    late QuillEditorController controller;
 
     setUp(() {
-      controller = NotedRichTextController.quill(
+      controller = NotedEditorController.quill(
         initial: testData0,
-      ) as QuillRichTextController;
+      ) as QuillEditorController;
     });
 
     testWidgets('renders a set of formatting buttons', (tester) async {
-      await tester.pumpWidget(TestWrapper(child: NotedRichTextToolbar(controller: controller)));
+      await tester.pumpWidget(TestWrapper(child: NotedEditorToolbar(controller: controller)));
 
       expect(find.byType(NotedIconButton), findsNWidgets(13));
 
@@ -44,24 +44,24 @@ void main() {
 
     testWidgets('toggles formatting', (tester) async {
       controller.controller.updateSelection(TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.LOCAL);
-      await tester.pumpWidget(TestWrapper(child: NotedRichTextToolbar(controller: controller)));
+      await tester.pumpWidget(TestWrapper(child: NotedEditorToolbar(controller: controller)));
 
-      expect(controller.isAttributeToggled(NotedRichTextAttribute.bold), false);
-
-      await tester.tap(find.byIcon(NotedIcons.bold));
-      await tester.pumpAndSettle();
-
-      expect(controller.isAttributeToggled(NotedRichTextAttribute.bold), true);
+      expect(controller.isAttributeToggled(NotedEditorAttribute.bold), false);
 
       await tester.tap(find.byIcon(NotedIcons.bold));
       await tester.pumpAndSettle();
 
-      expect(controller.isAttributeToggled(NotedRichTextAttribute.bold), false);
+      expect(controller.isAttributeToggled(NotedEditorAttribute.bold), true);
+
+      await tester.tap(find.byIcon(NotedIcons.bold));
+      await tester.pumpAndSettle();
+
+      expect(controller.isAttributeToggled(NotedEditorAttribute.bold), false);
     });
 
     testWidgets('toggles a link', (tester) async {
       controller.controller.updateSelection(TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.LOCAL);
-      await tester.pumpWidget(TestWrapper(child: NotedRichTextToolbar(controller: controller)));
+      await tester.pumpWidget(TestWrapper(child: NotedEditorToolbar(controller: controller)));
 
       expect(controller.getLink(), null);
 
@@ -81,7 +81,7 @@ void main() {
     });
 
     testWidgets('updates the text color', (tester) async {
-      await tester.pumpWidget(TestWrapper(child: NotedRichTextToolbar(controller: controller)));
+      await tester.pumpWidget(TestWrapper(child: NotedEditorToolbar(controller: controller)));
 
       await tester.tap(find.byIcon(NotedIcons.textColor));
       await tester.pumpAndSettle(const Duration(milliseconds: 200));
@@ -93,7 +93,7 @@ void main() {
       await tester.tap(color);
       await tester.pumpAndSettle();
 
-      expect(controller.getColor(NotedRichTextAttribute.textColor), blueGrey500);
+      expect(controller.getColor(NotedEditorAttribute.textColor), blueGrey500);
     });
   });
 }

@@ -17,7 +17,7 @@ class NotebookEditContent extends StatefulWidget {
 }
 
 class _NotebookEditContentState extends State<NotebookEditContent> {
-  late final NotedRichTextController textController;
+  late final NotedEditorController textController;
   late final TextEditingController titleController;
   final FocusNode focusNode = FocusNode();
 
@@ -25,7 +25,7 @@ class _NotebookEditContentState extends State<NotebookEditContent> {
   void initState() {
     super.initState();
 
-    textController = NotedRichTextController.quill(initial: widget.note.document);
+    textController = NotedEditorController.quill(initial: widget.note.document);
     titleController = TextEditingController(text: widget.note.title);
 
     textController.addListener(_updateNote);
@@ -48,7 +48,7 @@ class _NotebookEditContentState extends State<NotebookEditContent> {
           ),
         ),
         Expanded(
-          child: NotedRichTextEditor.quill(
+          child: NotedEditor.quill(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
             controller: textController,
             focusNode: focusNode,
@@ -56,7 +56,7 @@ class _NotebookEditContentState extends State<NotebookEditContent> {
             autofocus: true,
           ),
         ),
-        NotedRichTextToolbar(controller: textController),
+        NotedEditorToolbar(controller: textController),
       ],
     );
   }

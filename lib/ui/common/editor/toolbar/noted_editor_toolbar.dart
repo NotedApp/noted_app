@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:noted_app/ui/common/editor/noted_editor_attributes.dart';
+import 'package:noted_app/ui/common/editor/toolbar/home/noted_editor_state_button.dart';
+import 'package:noted_app/ui/common/editor/toolbar/home/noted_editor_toggle_button.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
-import 'package:noted_app/ui/common/rich_text/noted_rich_text_attributes.dart';
-import 'package:noted_app/ui/common/rich_text/toolbar/home/noted_rich_text_colors_button.dart';
-import 'package:noted_app/ui/common/rich_text/toolbar/home/noted_rich_text_toggle_button.dart';
 import 'package:noted_app/util/extensions.dart';
 
-part 'home/noted_rich_text_toolbar_home.dart';
-part 'colors/noted_rich_text_toolbar_colors.dart';
-part 'links/noted_rich_text_toolbar_links.dart';
+part 'home/noted_editor_toolbar_home.dart';
+part 'colors/noted_editor_toolbar_colors.dart';
+part 'links/noted_editor_toolbar_links.dart';
 
 typedef ToolbarStateCallback = void Function(_ToolbarState);
 
@@ -23,16 +23,16 @@ Key _textColorKey = Key(_ToolbarState.textColor.name);
 Key _highlightColorKey = Key(_ToolbarState.highlightColor.name);
 Key _linkKey = Key(_ToolbarState.link.name);
 
-class NotedRichTextToolbar extends StatefulWidget {
-  final NotedRichTextController controller;
+class NotedEditorToolbar extends StatefulWidget {
+  final NotedEditorController controller;
 
-  const NotedRichTextToolbar({required this.controller, super.key});
+  const NotedEditorToolbar({required this.controller, super.key});
 
   @override
-  State<StatefulWidget> createState() => _NotedRichTextToolbarState();
+  State<StatefulWidget> createState() => _NotedEditorToolbarState();
 }
 
-class _NotedRichTextToolbarState extends State<NotedRichTextToolbar> {
+class _NotedEditorToolbarState extends State<NotedEditorToolbar> {
   _ToolbarState state = _ToolbarState.home;
 
   void setToolbarState(_ToolbarState newState) {
@@ -76,14 +76,14 @@ class _NotedRichTextToolbarState extends State<NotedRichTextToolbar> {
             ),
           _ToolbarState.textColor => _ToolbarColorPicker(
               controller: widget.controller,
-              attribute: NotedRichTextAttribute.textColor,
+              attribute: NotedEditorAttribute.textColor,
               defaultColor: colors.onBackground,
               setToolbarState: setToolbarState,
               key: _textColorKey,
             ),
           _ToolbarState.highlightColor => _ToolbarColorPicker(
               controller: widget.controller,
-              attribute: NotedRichTextAttribute.textBackground,
+              attribute: NotedEditorAttribute.textBackground,
               defaultColor: colors.background,
               setToolbarState: setToolbarState,
               key: _highlightColorKey,

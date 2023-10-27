@@ -1,34 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
+import 'package:noted_app/ui/common/editor/noted_editor_attributes.dart';
+import 'package:noted_app/ui/common/editor/noted_editor_controller.dart';
 import 'package:noted_app/util/extensions.dart';
-import 'package:noted_app/ui/common/rich_text/noted_rich_text_attributes.dart';
-import 'package:noted_app/ui/common/rich_text/noted_rich_text_controller.dart';
 import 'package:noted_models/noted_models.dart';
 
 // coverage:ignore-start
-Attribute _getQuillAttribute(NotedRichTextAttribute attribute) {
+Attribute _getQuillAttribute(NotedEditorAttribute attribute) {
   return switch (attribute) {
-    NotedRichTextAttribute.bold => Attribute.bold,
-    NotedRichTextAttribute.italic => Attribute.italic,
-    NotedRichTextAttribute.underline => Attribute.underline,
-    NotedRichTextAttribute.strikethrough => Attribute.strikeThrough,
-    NotedRichTextAttribute.h1 => Attribute.h1,
-    NotedRichTextAttribute.h2 => Attribute.h2,
-    NotedRichTextAttribute.h3 => Attribute.h3,
-    NotedRichTextAttribute.textColor => Attribute.color,
-    NotedRichTextAttribute.textBackground => Attribute.background,
-    NotedRichTextAttribute.ul => Attribute.ul,
-    NotedRichTextAttribute.ol => Attribute.ol,
-    NotedRichTextAttribute.taskList => Attribute.unchecked,
-    NotedRichTextAttribute.link => Attribute.link,
+    NotedEditorAttribute.bold => Attribute.bold,
+    NotedEditorAttribute.italic => Attribute.italic,
+    NotedEditorAttribute.underline => Attribute.underline,
+    NotedEditorAttribute.strikethrough => Attribute.strikeThrough,
+    NotedEditorAttribute.h1 => Attribute.h1,
+    NotedEditorAttribute.h2 => Attribute.h2,
+    NotedEditorAttribute.h3 => Attribute.h3,
+    NotedEditorAttribute.textColor => Attribute.color,
+    NotedEditorAttribute.textBackground => Attribute.background,
+    NotedEditorAttribute.ul => Attribute.ul,
+    NotedEditorAttribute.ol => Attribute.ol,
+    NotedEditorAttribute.taskList => Attribute.unchecked,
+    NotedEditorAttribute.link => Attribute.link,
   };
 }
 // coverage:ignore-start
 
-class QuillRichTextController extends NotedRichTextController {
+class QuillEditorController extends NotedEditorController {
   QuillController controller = QuillController.basic();
 
-  QuillRichTextController({DocumentModel? initial}) {
+  QuillEditorController({DocumentModel? initial}) {
     if (initial != null) {
       controller = QuillController(
         document: Document.fromDelta(Delta.fromJson(initial)),
@@ -46,18 +46,18 @@ class QuillRichTextController extends NotedRichTextController {
   set value(DocumentModel document) => controller.document = Document.fromJson(document);
 
   @override
-  bool isAttributeToggled(NotedRichTextAttribute attribute) {
+  bool isAttributeToggled(NotedEditorAttribute attribute) {
     Attribute quillAttribute = _getQuillAttribute(attribute);
 
     switch (attribute) {
-      case NotedRichTextAttribute.h1:
-      case NotedRichTextAttribute.h2:
-      case NotedRichTextAttribute.h3:
+      case NotedEditorAttribute.h1:
+      case NotedEditorAttribute.h2:
+      case NotedEditorAttribute.h3:
         return _isMultiAttributeToggled(quillAttribute, Attribute.header.key);
-      case NotedRichTextAttribute.ol:
-      case NotedRichTextAttribute.ul:
+      case NotedEditorAttribute.ol:
+      case NotedEditorAttribute.ul:
         return _isMultiAttributeToggled(quillAttribute, Attribute.list.key);
-      case NotedRichTextAttribute.taskList:
+      case NotedEditorAttribute.taskList:
         return _isTaskListToggled();
       default:
         Style style = controller.getSelectionStyle();
@@ -88,13 +88,13 @@ class QuillRichTextController extends NotedRichTextController {
   }
 
   @override
-  void setAttribute(NotedRichTextAttribute attribute, bool value) {
+  void setAttribute(NotedEditorAttribute attribute, bool value) {
     Attribute quillAttribute = _getQuillAttribute(attribute);
     controller.formatSelection(!value ? Attribute.clone(quillAttribute, null) : quillAttribute);
   }
 
   @override
-  Color? getColor(NotedRichTextAttribute attribute) {
+  Color? getColor(NotedEditorAttribute attribute) {
     Style style = controller.getSelectionStyle();
     Attribute quillAttribute = _getQuillAttribute(attribute);
     dynamic currentValue = style.attributes[quillAttribute.key]?.value;
@@ -107,7 +107,7 @@ class QuillRichTextController extends NotedRichTextController {
   }
 
   @override
-  void setColor(NotedRichTextAttribute attribute, Color? value) {
+  void setColor(NotedEditorAttribute attribute, Color? value) {
     Attribute quillAttribute = _getQuillAttribute(attribute);
     controller.formatSelection(Attribute.clone(quillAttribute, value?.toHex()));
   }
@@ -115,7 +115,7 @@ class QuillRichTextController extends NotedRichTextController {
   @override
   String? getLink() {
     Style style = controller.getSelectionStyle();
-    Attribute quillAttribute = _getQuillAttribute(NotedRichTextAttribute.link);
+    Attribute quillAttribute = _getQuillAttribute(NotedEditorAttribute.link);
     dynamic currentValue = style.attributes[quillAttribute.key]?.value;
 
     if (currentValue == null || currentValue is! String) {
@@ -127,12 +127,12 @@ class QuillRichTextController extends NotedRichTextController {
 
   @override
   void setLink(String? value) {
-    Attribute quillAttribute = _getQuillAttribute(NotedRichTextAttribute.link);
+    Attribute quillAttribute = _getQuillAttribute(NotedEditorAttribute.link);
     controller.formatSelection(Attribute.clone(quillAttribute, value?.isNotEmpty ?? false ? value : null));
   }
 
   @override
-  void insertEmbed(NotedRichTextEmbed embed) {
+  void insertEmbed(NotedEditorEmbed embed) {
     // TODO: implement insertEmbed
   }
 

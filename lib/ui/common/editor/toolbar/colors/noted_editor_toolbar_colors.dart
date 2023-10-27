@@ -1,8 +1,8 @@
-part of '../noted_rich_text_toolbar.dart';
+part of '../noted_editor_toolbar.dart';
 
 // TODO: Get colors from settings bloc.
-final Map<NotedRichTextAttribute, List<Color>> _colors = {
-  NotedRichTextAttribute.textColor: [
+final Map<NotedEditorAttribute, List<Color>> _colors = {
+  NotedEditorAttribute.textColor: [
     black,
     white,
     grey400,
@@ -15,7 +15,7 @@ final Map<NotedRichTextAttribute, List<Color>> _colors = {
     orange500,
     brown500,
   ],
-  NotedRichTextAttribute.textBackground: [
+  NotedEditorAttribute.textBackground: [
     blueGrey200,
     red200,
     purple200,
@@ -45,8 +45,8 @@ final List<Color> _defaultColors = [
 ]; // coverage:ignore-end
 
 class _ToolbarColorPicker extends StatefulWidget {
-  final NotedRichTextController controller;
-  final NotedRichTextAttribute attribute;
+  final NotedEditorController controller;
+  final NotedEditorAttribute attribute;
   final Color defaultColor;
   final ToolbarStateCallback setToolbarState;
 

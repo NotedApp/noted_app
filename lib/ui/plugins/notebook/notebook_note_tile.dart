@@ -14,13 +14,13 @@ class NotebookNoteModelTile extends StatefulWidget {
 }
 
 class _NotebookNoteModelTileState extends State<NotebookNoteModelTile> {
-  late final NotedRichTextController _textController;
+  late final NotedEditorController _textController;
 
   @override
   void initState() {
     super.initState();
 
-    _textController = NotedRichTextController.quill(initial: widget.note.document);
+    _textController = NotedEditorController.quill(initial: widget.note.document);
   }
 
   @override
@@ -44,7 +44,7 @@ class _NotebookNoteModelTileState extends State<NotebookNoteModelTile> {
                 ),
               ),
             Expanded(
-              child: NotedRichTextEditor.quill(
+              child: NotedEditor.quill(
                 controller: _textController,
                 readonly: true,
                 padding: EdgeInsets.only(
