@@ -3,17 +3,17 @@ import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
 import 'package:noted_models/noted_models.dart';
 
-class NotebookNoteModelTile extends StatefulWidget {
+class NotebookTile extends StatefulWidget {
   final NotebookNoteModel note;
   final VoidCallback? onTap;
 
-  const NotebookNoteModelTile({required this.note, this.onTap, super.key});
+  const NotebookTile({required this.note, this.onTap, super.key});
 
   @override
-  State<StatefulWidget> createState() => _NotebookNoteModelTileState();
+  State<StatefulWidget> createState() => _NotebookTileState();
 }
 
-class _NotebookNoteModelTileState extends State<NotebookNoteModelTile> {
+class _NotebookTileState extends State<NotebookTile> {
   late final NotedEditorController _textController;
 
   @override
@@ -62,7 +62,7 @@ class _NotebookNoteModelTileState extends State<NotebookNoteModelTile> {
 
   // coverage:ignore-start
   @override
-  void didUpdateWidget(covariant NotebookNoteModelTile oldWidget) {
+  void didUpdateWidget(covariant NotebookTile oldWidget) {
     _textController.value = widget.note.document;
     super.didUpdateWidget(oldWidget);
   }

@@ -23,8 +23,8 @@ class HomeContent extends StatelessWidget {
           childAspectRatio: NotedWidgetConfig.tileAspectRatio,
         ),
         itemBuilder: (context, index) => buildNotedTile(
-          notes[index],
-          () => context.push('/notes/${notes[index].id}'),
+          note: notes[index],
+          onTap: () => context.push('/notes/${notes[index].id}'),
         ),
       ),
     );

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
-import 'package:noted_app/ui/plugins/notebook/notebook_note_tile.dart';
+import 'package:noted_app/ui/plugins/notebook/notebook_tile.dart';
 import 'package:noted_models/noted_models.dart';
 
 import '../../../helpers/mocks/mock_callbacks.dart';
@@ -46,14 +46,14 @@ void main() {
                 width: 300,
                 height: 300,
                 child: buildNotedTile(
-                  NotebookNoteModel(
+                  note: NotebookNoteModel(
                     id: 'notebook',
                     title: 'notebook',
                     document: [
                       {'insert': '\n'},
                     ],
                   ),
-                  notebookCallback,
+                  onTap: notebookCallback,
                 ),
               )
             ],
@@ -61,7 +61,7 @@ void main() {
         ),
       );
 
-      Finder notebookFinder = find.byType(NotebookNoteModelTile);
+      Finder notebookFinder = find.byType(NotebookTile);
 
       await tester.tap(notebookFinder);
 
