@@ -5,7 +5,7 @@ import 'package:noted_app/ui/common/editor/quill/quill_editor_controller.dart';
 import 'package:noted_app/util/extensions.dart';
 
 class QuillEditor extends NotedEditor {
-  const QuillEditor({
+  QuillEditor({
     required super.controller,
     super.focusNode,
     super.placeholder,
@@ -40,7 +40,7 @@ class QuillEditor extends NotedEditor {
           customStyles: _getStyles(context),
         ),
         focusNode: focusNode ?? FocusNode(),
-        scrollController: ScrollController(),
+        scrollController: PrimaryScrollController.maybeOf(context) ?? ScrollController(),
       ),
     );
   }

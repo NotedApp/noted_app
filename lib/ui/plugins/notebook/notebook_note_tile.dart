@@ -25,37 +25,36 @@ class _NotebookNoteModelTileState extends State<NotebookNoteModelTile> {
 
   @override
   Widget build(BuildContext context) {
+    Widget child;
+    bool hasTitle = widget.note.title.isNotEmpty;
+
+    if (hasTitle) {
+      child = NotedHeaderEditor(
+        controller: _textController,
+        readonly: true,
+        padding: EdgeInsets.only(bottom: 36),
+        onTap: widget.onTap,
+        header: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 12, 0, 4),
+          child: Text(
+            widget.note.title,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+        ),
+      );
+    } else {
+      child = NotedEditor.quill(
+        controller: _textController,
+        readonly: true,
+        padding: EdgeInsets.only(top: 12, bottom: 36),
+        onTap: widget.onTap,
+      );
+    }
+
     return NotedTile(
       child: Container(
-        padding: EdgeInsets.only(
-          left: 12,
-          top: widget.note.title.isNotEmpty ? 12 : 0,
-          right: 12,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (widget.note.title.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Text(
-                  widget.note.title,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-              ),
-            Expanded(
-              child: NotedEditor.quill(
-                controller: _textController,
-                readonly: true,
-                padding: EdgeInsets.only(
-                  top: widget.note.title.isNotEmpty ? 0 : 12,
-                  bottom: 12,
-                ),
-                onTap: widget.onTap,
-              ),
-            ),
-          ],
-        ),
+        padding: EdgeInsets.symmetric(horizontal: 12),
+        child: child,
       ),
       onTap: widget.onTap ?? () => context.push('notes/${widget.note.id}'),
     );

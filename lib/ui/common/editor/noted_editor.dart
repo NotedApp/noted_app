@@ -11,7 +11,7 @@ abstract class NotedEditor extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final VoidCallback? onTap;
 
-  const NotedEditor({
+  NotedEditor({
     required this.controller,
     this.focusNode,
     this.placeholder,
@@ -30,6 +30,7 @@ abstract class NotedEditor extends StatelessWidget {
     bool autofocus = false,
     EdgeInsetsGeometry padding = EdgeInsets.zero,
     VoidCallback? onTap,
+    Key? key,
   }) {
     return QuillEditor(
       controller: controller,
@@ -39,6 +40,7 @@ abstract class NotedEditor extends StatelessWidget {
       autofocus: autofocus,
       padding: padding,
       onTap: onTap,
+      key: key,
     );
   }
 }
