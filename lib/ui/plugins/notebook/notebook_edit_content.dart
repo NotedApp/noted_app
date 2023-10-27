@@ -17,7 +17,7 @@ class NotebookEditContent extends StatefulWidget {
 }
 
 class _NotebookEditContentState extends State<NotebookEditContent> {
-  late final NotedRichTextController textController;
+  late final NotedEditorController textController;
   late final TextEditingController titleController;
   final FocusNode focusNode = FocusNode();
 
@@ -25,11 +25,13 @@ class _NotebookEditContentState extends State<NotebookEditContent> {
   void initState() {
     super.initState();
 
-    textController = NotedRichTextController.quill(initial: widget.note.document);
+    textController = NotedEditorController.quill(initial: widget.note.document);
     titleController = TextEditingController(text: widget.note.title);
 
     textController.addListener(_updateNote);
     titleController.addListener(_updateNote);
+
+    focusNode.addListener(() => setState(() => {}));
   }
 
   @override
@@ -38,25 +40,24 @@ class _NotebookEditContentState extends State<NotebookEditContent> {
 
     return Column(
       children: [
-        SizedBox(height: 16),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: NotedTextField(
-            type: NotedTextFieldType.title,
-            controller: titleController,
-            hint: strings.edit_titlePlaceholder,
-          ),
-        ),
         Expanded(
-          child: NotedRichTextEditor.quill(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+          child: NotedHeaderEditor(
             controller: textController,
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 36),
             focusNode: focusNode,
             placeholder: strings.edit_textPlaceholder,
             autofocus: true,
+            header: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: NotedTextField(
+                type: NotedTextFieldType.title,
+                controller: titleController,
+                hint: strings.edit_titlePlaceholder,
+              ),
+            ),
           ),
         ),
-        NotedRichTextToolbar(controller: textController),
+        if (focusNode.hasFocus) NotedEditorToolbar(controller: textController),
       ],
     );
   }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:noted_app/ui/common/rich_text/noted_rich_text_controller.dart';
-import 'package:noted_app/ui/common/rich_text/quill/quill_rich_text_editor.dart';
+import 'package:noted_app/ui/common/editor/noted_editor_controller.dart';
+import 'package:noted_app/ui/common/editor/quill/quill_editor.dart';
 
-abstract class NotedRichTextEditor extends StatelessWidget {
-  final NotedRichTextController controller;
+abstract class NotedEditor extends StatelessWidget {
+  final NotedEditorController controller;
   final FocusNode? focusNode;
   final String? placeholder;
   final bool readonly;
@@ -11,7 +11,7 @@ abstract class NotedRichTextEditor extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final VoidCallback? onTap;
 
-  const NotedRichTextEditor({
+  NotedEditor({
     required this.controller,
     this.focusNode,
     this.placeholder,
@@ -22,16 +22,17 @@ abstract class NotedRichTextEditor extends StatelessWidget {
     super.key,
   });
 
-  factory NotedRichTextEditor.quill({
-    required NotedRichTextController controller,
+  factory NotedEditor.quill({
+    required NotedEditorController controller,
     FocusNode? focusNode,
     String? placeholder,
     bool readonly = false,
     bool autofocus = false,
     EdgeInsetsGeometry padding = EdgeInsets.zero,
     VoidCallback? onTap,
+    Key? key,
   }) {
-    return QuillRichTextEditor(
+    return QuillEditor(
       controller: controller,
       focusNode: focusNode,
       placeholder: placeholder,
@@ -39,6 +40,7 @@ abstract class NotedRichTextEditor extends StatelessWidget {
       autofocus: autofocus,
       padding: padding,
       onTap: onTap,
+      key: key,
     );
   }
 }

@@ -1,7 +1,7 @@
-part of '../noted_rich_text_toolbar.dart';
+part of '../noted_editor_toolbar.dart';
 
 class _ToolbarLinkPicker extends StatefulWidget {
-  final NotedRichTextController controller;
+  final NotedEditorController controller;
   final ToolbarStateCallback setToolbarState;
 
   const _ToolbarLinkPicker({

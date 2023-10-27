@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
-import 'package:noted_app/ui/plugins/notebook/notebook_note_tile.dart';
+import 'package:noted_app/ui/plugins/notebook/notebook_tile.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_models/noted_models.dart';
 
@@ -21,8 +21,8 @@ class NotedTile extends StatelessWidget {
   }
 }
 
-Widget buildNotedTile(NoteModel note, VoidCallback onTap) {
+Widget buildNotedTile({required NoteModel note, required VoidCallback onTap}) {
   return switch (note) {
-    NotebookNoteModel() => NotebookNoteModelTile(note: note, onTap: onTap),
+    NotebookNoteModel() => NotebookTile(note: note, onTap: onTap),
   };
 }

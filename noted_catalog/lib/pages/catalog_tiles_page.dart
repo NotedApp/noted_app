@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
-import 'package:noted_app/ui/plugins/notebook/notebook_note_tile.dart';
+import 'package:noted_app/ui/plugins/notebook/notebook_tile.dart';
 import 'package:noted_catalog/notebook/mock_notes.dart';
 
 class CatalogTilesPage extends StatelessWidget {
@@ -15,8 +15,8 @@ class CatalogTilesPage extends StatelessWidget {
       crossAxisCount: 2,
       shrinkWrap: true,
       children: [
-        NotebookNoteModelTile(note: testNote0, onTap: () => _showTapSnackBar(context)),
-        NotebookNoteModelTile(note: testNote1, onTap: () => _showTapSnackBar(context)),
+        NotebookTile(note: testNote0, onTap: () => _showTapSnackBar(context)),
+        NotebookTile(note: testNote1, onTap: () => _showTapSnackBar(context)),
       ],
     );
   }
