@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:noted_app/ui/common/custom_colors.dart';
 import 'package:noted_models/noted_models.dart' as Models;
 
 extension NotedColorExtensions on Color {
@@ -12,7 +11,7 @@ extension NotedColorExtensions on Color {
   /// Returns black or white, depending on the intensity of the color. This value can be used to generate a dynamic on
   /// surface color for the given color.
   Color getBW() {
-    return this.isLight() ? black : white;
+    return this.isLight() ? Colors.black : Colors.white;
   }
 
   bool isLight() {
@@ -34,7 +33,7 @@ extension NotedColorExtensions on Color {
     int? value = int.tryParse(buffer.toString(), radix: 16);
 
     if (value == null) {
-      return black;
+      return Colors.black;
     }
 
     return Color(value);

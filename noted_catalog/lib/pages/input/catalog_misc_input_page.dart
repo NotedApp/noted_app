@@ -16,7 +16,7 @@ class _CatalogMiscInputPageState extends State<CatalogMiscInputPage> {
   final List<String> dropdownOptions1 = ['option one', 'option two', 'option three', 'option four', 'option five'];
   String? dropdownValue1;
 
-  Color selectedColor = black;
+  Color selectedColor = Colors.black;
 
   String selectedString = '';
 
@@ -68,7 +68,7 @@ class _CatalogMiscInputPageState extends State<CatalogMiscInputPage> {
   }
 
   Future<void> launchColorPicker() async {
-    Color? updated = await showColorPicker(context, selectedColor, () => setState(() => selectedColor = black));
+    Color? updated = await showColorPicker(context, selectedColor, () => setState(() => selectedColor = Colors.black));
 
     if (updated != null) {
       setState(() => selectedColor = updated);

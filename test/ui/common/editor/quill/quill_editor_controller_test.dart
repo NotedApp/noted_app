@@ -55,8 +55,8 @@ void main() {
       controller.controller.updateSelection(TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.LOCAL);
       expect(controller.getColor(NotedEditorAttribute.textColor), null);
 
-      controller.setColor(NotedEditorAttribute.textColor, red500);
-      expect(controller.getColor(NotedEditorAttribute.textColor), red500);
+      controller.setColor(NotedEditorAttribute.textColor, Colors.red.shade500);
+      expect(controller.getColor(NotedEditorAttribute.textColor), Colors.red.shade500);
 
       controller.setColor(NotedEditorAttribute.textColor, null);
       expect(controller.getColor(NotedEditorAttribute.textColor), null);

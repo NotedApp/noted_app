@@ -19,3 +19,16 @@ abstract class NotedWidgetConfig {
 
   static const ScrollPhysics scrollPhysics = BouncingScrollPhysics();
 }
+
+class NotedPadding {
+  static const double xxxs = 2;
+  static const double xxs = 4;
+  static const double xs = 8;
+  static const double sm = 12;
+  static const double md = 16;
+  static const double lg = 20;
+  static const double xl = 24;
+  static const double xxl = 36;
+  static const double xxxl = 48;
+  static const double xxxxl = 64;
+}

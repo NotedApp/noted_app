@@ -87,13 +87,13 @@ void main() {
       await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       Finder color = find.byWidgetPredicate(
-        (widget) => widget is NotedColorPickerButton && widget.color == blueGrey500,
+        (widget) => widget is NotedColorPickerButton && widget.color == Colors.blueGrey.shade500,
       );
 
       await tester.tap(color);
       await tester.pumpAndSettle();
 
-      expect(controller.getColor(NotedEditorAttribute.textColor), blueGrey500);
+      expect(controller.getColor(NotedEditorAttribute.textColor), Colors.blueGrey.shade500);
     });
   });
 }
