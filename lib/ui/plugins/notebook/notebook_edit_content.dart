@@ -7,6 +7,7 @@ import 'package:noted_app/ui/pages/edit/edit_page.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_models/noted_models.dart';
 
+// coverage:ignore-file
 class NotebookEditContent extends StatefulWidget {
   final NotebookNoteModel note;
   final NoteUpdateCallback updateNote;

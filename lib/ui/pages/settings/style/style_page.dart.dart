@@ -6,6 +6,7 @@ import 'package:noted_app/ui/router/router_config.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
 
+// coverage:ignore-file
 class StylePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

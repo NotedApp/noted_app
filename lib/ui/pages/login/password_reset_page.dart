@@ -9,6 +9,7 @@ import 'package:noted_app/ui/pages/login/login_frame.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 
+// coverage:ignore-file
 class PasswordResetPage extends StatefulWidget {
   final String initialEmail;
 

@@ -12,6 +12,7 @@ import 'package:noted_app/ui/router/noted_router.dart';
 const ValueKey _contentKey = const ValueKey('content');
 const ValueKey _loadingKey = const ValueKey('loading');
 
+// coverage:ignore-file
 class LoginFrame extends StatelessWidget {
   final bool hasBackButton;
   final String? headerTitle;

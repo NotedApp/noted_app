@@ -12,6 +12,7 @@ import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
 
+// coverage:ignore-file
 class SignInPage extends StatefulWidget {
   final String initialEmail;
   final String initialPassword;

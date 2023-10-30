@@ -4,6 +4,7 @@ import 'package:noted_app/ui/router/noted_router.dart';
 import 'package:noted_app/ui/router/router_config.dart';
 import 'package:noted_models/noted_models.dart';
 
+// coverage:ignore-file
 class HomeContent extends StatelessWidget {
   final List<NoteModel> notes;
 

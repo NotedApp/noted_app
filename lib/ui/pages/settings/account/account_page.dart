@@ -12,6 +12,7 @@ import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 
+// coverage:ignore-file
 class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

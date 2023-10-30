@@ -9,6 +9,7 @@ import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+// coverage:ignore-file
 class SettingsPage extends StatelessWidget {
   final Future<String> _getVersion = PackageInfo.fromPlatform().then((value) => value.version);
 

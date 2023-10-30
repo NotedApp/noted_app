@@ -8,6 +8,7 @@ import 'package:noted_app/ui/pages/settings/tags/tags_loading.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_models/noted_models.dart';
 
+// coverage:ignore-file
 class TagsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

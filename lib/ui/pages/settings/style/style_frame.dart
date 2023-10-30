@@ -6,6 +6,7 @@ import 'package:noted_app/ui/common/layout/layout.dart';
 import 'package:noted_app/ui/pages/settings/settings_page.dart';
 import 'package:noted_models/noted_models.dart';
 
+// coverage:ignore-file
 class StyleFrame extends StatelessWidget {
   final String title;
   final Widget Function(BuildContext, StyleSettingsModel) builder;

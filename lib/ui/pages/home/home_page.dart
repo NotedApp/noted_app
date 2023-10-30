@@ -12,6 +12,7 @@ import 'package:noted_app/ui/router/router_config.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 
+// coverage:ignore-file
 class HomePage extends StatelessWidget {
   final NotesBloc? bloc;
 

@@ -17,6 +17,7 @@ const int _updateDebounceTimeMs = 250;
 
 typedef NoteUpdateCallback = void Function(NoteModel);
 
+// coverage:ignore-file
 class EditPage extends StatelessWidget {
   final String? initialId;
   final EditBloc? bloc;

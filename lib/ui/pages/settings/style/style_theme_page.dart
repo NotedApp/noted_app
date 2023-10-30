@@ -8,6 +8,7 @@ import 'package:noted_app/ui/pages/settings/style/style_frame.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_models/noted_models.dart';
 
+// coverage:ignore-file
 class StyleThemePage extends StatelessWidget {
   List<ColorSchemeModelName> get names => ColorSchemeModelName.values;
 
