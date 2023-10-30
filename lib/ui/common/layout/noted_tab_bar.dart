@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 class NotedTabBar extends StatelessWidget {
   final List<String> tabs;
   final TabController? controller;
-  final ValueChanged<int>? onTap;
+  final ValueChanged<int>? onPressed;
 
-  const NotedTabBar({required this.tabs, this.controller, this.onTap, super.key});
+  const NotedTabBar({required this.tabs, this.controller, this.onPressed, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class NotedTabBar extends StatelessWidget {
       indicatorPadding: const EdgeInsets.symmetric(horizontal: 5),
       indicatorSize: TabBarIndicatorSize.label,
       indicatorWeight: 0,
-      onTap: onTap,
+      onTap: onPressed,
       splashBorderRadius: BorderRadius.circular(16),
     );
   }

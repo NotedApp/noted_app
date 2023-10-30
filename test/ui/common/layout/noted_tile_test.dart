@@ -19,7 +19,7 @@ void main() {
             height: 80,
             child: NotedTile(
               child: Text('noted tile'),
-              onTap: onPressed,
+              onPressed: onPressed,
             ),
           ),
         ),
@@ -33,6 +33,26 @@ void main() {
       expect(cardFinder, findsOneWidget);
       expect((card.shape! as RoundedRectangleBorder).borderRadius, equals(BorderRadius.circular(12)));
       verify(() => onPressed()).called(1);
+    });
+
+    testWidgets('tile with tags renders as expected', (tester) async {
+      MockVoidCallback onPressed = MockVoidCallback();
+
+      await tester.pumpWidget(
+        TestWrapper(
+          child: SizedBox(
+            height: 80,
+            child: NotedTile(
+              child: Text('noted tile'),
+              tags: {'0'},
+              onPressed: onPressed,
+            ),
+          ),
+        ),
+      );
+
+      Finder tagFinder = find.byType(NotedTag);
+      expect(tagFinder, findsNWidgets(4));
     });
 
     testWidgets('tile builder works as expected', (tester) async {
@@ -53,7 +73,7 @@ void main() {
                       {'insert': '\n'},
                     ],
                   ),
-                  onTap: notebookCallback,
+                  onPressed: notebookCallback,
                 ),
               )
             ],

@@ -16,8 +16,8 @@ class CatalogTilesPage extends StatelessWidget {
       crossAxisCount: 2,
       shrinkWrap: true,
       children: [
-        NotebookTile(note: testNote0, onTap: () => _showTapSnackBar(context)),
-        NotebookTile(note: testNote1, onTap: () => _showTapSnackBar(context)),
+        NotebookTile(note: testNote0, onPressed: () => _showTapSnackBar(context)),
+        NotebookTile(note: testNote1, onPressed: () => _showTapSnackBar(context)),
       ],
     );
   }

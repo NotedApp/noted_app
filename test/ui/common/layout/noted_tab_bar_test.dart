@@ -21,7 +21,7 @@ void main() {
               'test 2',
             ],
             controller: controller,
-            onTap: onPressed,
+            onPressed: onPressed,
           ),
         ),
       );

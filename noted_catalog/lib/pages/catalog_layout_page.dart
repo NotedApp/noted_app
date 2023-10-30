@@ -123,7 +123,7 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProvid
           child: NotedCard(
             size: NotedWidgetSize.medium,
             margin: EdgeInsets.zero,
-            onTap: () {},
+            onPressed: () {},
             child: Padding(
               padding: EdgeInsets.all(16),
               child: Text('medium card'),

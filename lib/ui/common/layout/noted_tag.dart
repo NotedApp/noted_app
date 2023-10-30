@@ -14,9 +14,9 @@ class NotedTag extends StatelessWidget {
   final NotedWidgetSize size;
   final String text;
   final Color color;
-  final VoidCallback? onTap;
+  final VoidCallback? onPressed;
 
-  NotedTag({required this.size, required TagModel model, this.onTap = null})
+  NotedTag({required this.size, required TagModel model, this.onPressed = null})
       : _type = _NotedTagType.normal,
         text = model.name,
         color = Color(model.color);
@@ -25,15 +25,15 @@ class NotedTag extends StatelessWidget {
     required this.size,
     required this.text,
     required this.color,
-    this.onTap = null,
+    this.onPressed = null,
   }) : _type = _NotedTagType.normal;
 
-  NotedTag.add({required this.size, this.onTap = null})
+  NotedTag.add({required this.size, this.onPressed = null})
       : _type = _NotedTagType.add,
         text = '',
         color = Colors.transparent;
 
-  NotedTag.delete({required this.size, required TagModel model, this.onTap = null})
+  NotedTag.delete({required this.size, required TagModel model, this.onPressed = null})
       : _type = _NotedTagType.delete,
         text = model.name,
         color = Color(model.color);
@@ -78,38 +78,35 @@ class NotedTag extends StatelessWidget {
         ),
     };
 
-    Widget tag = Container(
-      decoration: BoxDecoration(
-        color: colors.$2,
-        border: Border.all(color: colors.$1),
-        borderRadius: BorderRadius.circular(params.$4),
+    return InkWell(
+      onTap: onPressed,
+      borderRadius: BorderRadius.circular(params.$4),
+      enableFeedback: onPressed != null,
+      child: Container(
+        decoration: BoxDecoration(
+          color: colors.$2,
+          border: Border.all(color: colors.$1),
+          borderRadius: BorderRadius.circular(params.$4),
+        ),
+        padding: params.$2,
+        child: switch (_type) {
+          _NotedTagType.normal => Text(text, style: params.$1),
+          _NotedTagType.add => Row(
+              children: [
+                Icon(NotedIcons.plus, size: params.$3, color: colors.$1),
+                SizedBox(width: 2),
+                Text(context.strings().tags_addTag, style: params.$1),
+              ],
+            ),
+          _NotedTagType.delete => Row(
+              children: [
+                Text(text, style: params.$1),
+                SizedBox(width: 2),
+                Icon(NotedIcons.trash, size: params.$3, color: colors.$1),
+              ],
+            ),
+        },
       ),
-      padding: params.$2,
-      child: switch (_type) {
-        _NotedTagType.normal => Text(text, style: params.$1),
-        _NotedTagType.add => Row(
-            children: [
-              Icon(NotedIcons.plus, size: params.$3, color: colors.$1),
-              SizedBox(width: 2),
-              Text(context.strings().tags_addTag, style: params.$1),
-            ],
-          ),
-        _NotedTagType.delete => Row(
-            children: [
-              Text(text, style: params.$1),
-              SizedBox(width: 2),
-              Icon(NotedIcons.trash, size: params.$3, color: colors.$1),
-            ],
-          ),
-      },
     );
-
-    return onTap == null
-        ? tag
-        : InkWell(
-            onTap: onTap,
-            borderRadius: BorderRadius.circular(params.$4),
-            child: tag,
-          );
   }
 }

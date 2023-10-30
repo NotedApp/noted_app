@@ -5,14 +5,14 @@ class NotedCard extends StatelessWidget {
   final NotedWidgetSize size;
   final EdgeInsetsGeometry? margin;
   final Color? color;
-  final VoidCallback? onTap;
+  final VoidCallback? onPressed;
   final Widget? child;
 
   const NotedCard({
     required this.size,
     this.margin,
     this.color,
-    this.onTap,
+    this.onPressed,
     this.child,
     super.key,
   });
@@ -39,10 +39,10 @@ class NotedCard extends StatelessWidget {
       elevation: 4,
       shape: shape,
       margin: margin,
-      child: onTap == null
+      child: onPressed == null
           ? child
           : InkWell(
-              onTap: onTap,
+              onTap: onPressed,
               borderRadius: borderRadius,
               child: child,
             ),

@@ -6,9 +6,9 @@ import 'package:noted_models/noted_models.dart';
 
 class NotebookTile extends StatefulWidget {
   final NotebookNoteModel note;
-  final VoidCallback? onTap;
+  final VoidCallback? onPressed;
 
-  const NotebookTile({required this.note, this.onTap, super.key});
+  const NotebookTile({required this.note, this.onPressed, super.key});
 
   @override
   State<StatefulWidget> createState() => _NotebookTileState();
@@ -34,7 +34,7 @@ class _NotebookTileState extends State<NotebookTile> {
         controller: _textController,
         readonly: true,
         padding: EdgeInsets.only(top: 12, bottom: 36),
-        onTap: widget.onTap,
+        onPressed: widget.onPressed,
         header: Padding(
           padding: const EdgeInsets.fromLTRB(0, 12, 0, 0),
           child: Text(
@@ -48,13 +48,13 @@ class _NotebookTileState extends State<NotebookTile> {
         controller: _textController,
         readonly: true,
         padding: EdgeInsets.only(top: 12, bottom: 36),
-        onTap: widget.onTap,
+        onPressed: widget.onPressed,
       );
     }
 
     return NotedTile(
       tags: widget.note.tags,
-      onTap: widget.onTap ?? () => context.push(NotesEditRoute(noteId: widget.note.id)),
+      onPressed: widget.onPressed ?? () => context.push(NotesEditRoute(noteId: widget.note.id)),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 12),
         child: child,

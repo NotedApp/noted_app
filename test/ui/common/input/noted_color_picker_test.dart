@@ -41,7 +41,7 @@ void main() {
       await tester.tap(button);
       await tester.pump(const Duration(seconds: 1));
 
-      expect(find.byType(NotedColorPickerButton), findsNWidgets(36));
+      expect(find.byType(NotedColorPickerButton), findsNWidgets(20));
 
       Finder reset = find.byWidgetPredicate(
         (widget) => widget is NotedTextButton && widget.type == NotedTextButtonType.outlined,

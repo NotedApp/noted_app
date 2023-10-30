@@ -29,13 +29,13 @@ void main() {
     });
 
     testWidgets('quill editor handles tap', (tester) async {
-      MockVoidCallback onTap = MockVoidCallback();
+      MockVoidCallback onPressed = MockVoidCallback();
 
       await tester.pumpWidget(
         TestWrapper(
           child: NotedEditor.quill(
             controller: NotedEditorController.quill(),
-            onTap: onTap,
+            onPressed: onPressed,
           ),
         ),
       );
@@ -45,17 +45,17 @@ void main() {
       await tester.tap(editor);
 
       expect(editor, findsOneWidget);
-      verify(() => onTap()).called(1);
+      verify(() => onPressed()).called(1);
     });
 
     testWidgets('quill editor handles tap with invalid controller', (tester) async {
-      MockVoidCallback onTap = MockVoidCallback();
+      MockVoidCallback onPressed = MockVoidCallback();
 
       await tester.pumpWidget(
         TestWrapper(
           child: NotedEditor.quill(
             controller: _MockController(),
-            onTap: onTap,
+            onPressed: onPressed,
           ),
         ),
       );

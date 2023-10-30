@@ -7,13 +7,13 @@ import 'package:noted_models/noted_models.dart';
 class NotedTile extends StatelessWidget {
   final Widget child;
   final Set<String> tags;
-  final VoidCallback? onTap;
+  final VoidCallback? onPressed;
 
-  const NotedTile({required this.child, this.tags = const {}, this.onTap, super.key});
+  const NotedTile({required this.child, this.tags = const {}, this.onPressed, super.key});
 
-  static Widget buildTile({required NoteModel note, required VoidCallback onTap}) {
+  static Widget buildTile({required NoteModel note, required VoidCallback onPressed}) {
     return switch (note) {
-      NotebookNoteModel() => NotebookTile(note: note, onTap: onTap),
+      NotebookNoteModel() => NotebookTile(note: note, onPressed: onPressed),
     };
   }
 
@@ -24,7 +24,7 @@ class NotedTile extends StatelessWidget {
     return NotedCard(
       size: NotedWidgetSize.small,
       color: context.colorScheme().background,
-      onTap: onTap,
+      onPressed: onPressed,
       child: contents,
     );
   }

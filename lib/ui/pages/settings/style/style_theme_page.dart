@@ -34,7 +34,7 @@ class StyleThemePage extends StatelessWidget {
             title: _getSchemeName(strings, names[index]),
             colors: colors,
             isSelected: state.colorSchemeName == names[index],
-            onTap: () => bloc.add(SettingsUpdateStyleColorSchemeEvent(names[index])),
+            onPressed: () => bloc.add(SettingsUpdateStyleColorSchemeEvent(names[index])),
           );
         },
         separatorBuilder: (context, index) => const SizedBox(height: 8),
@@ -59,13 +59,13 @@ class ThemeSwitcherItem extends StatelessWidget {
   final String title;
   final ColorScheme colors;
   final bool isSelected;
-  final VoidCallback? onTap;
+  final VoidCallback? onPressed;
 
   const ThemeSwitcherItem({
     required this.title,
     required this.colors,
     this.isSelected = false,
-    this.onTap,
+    this.onPressed,
     super.key,
   });
 
@@ -76,7 +76,7 @@ class ThemeSwitcherItem extends StatelessWidget {
 
     return NotedCard(
       size: NotedWidgetSize.medium,
-      onTap: onTap,
+      onPressed: onPressed,
       color: colors.background,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16, 12, 16, 20),

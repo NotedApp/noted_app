@@ -13,7 +13,7 @@ class QuillEditor extends NotedEditor {
     super.autofocus,
     super.usePrimaryScrollController,
     super.padding,
-    super.onTap,
+    super.onPressed,
     super.key,
   });
 
@@ -52,7 +52,7 @@ class QuillEditor extends NotedEditor {
     Quill.QuillController quillController = (controller as QuillEditorController).controller;
 
     if (quillController.selection.baseOffset == quillController.selection.extentOffset) {
-      onTap?.call();
+      onPressed?.call();
     }
 
     return false;
