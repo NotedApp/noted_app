@@ -41,18 +41,22 @@ class _NotebookEditContentState extends State<NotebookEditContent> {
     return Column(
       children: [
         Expanded(
-          child: NotedHeaderEditor(
-            controller: textController,
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 36),
-            focusNode: focusNode,
-            placeholder: strings.edit_textPlaceholder,
-            autofocus: true,
-            header: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: NotedTextField(
-                type: NotedTextFieldType.title,
-                controller: titleController,
-                hint: strings.edit_titlePlaceholder,
+          child: NotedScrollMask(
+            direction: Axis.vertical,
+            size: 8,
+            child: NotedHeaderEditor(
+              controller: textController,
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 36),
+              focusNode: focusNode,
+              placeholder: strings.edit_textPlaceholder,
+              autofocus: true,
+              header: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: NotedTextField(
+                  type: NotedTextFieldType.title,
+                  controller: titleController,
+                  hint: strings.edit_titlePlaceholder,
+                ),
               ),
             ),
           ),
