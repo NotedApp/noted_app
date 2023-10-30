@@ -11,6 +11,7 @@ class QuillEditor extends NotedEditor {
     super.placeholder,
     super.readonly,
     super.autofocus,
+    super.usePrimaryScrollController,
     super.padding,
     super.onTap,
     super.key,
@@ -28,6 +29,9 @@ class QuillEditor extends NotedEditor {
     return Quill.QuillProvider(
       configurations: Quill.QuillConfigurations(controller: quillController),
       child: Quill.QuillEditor(
+        scrollController: usePrimaryScrollController
+            ? PrimaryScrollController.maybeOf(context) ?? ScrollController()
+            : ScrollController(),
         configurations: Quill.QuillEditorConfigurations(
           padding: padding,
           autoFocus: autofocus,
@@ -40,7 +44,6 @@ class QuillEditor extends NotedEditor {
           customStyles: _getStyles(context),
         ),
         focusNode: focusNode ?? FocusNode(),
-        scrollController: PrimaryScrollController.maybeOf(context) ?? ScrollController(),
       ),
     );
   }

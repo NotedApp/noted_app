@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:noted_app/state/edit/edit_bloc.dart';
-import 'package:noted_app/state/edit/edit_event.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
+import 'package:noted_app/ui/pages/edit/edit_page.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_models/noted_models.dart';
 
 class NotebookEditContent extends StatefulWidget {
   final NotebookNoteModel note;
+  final NoteUpdateCallback updateNote;
 
-  const NotebookEditContent({required this.note, super.key});
+  const NotebookEditContent({required this.note, required this.updateNote, super.key});
 
   @override
   State<StatefulWidget> createState() => _NotebookEditContentState();
@@ -63,15 +62,13 @@ class _NotebookEditContentState extends State<NotebookEditContent> {
   }
 
   void _updateNote() {
-    context.read<EditBloc>().add(
-          EditUpdateEvent(
-            NotebookNoteModel(
-              id: widget.note.id,
-              title: titleController.text,
-              document: textController.value,
-            ),
-          ),
-        );
+    widget.updateNote(
+      NotebookNoteModel(
+        id: widget.note.id,
+        title: titleController.text,
+        document: textController.value,
+      ),
+    );
   }
 
   @override

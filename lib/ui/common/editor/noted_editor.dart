@@ -8,6 +8,7 @@ abstract class NotedEditor extends StatelessWidget {
   final String? placeholder;
   final bool readonly;
   final bool autofocus;
+  final bool usePrimaryScrollController;
   final EdgeInsetsGeometry padding;
   final VoidCallback? onTap;
 
@@ -17,6 +18,7 @@ abstract class NotedEditor extends StatelessWidget {
     this.placeholder,
     this.readonly = false,
     this.autofocus = false,
+    this.usePrimaryScrollController = false,
     this.padding = EdgeInsets.zero,
     this.onTap,
     super.key,
@@ -28,6 +30,7 @@ abstract class NotedEditor extends StatelessWidget {
     String? placeholder,
     bool readonly = false,
     bool autofocus = false,
+    bool usePrimaryScrollController = false,
     EdgeInsetsGeometry padding = EdgeInsets.zero,
     VoidCallback? onTap,
     Key? key,
@@ -38,6 +41,7 @@ abstract class NotedEditor extends StatelessWidget {
       placeholder: placeholder,
       readonly: readonly,
       autofocus: autofocus,
+      usePrimaryScrollController: usePrimaryScrollController,
       padding: padding,
       onTap: onTap,
       key: key,

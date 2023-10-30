@@ -10,6 +10,10 @@ abstract class NotedEvent {
 
 abstract class TrackableEvent {}
 
+// This flag enables verbose logging for the Noted Bloc. Please ensure that this flag is only enabled for testing
+// purposes, and is disabled when checked in to source control.
+const bool _logVerbose = false;
+
 abstract class NotedBloc<Event extends NotedEvent, State> extends Bloc<Event, State> {
   final String _type;
   late final NotedLogger _logger;
@@ -22,15 +26,20 @@ abstract class NotedBloc<Event extends NotedEvent, State> extends Bloc<Event, St
   void onTransition(Transition<Event, State> transition) {
     super.onTransition(transition);
 
+    Map<String, dynamic> params = {'event': transition.event};
+
+    if (_logVerbose) {
+      params.addAll({
+        'from': transition.currentState,
+        'to': transition.nextState,
+      });
+    }
+
     if (transition.event is TrackableEvent) {
       _logger.logBloc(
         name: 'transition',
         bloc: _type,
-        params: {
-          'from': transition.currentState,
-          'event': transition.event,
-          'to': transition.nextState,
-        },
+        params: params,
       );
     }
   }

@@ -195,7 +195,7 @@ class NotesEditRoute extends NotedRoute {
 
   @override
   List<String> get _parts => [
-        NotedRoute._login,
+        NotedRoute._notes,
         noteId,
       ];
 }

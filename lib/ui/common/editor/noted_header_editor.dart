@@ -33,6 +33,7 @@ class NotedHeaderEditor extends StatelessWidget {
         placeholder: placeholder,
         readonly: readonly,
         autofocus: autofocus,
+        usePrimaryScrollController: true,
         padding: padding,
         onTap: onTap,
       ),

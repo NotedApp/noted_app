@@ -8,13 +8,20 @@ import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/pages/edit/edit_content.dart';
 import 'package:noted_app/ui/pages/edit/edit_loading.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
+import 'package:noted_app/util/debouncer.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_app/util/extensions.dart';
+import 'package:noted_models/noted_models.dart';
+
+const int _updateDebounceTimeMs = 250;
+
+typedef NoteUpdateCallback = void Function(NoteModel);
 
 class EditPage extends StatelessWidget {
   final String? initialId;
+  final Debouncer updateDebouncer = Debouncer(interval: new Duration(milliseconds: _updateDebounceTimeMs));
 
-  const EditPage({required this.initialId});
+  EditPage({required this.initialId});
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +41,10 @@ class EditPage extends StatelessWidget {
           }
         },
         builder: (context, state) {
+          void _updateNote(NoteModel note) {
+            updateDebouncer.run(() => context.read<EditBloc>().add(EditUpdateEvent(note)));
+          }
+
           return NotedHeaderPage(
             hasBackButton: true,
             trailingActions: [
@@ -55,7 +66,7 @@ class EditPage extends StatelessWidget {
                   ctaText: strings.router_errorCta,
                   ctaCallback: () => context.pop(),
                 ),
-              _ => EditContent(note: state.note!),
+              _ => EditContent(note: state.note!, updateNote: _updateNote),
             },
           );
         },
