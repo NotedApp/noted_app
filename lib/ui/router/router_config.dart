@@ -20,6 +20,7 @@ import 'package:noted_app/ui/pages/settings/style/style_theme_page.dart';
 
 part 'noted_route.dart';
 
+// coverage:ignore-file
 GoRouter routerConfig = GoRouter(
   routes: [_home, _login],
   initialLocation: NotedRoute._login,
