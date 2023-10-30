@@ -8,20 +8,29 @@ import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/pages/edit/edit_content.dart';
 import 'package:noted_app/ui/pages/edit/edit_loading.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
+import 'package:noted_app/util/debouncer.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_app/util/extensions.dart';
+import 'package:noted_models/noted_models.dart';
 
+const int _updateDebounceTimeMs = 250;
+
+typedef NoteUpdateCallback = void Function(NoteModel);
+
+// coverage:ignore-file
 class EditPage extends StatelessWidget {
   final String? initialId;
+  final EditBloc? bloc;
+  final Debouncer updateDebouncer = Debouncer(interval: new Duration(milliseconds: _updateDebounceTimeMs));
 
-  const EditPage({required this.initialId});
+  EditPage({required this.initialId, this.bloc});
 
   @override
   Widget build(BuildContext context) {
     Strings strings = context.strings();
 
     return BlocProvider(
-      create: (context) => EditBloc(noteId: initialId),
+      create: (context) => bloc ?? EditBloc(noteId: initialId),
       child: BlocConsumer<EditBloc, EditState>(
         listenWhen: (previous, current) => previous.status != current.status || previous.error != current.error,
         listener: (context, state) {
@@ -34,8 +43,17 @@ class EditPage extends StatelessWidget {
           }
         },
         builder: (context, state) {
+          void _updateNote(NoteModel note) {
+            updateDebouncer.run(() => context.read<EditBloc>().add(EditUpdateEvent(note)));
+          }
+
           return NotedHeaderPage(
             hasBackButton: true,
+            backButton: StreamBuilder(
+              stream: updateDebouncer.activeStream,
+              initialData: false,
+              builder: (context, value) => _EditBackButton(isSaving: value.hasData ? value.data! : false),
+            ),
             trailingActions: [
               if (state.note != null)
                 NotedIconButton(
@@ -55,7 +73,7 @@ class EditPage extends StatelessWidget {
                   ctaText: strings.router_errorCta,
                   ctaCallback: () => context.pop(),
                 ),
-              _ => EditContent(note: state.note!),
+              _ => EditContent(note: state.note!, updateNote: _updateNote),
             },
           );
         },
@@ -81,26 +99,43 @@ class EditPage extends StatelessWidget {
       ),
     );
   }
+
+  void _handleEditError(BuildContext context, NotedError? error) {
+    Strings strings = context.strings();
+
+    final String? message = switch (error?.code) {
+      ErrorCode.notes_add_failed => strings.edit_error_addNoteFailed,
+      ErrorCode.notes_subscribe_failed => strings.edit_error_loadNoteFailed,
+      ErrorCode.notes_update_failed => strings.edit_error_updateNoteFailed,
+      ErrorCode.notes_delete_failed => strings.edit_error_deleteNoteFailed,
+      _ => null,
+    };
+
+    if (message != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        NotedSnackBar.createWithText(
+          context: context,
+          text: message,
+          hasClose: true,
+        ),
+      );
+    }
+  }
 }
 
-void _handleEditError(BuildContext context, NotedError? error) {
-  Strings strings = context.strings();
+class _EditBackButton extends StatelessWidget {
+  final bool isSaving;
 
-  final String? message = switch (error?.code) {
-    ErrorCode.notes_add_failed => strings.edit_error_addNoteFailed,
-    ErrorCode.notes_subscribe_failed => strings.edit_error_loadNoteFailed,
-    ErrorCode.notes_update_failed => strings.edit_error_updateNoteFailed,
-    ErrorCode.notes_delete_failed => strings.edit_error_deleteNoteFailed,
-    _ => null,
-  };
+  const _EditBackButton({required this.isSaving});
 
-  if (message != null) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      NotedSnackBar.createWithText(
-        context: context,
-        text: message,
-        hasClose: true,
-      ),
+  @override
+  Widget build(BuildContext context) {
+    return NotedIconButton(
+      icon: NotedIcons.chevronLeft,
+      iconWidget: isSaving ? NotedLoadingIndicator(size: 14, color: context.colorScheme().onPrimary) : null,
+      type: NotedIconButtonType.filled,
+      size: NotedWidgetSize.small,
+      onPressed: () => context.pop(),
     );
   }
 }

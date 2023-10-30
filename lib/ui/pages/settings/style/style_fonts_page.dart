@@ -8,6 +8,7 @@ import 'package:noted_app/ui/pages/settings/style/style_frame.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_models/noted_models.dart';
 
+// coverage:ignore-file
 class StyleFontsPage extends StatelessWidget {
   List<TextThemeModelName> get names => TextThemeModelName.values;
 
@@ -31,7 +32,7 @@ class StyleFontsPage extends StatelessWidget {
             title: _getThemeName(strings, names[index]),
             font: theme,
             isSelected: state.textThemeName == names[index],
-            onTap: () => bloc.add(SettingsUpdateStyleTextThemeEvent(names[index])),
+            onPressed: () => bloc.add(SettingsUpdateStyleTextThemeEvent(names[index])),
           );
         },
         separatorBuilder: (context, index) => const SizedBox(height: 8),
@@ -54,13 +55,13 @@ class FontSwitcherItem extends StatelessWidget {
   final String title;
   final TextTheme font;
   final bool isSelected;
-  final VoidCallback? onTap;
+  final VoidCallback? onPressed;
 
   const FontSwitcherItem({
     required this.title,
     required this.font,
     this.isSelected = false,
-    this.onTap,
+    this.onPressed,
     super.key,
   });
 
@@ -68,7 +69,7 @@ class FontSwitcherItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return NotedCard(
       size: NotedWidgetSize.medium,
-      onTap: onTap,
+      onPressed: onPressed,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(20, 12, 16, 18),
         child: Stack(

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
+import 'package:noted_app/ui/router/router_config.dart';
 import 'package:noted_models/noted_models.dart';
 
 class NotebookTile extends StatefulWidget {
   final NotebookNoteModel note;
-  final VoidCallback? onTap;
+  final VoidCallback? onPressed;
 
-  const NotebookTile({required this.note, this.onTap, super.key});
+  const NotebookTile({required this.note, this.onPressed, super.key});
 
   @override
   State<StatefulWidget> createState() => _NotebookTileState();
@@ -32,10 +33,10 @@ class _NotebookTileState extends State<NotebookTile> {
       child = NotedHeaderEditor(
         controller: _textController,
         readonly: true,
-        padding: EdgeInsets.only(bottom: 36),
-        onTap: widget.onTap,
+        padding: EdgeInsets.only(top: 12, bottom: 36),
+        onPressed: widget.onPressed,
         header: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 12, 0, 6),
+          padding: const EdgeInsets.fromLTRB(0, 12, 0, 0),
           child: Text(
             widget.note.title,
             style: Theme.of(context).textTheme.titleMedium,
@@ -47,16 +48,17 @@ class _NotebookTileState extends State<NotebookTile> {
         controller: _textController,
         readonly: true,
         padding: EdgeInsets.only(top: 12, bottom: 36),
-        onTap: widget.onTap,
+        onPressed: widget.onPressed,
       );
     }
 
     return NotedTile(
+      tags: widget.note.tags,
+      onPressed: widget.onPressed ?? () => context.push(NotesEditRoute(noteId: widget.note.id)),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 12),
         child: child,
       ),
-      onTap: widget.onTap ?? () => context.push('notes/${widget.note.id}'),
     );
   }
 

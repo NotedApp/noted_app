@@ -21,7 +21,7 @@ void main() {
       addTearDown(() => tester.view.resetDevicePixelRatio());
 
       MockVoidCallback onReset = MockVoidCallback();
-      Future<Color?> result = Future.value(black);
+      Future<Color?> result = Future.value(Colors.black);
 
       await tester.pumpWidget(
         TestWrapper(
@@ -30,7 +30,7 @@ void main() {
               icon: NotedIcons.eyedropper,
               type: NotedIconButtonType.simple,
               onPressed: () {
-                result = showColorPicker(context, black, onReset);
+                result = showColorPicker(context, Colors.black, onReset);
               },
             ),
           ),
@@ -41,7 +41,7 @@ void main() {
       await tester.tap(button);
       await tester.pump(const Duration(seconds: 1));
 
-      expect(find.byType(NotedColorPickerButton), findsNWidgets(36));
+      expect(find.byType(NotedColorPickerButton), findsNWidgets(20));
 
       Finder reset = find.byWidgetPredicate(
         (widget) => widget is NotedTextButton && widget.type == NotedTextButtonType.outlined,
@@ -63,7 +63,7 @@ void main() {
       addTearDown(() => tester.view.resetPhysicalSize());
       addTearDown(() => tester.view.resetDevicePixelRatio());
 
-      Future<Color?> result = Future.value(black);
+      Future<Color?> result = Future.value(Colors.black);
 
       await tester.pumpWidget(
         TestWrapper(
@@ -72,7 +72,7 @@ void main() {
               icon: NotedIcons.eyedropper,
               type: NotedIconButtonType.simple,
               onPressed: () {
-                result = showColorPicker(context, black, null);
+                result = showColorPicker(context, Colors.black, null);
               },
             ),
           ),
@@ -84,7 +84,7 @@ void main() {
       await tester.pump(const Duration(seconds: 1));
 
       Finder color = find.byWidgetPredicate(
-        (widget) => widget is NotedColorPickerButton && widget.color == blueGrey200,
+        (widget) => widget is NotedColorPickerButton && widget.color == Colors.blueGrey.shade200,
       );
 
       expect(color, findsOneWidget);
@@ -95,7 +95,7 @@ void main() {
       await tester.tap(confirm);
       await tester.pump(const Duration(seconds: 1));
 
-      expect(result, completion(equals(blueGrey200)));
+      expect(result, completion(equals(Colors.blueGrey.shade200)));
     });
 
     testWidgets('color picker cancels selecting a color', (tester) async {
@@ -105,7 +105,7 @@ void main() {
       addTearDown(() => tester.view.resetPhysicalSize());
       addTearDown(() => tester.view.resetDevicePixelRatio());
 
-      Future<Color?> result = Future.value(black);
+      Future<Color?> result = Future.value(Colors.black);
 
       await tester.pumpWidget(
         TestWrapper(
@@ -114,7 +114,7 @@ void main() {
               icon: NotedIcons.eyedropper,
               type: NotedIconButtonType.simple,
               onPressed: () {
-                result = showColorPicker(context, black, null);
+                result = showColorPicker(context, Colors.black, null);
               },
             ),
           ),
@@ -126,7 +126,7 @@ void main() {
       await tester.pump(const Duration(seconds: 1));
 
       Finder color = find.byWidgetPredicate(
-        (widget) => widget is NotedColorPickerButton && widget.color == blueGrey200,
+        (widget) => widget is NotedColorPickerButton && widget.color == Colors.blueGrey.shade200,
       );
 
       expect(color, findsOneWidget);

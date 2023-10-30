@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
+import 'package:noted_app/ui/router/router_config.dart';
 
 import '../../helpers/environment/unit_test_environment.dart';
 import '../../helpers/mocks/mock_classes.dart';
@@ -16,6 +17,7 @@ void main() {
   setUpAll(() async {
     await UnitTestEnvironment().configure(router: _mockRouter);
     registerFallbackValue(_FakeBuildContext());
+    registerFallbackValue(LoginRoute());
 
     when(() => _mockRouter.push(captureAny(), captureAny())).thenAnswer((invocation) => Future.value());
     when(() => _mockRouter.replace(captureAny(), captureAny())).thenAnswer((invocation) => Future.value());
@@ -31,12 +33,12 @@ void main() {
                 NotedIconButton(
                   icon: NotedIcons.account,
                   type: NotedIconButtonType.filled,
-                  onPressed: () => context.push('test/route'),
+                  onPressed: () => context.push(SettingsAccountRoute()),
                 ),
                 NotedIconButton(
-                  icon: NotedIcons.alarmClock,
+                  icon: NotedIcons.brush,
                   type: NotedIconButtonType.filled,
-                  onPressed: () => context.replace('test/route'),
+                  onPressed: () => context.replace(SettingsStyleRoute()),
                 ),
                 NotedIconButton(
                   icon: NotedIcons.animation,
@@ -50,11 +52,11 @@ void main() {
       );
 
       await tester.tap(find.byIcon(NotedIcons.account));
-      await tester.tap(find.byIcon(NotedIcons.alarmClock));
+      await tester.tap(find.byIcon(NotedIcons.brush));
       await tester.tap(find.byIcon(NotedIcons.animation));
 
-      verify(() => _mockRouter.push(captureAny(), 'test/route')).called(1);
-      verify(() => _mockRouter.replace(captureAny(), 'test/route')).called(1);
+      verify(() => _mockRouter.push(captureAny(), SettingsAccountRoute())).called(1);
+      verify(() => _mockRouter.replace(captureAny(), SettingsStyleRoute())).called(1);
       verify(() => _mockRouter.pop(captureAny(), 'result')).called(1);
     });
   });

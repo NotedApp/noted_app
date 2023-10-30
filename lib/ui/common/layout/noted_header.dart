@@ -4,7 +4,7 @@ import 'package:noted_app/ui/common/button/noted_icon_button.dart';
 class NotedHeader extends AppBar {
   NotedHeader({
     required BuildContext context,
-    NotedIconButton? leadingAction,
+    Widget? leadingAction,
     String? title,
     List<NotedIconButton> trailingActions = const [],
     PreferredSizeWidget? bottom,
@@ -24,7 +24,7 @@ class NotedHeader extends AppBar {
         );
 }
 
-Widget? _getLeading(NotedIconButton? leading) {
+Widget? _getLeading(Widget? leading) {
   if (leading == null) {
     return null;
   }

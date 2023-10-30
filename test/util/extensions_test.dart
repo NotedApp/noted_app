@@ -1,29 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:noted_app/ui/common/custom_colors.dart';
 import 'package:noted_app/util/extensions.dart';
 
 void main() {
   group('Color Extensions', () {
+    test('color get dark or light returns an appropriate value', () {
+      expect(Colors.black.isDark(), true);
+      expect(Colors.black.isLight(), false);
+      expect(Colors.white.isLight(), true);
+      expect(Colors.white.isDark(), false);
+    });
+
     test('color get black and white returns an appropriate surface color', () {
-      expect(black.getBW(), white);
-      expect(white.getBW(), black);
-      expect(red800.getBW(), white);
-      expect(yellow200.getBW(), black);
+      expect(Colors.black.getBW(), Colors.white);
+      expect(Colors.white.getBW(), Colors.black);
+      expect(Colors.red.shade800.getBW(), Colors.white);
+      expect(Colors.yellow.shade200.getBW(), Colors.black);
     });
 
     test('color can be built from a hex string', () {
-      expect(NotedColorExtensions.fromHex('#FF000000'), black);
-      expect(NotedColorExtensions.fromHex('#FFFFFFFF'), white);
-      expect(NotedColorExtensions.fromHex('80000000'), black.withOpacity(0.5));
-      expect(NotedColorExtensions.fromHex('F5F5F5'), grey100);
+      expect(NotedColorExtensions.fromHex('#FF000000'), Colors.black);
+      expect(NotedColorExtensions.fromHex('#FFFFFFFF'), Colors.white);
+      expect(NotedColorExtensions.fromHex('80000000'), Colors.black.withOpacity(0.5));
+      expect(NotedColorExtensions.fromHex('F5F5F5'), Colors.grey.shade100);
     });
 
     test('color can converted to a hex string', () {
-      expect(black.toHex(), '#ff000000');
-      expect(white.toHex(withTag: false), 'ffffffff');
-      expect(black.withOpacity(0.5).toHex(), '#80000000');
-      expect(grey100.toHex(withTag: false), 'fff5f5f5');
+      expect(Colors.black.toHex(), '#ff000000');
+      expect(Colors.white.toHex(withTag: false), 'ffffffff');
+      expect(Colors.black.withOpacity(0.5).toHex(), '#80000000');
+      expect(Colors.grey.shade100.toHex(withTag: false), 'fff5f5f5');
     });
 
     test('color can have its value updates', () {

@@ -4,6 +4,7 @@ import 'package:noted_app/state/auth/auth_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/util/extensions.dart';
 
+// coverage:ignore-file
 class LoginLoading extends StatelessWidget {
   final AuthStatus status;
 

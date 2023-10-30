@@ -19,7 +19,7 @@ void main() {
             height: 80,
             child: NotedTile(
               child: Text('noted tile'),
-              onTap: onPressed,
+              onPressed: onPressed,
             ),
           ),
         ),
@@ -35,6 +35,26 @@ void main() {
       verify(() => onPressed()).called(1);
     });
 
+    testWidgets('tile with tags renders as expected', (tester) async {
+      MockVoidCallback onPressed = MockVoidCallback();
+
+      await tester.pumpWidget(
+        TestWrapper(
+          child: SizedBox(
+            height: 80,
+            child: NotedTile(
+              child: Text('noted tile'),
+              tags: {'0'},
+              onPressed: onPressed,
+            ),
+          ),
+        ),
+      );
+
+      Finder tagFinder = find.byType(NotedTag);
+      expect(tagFinder, findsNWidgets(4));
+    });
+
     testWidgets('tile builder works as expected', (tester) async {
       MockVoidCallback notebookCallback = MockVoidCallback();
 
@@ -45,7 +65,7 @@ void main() {
               SizedBox(
                 width: 300,
                 height: 300,
-                child: buildNotedTile(
+                child: NotedTile.buildTile(
                   note: NotebookNoteModel(
                     id: 'notebook',
                     title: 'notebook',
@@ -53,7 +73,7 @@ void main() {
                       {'insert': '\n'},
                     ],
                   ),
-                  onTap: notebookCallback,
+                  onPressed: notebookCallback,
                 ),
               )
             ],

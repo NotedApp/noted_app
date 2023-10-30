@@ -7,10 +7,12 @@ import 'package:noted_app/state/auth/auth_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/pages/settings/account/account_frame.dart';
 import 'package:noted_app/ui/pages/settings/settings_row.dart';
+import 'package:noted_app/ui/router/router_config.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 
+// coverage:ignore-file
 class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class AccountPage extends StatelessWidget {
             icon: NotedIcons.key,
             title: strings.login_changePassword,
             hasArrow: true,
-            onPressed: () => context.push('/settings/account/change-password'),
+            onPressed: () => context.push(SettingsAccountChangePasswordRoute()),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),

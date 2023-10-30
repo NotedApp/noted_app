@@ -28,7 +28,7 @@ void main() {
                       {'insert': '\n'},
                     ],
                   ),
-                  onTap: callback,
+                  onPressed: callback,
                 ),
               )
             ],
@@ -64,7 +64,7 @@ void main() {
                       {'insert': '\n'},
                     ],
                   ),
-                  onTap: callback,
+                  onPressed: callback,
                 ),
               )
             ],

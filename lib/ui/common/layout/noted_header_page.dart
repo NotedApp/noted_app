@@ -9,6 +9,7 @@ class NotedHeaderPage extends StatelessWidget {
   final Widget child;
   final bool hasBackButton;
   final VoidCallback? onBack;
+  final Widget? backButton;
   final String? title;
   final List<NotedIconButton>? trailingActions;
   final NotedIconButton? floatingActionButton;
@@ -17,6 +18,7 @@ class NotedHeaderPage extends StatelessWidget {
     required this.child,
     required this.hasBackButton,
     this.onBack,
+    this.backButton,
     this.title,
     this.trailingActions,
     this.floatingActionButton,
@@ -25,17 +27,22 @@ class NotedHeaderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget? _back;
+
+    if (hasBackButton) {
+      _back = backButton ??
+          NotedIconButton(
+            icon: NotedIcons.chevronLeft,
+            type: NotedIconButtonType.filled,
+            size: NotedWidgetSize.small,
+            onPressed: onBack ?? () => context.pop(),
+          );
+    }
+
     return Scaffold(
       appBar: NotedHeader(
         context: context,
-        leadingAction: hasBackButton
-            ? NotedIconButton(
-                icon: NotedIcons.chevronLeft,
-                type: NotedIconButtonType.filled,
-                size: NotedWidgetSize.small,
-                onPressed: onBack ?? () => context.pop(),
-              )
-            : null,
+        leadingAction: _back,
         title: title,
         trailingActions: trailingActions ?? [],
       ),

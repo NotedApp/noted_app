@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
+import 'package:noted_app/ui/router/router_config.dart';
 import 'package:noted_models/noted_models.dart';
 
+// coverage:ignore-file
 class HomeContent extends StatelessWidget {
   final List<NoteModel> notes;
 
@@ -22,9 +24,9 @@ class HomeContent extends StatelessWidget {
           crossAxisSpacing: 4,
           childAspectRatio: NotedWidgetConfig.tileAspectRatio,
         ),
-        itemBuilder: (context, index) => buildNotedTile(
+        itemBuilder: (context, index) => NotedTile.buildTile(
           note: notes[index],
-          onTap: () => context.push('/notes/${notes[index].id}'),
+          onPressed: () => context.push(NotesEditRoute(noteId: notes[index].id)),
         ),
       ),
     );

@@ -7,10 +7,12 @@ import 'package:noted_app/state/auth/auth_event.dart';
 import 'package:noted_app/state/auth/auth_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/pages/login/login_frame.dart';
+import 'package:noted_app/ui/router/router_config.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
 
+// coverage:ignore-file
 class SignInPage extends StatefulWidget {
   final String initialEmail;
   final String initialPassword;
@@ -96,7 +98,7 @@ class _SignInPageState extends State<SignInPage> {
             label: strings.login_register,
             type: NotedTextButtonType.filled,
             color: NotedWidgetColor.secondary,
-            onPressed: () => context.push('/login/register'),
+            onPressed: () => context.push(LoginRegisterRoute()),
           ),
           Padding(
             padding: EdgeInsets.fromLTRB(36, 14, 36, 18),
@@ -111,7 +113,7 @@ class _SignInPageState extends State<SignInPage> {
                   TextSpan(
                     text: strings.login_resetPassword,
                     style: theme.labelSmall?.copyWith(decoration: TextDecoration.underline),
-                    recognizer: TapGestureRecognizer()..onTap = () => context.push('/login/reset-password'),
+                    recognizer: TapGestureRecognizer()..onTap = () => context.push(LoginResetPasswordRoute()),
                   ),
                 ],
               ),

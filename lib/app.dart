@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/state/auth/auth_bloc.dart';
-import 'package:noted_app/state/notes/notes_bloc.dart';
 import 'package:noted_app/state/settings/settings_bloc.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/router/router_config.dart';
@@ -17,7 +16,6 @@ class NotedApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => AuthBloc(), lazy: false),
         BlocProvider(create: (context) => SettingsBloc(), lazy: false),
-        BlocProvider(create: (context) => NotesBloc(), lazy: false),
       ],
       child: NotedThemeBuilder(
         builder: (context, theme) => MaterialApp.router(

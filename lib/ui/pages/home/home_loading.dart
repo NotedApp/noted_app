@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 
+// coverage:ignore-file
 class HomeLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

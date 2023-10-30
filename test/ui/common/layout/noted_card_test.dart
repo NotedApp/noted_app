@@ -23,7 +23,7 @@ void main() {
                 child: NotedCard(
                   key: smallKey,
                   size: NotedWidgetSize.small,
-                  onTap: onPressed,
+                  onPressed: onPressed,
                 ),
               ),
               SizedBox(
@@ -38,7 +38,7 @@ void main() {
                 child: NotedCard(
                   key: largeKey,
                   size: NotedWidgetSize.large,
-                  onTap: onPressed,
+                  onPressed: onPressed,
                 ),
               ),
             ],

@@ -1,12 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:noted_app/ui/common/custom_colors.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/ui/common/button/noted_text_button.dart';
 import 'package:noted_app/ui/common/icon/noted_icons.dart';
 import 'package:noted_app/ui/common/layout/noted_dialog.dart';
 import 'package:noted_app/ui/common/noted_widget_config.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
+
+// TODO: Get colors from style settings bloc.
+final List<Color> _colors = [
+  Colors.black,
+  Colors.white,
+  Colors.grey.shade400,
+  Colors.grey.shade600,
+  Colors.blueGrey.shade500,
+  Colors.red.shade500,
+  Colors.indigo.shade500,
+  Colors.teal.shade500,
+  Colors.lightGreen.shade500,
+  Colors.orange.shade500,
+  Colors.brown.shade500,
+  Colors.blueGrey.shade200,
+  Colors.red.shade200,
+  Colors.purple.shade200,
+  Colors.indigo.shade200,
+  Colors.lightBlue.shade200,
+  Colors.teal.shade200,
+  Colors.lightGreen.shade200,
+  Colors.yellow.shade200,
+  Colors.orange.shade200,
+];
 
 class NotedColorPicker extends StatefulWidget {
   final Color initialColor;
@@ -52,7 +75,7 @@ class _NotedColorPickerState extends State<NotedColorPicker> {
             crossAxisSpacing: 8,
             mainAxisSpacing: 8,
             shrinkWrap: true,
-            children: customColors
+            children: _colors
                 .map(
                   (color) => NotedColorPickerButton(
                     color: color,

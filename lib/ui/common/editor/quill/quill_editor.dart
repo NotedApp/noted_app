@@ -11,8 +11,9 @@ class QuillEditor extends NotedEditor {
     super.placeholder,
     super.readonly,
     super.autofocus,
+    super.usePrimaryScrollController,
     super.padding,
-    super.onTap,
+    super.onPressed,
     super.key,
   });
 
@@ -28,6 +29,9 @@ class QuillEditor extends NotedEditor {
     return Quill.QuillProvider(
       configurations: Quill.QuillConfigurations(controller: quillController),
       child: Quill.QuillEditor(
+        scrollController: usePrimaryScrollController
+            ? PrimaryScrollController.maybeOf(context) ?? ScrollController()
+            : ScrollController(),
         configurations: Quill.QuillEditorConfigurations(
           padding: padding,
           autoFocus: autofocus,
@@ -40,7 +44,6 @@ class QuillEditor extends NotedEditor {
           customStyles: _getStyles(context),
         ),
         focusNode: focusNode ?? FocusNode(),
-        scrollController: PrimaryScrollController.maybeOf(context) ?? ScrollController(),
       ),
     );
   }
@@ -49,7 +52,7 @@ class QuillEditor extends NotedEditor {
     Quill.QuillController quillController = (controller as QuillEditorController).controller;
 
     if (quillController.selection.baseOffset == quillController.selection.extentOffset) {
-      onTap?.call();
+      onPressed?.call();
     }
 
     return false;
@@ -116,8 +119,8 @@ Quill.DefaultStyles _getStyles(BuildContext context) {
     ),
     lists: Quill.DefaultListBlockStyle(
       baseStyle,
-      baseSpacing,
-      const Quill.VerticalSpacing(0, 6),
+      const Quill.VerticalSpacing(4, 0),
+      const Quill.VerticalSpacing(0, 2),
       null,
       null,
     ),
@@ -135,10 +138,23 @@ Quill.DefaultStyles _getStyles(BuildContext context) {
       color: scheme.tertiary,
       decoration: TextDecoration.underline,
     ),
-    indent: Quill.DefaultTextBlockStyle(baseStyle, baseSpacing, const Quill.VerticalSpacing(0, 6), null),
+    indent: Quill.DefaultTextBlockStyle(
+      baseStyle,
+      baseSpacing,
+      const Quill.VerticalSpacing(0, 6),
+      null,
+    ),
     align: Quill.DefaultTextBlockStyle(
-        baseStyle, const Quill.VerticalSpacing(0, 0), const Quill.VerticalSpacing(0, 0), null),
+      baseStyle,
+      const Quill.VerticalSpacing(0, 0),
+      const Quill.VerticalSpacing(0, 0),
+      null,
+    ),
     leading: Quill.DefaultTextBlockStyle(
-        baseStyle, const Quill.VerticalSpacing(0, 0), const Quill.VerticalSpacing(0, 0), null),
+      baseStyle,
+      const Quill.VerticalSpacing(0, 0),
+      const Quill.VerticalSpacing(0, 0),
+      null,
+    ),
   );
 }
