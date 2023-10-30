@@ -13,52 +13,58 @@ import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 
 class HomePage extends StatelessWidget {
+  final NotesBloc? bloc;
+
+  const HomePage({this.bloc});
+
   @override
   Widget build(BuildContext context) {
     Strings strings = context.strings();
-    NotesBloc bloc = context.watch();
 
-    return BlocConsumer<NotesBloc, NotesState>(
-      bloc: bloc,
-      listenWhen: (previous, current) => previous.error != current.error,
-      listener: (context, state) {
-        if (state.error?.code == ErrorCode.notes_subscribe_failed) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            NotedSnackBar.createWithText(
-              context: context,
-              text: strings.edit_error_updateNoteFailed,
-              hasClose: true,
-            ),
-          );
-        }
-      },
-      builder: (context, state) => NotedHeaderPage(
-        title: strings.notes_title,
-        hasBackButton: false,
-        trailingActions: [
-          NotedIconButton(
-            icon: NotedIcons.settings,
-            type: NotedIconButtonType.filled,
-            size: NotedWidgetSize.small,
-            onPressed: () => context.push(SettingsRoute()),
-          ),
-        ],
-        floatingActionButton: NotedIconButton(
-          icon: NotedIcons.plus,
-          type: NotedIconButtonType.filled,
-          size: NotedWidgetSize.large,
-          onPressed: () => context.push(NotesAddRoute()),
-        ),
-        child: switch (state) {
-          NotesState(status: NotesStatus.loading) => HomeLoading(),
-          NotesState(error: NotedError(code: ErrorCode.notes_subscribe_failed)) => NotedErrorWidget(
-              text: strings.notes_error_failed,
-              ctaText: strings.common_refresh,
-              ctaCallback: () => bloc.add(NotesSubscribeEvent()),
-            ),
-          NotesState(notes: []) => NotedErrorWidget(text: strings.notes_error_empty),
-          _ => HomeContent(notes: state.notes),
+    return BlocProvider(
+      create: (context) => bloc ?? NotesBloc(),
+      child: BlocConsumer<NotesBloc, NotesState>(
+        bloc: bloc,
+        listenWhen: (previous, current) => previous.error != current.error,
+        listener: (context, state) {
+          if (state.error?.code == ErrorCode.notes_subscribe_failed) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              NotedSnackBar.createWithText(
+                context: context,
+                text: strings.edit_error_updateNoteFailed,
+                hasClose: true,
+              ),
+            );
+          }
         },
+        builder: (context, state) => NotedHeaderPage(
+          title: strings.notes_title,
+          hasBackButton: false,
+          trailingActions: [
+            NotedIconButton(
+              icon: NotedIcons.settings,
+              type: NotedIconButtonType.filled,
+              size: NotedWidgetSize.small,
+              onPressed: () => context.push(SettingsRoute()),
+            ),
+          ],
+          floatingActionButton: NotedIconButton(
+            icon: NotedIcons.plus,
+            type: NotedIconButtonType.filled,
+            size: NotedWidgetSize.large,
+            onPressed: () => context.push(NotesAddRoute()),
+          ),
+          child: switch (state) {
+            NotesState(status: NotesStatus.loading) => HomeLoading(),
+            NotesState(error: NotedError(code: ErrorCode.notes_subscribe_failed)) => NotedErrorWidget(
+                text: strings.notes_error_failed,
+                ctaText: strings.common_refresh,
+                ctaCallback: () => context.read<NotesBloc>().add(NotesSubscribeEvent()),
+              ),
+            NotesState(notes: []) => NotedErrorWidget(text: strings.notes_error_empty),
+            _ => HomeContent(notes: state.notes),
+          },
+        ),
       ),
     );
   }

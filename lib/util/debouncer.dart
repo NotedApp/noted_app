@@ -11,6 +11,7 @@ class Debouncer {
   Timer? _timer;
 
   bool get isActive => _timer?.isActive ?? false;
+  Stream<bool> get activeStream => _isActiveController.stream;
 
   Debouncer({required this.interval, this.runFirst = false});
 

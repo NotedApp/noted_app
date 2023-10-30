@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 
 class NotedLoadingIndicator extends StatelessWidget {
   final String? label;
+  final double size;
+  final Color? color;
 
-  const NotedLoadingIndicator({this.label, super.key});
+  const NotedLoadingIndicator({this.label, this.size = 24, this.color, super.key});
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
 
     SizedBox progress = SizedBox(
-      width: 24,
-      height: 24,
+      width: size,
+      height: size,
       child: CircularProgressIndicator(
-        color: theme.colorScheme.tertiary,
+        color: color ?? theme.colorScheme.tertiary,
         strokeWidth: 2,
         semanticsLabel: label,
       ),
@@ -23,15 +25,13 @@ class NotedLoadingIndicator extends StatelessWidget {
       return progress;
     }
 
-    Text labelText = Text(
-      label!,
-      style: Theme.of(context).textTheme.bodyMedium,
-    );
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        labelText,
+        Text(
+          label!,
+          style: theme.textTheme.bodyMedium,
+        ),
         const SizedBox(height: 16),
         progress,
       ],

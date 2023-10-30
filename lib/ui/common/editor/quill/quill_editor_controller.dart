@@ -36,7 +36,7 @@ class QuillEditorController extends NotedEditorController {
       );
     }
 
-    controller.addListener(notifyListeners);
+    controller.changes.listen((event) => notifyListeners());
   }
 
   @override
