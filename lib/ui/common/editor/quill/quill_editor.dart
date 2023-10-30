@@ -119,8 +119,8 @@ Quill.DefaultStyles _getStyles(BuildContext context) {
     ),
     lists: Quill.DefaultListBlockStyle(
       baseStyle,
-      baseSpacing,
-      const Quill.VerticalSpacing(0, 6),
+      const Quill.VerticalSpacing(4, 0),
+      const Quill.VerticalSpacing(0, 2),
       null,
       null,
     ),
@@ -138,10 +138,23 @@ Quill.DefaultStyles _getStyles(BuildContext context) {
       color: scheme.tertiary,
       decoration: TextDecoration.underline,
     ),
-    indent: Quill.DefaultTextBlockStyle(baseStyle, baseSpacing, const Quill.VerticalSpacing(0, 6), null),
+    indent: Quill.DefaultTextBlockStyle(
+      baseStyle,
+      baseSpacing,
+      const Quill.VerticalSpacing(0, 6),
+      null,
+    ),
     align: Quill.DefaultTextBlockStyle(
-        baseStyle, const Quill.VerticalSpacing(0, 0), const Quill.VerticalSpacing(0, 0), null),
+      baseStyle,
+      const Quill.VerticalSpacing(0, 0),
+      const Quill.VerticalSpacing(0, 0),
+      null,
+    ),
     leading: Quill.DefaultTextBlockStyle(
-        baseStyle, const Quill.VerticalSpacing(0, 0), const Quill.VerticalSpacing(0, 0), null),
+      baseStyle,
+      const Quill.VerticalSpacing(0, 0),
+      const Quill.VerticalSpacing(0, 0),
+      null,
+    ),
   );
 }

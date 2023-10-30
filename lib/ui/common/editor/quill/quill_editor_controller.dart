@@ -36,11 +36,14 @@ class QuillEditorController extends NotedEditorController {
       );
     }
 
-    controller.changes.listen((event) => notifyListeners());
+    controller.addListener(notifyListeners);
   }
 
   @override
   List<dynamic> get value => controller.document.toDelta().toJson();
+
+  @override
+  Stream<DocumentModel> get valueStream => controller.changes.map((event) => value);
 
   @override
   set value(DocumentModel document) => controller.document = Document.fromJson(document);

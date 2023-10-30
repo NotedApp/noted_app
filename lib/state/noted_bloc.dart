@@ -29,10 +29,12 @@ abstract class NotedBloc<Event extends NotedEvent, State> extends Bloc<Event, St
     Map<String, dynamic> params = {'event': transition.event};
 
     if (_logVerbose) {
+      // coverage:ignore-start
       params.addAll({
         'from': transition.currentState,
         'to': transition.nextState,
       });
+      // coverage:ignore-end
     }
 
     if (transition.event is TrackableEvent) {

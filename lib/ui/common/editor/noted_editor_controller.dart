@@ -12,6 +12,8 @@ abstract class NotedEditorController extends ChangeNotifier {
 
   DocumentModel get value;
 
+  Stream<DocumentModel> get valueStream;
+
   void set value(DocumentModel document);
 
   bool isAttributeToggled(NotedEditorAttribute attribute);

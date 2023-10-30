@@ -60,8 +60,8 @@ void main() {
       await tester.tap(find.byIcon(NotedIcons.brush));
       await tester.tap(find.byIcon(NotedIcons.animation));
 
-      verify(() => _mockRouter.push('settings/account')).called(1);
-      verify(() => _mockRouter.pushReplacement('settings/style')).called(1);
+      verify(() => _mockRouter.push('/settings/account')).called(1);
+      verify(() => _mockRouter.pushReplacement('/settings/style')).called(1);
       verify(() => _mockRouter.pop('result')).called(1);
     });
   });

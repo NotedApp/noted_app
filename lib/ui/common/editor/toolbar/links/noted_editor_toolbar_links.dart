@@ -47,7 +47,7 @@ class _ToolbarLinkPickerState extends State<_ToolbarLinkPicker> {
             type: NotedTextFieldType.standard,
             name: context.strings().editor_linkPickerTitle,
             controller: textController,
-            onSubmitted: (value) => widget.controller.setLink(value),
+            onChanged: (value) => widget.controller.setLink(value),
           ),
         ),
         SizedBox(width: 8),

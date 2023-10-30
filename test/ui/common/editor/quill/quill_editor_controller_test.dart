@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:noted_app/ui/common/editor/noted_editor_attributes.dart';
 import 'package:noted_app/ui/common/editor/quill/quill_editor_controller.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
+import 'package:noted_models/noted_models.dart';
 
 import '../../../../helpers/mocks/mock_delta.dart';
 
@@ -23,6 +24,8 @@ void main() {
 
       controller.value = testData1;
       expect(controller.value, testData1);
+
+      expect(controller.valueStream, isA<Stream<DocumentModel>>());
     });
 
     test('validates and updates bold formatting', () {

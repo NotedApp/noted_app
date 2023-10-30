@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
@@ -17,6 +19,7 @@ class NotebookEditContent extends StatefulWidget {
 
 class _NotebookEditContentState extends State<NotebookEditContent> {
   late final NotedEditorController textController;
+  late final StreamSubscription textSubscription;
   late final TextEditingController titleController;
   final FocusNode focusNode = FocusNode();
 
@@ -27,10 +30,8 @@ class _NotebookEditContentState extends State<NotebookEditContent> {
     textController = NotedEditorController.quill(initial: widget.note.document);
     titleController = TextEditingController(text: widget.note.title);
 
-    textController.addListener(_updateNote);
+    textSubscription = textController.valueStream.listen((data) => _updateNote());
     titleController.addListener(_updateNote);
-
-    focusNode.addListener(() => setState(() => {}));
   }
 
   @override
@@ -56,7 +57,7 @@ class _NotebookEditContentState extends State<NotebookEditContent> {
             ),
           ),
         ),
-        if (focusNode.hasFocus) NotedEditorToolbar(controller: textController),
+        NotedEditorToolbar(controller: textController),
       ],
     );
   }
@@ -74,6 +75,7 @@ class _NotebookEditContentState extends State<NotebookEditContent> {
   @override
   void dispose() {
     textController.dispose();
+    textSubscription.cancel();
     titleController.dispose();
     focusNode.dispose();
     super.dispose();

@@ -33,10 +33,10 @@ class _NotebookTileState extends State<NotebookTile> {
       child = NotedHeaderEditor(
         controller: _textController,
         readonly: true,
-        padding: EdgeInsets.only(bottom: 36),
+        padding: EdgeInsets.only(top: 12, bottom: 36),
         onTap: widget.onTap,
         header: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 12, 0, 6),
+          padding: const EdgeInsets.fromLTRB(0, 12, 0, 0),
           child: Text(
             widget.note.title,
             style: Theme.of(context).textTheme.titleMedium,

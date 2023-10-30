@@ -18,10 +18,10 @@ enum _ToolbarState {
   link,
 }
 
-Key _homeKey = Key(_ToolbarState.home.name);
-Key _textColorKey = Key(_ToolbarState.textColor.name);
-Key _highlightColorKey = Key(_ToolbarState.highlightColor.name);
-Key _linkKey = Key(_ToolbarState.link.name);
+final Key _homeKey = Key(_ToolbarState.home.name);
+final Key _textColorKey = Key(_ToolbarState.textColor.name);
+final Key _highlightColorKey = Key(_ToolbarState.highlightColor.name);
+final Key _linkKey = Key(_ToolbarState.link.name);
 
 class NotedEditorToolbar extends StatefulWidget {
   final NotedEditorController controller;

@@ -70,6 +70,9 @@ class _MockController extends NotedEditorController {
   List get value => throw UnimplementedError();
 
   @override
+  Stream<DocumentModel> get valueStream => throw UnimplementedError();
+
+  @override
   set value(DocumentModel document) => throw UnimplementedError();
 
   @override

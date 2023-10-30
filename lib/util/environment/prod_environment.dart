@@ -1,5 +1,6 @@
 part of 'environment.dart';
 
+// coverage:ignore-file
 class ProdEnvironment extends Environment {
   @override
   FirebaseOptions? get firebaseOptions => throw UnimplementedError();

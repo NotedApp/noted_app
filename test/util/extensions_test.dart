@@ -5,6 +5,13 @@ import 'package:noted_app/util/extensions.dart';
 
 void main() {
   group('Color Extensions', () {
+    test('color get dark or light returns an appropriate value', () {
+      expect(black.isDark(), true);
+      expect(black.isLight(), false);
+      expect(white.isLight(), true);
+      expect(white.isDark(), false);
+    });
+
     test('color get black and white returns an appropriate surface color', () {
       expect(black.getBW(), white);
       expect(white.getBW(), black);

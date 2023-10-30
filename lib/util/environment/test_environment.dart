@@ -1,5 +1,6 @@
 part of 'environment.dart';
 
+// coverage:ignore-file
 class TestEnvironment extends Environment {
   @override
   FirebaseOptions? get firebaseOptions => TestFirebaseOptions.currentPlatform;
