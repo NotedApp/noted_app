@@ -1,8 +1,8 @@
 import 'package:firebase_core_platform_interface/firebase_core_platform_interface.dart';
 import 'package:noted_app/repository/auth/auth_repository.dart';
 import 'package:noted_app/repository/auth/local_auth_repository.dart';
-import 'package:noted_app/repository/notes/local_notes_repository.dart';
 import 'package:noted_app/repository/notes/notes_repository.dart';
+import 'package:noted_app/repository/notes/local_notes_repository.dart';
 import 'package:noted_app/repository/settings/local_settings_repository.dart';
 import 'package:noted_app/repository/settings/settings_repository.dart';
 import 'package:noted_app/util/environment/environment.dart';
