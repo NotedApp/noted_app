@@ -55,6 +55,8 @@ flutter:
   assets:
     - assets/svg/woman_climbing.svg
     - assets/svg/woman_reading.svg
+    - assets/svg/woman_cooking.svg
+    - assets/svg/man_computer.svg
 
   fonts:
     - family: NotedIcons
