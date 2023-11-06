@@ -2,7 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:noted_app/repository/auth/auth_repository.dart';
 import 'package:noted_app/repository/auth/local_auth_repository.dart';
-import 'package:noted_app/repository/notes/local_notebook_repository.dart';
+import 'package:noted_app/repository/notes/local_notes_repository.dart';
 import 'package:noted_app/repository/notes/notes_repository.dart';
 import 'package:noted_app/state/edit/edit_bloc.dart';
 import 'package:noted_app/state/edit/edit_event.dart';
