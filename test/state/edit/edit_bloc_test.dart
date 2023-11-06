@@ -18,7 +18,7 @@ void main() {
     LocalNotesRepository notes() => locator<NotesRepository>() as LocalNotesRepository;
     LocalAuthRepository auth() => locator<AuthRepository>() as LocalAuthRepository;
 
-    NoteModel addedNote = NotebookNoteModel.emptyQuill().copyWith(id: 'note-2');
+    NoteModel addedNote = NotebookNoteModel.empty().copyWith(id: 'note-2');
 
     NoteModel existing = localNotes.values.first.copyWith();
     NoteModel updated = existing.copyWith(title: 'updated');

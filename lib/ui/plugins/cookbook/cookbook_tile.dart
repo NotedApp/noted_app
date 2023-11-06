@@ -4,17 +4,18 @@ import 'package:noted_app/ui/router/noted_router.dart';
 import 'package:noted_app/ui/router/router_config.dart';
 import 'package:noted_models/noted_models.dart';
 
-class NotebookTile extends StatefulWidget {
-  final NotebookNoteModel note;
+// TODO: Update this to be specific to the cookbook plugin.
+class CookbookTile extends StatefulWidget {
+  final CookbookNoteModel note;
   final VoidCallback? onPressed;
 
-  const NotebookTile({required this.note, this.onPressed, super.key});
+  const CookbookTile({required this.note, this.onPressed, super.key});
 
   @override
-  State<StatefulWidget> createState() => _NotebookTileState();
+  State<StatefulWidget> createState() => _CookbookTileState();
 }
 
-class _NotebookTileState extends State<NotebookTile> {
+class _CookbookTileState extends State<CookbookTile> {
   late final NotedEditorController _textController;
 
   @override
@@ -64,7 +65,7 @@ class _NotebookTileState extends State<NotebookTile> {
 
   // coverage:ignore-start
   @override
-  void didUpdateWidget(covariant NotebookTile oldWidget) {
+  void didUpdateWidget(covariant CookbookTile oldWidget) {
     _textController.value = widget.note.document;
     super.didUpdateWidget(oldWidget);
   }
