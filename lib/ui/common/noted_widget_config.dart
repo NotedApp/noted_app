@@ -17,5 +17,7 @@ abstract class NotedWidgetConfig {
 
   static const double tileAspectRatio = 0.8;
 
-  static const ScrollPhysics scrollPhysics = BouncingScrollPhysics();
+  static const ScrollPhysics scrollPhysics = BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics());
+
+  static const double goldenRatio = 1.618;
 }

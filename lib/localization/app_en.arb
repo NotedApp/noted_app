@@ -3,6 +3,9 @@
 
   "app_title": "noted.",
 
+  "plugin_notebook_title": "notebook",
+  "plugin_cookbook_title": "cookbook",
+
   "common_unimplemented": "this feature is not available yet, please try again soon!",
   "common_confirm": "confirm",
   "common_cancel": "cancel",

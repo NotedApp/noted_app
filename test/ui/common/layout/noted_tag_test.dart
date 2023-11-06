@@ -8,8 +8,8 @@ import '../../../helpers/mocks/mock_callbacks.dart';
 import '../../../helpers/test_wrapper.dart';
 
 void main() {
-  group('Noted Text Button', () {
-    testWidgets('simple text button functions as expected', (tester) async {
+  group('Noted Tag', () {
+    testWidgets('tags function as expected', (tester) async {
       MockVoidCallback onPressed = MockVoidCallback();
 
       await tester.pumpWidget(

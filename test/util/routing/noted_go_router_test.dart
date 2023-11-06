@@ -49,6 +49,11 @@ void main() {
                     type: NotedIconButtonType.filled,
                     onPressed: () => NotedRouterExtensions(context).pop('result'),
                   ),
+                  NotedIconButton(
+                    icon: NotedIcons.tag,
+                    type: NotedIconButtonType.filled,
+                    onPressed: () => NotedRouterExtensions(context).popAndPush(SettingsTagsRoute(), 'result'),
+                  ),
                 ],
               ),
             ),
@@ -59,10 +64,12 @@ void main() {
       await tester.tap(find.byIcon(NotedIcons.account));
       await tester.tap(find.byIcon(NotedIcons.brush));
       await tester.tap(find.byIcon(NotedIcons.animation));
+      await tester.tap(find.byIcon(NotedIcons.tag));
 
       verify(() => _mockRouter.push('/settings/account')).called(1);
+      verify(() => _mockRouter.push('/settings/tags')).called(1);
       verify(() => _mockRouter.pushReplacement('/settings/style')).called(1);
-      verify(() => _mockRouter.pop('result')).called(1);
+      verify(() => _mockRouter.pop('result')).called(2);
     });
   });
 }
