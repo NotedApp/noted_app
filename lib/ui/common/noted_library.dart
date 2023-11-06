@@ -1,7 +1,7 @@
 library noted_library;
 
 export './button/button.dart';
-export './icon/icon.dart';
+export 'image/image.dart';
 export './input/input.dart';
 export './layout/layout.dart';
 export './loading/loading.dart';

@@ -13,4 +13,8 @@ class TestRouter extends NotedRouter {
 
   @override
   Future<T?> replace<T extends Object?>(BuildContext context, NotedRoute route) => Future.value();
+
+  @override
+  Future<T?> popAndPush<T extends Object?, U extends Object?>(BuildContext context, NotedRoute route, [U? result]) =>
+      Future.value();
 }

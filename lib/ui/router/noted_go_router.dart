@@ -19,4 +19,10 @@ class NotedGoRouter extends NotedRouter {
       GoRouter.of(context).pop(result);
     }
   }
+
+  @override
+  Future<T?> popAndPush<T extends Object?, U extends Object?>(BuildContext context, NotedRoute route, [U? result]) {
+    pop(context, result);
+    return GoRouter.of(context).push(route.route);
+  }
 }

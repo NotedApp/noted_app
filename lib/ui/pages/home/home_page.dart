@@ -7,6 +7,7 @@ import 'package:noted_app/state/notes/notes_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/pages/home/home_content.dart';
 import 'package:noted_app/ui/pages/home/home_loading.dart';
+import 'package:noted_app/ui/pages/home/note_picker.dart/note_picker.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
 import 'package:noted_app/ui/router/router_config.dart';
 import 'package:noted_app/util/extensions.dart';
@@ -54,6 +55,7 @@ class HomePage extends StatelessWidget {
             type: NotedIconButtonType.filled,
             size: NotedWidgetSize.large,
             onPressed: () => context.push(NotesAddRoute()),
+            onLongPress: () => NotePicker.show(context),
           ),
           child: switch (state) {
             NotesState(status: NotesStatus.loading) => HomeLoading(),

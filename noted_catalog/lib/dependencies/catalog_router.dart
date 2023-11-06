@@ -26,4 +26,8 @@ class CatalogRouter extends NotedRouter {
   void pop<T extends Object?>(BuildContext context, [T? result]) {
     Navigator.of(context).maybePop(result);
   }
+
+  @override
+  Future<T?> popAndPush<T extends Object?, U extends Object?>(BuildContext context, NotedRoute route, [U? result]) =>
+      _showModal(context, 'popped and pushed route: ${route.route}');
 }

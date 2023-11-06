@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:noted_app/ui/common/icon/noted_icons.dart';
-import 'package:noted_app/ui/common/layout/noted_header_page.dart';
+import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/pages/settings/settings_row.dart';
 import 'package:noted_app/ui/pages/settings/style/style_fonts_page.dart';
 import 'package:noted_app/ui/pages/settings/style/style_theme_page.dart';

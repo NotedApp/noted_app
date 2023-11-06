@@ -16,7 +16,6 @@ class HomeContent extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(12, 16, 12, 0),
       child: GridView.builder(
         itemCount: notes.length,
-        physics: NotedWidgetConfig.scrollPhysics,
         padding: EdgeInsets.only(bottom: 128),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,

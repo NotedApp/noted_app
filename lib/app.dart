@@ -24,6 +24,7 @@ class NotedApp extends StatelessWidget {
           supportedLocales: Strings.supportedLocales,
           routerConfig: routerConfig,
           theme: theme,
+          scrollBehavior: ScrollConfiguration.of(context).copyWith(physics: NotedWidgetConfig.scrollPhysics),
         ),
       ),
     );
