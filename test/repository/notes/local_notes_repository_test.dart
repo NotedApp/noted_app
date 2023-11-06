@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:noted_app/repository/notes/local_notebook_repository.dart';
+import 'package:noted_app/repository/notes/local_notes_repository.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 

@@ -16,11 +16,11 @@ class TagsPage extends StatelessWidget {
       title: context.strings().settings_tags_title,
       hasBackButton: true,
       child: BlocConsumer<SettingsBloc, SettingsState>(
-        buildWhen: (previous, current) => previous.settings.tag != current.settings.tag,
+        buildWhen: (previous, current) => previous.settings.tags != current.settings.tags,
         listener: handleSettingsError,
         builder: (context, state) => switch (state) {
           SettingsState(status: SettingsStatus.loading) => TagsLoading(),
-          SettingsState(settings: SettingsModel(tag: TagSettingsModel(tags: const {}))) =>
+          SettingsState(settings: SettingsModel(tags: TagSettingsModel(tags: const {}))) =>
             NotedErrorWidget(text: context.strings().settings_error_tags_empty),
           _ => Container(), // content
         },

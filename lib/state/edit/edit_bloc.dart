@@ -35,7 +35,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
     });
 
     if (noteId == null) {
-      add(EditAddEvent(NotebookNoteModel.emptyQuill()));
+      add(EditAddEvent(NotebookNoteModel.empty()));
     } else {
       add(EditLoadEvent(noteId));
     }

@@ -14,12 +14,12 @@ dependencies:
   noted_models:
     git:
       url: https://github.com/NotedApp/noted_models.git
-      ref: v0.0.4-alpha
+      ref: v0.0.5-alpha
 
   flutter_bloc: ^8.1.2
   flutter_svg: ^2.0.6
   equatable: ^2.0.5
-  flutter_quill: ^7.10.2
+  flutter_quill: ^8.2.2
   meta: ^1.9.1
   flutter_localizations:
     sdk: flutter
