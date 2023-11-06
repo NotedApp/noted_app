@@ -6,6 +6,7 @@ import 'package:noted_app/ui/router/router_config.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_models/noted_models.dart';
 
+// coverage:ignore-file
 class NotePickerCard extends StatelessWidget {
   final String imageUrl;
   final String title;

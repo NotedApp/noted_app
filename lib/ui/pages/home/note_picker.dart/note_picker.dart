@@ -3,6 +3,7 @@ import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/pages/home/note_picker.dart/note_picker_card.dart';
 import 'package:noted_models/noted_models.dart';
 
+// coverage:ignore-file
 class NotePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

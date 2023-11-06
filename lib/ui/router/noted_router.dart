@@ -13,6 +13,6 @@ extension NotedRouterExtensions on BuildContext {
   Future<T?> push<T extends Object?>(NotedRoute route) => locator<NotedRouter>().push(this, route);
   Future<T?> replace<T extends Object?>(NotedRoute route) => locator<NotedRouter>().replace(this, route);
   void pop<T extends Object?>([T? result]) => locator<NotedRouter>().pop(this, result);
-  void popAndPush<T extends Object?, U extends Object?>(NotedRoute route, [U? result]) =>
+  Future<T?> popAndPush<T extends Object?, U extends Object?>(NotedRoute route, [U? result]) =>
       locator<NotedRouter>().popAndPush(this, route, result);
 }
