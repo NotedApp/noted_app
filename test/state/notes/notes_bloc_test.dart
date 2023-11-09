@@ -40,12 +40,22 @@ void main() {
         bloc.add(NotesSubscribeEvent());
         await Future.delayed(const Duration(milliseconds: 15));
         notes().addNote(userId: auth().currentUser.id, note: testNote);
+        await Future.delayed(const Duration(milliseconds: 10));
+        notes().deleteNote(userId: auth().currentUser.id, noteId: 'test');
+        await Future.delayed(const Duration(milliseconds: 5));
+        notes().deleteNote(userId: auth().currentUser.id, noteId: 'test-note-1');
+        await Future.delayed(const Duration(milliseconds: 5));
+        notes().deleteNote(userId: auth().currentUser.id, noteId: 'test-note-0');
+        await Future.delayed(const Duration(milliseconds: 10));
       },
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        NotesState(notes: [], status: NotesStatus.loading),
-        NotesState(notes: localNotes.values.toList()),
-        NotesState(notes: [...localNotes.values, testNote]),
+        NotesState.loading(),
+        NotesState.success(notes: localNotes.values.toList()),
+        NotesState.success(notes: [...localNotes.values, testNote]),
+        NotesState.success(notes: localNotes.values.toList()),
+        NotesState.success(notes: [localNotes['test-note-0']!]),
+        NotesState.empty(),
       ],
     );
 
@@ -58,11 +68,8 @@ void main() {
       },
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        NotesState(
-          notes: [],
-        ),
-        NotesState(notes: [], status: NotesStatus.loading),
-        NotesState(notes: localNotes.values.toList()),
+        NotesState.loading(),
+        NotesState.success(notes: localNotes.values.toList()),
       ],
     );
 
@@ -73,8 +80,8 @@ void main() {
       act: (bloc) => bloc.add(NotesSubscribeEvent()),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        NotesState(notes: [], status: NotesStatus.loading),
-        NotesState(notes: [], error: NotedError(ErrorCode.notes_subscribe_failed)),
+        NotesState.loading(),
+        NotesState.error(error: NotedError(ErrorCode.notes_subscribe_failed)),
       ],
     );
 
@@ -88,9 +95,9 @@ void main() {
       },
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        NotesState(notes: [], status: NotesStatus.loading),
-        NotesState(notes: localNotes.values.toList()),
-        NotesState(
+        NotesState.loading(),
+        NotesState.success(notes: localNotes.values.toList()),
+        NotesState.success(
           notes: localNotes.values.toList(),
           error: NotedError(ErrorCode.notes_parse_failed),
         ),
@@ -104,7 +111,7 @@ void main() {
       act: (bloc) => bloc.add(NotesSubscribeEvent()),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        NotesState(notes: [], error: NotedError(ErrorCode.notes_subscribe_failed, message: 'missing auth')),
+        NotesState.error(error: NotedError(ErrorCode.notes_subscribe_failed, message: 'missing auth')),
       ],
     );
   });

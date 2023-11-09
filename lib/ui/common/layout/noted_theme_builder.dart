@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noted_app/state/settings/settings_bloc.dart';
 import 'package:noted_app/state/settings/settings_state.dart';
+import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_models/noted_models.dart';
 
@@ -12,15 +12,11 @@ class NotedThemeBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SettingsBloc, SettingsState>(
-      buildWhen: (previous, current) {
-        StyleSettingsModel old = previous.settings.style;
-        StyleSettingsModel next = current.settings.style;
-        return old.colorScheme != next.colorScheme || old.textTheme != next.textTheme;
-      },
-      builder: (context, state) {
-        ColorScheme colorScheme = state.settings.style.colorScheme.toMaterial();
-        TextTheme textTheme = state.settings.style.textTheme.toMaterial();
+    return NotedBlocSelector<SettingsBloc, SettingsState, (ColorSchemeModel, TextThemeModel)>(
+      selector: (state) => (state.settings.style.colorScheme, state.settings.style.textTheme),
+      builder: (context, _, state) {
+        ColorScheme colorScheme = state.$1.toMaterial();
+        TextTheme textTheme = state.$2.toMaterial();
 
         return builder(
           context,
@@ -28,6 +24,7 @@ class NotedThemeBuilder extends StatelessWidget {
             brightness: colorScheme.brightness,
             colorScheme: colorScheme,
             textTheme: textTheme,
+            pageTransitionsTheme: NotedWidgetConfig.transitions,
             useMaterial3: true,
           ),
         );

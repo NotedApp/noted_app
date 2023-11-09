@@ -20,4 +20,11 @@ abstract class NotedWidgetConfig {
   static const ScrollPhysics scrollPhysics = BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics());
 
   static const double goldenRatio = 1.618;
+
+  static const PageTransitionsTheme transitions = PageTransitionsTheme(
+    builders: {
+      TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+      TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+    },
+  );
 }

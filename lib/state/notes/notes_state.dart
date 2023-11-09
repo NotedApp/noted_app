@@ -5,6 +5,8 @@ import 'package:noted_models/noted_models.dart';
 enum NotesStatus {
   loaded,
   loading,
+  error,
+  empty,
 }
 
 final class NotesState extends Equatable {
@@ -12,11 +14,21 @@ final class NotesState extends Equatable {
   final List<NoteModel> notes;
   final NotedError? error;
 
-  const NotesState({
-    this.status = NotesStatus.loaded,
-    required this.notes,
-    this.error = null,
-  });
+  const NotesState.loading()
+      : status = NotesStatus.loading,
+        notes = const [],
+        error = null;
+
+  const NotesState.success({required this.notes, this.error}) : status = NotesStatus.loaded;
+
+  const NotesState.error({required this.error})
+      : status = NotesStatus.error,
+        notes = const [];
+
+  const NotesState.empty()
+      : status = NotesStatus.empty,
+        notes = const [],
+        error = null;
 
   @override
   List<Object?> get props => [status, notes, error];

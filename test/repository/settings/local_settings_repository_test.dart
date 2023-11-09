@@ -21,11 +21,32 @@ void main() {
         textThemeName: TextThemeModelName.roboto,
       );
 
+      TagSettingsModel tags = TagSettingsModel(
+        showTags: false,
+        tags: {TagModel.empty(), TagModel(id: 'test', name: 'test', color: 0xFFFFFFFF)},
+      );
+
+      PluginSettingsModel plugins = PluginSettingsModel(
+        cookbook: CookbookSettingsModel(
+          showCookTime: false,
+          typeTags: {TagModel.empty()},
+        ),
+      );
+
       await repository.updateStyleSettings(userId: 'test', style: style);
+      await repository.updateTagSettings(userId: 'test', tags: tags);
+      await repository.updatePluginSettings(userId: 'test', plugins: plugins);
+
       SettingsModel updated = await repository.fetchSettings(userId: 'test');
 
       expect(updated.style.colorSchemeName, ColorSchemeModelName.green);
       expect(updated.style.textThemeName, TextThemeModelName.roboto);
+
+      expect(updated.tags.showTags, false);
+      expect(updated.tags.tags.length, 2);
+
+      expect(updated.plugins.cookbook.showCookTime, false);
+      expect(updated.plugins.cookbook.typeTags.length, 1);
     });
 
     test('handles fetch error', () async {
@@ -43,6 +64,24 @@ void main() {
       await expectLater(
         () => repository.updateStyleSettings(userId: 'test', style: StyleSettingsModel()),
         throwsA(NotedError(ErrorCode.settings_updateStyle_failed)),
+      );
+    });
+
+    test('handles update tags error', () async {
+      repository.setShouldThrow(true);
+
+      await expectLater(
+        () => repository.updateTagSettings(userId: 'test', tags: TagSettingsModel()),
+        throwsA(NotedError(ErrorCode.settings_updateTags_failed)),
+      );
+    });
+
+    test('handles update plugins error', () async {
+      repository.setShouldThrow(true);
+
+      await expectLater(
+        () => repository.updatePluginSettings(userId: 'test', plugins: PluginSettingsModel()),
+        throwsA(NotedError(ErrorCode.settings_updatePlugins_failed)),
       );
     });
 
