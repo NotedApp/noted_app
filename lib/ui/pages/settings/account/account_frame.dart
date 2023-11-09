@@ -22,14 +22,14 @@ class AccountFrame extends StatelessWidget {
       child: NotedBlocSelector<AuthBloc, AuthState, AuthStatus>(
         selector: (state) => state.status,
         listener: stateListener,
-        builder: (context, _, state) => switch (state) {
-          AuthStatus.authenticated => child,
-          _ => LoginLoading(status: state),
-        },
         selectedListener: (context, state) {
           if (state == AuthStatus.unauthenticated) {
             context.replace(LoginRoute());
           }
+        },
+        builder: (context, _, state) => switch (state) {
+          AuthStatus.authenticated => child,
+          _ => LoginLoading(status: state),
         },
       ),
     );
