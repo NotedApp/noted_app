@@ -46,4 +46,28 @@ class FirebaseSettingsRepository extends SettingsRepository {
       throw NotedError(ErrorCode.settings_updateStyle_failed);
     }
   }
+
+  @override
+  Future<void> updateTagSettings({required String userId, required TagSettingsModel tags}) async {
+    try {
+      final Map<String, dynamic> data = {'tags': tags.toMap()};
+      await _settings(userId).set(data, SetOptions(merge: true));
+    } on FirebaseException catch (e) {
+      throw NotedError(ErrorCode.settings_updateTags_failed, message: e.code);
+    } catch (_) {
+      throw NotedError(ErrorCode.settings_updateTags_failed);
+    }
+  }
+
+  @override
+  Future<void> updatePluginSettings({required String userId, required PluginSettingsModel plugins}) async {
+    try {
+      final Map<String, dynamic> data = {'plugins': plugins.toMap()};
+      await _settings(userId).set(data, SetOptions(merge: true));
+    } on FirebaseException catch (e) {
+      throw NotedError(ErrorCode.settings_updatePlugins_failed, message: e.code);
+    } catch (_) {
+      throw NotedError(ErrorCode.settings_updatePlugins_failed);
+    }
+  }
 }
