@@ -8,7 +8,7 @@ import 'package:noted_models/noted_models.dart';
 class FirebaseSettingsRepository extends SettingsRepository {
   final FirebaseFirestore _firestore;
 
-  CollectionReference get _settings => _firestore.collection('settings');
+  DocumentReference _settings(String userId) => _firestore.collection('settings').doc(userId);
 
   FirebaseSettingsRepository({
     FirebaseFirestore? firestore,
@@ -17,7 +17,7 @@ class FirebaseSettingsRepository extends SettingsRepository {
   @override
   Future<SettingsModel> fetchSettings({required String userId}) async {
     try {
-      final DocumentSnapshot snapshot = await _settings.doc(userId).get();
+      final DocumentSnapshot snapshot = await _settings(userId).get();
 
       if (snapshot.exists) {
         final Object? data = snapshot.data();
@@ -25,7 +25,7 @@ class FirebaseSettingsRepository extends SettingsRepository {
         return map == null ? SettingsModel() : SettingsModel.fromMap(map);
       } else {
         final SettingsModel settings = SettingsModel();
-        await _settings.doc(userId).set(settings);
+        await _settings(userId).set(settings);
         return settings;
       }
     } on FirebaseException catch (e) {
@@ -39,7 +39,7 @@ class FirebaseSettingsRepository extends SettingsRepository {
   Future<void> updateStyleSettings({required String userId, required StyleSettingsModel style}) async {
     try {
       final Map<String, dynamic> data = {'style': style.toMap()};
-      await _settings.doc(userId).set(data, SetOptions(merge: true));
+      await _settings(userId).set(data, SetOptions(merge: true));
     } on FirebaseException catch (e) {
       throw NotedError(ErrorCode.settings_updateStyle_failed, message: e.code);
     } catch (_) {

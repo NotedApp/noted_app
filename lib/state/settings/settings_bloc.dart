@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noted_app/repository/auth/auth_repository.dart';
 import 'package:noted_app/repository/settings/settings_repository.dart';
@@ -20,9 +21,9 @@ class SettingsBloc extends NotedBloc<SettingsEvent, SettingsState> {
         _auth = authRepository ?? locator<AuthRepository>(),
         super(const SettingsState(settings: SettingsModel()), 'settings') {
     on<SettingsLoadUserEvent>(_onLoadUser);
-    on<SettingsUpdateStyleColorSchemeEvent>(_onUpdateStyleColorScheme);
-    on<SettingsUpdateStyleCustomColorSchemeEvent>(_onUpdateStyleCustomColorScheme);
-    on<SettingsUpdateStyleTextThemeEvent>(_onUpdateStyleTextTheme);
+    on<SettingsUpdateStyleColorSchemeEvent>(_onUpdateStyleColorScheme, transformer: restartable());
+    on<SettingsUpdateStyleCustomColorSchemeEvent>(_onUpdateStyleCustomColorScheme, transformer: restartable());
+    on<SettingsUpdateStyleTextThemeEvent>(_onUpdateStyleTextTheme, transformer: restartable());
     on<SettingsResetEvent>(_onReset);
 
     _userSubscription = _auth.userStream.listen((user) {

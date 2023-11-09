@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noted_app/repository/auth/auth_repository.dart';
 import 'package:noted_app/repository/notes/notes_repository.dart';
@@ -20,7 +21,7 @@ class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
       : _notes = notesRepository ?? locator<NotesRepository>(),
         _auth = authRepository ?? locator<AuthRepository>(),
         super(NotesState(notes: const []), 'notes') {
-    on<NotesSubscribeEvent>(_onSubscribeNotes);
+    on<NotesSubscribeEvent>(_onSubscribeNotes, transformer: restartable());
     on<NotesUpdateEvent>(_onUpdateNotes);
     on<NotesUpdateErrorEvent>(_onUpdateError);
     on<NotesResetEvent>(_onReset);
