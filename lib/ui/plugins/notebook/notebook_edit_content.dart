@@ -31,7 +31,7 @@ class _NotebookEditContentState extends State<NotebookEditContent> {
     textController = NotedEditorController.quill(initial: widget.note.document);
     titleController = TextEditingController(text: widget.note.title);
 
-    textSubscription = textController.valueStream.listen((data) => _updateNote());
+    textSubscription = textController.valueStream.listen((_) => _updateNote());
     titleController.addListener(_updateNote);
   }
 

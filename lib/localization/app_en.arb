@@ -105,6 +105,7 @@
 
   "cookbook_prepTime": "prep time",
   "cookbook_cookTime": "cook time",
+  "cookbook_url": "recipe link",
 
   "edit_titlePlaceholder": "title",
   "edit_textPlaceholder": "enter a note...",
