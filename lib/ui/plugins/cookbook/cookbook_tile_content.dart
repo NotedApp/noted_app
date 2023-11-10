@@ -120,7 +120,8 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
                   padding: EdgeInsets.symmetric(horizontal: 12),
                   child: Text(
                     widget.note.title,
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: Theme.of(context).textTheme.titleMedium,
+                    textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                   ),
@@ -132,6 +133,7 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
                   child: Text(
                     '$prepTime: ${widget.note.prepTime}',
                     style: Theme.of(context).textTheme.bodyMedium,
+                    textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                   ),
@@ -142,6 +144,7 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
                   child: Text(
                     '$cookTime: ${widget.note.cookTime}',
                     style: Theme.of(context).textTheme.bodyMedium,
+                    textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                   ),

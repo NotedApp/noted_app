@@ -44,7 +44,7 @@ class _ToolbarLinkPickerState extends State<_ToolbarLinkPicker> {
         SizedBox(width: 16),
         Expanded(
           child: NotedTextField(
-            type: NotedTextFieldType.standard,
+            type: NotedTextFieldType.outlined,
             name: context.strings().editor_linkPickerTitle,
             controller: textController,
             onChanged: (value) => widget.controller.setLink(value),

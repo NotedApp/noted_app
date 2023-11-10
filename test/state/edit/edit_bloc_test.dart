@@ -37,7 +37,7 @@ void main() {
 
     blocTest(
       'adds and deletes a note',
-      build: () => EditBloc(noteId: null),
+      build: () => EditBloc.add(plugin: NotedPlugin.notebook),
       act: (bloc) async {
         await Future.delayed(const Duration(milliseconds: 20));
         bloc.add(EditDeleteEvent());
@@ -85,7 +85,7 @@ void main() {
     blocTest(
       'adds a note and handles error',
       setUp: () => notes().setShouldThrow(true),
-      build: () => EditBloc(noteId: null),
+      build: () => EditBloc.add(plugin: NotedPlugin.notebook),
       wait: const Duration(milliseconds: 10),
       expect: () => [
         EditState(note: null, status: EditStatus.loading),
@@ -96,7 +96,7 @@ void main() {
     blocTest(
       'add a note fails with no auth',
       setUp: () async => auth().signOut(),
-      build: () => EditBloc(noteId: null),
+      build: () => EditBloc.add(plugin: NotedPlugin.notebook),
       wait: const Duration(milliseconds: 10),
       expect: () => [
         EditState(
@@ -109,7 +109,7 @@ void main() {
 
     blocTest(
       'add a note fails with wrong state',
-      build: () => EditBloc(noteId: null),
+      build: () => EditBloc.add(plugin: NotedPlugin.notebook),
       act: (bloc) async {
         bloc.add(EditAddEvent(addedNote));
       },

@@ -17,10 +17,31 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
   late final StreamSubscription<UserModel> _userSubscription;
   StreamSubscription<NoteModel>? _noteSubscription;
 
-  EditBloc({required String? noteId, NotesRepository? notesRepository, AuthRepository? authRepository})
+  EditBloc({required String noteId, NotesRepository? notesRepository, AuthRepository? authRepository})
       : _notes = notesRepository ?? locator<NotesRepository>(),
         _auth = authRepository ?? locator<AuthRepository>(),
         super(EditState(note: null), 'note') {
+    _init();
+    add(EditLoadEvent(noteId));
+  }
+
+  EditBloc.add({required NotedPlugin plugin, NotesRepository? notesRepository, AuthRepository? authRepository})
+      : _notes = notesRepository ?? locator<NotesRepository>(),
+        _auth = authRepository ?? locator<AuthRepository>(),
+        super(EditState(note: null), 'note') {
+    _init();
+
+    // coverage:ignore-start
+    NoteModel model = switch (plugin) {
+      NotedPlugin.notebook => NotebookNoteModel.empty(),
+      NotedPlugin.cookbook => CookbookNoteModel.empty(),
+    };
+    // coverage:ignore-end
+
+    add(EditAddEvent(model));
+  }
+
+  void _init() {
     on<EditAddEvent>(_onAddNote, transformer: restartable());
     on<EditLoadEvent>(_onLoadNote, transformer: restartable());
     on<EditUpdateEvent>(_onUpdateNote);
@@ -34,12 +55,6 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
         add(EditCloseEvent());
       }
     });
-
-    if (noteId == null) {
-      add(EditAddEvent(NotebookNoteModel.empty()));
-    } else {
-      add(EditLoadEvent(noteId));
-    }
   }
 
   Future _subscribeNote(String noteId, Emitter<EditState> emit) async {

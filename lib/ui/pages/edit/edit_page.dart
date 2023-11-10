@@ -19,18 +19,19 @@ typedef NoteUpdateCallback = void Function(NoteModel);
 
 // coverage:ignore-file
 class EditPage extends StatelessWidget {
-  final String? initialId;
-  final EditBloc? bloc;
+  final EditBloc bloc;
   final Debouncer updateDebouncer = Debouncer(interval: new Duration(milliseconds: _updateDebounceTimeMs));
 
-  EditPage({required this.initialId, this.bloc});
+  EditPage({required String initialId}) : bloc = EditBloc(noteId: initialId);
+
+  EditPage.add({required NotedPlugin plugin}) : bloc = EditBloc.add(plugin: plugin);
 
   @override
   Widget build(BuildContext context) {
     Strings strings = context.strings();
 
     return BlocProvider(
-      create: (context) => bloc ?? EditBloc(noteId: initialId),
+      create: (context) => bloc,
       child: BlocConsumer<EditBloc, EditState>(
         listenWhen: (previous, current) => previous.status != current.status || previous.error != current.error,
         listener: (context, state) {

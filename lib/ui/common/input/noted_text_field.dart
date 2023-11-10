@@ -3,8 +3,9 @@ import 'package:noted_app/ui/common/button/noted_icon_button.dart';
 import 'package:noted_app/ui/common/noted_widget_config.dart';
 
 enum NotedTextFieldType {
-  standard,
+  outlined,
   title,
+  plain,
 }
 
 class NotedTextField extends StatelessWidget {
@@ -50,8 +51,9 @@ class NotedTextField extends StatelessWidget {
     ThemeData theme = Theme.of(context);
 
     _NotedTextFieldBuilder builder = switch (type) {
-      NotedTextFieldType.standard => _StandardTextFieldBuilder(this),
+      NotedTextFieldType.outlined => _StandardTextFieldBuilder(this),
       NotedTextFieldType.title => _TitleTextFieldBuilder(this),
+      NotedTextFieldType.plain => _PlainTextFieldBuilder(this),
     };
 
     String? resolvedErrorText = errorText != null
@@ -66,6 +68,8 @@ class NotedTextField extends StatelessWidget {
 
     TextStyle? style = builder.styleOf(theme.textTheme);
 
+    TextStyle? hintStyle = style?.copyWith(color: theme.colorScheme.onBackground.withOpacity(0.4));
+
     NotedIconButton? suffix = icon == null
         ? null
         : NotedIconButton(
@@ -78,6 +82,8 @@ class NotedTextField extends StatelessWidget {
     InputDecoration decoration = builder.decorationOf(theme.colorScheme).copyWith(
           isDense: true,
           hintText: hint,
+          hintStyle: hintStyle,
+          labelStyle: hintStyle,
           errorText: resolvedErrorText,
           errorStyle: errorStyle,
           suffixIcon: suffix,
@@ -150,9 +156,25 @@ class _TitleTextFieldBuilder extends _NotedTextFieldBuilder {
   InputDecoration decorationOf(ColorScheme scheme) {
     return const InputDecoration(
       contentPadding: EdgeInsets.symmetric(vertical: 5),
-      border: OutlineInputBorder(
-        borderSide: BorderSide.none,
-      ),
+      border: OutlineInputBorder(borderSide: BorderSide.none),
+    );
+  }
+}
+
+class _PlainTextFieldBuilder extends _NotedTextFieldBuilder {
+  const _PlainTextFieldBuilder(super.source);
+
+  @override
+  TextStyle? styleOf(TextTheme theme) {
+    return theme.bodyLarge;
+  }
+
+  @override
+  InputDecoration decorationOf(ColorScheme scheme) {
+    return InputDecoration(
+      labelText: source.name,
+      contentPadding: const EdgeInsets.symmetric(vertical: 8),
+      border: const OutlineInputBorder(borderSide: BorderSide.none),
     );
   }
 }

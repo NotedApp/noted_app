@@ -26,7 +26,7 @@ class _CatalogTextInputPageState extends State<CatalogTextInputPage> {
         type: CatalogListItemType.column,
         label: 'text field plain',
         child: NotedTextField(
-          type: NotedTextFieldType.standard,
+          type: NotedTextFieldType.outlined,
           name: 'email',
           errorText: error0,
           controller: controller0,
@@ -39,7 +39,7 @@ class _CatalogTextInputPageState extends State<CatalogTextInputPage> {
         type: CatalogListItemType.column,
         label: 'text field show/hide',
         child: NotedTextField(
-          type: NotedTextFieldType.standard,
+          type: NotedTextFieldType.outlined,
           name: 'password',
           errorText: error1,
           showErrorText: true,

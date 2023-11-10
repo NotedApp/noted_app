@@ -66,7 +66,7 @@ class _SignInPageState extends State<SignInPage> {
             errorText: _emailError,
             showErrorText: true,
             keyboardType: TextInputType.emailAddress,
-            type: NotedTextFieldType.standard,
+            type: NotedTextFieldType.outlined,
           ),
           SizedBox(height: 12),
           NotedTextField(
@@ -76,7 +76,7 @@ class _SignInPageState extends State<SignInPage> {
             errorText: _passwordError,
             showErrorText: true,
             keyboardType: TextInputType.visiblePassword,
-            type: NotedTextFieldType.standard,
+            type: NotedTextFieldType.outlined,
             autocorrect: false,
             obscureText: !_showPassword,
             icon: _showPassword ? NotedIcons.eyeClosed : NotedIcons.eye,

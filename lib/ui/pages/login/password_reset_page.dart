@@ -54,7 +54,7 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
             errorText: _emailError,
             showErrorText: true,
             keyboardType: TextInputType.emailAddress,
-            type: NotedTextFieldType.standard,
+            type: NotedTextFieldType.outlined,
           ),
           SizedBox(height: 12),
           NotedTextButton(

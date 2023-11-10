@@ -7,13 +7,13 @@ import '../../../helpers/test_wrapper.dart';
 
 void main() {
   group('Noted Text Field', () {
-    testWidgets('standard text field produces a string', (tester) async {
+    testWidgets('outlined text field produces a string', (tester) async {
       MockCallback<String> onChanged = MockCallback();
 
       await tester.pumpWidget(
         TestWrapper(
           child: NotedTextField(
-            type: NotedTextFieldType.standard,
+            type: NotedTextFieldType.outlined,
             onChanged: onChanged,
           ),
         ),
@@ -47,13 +47,33 @@ void main() {
       verify(() => onChanged('test')).called(1);
     });
 
+    testWidgets('plain text field produces a string', (tester) async {
+      MockCallback<String> onChanged = MockCallback();
+
+      await tester.pumpWidget(
+        TestWrapper(
+          child: NotedTextField(
+            type: NotedTextFieldType.plain,
+            onChanged: onChanged,
+          ),
+        ),
+      );
+
+      Finder input = find.byType(NotedTextField);
+
+      expect(input, findsOneWidget);
+      await tester.enterText(input, 'test');
+
+      verify(() => onChanged('test')).called(1);
+    });
+
     testWidgets('text field handles an icon', (tester) async {
       MockVoidCallback onPressed = MockVoidCallback();
 
       await tester.pumpWidget(
         TestWrapper(
           child: NotedTextField(
-            type: NotedTextFieldType.standard,
+            type: NotedTextFieldType.outlined,
             onChanged: (_) {},
             icon: NotedIcons.pencil,
             onIconPressed: onPressed,
@@ -75,7 +95,7 @@ void main() {
       await tester.pumpWidget(
         TestWrapper(
           child: NotedTextField(
-            type: NotedTextFieldType.standard,
+            type: NotedTextFieldType.outlined,
             showErrorText: true,
             errorText: 'validation',
             validator: validator,

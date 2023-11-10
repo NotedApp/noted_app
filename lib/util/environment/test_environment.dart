@@ -6,7 +6,7 @@ class TestEnvironment extends Environment {
   FirebaseOptions? get firebaseOptions => TestFirebaseOptions.currentPlatform;
 
   @override
-  NotedCrashHandler get crashHandler => LocalCrashHandler();
+  NotedCrashHandler get crashHandler => FirebaseCrashHandler();
 
   @override
   NotedLogger get logger => LocalLogger();

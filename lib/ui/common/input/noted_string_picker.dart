@@ -35,7 +35,7 @@ class _NotedStringPickerState extends State<NotedStringPicker> {
       rightActionText: strings.common_cancel,
       onRightActionPressed: () => context.pop(),
       child: NotedTextField(
-        type: NotedTextFieldType.standard,
+        type: NotedTextFieldType.outlined,
         controller: controller,
         keyboardType: TextInputType.url,
         autocorrect: false,
