@@ -34,18 +34,23 @@ class NotedCard extends StatelessWidget {
       borderRadius: borderRadius,
     );
 
+    Widget? contents = onPressed == null
+        ? child
+        : InkWell(
+            onTap: onPressed,
+            borderRadius: borderRadius,
+            child: child,
+          );
+
     return Card(
       color: color ?? colors.background,
       elevation: 4,
       shape: shape,
       margin: margin,
-      child: onPressed == null
-          ? child
-          : InkWell(
-              onTap: onPressed,
-              borderRadius: borderRadius,
-              child: child,
-            ),
+      child: ClipRRect(
+        borderRadius: borderRadius,
+        child: contents,
+      ),
     );
   }
 }

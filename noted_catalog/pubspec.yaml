@@ -13,6 +13,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: any
+  mocktail: any
   noted_app:
     path: ../../noted_app
 

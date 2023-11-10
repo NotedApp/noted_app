@@ -8,8 +8,8 @@ import '../../../helpers/mocks/mock_callbacks.dart';
 import '../../../helpers/test_wrapper.dart';
 
 void main() {
-  group('Notebook Tile', () {
-    testWidgets('tile with title renders as expected', (tester) async {
+  group('Cookbook Tile', () {
+    testWidgets('tile without url renders as expected', (tester) async {
       MockVoidCallback callback = MockVoidCallback();
 
       await tester.pumpWidget(
@@ -20,7 +20,7 @@ void main() {
                 width: 300,
                 height: 300,
                 child: NotedTile(
-                  noteId: 'notebook0',
+                  noteId: 'cookbook0',
                   onPressed: callback,
                 ),
               )
@@ -29,17 +29,23 @@ void main() {
         ),
       );
 
-      Finder titleFinder = find.text('notebook');
+      Finder titleFinder = find.text('cookbook');
+      Finder prepTimeFinder = find.text('prep time: 1hr');
+      Finder cookTimeFinder = find.text('cook time: 15m');
+      Finder tagsFinder = find.byType(NotedTagRow);
       Finder bodyFinder = find.byType(QuillEditor);
 
       await tester.tap(titleFinder);
 
       expect(titleFinder, findsOneWidget);
+      expect(prepTimeFinder, findsOneWidget);
+      expect(cookTimeFinder, findsOneWidget);
+      expect(tagsFinder, findsOneWidget);
       expect(bodyFinder, findsOneWidget);
       verify(() => callback()).called(1);
     });
 
-    testWidgets('tile without title renders as expected', (tester) async {
+    testWidgets('tile with url renders as expected', (tester) async {
       MockVoidCallback callback = MockVoidCallback();
 
       await tester.pumpWidget(
@@ -50,21 +56,30 @@ void main() {
                 width: 300,
                 height: 300,
                 child: NotedTile(
-                  noteId: 'notebook1',
+                  noteId: 'cookbook1',
                   onPressed: callback,
                 ),
-              )
+              ),
             ],
           ),
         ),
       );
 
+      Finder titleFinder = find.text('cookbook');
+      Finder prepTimeFinder = find.text('prep time: 1hr');
+      Finder cookTimeFinder = find.text('cook time: 15m');
+      Finder tagsFinder = find.byType(NotedTagRow);
+      Finder linkFinder = find.byType(NotedLink);
       Finder bodyFinder = find.byType(QuillEditor);
 
-      await tester.tap(bodyFinder);
+      await tester.tap(titleFinder);
 
-      expect(bodyFinder, findsOneWidget);
-      expect(find.byType(Text), findsNothing);
+      expect(titleFinder, findsOneWidget);
+      expect(prepTimeFinder, findsOneWidget);
+      expect(cookTimeFinder, findsOneWidget);
+      expect(tagsFinder, findsOneWidget);
+      expect(linkFinder, findsOneWidget);
+      expect(bodyFinder, findsNothing);
       verify(() => callback()).called(1);
     });
   });
