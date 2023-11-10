@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:noted_app/ui/plugins/notebook/notebook_tile.dart';
-import 'package:noted_models/noted_models.dart';
+import 'package:noted_app/ui/common/noted_library.dart';
 
 import '../../../helpers/mocks/mock_callbacks.dart';
 import '../../../helpers/test_wrapper.dart';
@@ -20,14 +19,8 @@ void main() {
               SizedBox(
                 width: 300,
                 height: 300,
-                child: NotebookTile(
-                  note: NotebookNoteModel(
-                    id: 'notebook',
-                    title: 'notebook',
-                    document: [
-                      {'insert': '\n'},
-                    ],
-                  ),
+                child: NotedTile(
+                  noteId: 'notebook0',
                   onPressed: callback,
                 ),
               )
@@ -56,14 +49,8 @@ void main() {
               SizedBox(
                 width: 300,
                 height: 300,
-                child: NotebookTile(
-                  note: NotebookNoteModel(
-                    id: 'notebook',
-                    title: '',
-                    document: [
-                      {'insert': '\n'},
-                    ],
-                  ),
+                child: NotedTile(
+                  noteId: 'notebook1',
                   onPressed: callback,
                 ),
               )

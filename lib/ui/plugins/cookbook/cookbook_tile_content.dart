@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
-import 'package:noted_app/ui/router/noted_router.dart';
-import 'package:noted_app/ui/router/router_config.dart';
 import 'package:noted_models/noted_models.dart';
 
 // TODO: Update this to be specific to the cookbook plugin.
-class CookbookTile extends StatefulWidget {
+class CookbookTileContent extends StatefulWidget {
   final CookbookNoteModel note;
   final VoidCallback? onPressed;
 
-  const CookbookTile({required this.note, this.onPressed, super.key});
+  const CookbookTileContent({required this.note, this.onPressed, super.key});
 
   @override
-  State<StatefulWidget> createState() => _CookbookTileState();
+  State<StatefulWidget> createState() => _CookbookTileContentState();
 }
 
-class _CookbookTileState extends State<CookbookTile> {
+class _CookbookTileContentState extends State<CookbookTileContent> {
   late final NotedEditorController _textController;
 
   @override
@@ -27,11 +25,10 @@ class _CookbookTileState extends State<CookbookTile> {
 
   @override
   Widget build(BuildContext context) {
-    Widget child;
     bool hasTitle = widget.note.title.isNotEmpty;
 
     if (hasTitle) {
-      child = NotedHeaderEditor(
+      return NotedHeaderEditor(
         controller: _textController,
         readonly: true,
         padding: EdgeInsets.only(top: 12, bottom: 36),
@@ -45,27 +42,18 @@ class _CookbookTileState extends State<CookbookTile> {
         ),
       );
     } else {
-      child = NotedEditor.quill(
+      return NotedEditor.quill(
         controller: _textController,
         readonly: true,
         padding: EdgeInsets.only(top: 12, bottom: 36),
         onPressed: widget.onPressed,
       );
     }
-
-    return NotedTile(
-      tags: widget.note.tagIds,
-      onPressed: widget.onPressed ?? () => context.push(NotesEditRoute(noteId: widget.note.id)),
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 12),
-        child: child,
-      ),
-    );
   }
 
   // coverage:ignore-start
   @override
-  void didUpdateWidget(covariant CookbookTile oldWidget) {
+  void didUpdateWidget(covariant CookbookTileContent oldWidget) {
     _textController.value = widget.note.document;
     super.didUpdateWidget(oldWidget);
   }

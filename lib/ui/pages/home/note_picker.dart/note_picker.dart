@@ -15,7 +15,7 @@ class NotePicker extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(context.strings().noted_addPicker, style: context.textTheme().displaySmall),
+          Text(context.strings().notes_addPicker, style: context.textTheme().displaySmall),
           SizedBox(height: 12),
           Expanded(
             child: GridView.count(

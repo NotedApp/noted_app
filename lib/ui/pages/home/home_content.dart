@@ -22,7 +22,7 @@ class HomeContent extends StatelessWidget {
             crossAxisSpacing: 4,
             childAspectRatio: NotedWidgetConfig.tileAspectRatio,
           ),
-          itemBuilder: (context, index) => NotedTileBuilder(
+          itemBuilder: (context, index) => NotedTile(
             noteId: state[index],
             onPressed: () => context.push(NotesEditRoute(noteId: state[index])),
           ),

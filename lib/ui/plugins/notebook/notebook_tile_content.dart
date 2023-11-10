@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
-import 'package:noted_app/ui/router/noted_router.dart';
-import 'package:noted_app/ui/router/router_config.dart';
 import 'package:noted_models/noted_models.dart';
 
-class NotebookTile extends StatefulWidget {
+class NotebookTileContent extends StatefulWidget {
   final NotebookNoteModel note;
   final VoidCallback? onPressed;
 
-  const NotebookTile({required this.note, this.onPressed, super.key});
+  const NotebookTileContent({required this.note, this.onPressed, super.key});
 
   @override
-  State<StatefulWidget> createState() => _NotebookTileState();
+  State<StatefulWidget> createState() => _NotebookTileContentState();
 }
 
-class _NotebookTileState extends State<NotebookTile> {
+class _NotebookTileContentState extends State<NotebookTileContent> {
   late final NotedEditorController _textController;
 
   @override
@@ -26,11 +24,10 @@ class _NotebookTileState extends State<NotebookTile> {
 
   @override
   Widget build(BuildContext context) {
-    Widget child;
     bool hasTitle = widget.note.title.isNotEmpty;
 
     if (hasTitle) {
-      child = NotedHeaderEditor(
+      return NotedHeaderEditor(
         controller: _textController,
         readonly: true,
         padding: EdgeInsets.only(top: 12, bottom: 36),
@@ -44,27 +41,18 @@ class _NotebookTileState extends State<NotebookTile> {
         ),
       );
     } else {
-      child = NotedEditor.quill(
+      return NotedEditor.quill(
         controller: _textController,
         readonly: true,
         padding: EdgeInsets.only(top: 12, bottom: 36),
         onPressed: widget.onPressed,
       );
     }
-
-    return NotedTile(
-      tags: widget.note.tagIds,
-      onPressed: widget.onPressed ?? () => context.push(NotesEditRoute(noteId: widget.note.id)),
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 12),
-        child: child,
-      ),
-    );
   }
 
   // coverage:ignore-start
   @override
-  void didUpdateWidget(covariant NotebookTile oldWidget) {
+  void didUpdateWidget(covariant NotebookTileContent oldWidget) {
     _textController.value = widget.note.document;
     super.didUpdateWidget(oldWidget);
   }
