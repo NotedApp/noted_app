@@ -39,7 +39,7 @@ class NotedTagRow extends StatelessWidget {
 
   const NotedTagRow({
     required this.tags,
-    this.padding = const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+    this.padding = const EdgeInsets.symmetric(horizontal: 12),
   });
 
   @override

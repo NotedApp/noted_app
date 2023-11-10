@@ -27,7 +27,7 @@ class _NotebookTileContentState extends State<NotebookTileContent> {
     Widget? header;
 
     final bool hasTitle = widget.note.title.isNotEmpty;
-    final bool hasTags = true; // widget.note.tagIds.isNotEmpty;
+    final bool hasTags = widget.note.tagIds.isNotEmpty;
 
     if (hasTitle || hasTags) {
       header = Column(
@@ -40,11 +40,7 @@ class _NotebookTileContentState extends State<NotebookTileContent> {
               child: Text(widget.note.title, style: Theme.of(context).textTheme.titleMedium),
             ),
           if (hasTitle && hasTags) SizedBox(height: 8),
-          if (hasTags)
-            NotedTagRow(
-              tags: widget.note.tagIds,
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-            )
+          if (hasTags) NotedTagRow(tags: widget.note.tagIds)
         ],
       );
     }
