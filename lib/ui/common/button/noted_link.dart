@@ -3,6 +3,7 @@ import 'package:noted_app/ui/common/layout/layout.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+// coverage:ignore-file
 class NotedLink extends StatelessWidget {
   final String url;
 

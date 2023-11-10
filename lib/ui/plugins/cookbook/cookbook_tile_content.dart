@@ -98,6 +98,7 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
           future: _imageUrl,
           builder: (context, snapshot) {
             if (snapshot.hasData && (snapshot.data?.isNotEmpty ?? false)) {
+              // coverage:ignore-start
               return Opacity(
                 opacity: 0.2,
                 child: CachedNetworkImage(
@@ -105,6 +106,7 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
                   fit: BoxFit.cover,
                 ),
               );
+              // coverage:ignore-end
             } else {
               return Container();
             }
@@ -176,6 +178,6 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
 
   Future<String?> _getOgpImage(String url) async {
     final OgpData? ogpData = await OgpDataExtract.execute(url);
-    return ogpData?.image;
+    return ogpData?.image; // coverage:ignore-line
   }
 }
