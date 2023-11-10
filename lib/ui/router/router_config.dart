@@ -17,6 +17,7 @@ import 'package:noted_app/ui/pages/settings/settings_page.dart';
 import 'package:noted_app/ui/pages/settings/style/style_page.dart.dart';
 import 'package:noted_app/ui/pages/settings/style/style_fonts_page.dart';
 import 'package:noted_app/ui/pages/settings/style/style_theme_page.dart';
+import 'package:noted_models/noted_models.dart';
 
 part 'noted_route.dart';
 
@@ -119,12 +120,21 @@ final GoRoute _notes = GoRoute(
   builder: (context, state) => HomePage(),
   routes: [
     GoRoute(
-      path: NotedRoute._notes_add,
-      builder: (context, state) => EditPage(initialId: null),
+      path: '${NotedRoute._notes_add}/:${NotedRoute._notes_pluginName}',
+      builder: (context, state) {
+        NotedPlugin plugin = NotedPlugin.values.firstWhere(
+          (plugin) => plugin.name == state.pathParameters[NotedRoute._notes_pluginName],
+          orElse: () => NotedPlugin.notebook,
+        );
+
+        return EditPage.add(plugin: plugin);
+      },
     ),
     GoRoute(
       path: ':${NotedRoute._notes_noteId}',
-      builder: (context, state) => EditPage(initialId: state.pathParameters[NotedRoute._notes_noteId]),
+      builder: (context, state) => EditPage(
+        initialId: state.pathParameters[NotedRoute._notes_noteId] ?? '',
+      ),
     ),
   ],
 );

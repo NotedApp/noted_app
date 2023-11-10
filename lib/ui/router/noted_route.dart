@@ -24,6 +24,7 @@ sealed class NotedRoute extends Equatable {
   static const String _notes = 'notes';
   static const String _notes_add = 'add';
   static const String _notes_noteId = 'noteId';
+  static const String _notes_pluginName = 'pluginName';
 
   String get route => (_isHomeRoute ? NotedRoute._home : '') + _parts.join('/');
   List<String> get _parts;
@@ -182,10 +183,15 @@ class SettingsHelpRoute extends NotedRoute {
 // Notes Page
 
 class NotesAddRoute extends NotedRoute {
+  final NotedPlugin plugin;
+
+  const NotesAddRoute({required this.plugin});
+
   @override
   List<String> get _parts => [
         NotedRoute._notes,
         NotedRoute._notes_add,
+        plugin.name,
       ];
 }
 

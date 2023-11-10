@@ -12,6 +12,7 @@ import 'package:noted_app/ui/router/noted_router.dart';
 import 'package:noted_app/ui/router/router_config.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
+import 'package:noted_models/noted_models.dart';
 
 // coverage:ignore-file
 class HomePage extends StatelessWidget {
@@ -40,7 +41,7 @@ class HomePage extends StatelessWidget {
           icon: NotedIcons.plus,
           type: NotedIconButtonType.filled,
           size: NotedWidgetSize.large,
-          onPressed: () => context.push(NotesAddRoute()),
+          onPressed: () => context.push(NotesAddRoute(plugin: NotedPlugin.notebook)),
           onLongPress: () => NotePicker.show(context),
         ),
         child: NotedBlocSelector<NotesBloc, NotesState, NotesStatus>(

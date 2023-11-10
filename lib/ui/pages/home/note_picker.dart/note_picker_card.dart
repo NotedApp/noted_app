@@ -49,12 +49,12 @@ class NotePickerCard extends StatelessWidget {
       NotedPlugin.notebook => NotePickerCard._(
           'assets/svg/man_computer.svg',
           strings.plugin_notebook_title,
-          NotesAddRoute(),
+          NotesAddRoute(plugin: plugin),
         ),
       NotedPlugin.cookbook => NotePickerCard._(
           'assets/svg/woman_cooking.svg',
           strings.plugin_cookbook_title,
-          NotesAddRoute(),
+          NotesAddRoute(plugin: plugin),
         ),
     };
   }
