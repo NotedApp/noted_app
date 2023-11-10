@@ -1,6 +1,10 @@
+import 'dart:ui';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
+import 'package:noted_app/util/extensions.dart';
 import 'package:noted_models/noted_models.dart';
 import 'package:ogp_data_extract/ogp_data_extract.dart';
 
@@ -29,19 +33,25 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
   @override
   Widget build(BuildContext context) {
     if (widget.note.url.isNotEmpty) {
-      return _buildLinkedTile();
+      return _buildLinkedTile(context);
     } else {
-      return _buildUnlinkedTile();
+      return _buildUnlinkedTile(context);
     }
   }
 
-  Widget _buildUnlinkedTile() {
+  Widget _buildUnlinkedTile(BuildContext context) {
+    Strings strings = context.strings();
+    final String prepTime = strings.cookbook_prepTime;
+    final String cookTime = strings.cookbook_cookTime;
+
     Widget? header;
 
     final bool hasTitle = widget.note.title.isNotEmpty;
     final bool hasTags = widget.note.tagIds.isNotEmpty;
+    final bool hasPrepTime = widget.note.prepTime.isNotEmpty;
+    final bool hasCookTime = widget.note.cookTime.isNotEmpty;
 
-    if (hasTitle || hasTags) {
+    if (hasTitle || hasTags || hasPrepTime || hasCookTime) {
       header = Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -52,7 +62,17 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
               child: Text(widget.note.title, style: Theme.of(context).textTheme.titleMedium),
             ),
           if (hasTitle && hasTags) SizedBox(height: 8),
-          if (hasTags) NotedTagRow(tags: widget.note.tagIds)
+          if (hasTags) NotedTagRow(tags: widget.note.tagIds),
+          if (hasPrepTime)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 4, 12, 0),
+              child: Text('$prepTime: ${widget.note.prepTime}', style: Theme.of(context).textTheme.bodyMedium),
+            ),
+          if (hasCookTime)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 4, 12, 0),
+              child: Text('$cookTime: ${widget.note.cookTime}', style: Theme.of(context).textTheme.bodyMedium),
+            ),
         ],
       );
     }
@@ -66,7 +86,11 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
     );
   }
 
-  Widget _buildLinkedTile() {
+  Widget _buildLinkedTile(BuildContext context) {
+    Strings strings = context.strings();
+    final String prepTime = strings.cookbook_prepTime;
+    final String cookTime = strings.cookbook_cookTime;
+
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -74,7 +98,13 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
           future: _imageUrl,
           builder: (context, snapshot) {
             if (snapshot.hasData && (snapshot.data?.isNotEmpty ?? false)) {
-              return Opacity(opacity: 0.2, child: CachedNetworkImage(imageUrl: snapshot.data!, fit: BoxFit.cover));
+              return Opacity(
+                opacity: 0.2,
+                child: CachedNetworkImage(
+                  imageUrl: snapshot.data!,
+                  fit: BoxFit.cover,
+                ),
+              );
             } else {
               return Container();
             }
@@ -83,20 +113,44 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
         Padding(
           padding: EdgeInsets.symmetric(vertical: 12),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Spacer(),
               if (widget.note.title.isNotEmpty)
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 12),
                   child: Text(
                     widget.note.title,
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: Theme.of(context).textTheme.titleLarge,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                   ),
                 ),
-              if (widget.note.title.isNotEmpty) Spacer(),
+              if (widget.note.title.isNotEmpty) SizedBox(height: 4),
+              if (widget.note.prepTime.isNotEmpty)
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12),
+                  child: Text(
+                    '$prepTime: ${widget.note.prepTime}',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                ),
+              if (widget.note.cookTime.isNotEmpty)
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12),
+                  child: Text(
+                    '$cookTime: ${widget.note.cookTime}',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                ),
               Spacer(),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12),
+                child: NotedLink(url: widget.note.url),
+              ),
               if (widget.note.tagIds.isNotEmpty) SizedBox(height: 12),
               if (widget.note.tagIds.isNotEmpty) NotedTagRow(tags: widget.note.tagIds)
             ],

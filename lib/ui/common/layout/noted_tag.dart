@@ -44,16 +44,16 @@ class NotedTag extends StatelessWidget {
 
     (Color, Color) colors = switch (_type) {
       _NotedTagType.normal => (
-          color,
-          color.withAlpha(52),
+          theme.colorScheme.onBackground,
+          color.withAlpha(128),
         ),
       _NotedTagType.add => (
           theme.colorScheme.onBackground.withAlpha(128),
           theme.colorScheme.onBackground.withAlpha(52),
         ),
       _NotedTagType.delete => (
-          color,
-          color.withAlpha(52),
+          theme.colorScheme.onBackground,
+          color.withAlpha(128),
         ),
     };
 

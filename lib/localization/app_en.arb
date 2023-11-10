@@ -11,6 +11,7 @@
   "common_cancel": "cancel",
   "common_refresh": "refresh",
   "common_notAny": "n/a",
+  "common_error_linkFormat": "failed to open the link, please make sure you have a valid link and try again.",
 
   "router_errorTitle": "oops!",
   "router_errorText": "sorry, we seem to be lost!",
@@ -101,6 +102,9 @@
 
   "notes_error_failed": "can't load notes, please refresh and try again.",
   "notes_error_empty": "get started by creating a note using the button below!",
+
+  "cookbook_prepTime": "prep time",
+  "cookbook_cookTime": "cook time",
 
   "edit_titlePlaceholder": "title",
   "edit_textPlaceholder": "enter a note...",
