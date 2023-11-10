@@ -12,9 +12,7 @@ class FirebaseNotesRepository extends NotesRepository {
     FirebaseDatabase? database,
   }) : _database = database ?? FirebaseDatabase.instance;
 
-  DatabaseReference _notes(String userId) {
-    return _database.ref('notes/$userId');
-  }
+  DatabaseReference _notes(String userId) => _database.ref('notes/$userId');
 
   @override
   Future<Stream<List<NoteModel>>> subscribeNotes({required String userId}) async {

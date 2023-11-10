@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:noted_app/state/auth/auth_bloc.dart';
 import 'package:noted_app/state/auth/auth_state.dart';
@@ -61,17 +60,17 @@ class LoginFrame extends StatelessWidget {
             ),
             SizedBox(
               height: 330,
-              child: BlocConsumer<AuthBloc, AuthState>(
-                listener: (context, state) {
-                  if (state.status == AuthStatus.authenticated) {
+              child: NotedBlocSelector<AuthBloc, AuthState, AuthStatus>(
+                selector: (state) => state.status,
+                listener: stateListener,
+                selectedListener: (context, state) {
+                  if (state == AuthStatus.authenticated) {
                     context.replace(HomeRoute());
-                  } else {
-                    stateListener?.call(context, state);
                   }
                 },
-                builder: (context, state) => switch (state.status) {
+                builder: (context, _, state) => switch (state) {
                   AuthStatus.unauthenticated => contentBuilder(_contentKey),
-                  _ => LoginLoading(status: state.status, key: _loadingKey),
+                  _ => LoginLoading(status: state, key: _loadingKey),
                 },
               ),
             ),

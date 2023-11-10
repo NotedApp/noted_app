@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noted_app/repository/auth/auth_repository.dart';
 import 'package:noted_app/repository/notes/notes_repository.dart';
@@ -20,10 +21,10 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
       : _notes = notesRepository ?? locator<NotesRepository>(),
         _auth = authRepository ?? locator<AuthRepository>(),
         super(EditState(note: null), 'note') {
-    on<EditAddEvent>(_onAddNote);
-    on<EditLoadEvent>(_onLoadNote);
+    on<EditAddEvent>(_onAddNote, transformer: restartable());
+    on<EditLoadEvent>(_onLoadNote, transformer: restartable());
     on<EditUpdateEvent>(_onUpdateNote);
-    on<EditDeleteEvent>(_onDeleteNote);
+    on<EditDeleteEvent>(_onDeleteNote, transformer: restartable());
     on<EditRemoteUpdateEvent>(_onRemoteUpdateNote);
     on<EditRemoteUpdateErrorEvent>(_onRemoteUpdateError);
     on<EditCloseEvent>(_onClose);

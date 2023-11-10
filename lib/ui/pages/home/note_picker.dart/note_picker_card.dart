@@ -23,14 +23,17 @@ class NotePickerCard extends StatelessWidget {
       onPressed: () => context.popAndPush(route),
       child: Stack(
         children: [
-          NotedSvg.asset(source: imageUrl, color: theme.colorScheme.primary, fit: BoxFit.cover),
-          Padding(
-            padding: const EdgeInsets.all(16),
+          NotedSvg.asset(
+            source: imageUrl,
+            color: theme.colorScheme.tertiary.withAlpha(128),
+            fit: BoxFit.cover,
+          ),
+          Center(
             child: Text(
               title,
-              style: theme.textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.bold,
+              style: theme.textTheme.titleLarge?.copyWith(
                 height: 1,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),

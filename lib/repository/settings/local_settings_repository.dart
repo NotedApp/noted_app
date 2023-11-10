@@ -37,6 +37,28 @@ class LocalSettingsRepository extends SettingsRepository {
     _settings = _settings.copyWith(style: style);
   }
 
+  @override
+  Future<void> updateTagSettings({required String userId, required TagSettingsModel tags}) async {
+    await Future.delayed(Duration(milliseconds: _msDelay));
+
+    if (_shouldThrow || userId.isEmpty) {
+      throw NotedError(ErrorCode.settings_updateTags_failed);
+    }
+
+    _settings = _settings.copyWith(tags: tags);
+  }
+
+  @override
+  Future<void> updatePluginSettings({required String userId, required PluginSettingsModel plugins}) async {
+    await Future.delayed(Duration(milliseconds: _msDelay));
+
+    if (_shouldThrow || userId.isEmpty) {
+      throw NotedError(ErrorCode.settings_updatePlugins_failed);
+    }
+
+    _settings = _settings.copyWith(plugins: plugins);
+  }
+
   void setShouldThrow(bool shouldThrow) => _shouldThrow = shouldThrow;
   void setMsDelay(int msDelay) => _msDelay = msDelay;
   void reset() {

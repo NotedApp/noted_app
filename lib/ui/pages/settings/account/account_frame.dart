@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noted_app/state/auth/auth_bloc.dart';
 import 'package:noted_app/state/auth/auth_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
@@ -20,17 +19,17 @@ class AccountFrame extends StatelessWidget {
     return NotedHeaderPage(
       hasBackButton: true,
       title: context.strings().settings_account_title,
-      child: BlocConsumer<AuthBloc, AuthState>(
-        listener: (context, state) {
-          if (state.status == AuthStatus.unauthenticated) {
+      child: NotedBlocSelector<AuthBloc, AuthState, AuthStatus>(
+        selector: (state) => state.status,
+        listener: stateListener,
+        selectedListener: (context, state) {
+          if (state == AuthStatus.unauthenticated) {
             context.replace(LoginRoute());
-          } else {
-            stateListener?.call(context, state);
           }
         },
-        builder: (context, state) => switch (state.status) {
+        builder: (context, _, state) => switch (state) {
           AuthStatus.authenticated => child,
-          _ => LoginLoading(status: state.status),
+          _ => LoginLoading(status: state),
         },
       ),
     );

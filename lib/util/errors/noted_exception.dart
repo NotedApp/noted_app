@@ -46,6 +46,8 @@ enum ErrorCode {
 
   settings_fetch_failed,
   settings_updateStyle_failed,
+  settings_updateTags_failed,
+  settings_updatePlugins_failed,
 
   notes_subscribe_failed,
   notes_parse_failed,

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noted_app/repository/auth/auth_repository.dart';
 import 'package:noted_app/repository/notes/notes_repository.dart';
@@ -19,8 +20,8 @@ class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
   NotesBloc({NotesRepository? notesRepository, AuthRepository? authRepository})
       : _notes = notesRepository ?? locator<NotesRepository>(),
         _auth = authRepository ?? locator<AuthRepository>(),
-        super(NotesState(notes: const []), 'notes') {
-    on<NotesSubscribeEvent>(_onSubscribeNotes);
+        super(NotesState.loading(), 'notes') {
+    on<NotesSubscribeEvent>(_onSubscribeNotes, transformer: restartable());
     on<NotesUpdateEvent>(_onUpdateNotes);
     on<NotesUpdateErrorEvent>(_onUpdateError);
     on<NotesResetEvent>(_onReset);
@@ -35,10 +36,6 @@ class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
   }
 
   void _onSubscribeNotes(NotesSubscribeEvent event, Emitter<NotesState> emit) async {
-    if (state.status == NotesStatus.loading) {
-      return;
-    }
-
     try {
       if (_auth.currentUser.isEmpty) {
         throw NotedError(ErrorCode.notes_subscribe_failed, message: 'missing auth');
@@ -47,7 +44,7 @@ class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
       _notesSubscription?.cancel();
       _notesSubscription = null;
 
-      emit(NotesState(notes: const [], status: NotesStatus.loading));
+      emit(NotesState.loading());
 
       _notesSubscription = (await _notes.subscribeNotes(userId: _auth.currentUser.id)).listen((event) {
         add(NotesUpdateEvent(event));
@@ -55,20 +52,24 @@ class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
         add(NotesUpdateErrorEvent(NotedError.fromObject(e)));
       });
     } catch (e) {
-      emit(NotesState(notes: state.notes, error: NotedError.fromObject(e)));
+      emit(NotesState.error(error: NotedError.fromObject(e)));
     }
   }
 
   void _onUpdateNotes(NotesUpdateEvent event, Emitter<NotesState> emit) async {
-    emit(NotesState(notes: event.notes));
+    if (event.notes.isEmpty) {
+      emit(NotesState.empty());
+    } else {
+      emit(NotesState.success(notes: event.notes));
+    }
   }
 
   void _onUpdateError(NotesUpdateErrorEvent event, Emitter<NotesState> emit) async {
-    emit(NotesState(notes: state.notes, error: event.error));
+    emit(NotesState.success(notes: state.notes, error: event.error));
   }
 
   void _onReset(NotesResetEvent event, Emitter<NotesState> emit) async {
-    emit(NotesState(notes: const []));
+    emit(NotesState.loading());
 
     _notesSubscription?.cancel();
     _notesSubscription = null;

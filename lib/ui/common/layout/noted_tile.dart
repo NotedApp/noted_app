@@ -1,9 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:noted_app/state/notes/notes_bloc.dart';
+import 'package:noted_app/state/notes/notes_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/plugins/cookbook/cookbook_tile.dart';
 import 'package:noted_app/ui/plugins/notebook/notebook_tile.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_models/noted_models.dart';
+
+class NotedTileBuilder extends StatelessWidget {
+  final String noteId;
+  final VoidCallback? onPressed;
+
+  const NotedTileBuilder({required this.noteId, this.onPressed, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return NotedBlocSelector<NotesBloc, NotesState, NoteModel>(
+      selector: (state) => state.notes.firstWhere(
+        (note) => note.id == noteId,
+        orElse: NotebookNoteModel.empty,
+      ),
+      builder: (context, _, note) => switch (note) {
+        NotebookNoteModel() => NotebookTile(note: note, onPressed: onPressed),
+        CookbookNoteModel() => CookbookTile(note: note, onPressed: onPressed),
+      },
+    );
+  }
+}
 
 class NotedTile extends StatelessWidget {
   final Widget child;
@@ -11,13 +34,6 @@ class NotedTile extends StatelessWidget {
   final VoidCallback? onPressed;
 
   const NotedTile({required this.child, this.tags = const {}, this.onPressed, super.key});
-
-  static Widget buildTile({required NoteModel note, required VoidCallback onPressed}) {
-    return switch (note) {
-      NotebookNoteModel() => NotebookTile(note: note, onPressed: onPressed),
-      CookbookNoteModel() => CookbookTile(note: note, onPressed: onPressed),
-    };
-  }
 
   @override
   Widget build(BuildContext context) {

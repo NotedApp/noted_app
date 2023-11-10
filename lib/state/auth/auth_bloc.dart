@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noted_app/repository/auth/auth_repository.dart';
 import 'package:noted_app/state/auth/auth_event.dart';
@@ -21,16 +22,16 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
               : AuthState.unauthenticated(),
           'auth',
         ) {
-    on<AuthSignUpWithEmailEvent>(_onSignUpWithEmail);
-    on<AuthSignInWithEmailEvent>(_onSignIn);
-    on<AuthSignInWithGoogleEvent>(_onSignIn);
-    on<AuthSignInWithAppleEvent>(_onSignIn);
-    on<AuthSignInWithFacebookEvent>(_onSignIn);
-    on<AuthSignInWithGithubEvent>(_onSignIn);
-    on<AuthSignOutEvent>(_onSignOut);
-    on<AuthSendPasswordResetEvent>(_onResetPassword);
-    on<AuthChangePasswordEvent>(_onChangePassword);
-    on<AuthDeleteAccountEvent>(_onDeleteAccount);
+    on<AuthSignUpWithEmailEvent>(_onSignUpWithEmail, transformer: restartable());
+    on<AuthSignInWithEmailEvent>(_onSignIn, transformer: restartable());
+    on<AuthSignInWithGoogleEvent>(_onSignIn, transformer: restartable());
+    on<AuthSignInWithAppleEvent>(_onSignIn, transformer: restartable());
+    on<AuthSignInWithFacebookEvent>(_onSignIn, transformer: restartable());
+    on<AuthSignInWithGithubEvent>(_onSignIn, transformer: restartable());
+    on<AuthSignOutEvent>(_onSignOut, transformer: restartable());
+    on<AuthSendPasswordResetEvent>(_onResetPassword, transformer: restartable());
+    on<AuthChangePasswordEvent>(_onChangePassword, transformer: restartable());
+    on<AuthDeleteAccountEvent>(_onDeleteAccount, transformer: restartable());
     on<AuthUserUpdatedEvent>(_onUserChanged);
 
     _userSubscription = _repository.userStream.listen((user) => add(AuthUserUpdatedEvent(user)));
