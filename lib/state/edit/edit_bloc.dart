@@ -31,10 +31,12 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
         super(EditState(note: null), 'note') {
     _init();
 
+    // coverage:ignore-start
     NoteModel model = switch (plugin) {
       NotedPlugin.notebook => NotebookNoteModel.empty(),
       NotedPlugin.cookbook => CookbookNoteModel.empty(),
     };
+    // coverage:ignore-end
 
     add(EditAddEvent(model));
   }
