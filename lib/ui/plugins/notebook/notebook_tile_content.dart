@@ -24,30 +24,38 @@ class _NotebookTileContentState extends State<NotebookTileContent> {
 
   @override
   Widget build(BuildContext context) {
-    bool hasTitle = widget.note.title.isNotEmpty;
+    Widget? header;
 
-    if (hasTitle) {
-      return NotedHeaderEditor(
-        controller: _textController,
-        readonly: true,
-        padding: EdgeInsets.only(top: 12, bottom: 36),
-        onPressed: widget.onPressed,
-        header: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 12, 0, 0),
-          child: Text(
-            widget.note.title,
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-        ),
-      );
-    } else {
-      return NotedEditor.quill(
-        controller: _textController,
-        readonly: true,
-        padding: EdgeInsets.only(top: 12, bottom: 36),
-        onPressed: widget.onPressed,
+    final bool hasTitle = widget.note.title.isNotEmpty;
+    final bool hasTags = true; // widget.note.tagIds.isNotEmpty;
+
+    if (hasTitle || hasTags) {
+      header = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 12),
+          if (hasTitle)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Text(widget.note.title, style: Theme.of(context).textTheme.titleMedium),
+            ),
+          if (hasTitle && hasTags) SizedBox(height: 8),
+          if (hasTags)
+            NotedTagRow(
+              tags: widget.note.tagIds,
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+            )
+        ],
       );
     }
+
+    return NotedHeaderEditor(
+      controller: _textController,
+      readonly: true,
+      padding: EdgeInsets.fromLTRB(12, 12, 12, 36),
+      onPressed: widget.onPressed,
+      header: header,
+    );
   }
 
   // coverage:ignore-start

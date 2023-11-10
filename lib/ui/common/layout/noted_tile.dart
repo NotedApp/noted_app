@@ -24,55 +24,51 @@ class NotedTile extends StatelessWidget {
           (note) => note.id == noteId,
           orElse: NotebookNoteModel.empty,
         ),
-        builder: (context, _, note) {
-          Widget content = switch (note) {
-            NotebookNoteModel() => NotebookTileContent(note: note, onPressed: onPressed),
-            CookbookNoteModel() => CookbookTileContent(note: note, onPressed: onPressed),
-          };
-
-          return note.tagIds.isNotEmpty
-              ? Column(children: [Expanded(child: content), _NotedTagRow(tags: note.tagIds)])
-              : content;
+        builder: (context, _, note) => switch (note) {
+          NotebookNoteModel() => NotebookTileContent(note: note, onPressed: onPressed),
+          CookbookNoteModel() => CookbookTileContent(note: note, onPressed: onPressed),
         },
       ),
     );
   }
 }
 
-class _NotedTagRow extends StatelessWidget {
+class NotedTagRow extends StatelessWidget {
   final Set<String> tags;
+  final EdgeInsetsGeometry padding;
 
-  const _NotedTagRow({required this.tags});
+  const NotedTagRow({
+    required this.tags,
+    this.padding = const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+  });
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 4, 10, 10),
-        child: Row(
-          children: [
-            NotedTag(
-              size: NotedWidgetSize.small,
-              model: TagModel(id: 'test-0', name: 'test', color: 0xFF2A324B),
-            ),
-            SizedBox(width: 4),
-            NotedTag(
-              size: NotedWidgetSize.small,
-              model: TagModel(id: 'test-1', name: 'work', color: 0xFFB33951),
-            ),
-            SizedBox(width: 4),
-            NotedTag(
-              size: NotedWidgetSize.small,
-              model: TagModel(id: 'test-2', name: 'sports', color: 0xFF789395),
-            ),
-            SizedBox(width: 4),
-            NotedTag(
-              size: NotedWidgetSize.small,
-              model: TagModel(id: 'test-3', name: 'guitar', color: 0xFF000000),
-            ),
-          ],
-        ),
+      padding: padding,
+      child: Row(
+        children: [
+          NotedTag(
+            size: NotedWidgetSize.small,
+            model: TagModel(id: 'test-0', name: 'test', color: 0xFF2A324B),
+          ),
+          SizedBox(width: 4),
+          NotedTag(
+            size: NotedWidgetSize.small,
+            model: TagModel(id: 'test-1', name: 'work', color: 0xFFB33951),
+          ),
+          SizedBox(width: 4),
+          NotedTag(
+            size: NotedWidgetSize.small,
+            model: TagModel(id: 'test-2', name: 'sports', color: 0xFF789395),
+          ),
+          SizedBox(width: 4),
+          NotedTag(
+            size: NotedWidgetSize.small,
+            model: TagModel(id: 'test-3', name: 'guitar', color: 0xFF000000),
+          ),
+        ],
       ),
     );
   }

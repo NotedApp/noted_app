@@ -25,30 +25,47 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
 
   @override
   Widget build(BuildContext context) {
-    bool hasTitle = widget.note.title.isNotEmpty;
+    Widget? header;
+    final List<Widget> children = [];
 
-    if (hasTitle) {
-      return NotedHeaderEditor(
-        controller: _textController,
-        readonly: true,
-        padding: EdgeInsets.only(top: 12, bottom: 36),
-        onPressed: widget.onPressed,
-        header: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 12, 0, 0),
-          child: Text(
-            widget.note.title,
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-        ),
-      );
-    } else {
-      return NotedEditor.quill(
-        controller: _textController,
-        readonly: true,
-        padding: EdgeInsets.only(top: 12, bottom: 36),
-        onPressed: widget.onPressed,
+    if (widget.note.title.isNotEmpty) {
+      children.addAll([
+        Text(widget.note.title, style: Theme.of(context).textTheme.titleMedium),
+        SizedBox(height: 12),
+      ]);
+    }
+
+    if (widget.note.prepTime.isNotEmpty) {
+      children.addAll([
+        Text(widget.note.prepTime, style: Theme.of(context).textTheme.bodySmall),
+        SizedBox(height: 12),
+      ]);
+    }
+
+    if (widget.note.cookTime.isNotEmpty) {
+      children.addAll([
+        Text(widget.note.cookTime, style: Theme.of(context).textTheme.bodySmall),
+        SizedBox(height: 12),
+      ]);
+    }
+
+    if (children.isNotEmpty) {
+      header = Padding(
+        padding: EdgeInsets.only(top: 12),
+        child: Column(children: children),
       );
     }
+
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 12),
+      child: NotedHeaderEditor(
+        controller: _textController,
+        readonly: true,
+        padding: EdgeInsets.only(top: 12, bottom: 36),
+        onPressed: widget.onPressed,
+        header: header,
+      ),
+    );
   }
 
   // coverage:ignore-start

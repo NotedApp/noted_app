@@ -71,7 +71,7 @@ class NotedTag extends StatelessWidget {
           12,
         ),
       NotedWidgetSize.small => (
-          theme.textTheme.labelSmall?.copyWith(color: colors.$1),
+          theme.textTheme.labelMedium?.copyWith(color: colors.$1),
           const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
           12,
           10,
