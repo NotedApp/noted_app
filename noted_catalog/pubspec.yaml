@@ -24,7 +24,7 @@ dev_dependencies:
   noted_lints:
     git:
       url: https://github.com/NotedApp/noted_lints.git
-      ref: v1.0.0
+      ref: v1.0.2
 
 flutter:
   uses-material-design: true
