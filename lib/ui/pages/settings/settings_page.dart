@@ -11,7 +11,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 // coverage:ignore-file
 class SettingsPage extends StatelessWidget {
-  final Future<String> _getVersion = PackageInfo.fromPlatform().then((value) => value.version);
+  const SettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class SettingsPage extends StatelessWidget {
       title: strings.settings_title,
       child: Column(
         children: [
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           SettingsRow(
             icon: NotedIcons.account,
             title: strings.settings_account_title,
@@ -65,9 +65,9 @@ class SettingsPage extends StatelessWidget {
             hasArrow: true,
             onPressed: () => showUnimplementedSnackBar(context),
           ),
-          Spacer(),
+          const Spacer(),
           FutureBuilder<String>(
-            future: _getVersion,
+            future: PackageInfo.fromPlatform().then((value) => value.version),
             initialData: strings.app_title,
             builder: (context, info) {
               return Text(
@@ -76,7 +76,7 @@ class SettingsPage extends StatelessWidget {
               );
             },
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
         ],
       ),
     );

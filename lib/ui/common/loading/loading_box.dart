@@ -8,9 +8,10 @@ class LoadingBox extends StatelessWidget {
   final EdgeInsetsGeometry padding;
 
   const LoadingBox({
+    super.key,
     this.cornerRadius = 12,
-    this.width = null,
-    this.height = null,
+    this.width,
+    this.height,
     this.padding = EdgeInsets.zero,
   });
 

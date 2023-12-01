@@ -1,5 +1,6 @@
 part of 'router_config.dart';
 
+// ignore_for_file: constant_identifier_names
 // coverage:ignore-file
 sealed class NotedRoute extends Equatable {
   static const String _login = '/login';

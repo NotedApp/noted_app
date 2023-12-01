@@ -18,7 +18,7 @@ import 'package:noted_models/noted_models.dart';
 class HomePage extends StatelessWidget {
   final NotesBloc? bloc;
 
-  const HomePage({this.bloc});
+  const HomePage({super.key, this.bloc});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class HomePage extends StatelessWidget {
           icon: NotedIcons.plus,
           type: NotedIconButtonType.filled,
           size: NotedWidgetSize.large,
-          onPressed: () => context.push(NotesAddRoute(plugin: NotedPlugin.notebook)),
+          onPressed: () => context.push(const NotesAddRoute(plugin: NotedPlugin.notebook)),
           onLongPress: () => NotePicker.show(context),
         ),
         child: NotedBlocSelector<NotesBloc, NotesState, NotesStatus>(
@@ -58,14 +58,14 @@ class HomePage extends StatelessWidget {
             }
           },
           builder: (context, bloc, state) => switch (state) {
-            NotesStatus.loading => HomeLoading(),
+            NotesStatus.loading => const HomeLoading(),
             NotesStatus.error => NotedErrorWidget(
                 text: strings.notes_error_failed,
                 ctaText: strings.common_refresh,
                 ctaCallback: () => bloc.add(NotesSubscribeEvent()),
               ),
             NotesStatus.empty => NotedErrorWidget(text: strings.notes_error_empty),
-            NotesStatus.loaded => HomeContent(),
+            NotesStatus.loaded => const HomeContent(),
           },
         ),
       ),

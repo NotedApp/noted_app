@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:noted_app/ui/common/noted_library.dart';
+import 'package:noted_app/util/extensions.dart';
 import 'package:noted_catalog/catalog_list_widget.dart';
 
 class CatalogSvgImagePage extends StatelessWidget {
@@ -7,18 +8,24 @@ class CatalogSvgImagePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ColorFilter filter = ColorFilter.mode(Theme.of(context).colorScheme.tertiary, BlendMode.srcIn);
-
     List<CatalogListItem> children = [
       CatalogListItem(
         type: CatalogListItemType.column,
         label: 'woman reading',
-        child: SvgPicture.asset('assets/svg/woman_reading.svg', colorFilter: filter, fit: BoxFit.fitWidth),
+        child: NotedSvg.asset(
+          source: 'assets/svg/woman_reading.svg',
+          fit: BoxFit.fitWidth,
+          color: context.colorScheme().tertiary,
+        ),
       ),
       CatalogListItem(
         type: CatalogListItemType.column,
         label: 'woman climbing',
-        child: SvgPicture.asset('assets/svg/woman_climbing.svg', colorFilter: filter, fit: BoxFit.fitWidth),
+        child: NotedSvg.asset(
+          source: 'assets/svg/woman_climbing.svg',
+          fit: BoxFit.fitWidth,
+          color: context.colorScheme().tertiary,
+        ),
       ),
     ];
 

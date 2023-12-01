@@ -14,22 +14,22 @@ void main() {
   group('LocalSettingsRepository', () {
     test('fetches settings and sets settings', () async {
       SettingsModel settings = await repository.fetchSettings(userId: 'test');
-      expect(settings, SettingsModel());
+      expect(settings, const SettingsModel());
 
-      StyleSettingsModel style = StyleSettingsModel(
+      StyleSettingsModel style = const StyleSettingsModel(
         colorSchemeName: ColorSchemeModelName.green,
         textThemeName: TextThemeModelName.roboto,
       );
 
       TagSettingsModel tags = TagSettingsModel(
         showTags: false,
-        tags: {TagModel.empty(), TagModel(id: 'test', name: 'test', color: 0xFFFFFFFF)},
+        tags: {const TagModel.empty(), const TagModel(id: 'test', name: 'test', color: 0xFFFFFFFF)},
       );
 
       PluginSettingsModel plugins = PluginSettingsModel(
         cookbook: CookbookSettingsModel(
           showCookTime: false,
-          typeTags: {TagModel.empty()},
+          typeTags: {const TagModel.empty()},
         ),
       );
 
@@ -62,7 +62,7 @@ void main() {
       repository.setShouldThrow(true);
 
       await expectLater(
-        () => repository.updateStyleSettings(userId: 'test', style: StyleSettingsModel()),
+        () => repository.updateStyleSettings(userId: 'test', style: const StyleSettingsModel()),
         throwsA(NotedError(ErrorCode.settings_updateStyle_failed)),
       );
     });
@@ -71,7 +71,7 @@ void main() {
       repository.setShouldThrow(true);
 
       await expectLater(
-        () => repository.updateTagSettings(userId: 'test', tags: TagSettingsModel()),
+        () => repository.updateTagSettings(userId: 'test', tags: const TagSettingsModel()),
         throwsA(NotedError(ErrorCode.settings_updateTags_failed)),
       );
     });
@@ -80,7 +80,7 @@ void main() {
       repository.setShouldThrow(true);
 
       await expectLater(
-        () => repository.updatePluginSettings(userId: 'test', plugins: PluginSettingsModel()),
+        () => repository.updatePluginSettings(userId: 'test', plugins: const PluginSettingsModel()),
         throwsA(NotedError(ErrorCode.settings_updatePlugins_failed)),
       );
     });
@@ -96,7 +96,7 @@ void main() {
       repository.reset();
 
       SettingsModel settings = await repository.fetchSettings(userId: 'test');
-      expect(settings, SettingsModel());
+      expect(settings, const SettingsModel());
     });
   });
 }

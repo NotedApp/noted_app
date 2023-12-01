@@ -12,7 +12,7 @@ class StyleFrame extends StatelessWidget {
   final Widget Function(BuildContext, StyleSettingsModel) builder;
   final bool Function(StyleSettingsModel, StyleSettingsModel)? buildWhen;
 
-  const StyleFrame({required this.title, required this.builder, this.buildWhen});
+  const StyleFrame({super.key, required this.title, required this.builder, this.buildWhen});
 
   @override
   Widget build(BuildContext context) {

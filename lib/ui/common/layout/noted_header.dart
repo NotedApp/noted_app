@@ -7,7 +7,7 @@ class NotedHeader extends AppBar {
     Widget? leadingAction,
     String? title,
     List<NotedIconButton> trailingActions = const [],
-    PreferredSizeWidget? bottom,
+    super.bottom,
     super.key,
   }) : super(
           toolbarHeight: 72,
@@ -17,9 +17,8 @@ class NotedHeader extends AppBar {
           title: _getTitle(title, context),
           actions: [
             ...trailingActions.map(_getAction),
-            SizedBox(width: 4),
+            const SizedBox(width: 4),
           ],
-          bottom: bottom,
           forceMaterialTransparency: true,
         );
 }
@@ -41,5 +40,5 @@ Widget? _getTitle(String? title, BuildContext context) {
 }
 
 Widget _getAction(NotedIconButton action) {
-  return Padding(padding: EdgeInsets.only(right: 12), child: action);
+  return Padding(padding: const EdgeInsets.only(right: 12), child: action);
 }

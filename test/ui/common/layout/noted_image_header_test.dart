@@ -12,7 +12,7 @@ void main() {
     });
 
     testWidgets('header renders a title and image', (tester) async {
-      await tester.pumpWidget(TestWrapper(child: NotedImageHeader(title: 'noted.')));
+      await tester.pumpWidget(TestWrapper(child: const NotedImageHeader(title: 'noted.')));
 
       expect(find.text('noted.'), findsOneWidget);
       expect(find.byType(SvgPicture), findsOneWidget);

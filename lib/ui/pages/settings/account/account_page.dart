@@ -14,6 +14,8 @@ import 'package:noted_app/util/errors/noted_exception.dart';
 
 // coverage:ignore-file
 class AccountPage extends StatelessWidget {
+  const AccountPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = context.theme();
@@ -25,7 +27,7 @@ class AccountPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           SettingsRow(
             icon: NotedIcons.email,
             title: strings.login_email,

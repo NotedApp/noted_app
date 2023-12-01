@@ -9,24 +9,24 @@ void main() {
     testWidgets('scroll mask renders as expected', (tester) async {
       await tester.pumpWidget(
         TestWrapper(
-          child: Column(
+          child: const Column(
             children: [
               SizedBox(
                 width: 200,
                 height: 200,
                 child: NotedScrollMask(
-                  child: Text('noted tile'),
                   direction: Axis.horizontal,
                   size: 16,
+                  child: Text('noted tile'),
                 ),
               ),
               SizedBox(
                 width: 200,
                 height: 200,
                 child: NotedScrollMask(
-                  child: Text('noted tile'),
                   direction: Axis.vertical,
                   size: 16,
+                  child: Text('noted tile'),
                 ),
               ),
             ],

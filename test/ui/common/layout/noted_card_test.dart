@@ -23,10 +23,10 @@ void main() {
                 child: NotedCard(
                   key: smallKey,
                   size: NotedWidgetSize.small,
-                  onPressed: onPressed,
+                  onPressed: onPressed.call,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 80,
                 child: NotedCard(
                   key: mediumKey,
@@ -38,7 +38,7 @@ void main() {
                 child: NotedCard(
                   key: largeKey,
                   size: NotedWidgetSize.large,
-                  onPressed: onPressed,
+                  onPressed: onPressed.call,
                 ),
               ),
             ],

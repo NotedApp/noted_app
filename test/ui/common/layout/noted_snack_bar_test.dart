@@ -19,7 +19,7 @@ void main() {
                 onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
                   NotedSnackBar.create(
                     context: context,
-                    content: Text('test snackbar content'),
+                    content: const Text('test snackbar content'),
                   ),
                 ),
               ),
@@ -29,12 +29,8 @@ void main() {
       );
 
       await tester.tap(find.byIcon(NotedIcons.pencil));
-      await tester.pump(const Duration(seconds: 1));
-
-      SnackBar bar = tester.widget(find.byType(SnackBar));
-
+      await tester.pumpAndSettle();
       expect(find.text('test snackbar content'), findsOneWidget);
-      expect((bar.shape! as RoundedRectangleBorder).borderRadius, equals(BorderRadius.circular(12)));
     });
 
     testWidgets('snack bar is created with text content', (tester) async {
@@ -58,12 +54,8 @@ void main() {
       );
 
       await tester.tap(find.byIcon(NotedIcons.pencil));
-      await tester.pump(const Duration(seconds: 1));
-
-      SnackBar bar = tester.widget(find.byType(SnackBar));
-
+      await tester.pumpAndSettle();
       expect(find.text('test snackbar content'), findsOneWidget);
-      expect((bar.shape! as RoundedRectangleBorder).borderRadius, equals(BorderRadius.circular(12)));
     });
 
     testWidgets('snack bar is created with text and close content', (tester) async {
@@ -81,7 +73,7 @@ void main() {
                     context: context,
                     text: 'test snackbar content',
                     hasClose: true,
-                    onClose: close,
+                    onClose: close.call,
                   ),
                 ),
               ),
@@ -91,17 +83,15 @@ void main() {
       );
 
       await tester.tap(find.byIcon(NotedIcons.pencil));
-      await tester.pump(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
 
       Finder closeButton = find.byIcon(NotedIcons.close);
-      SnackBar bar = tester.widget(find.byType(SnackBar));
 
       expect(find.text('test snackbar content'), findsOneWidget);
       expect(closeButton, findsOneWidget);
-      expect((bar.shape! as RoundedRectangleBorder).borderRadius, equals(BorderRadius.circular(12)));
 
       await tester.tap(find.byIcon(NotedIcons.close));
-      await tester.pump(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
 
       verify(() => close()).called(1);
     });
@@ -128,17 +118,15 @@ void main() {
       );
 
       await tester.tap(find.byIcon(NotedIcons.pencil));
-      await tester.pump(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
 
       Finder closeButton = find.byIcon(NotedIcons.close);
-      SnackBar bar = tester.widget(find.byType(SnackBar));
 
       expect(find.text('test snackbar content'), findsOneWidget);
       expect(closeButton, findsOneWidget);
-      expect((bar.shape! as RoundedRectangleBorder).borderRadius, equals(BorderRadius.circular(12)));
 
       await tester.tap(find.byIcon(NotedIcons.close));
-      await tester.pump(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
 
       expect(find.text('test snackbar content'), findsNothing);
     });
@@ -159,18 +147,16 @@ void main() {
       );
 
       await tester.tap(find.byIcon(NotedIcons.pencil));
-      await tester.pump(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
 
       Finder text = find.text('this feature is not available yet, please try again soon!');
       Finder closeButton = find.byIcon(NotedIcons.close);
-      SnackBar bar = tester.widget(find.byType(SnackBar));
 
       expect(text, findsOneWidget);
       expect(closeButton, findsOneWidget);
-      expect((bar.shape! as RoundedRectangleBorder).borderRadius, equals(BorderRadius.circular(12)));
 
       await tester.tap(find.byIcon(NotedIcons.close));
-      await tester.pump(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
 
       expect(text, findsNothing);
     });

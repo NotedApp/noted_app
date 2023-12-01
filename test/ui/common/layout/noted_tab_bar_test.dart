@@ -15,13 +15,13 @@ void main() {
       await tester.pumpWidget(
         TestWrapper(
           child: NotedTabBar(
-            tabs: [
+            tabs: const [
               'test 0',
               'test 1',
               'test 2',
             ],
             controller: controller,
-            onPressed: onPressed,
+            onPressed: onPressed.call,
           ),
         ),
       );

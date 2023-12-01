@@ -20,11 +20,11 @@ typedef NoteUpdateCallback = void Function(NoteModel);
 // coverage:ignore-file
 class EditPage extends StatelessWidget {
   final EditBloc bloc;
-  final Debouncer updateDebouncer = Debouncer(interval: new Duration(milliseconds: _updateDebounceTimeMs));
+  final Debouncer updateDebouncer = Debouncer(interval: const Duration(milliseconds: _updateDebounceTimeMs));
 
-  EditPage({required String initialId}) : bloc = EditBloc(noteId: initialId);
+  EditPage({super.key, required String initialId}) : bloc = EditBloc(noteId: initialId);
 
-  EditPage.add({required NotedPlugin plugin}) : bloc = EditBloc.add(plugin: plugin);
+  EditPage.add({super.key, required NotedPlugin plugin}) : bloc = EditBloc.add(plugin: plugin);
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class EditPage extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          void _updateNote(NoteModel note) {
+          void updateNote(NoteModel note) {
             updateDebouncer.run(() => context.read<EditBloc>().add(EditUpdateEvent(note)));
           }
 
@@ -65,16 +65,16 @@ class EditPage extends StatelessWidget {
                 ),
             ],
             child: switch (state) {
-              EditState(status: EditStatus.initial) => EditLoading(),
-              EditState(status: EditStatus.loading) => EditLoading(),
-              EditState(status: EditStatus.deleting) => EditLoading(),
-              EditState(status: EditStatus.deleted) => EditLoading(),
+              EditState(status: EditStatus.initial) => const EditLoading(),
+              EditState(status: EditStatus.loading) => const EditLoading(),
+              EditState(status: EditStatus.deleting) => const EditLoading(),
+              EditState(status: EditStatus.deleted) => const EditLoading(),
               EditState(note: null) => NotedErrorWidget(
                   text: strings.edit_error_empty,
                   ctaText: strings.router_errorCta,
                   ctaCallback: () => context.pop(),
                 ),
-              _ => EditContent(note: state.note!, updateNote: _updateNote),
+              _ => EditContent(note: state.note!, updateNote: updateNote),
             },
           );
         },
@@ -82,14 +82,13 @@ class EditPage extends StatelessWidget {
     );
   }
 
-  void _confirmDeleteNote(BuildContext context) async {
+  Future<void> _confirmDeleteNote(BuildContext context) async {
     Strings strings = context.strings();
     EditBloc bloc = context.read();
 
     showDialog<bool>(
       context: context,
       builder: (context) => NotedDialog(
-        child: Text(strings.edit_delete_confirmText),
         leftActionText: strings.common_confirm,
         onLeftActionPressed: () {
           bloc.add(EditDeleteEvent());
@@ -97,6 +96,7 @@ class EditPage extends StatelessWidget {
         },
         rightActionText: strings.common_cancel,
         onRightActionPressed: () => context.pop(),
+        child: Text(strings.edit_delete_confirmText),
       ),
     );
   }

@@ -14,7 +14,7 @@ void main() {
     });
 
     testWidgets('color picker renders all colors and resets default', (tester) async {
-      tester.view.physicalSize = Size(600, 1200);
+      tester.view.physicalSize = const Size(600, 1200);
       tester.view.devicePixelRatio = 1.0;
 
       addTearDown(() => tester.view.resetPhysicalSize());
@@ -30,7 +30,7 @@ void main() {
               icon: NotedIcons.eyedropper,
               type: NotedIconButtonType.simple,
               onPressed: () {
-                result = showColorPicker(context, Colors.black, onReset);
+                result = showColorPicker(context, Colors.black, onReset.call);
               },
             ),
           ),
@@ -57,7 +57,7 @@ void main() {
     });
 
     testWidgets('color picker selects a color', (tester) async {
-      tester.view.physicalSize = Size(600, 1200);
+      tester.view.physicalSize = const Size(600, 1200);
       tester.view.devicePixelRatio = 1.0;
 
       addTearDown(() => tester.view.resetPhysicalSize());
@@ -99,7 +99,7 @@ void main() {
     });
 
     testWidgets('color picker cancels selecting a color', (tester) async {
-      tester.view.physicalSize = Size(600, 1200);
+      tester.view.physicalSize = const Size(600, 1200);
       tester.view.devicePixelRatio = 1.0;
 
       addTearDown(() => tester.view.resetPhysicalSize());

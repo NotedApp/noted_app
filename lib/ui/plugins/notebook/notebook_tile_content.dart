@@ -33,13 +33,13 @@ class _NotebookTileContentState extends State<NotebookTileContent> {
       header = Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           if (hasTitle)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Text(widget.note.title, style: Theme.of(context).textTheme.titleMedium),
             ),
-          if (hasTitle && hasTags) SizedBox(height: 8),
+          if (hasTitle && hasTags) const SizedBox(height: 8),
           if (hasTags) NotedTagRow(tags: widget.note.tagIds)
         ],
       );
@@ -48,7 +48,7 @@ class _NotebookTileContentState extends State<NotebookTileContent> {
     return NotedHeaderEditor(
       controller: _textController,
       readonly: true,
-      padding: EdgeInsets.fromLTRB(12, 12, 12, 36),
+      padding: const EdgeInsets.fromLTRB(12, 12, 12, 36),
       onPressed: widget.onPressed,
       header: header,
     );

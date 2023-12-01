@@ -17,7 +17,7 @@ class RegisterPage extends StatefulWidget {
   final String initialEmail;
   final String initialPassword;
 
-  RegisterPage({this.initialEmail = '', this.initialPassword = '', super.key});
+  const RegisterPage({this.initialEmail = '', this.initialPassword = '', super.key});
 
   @override
   State<StatefulWidget> createState() => _RegisterPageState();
@@ -27,9 +27,9 @@ class _RegisterPageState extends State<RegisterPage> {
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
   late final TextEditingController _confirmController;
-  String? _emailError = null;
-  String? _passwordError = null;
-  String? _confirmError = null;
+  String? _emailError;
+  String? _passwordError;
+  String? _confirmError;
   bool _showPassword = false;
 
   @override
@@ -58,7 +58,7 @@ class _RegisterPageState extends State<RegisterPage> {
         key: key,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(height: 18),
+          const SizedBox(height: 18),
           NotedTextField(
             controller: _emailController,
             name: strings.login_email,
@@ -68,7 +68,7 @@ class _RegisterPageState extends State<RegisterPage> {
             keyboardType: TextInputType.emailAddress,
             type: NotedTextFieldType.outlined,
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           NotedTextField(
             controller: _passwordController,
             name: strings.login_password,
@@ -82,7 +82,7 @@ class _RegisterPageState extends State<RegisterPage> {
             icon: _showPassword ? NotedIcons.eyeClosed : NotedIcons.eye,
             onIconPressed: () => setState(() => _showPassword = !_showPassword),
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           NotedTextField(
             controller: _confirmController,
             name: strings.login_confirmPassword,
@@ -94,14 +94,14 @@ class _RegisterPageState extends State<RegisterPage> {
             autocorrect: false,
             obscureText: !_showPassword,
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           NotedTextButton(
             label: strings.login_register,
             type: NotedTextButtonType.filled,
             onPressed: () => _tryRegister(context, bloc),
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(36, 14, 36, 18),
+            padding: const EdgeInsets.fromLTRB(36, 14, 36, 18),
             child: RichText(
               textAlign: TextAlign.center,
               text: TextSpan(

@@ -10,12 +10,19 @@ dependencies:
   flutter:
     sdk: flutter
 
+  noted_models:
+    git:
+      url: https://github.com/NotedApp/noted_models.git
+      ref: v0.0.5-alpha
+
+  flutter_bloc: any
   flutter_localizations:
     sdk: flutter
   intl: any
   mocktail: any
   noted_app:
     path: ../../noted_app
+  firebase_core_platform_interface: ^5.0.0
 
 dev_dependencies:
   flutter_test:
@@ -24,7 +31,7 @@ dev_dependencies:
   noted_lints:
     git:
       url: https://github.com/NotedApp/noted_lints.git
-      ref: v1.0.0
+      ref: v1.0.2
 
 flutter:
   uses-material-design: true

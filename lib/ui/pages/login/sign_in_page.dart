@@ -17,7 +17,7 @@ class SignInPage extends StatefulWidget {
   final String initialEmail;
   final String initialPassword;
 
-  SignInPage({
+  const SignInPage({
     this.initialEmail = '',
     this.initialPassword = '',
     super.key,
@@ -30,8 +30,8 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
-  String? _emailError = null;
-  String? _passwordError = null;
+  String? _emailError;
+  String? _passwordError;
   bool _showPassword = false;
 
   @override
@@ -58,7 +58,7 @@ class _SignInPageState extends State<SignInPage> {
         key: key,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(height: 18),
+          const SizedBox(height: 18),
           NotedTextField(
             controller: _emailController,
             name: strings.login_email,
@@ -68,7 +68,7 @@ class _SignInPageState extends State<SignInPage> {
             keyboardType: TextInputType.emailAddress,
             type: NotedTextFieldType.outlined,
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           NotedTextField(
             controller: _passwordController,
             name: strings.login_password,
@@ -82,7 +82,7 @@ class _SignInPageState extends State<SignInPage> {
             icon: _showPassword ? NotedIcons.eyeClosed : NotedIcons.eye,
             onIconPressed: () => setState(() => _showPassword = !_showPassword),
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           NotedTextButton(
             label: strings.login_signIn,
             type: NotedTextButtonType.filled,
@@ -93,7 +93,7 @@ class _SignInPageState extends State<SignInPage> {
               ),
             ),
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           NotedTextButton(
             label: strings.login_register,
             type: NotedTextButtonType.filled,
@@ -101,7 +101,7 @@ class _SignInPageState extends State<SignInPage> {
             onPressed: () => context.push(LoginRegisterRoute()),
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(36, 14, 36, 18),
+            padding: const EdgeInsets.fromLTRB(36, 14, 36, 18),
             child: RichText(
               textAlign: TextAlign.center,
               text: TextSpan(

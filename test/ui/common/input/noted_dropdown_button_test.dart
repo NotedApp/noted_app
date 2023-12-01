@@ -18,7 +18,7 @@ void main() {
           child: NotedDropdownButton(
             value: initial,
             items: values,
-            onChanged: onSelect,
+            onChanged: onSelect.call,
           ),
         ),
       );

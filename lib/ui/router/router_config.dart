@@ -25,12 +25,12 @@ part 'noted_route.dart';
 GoRouter routerConfig = GoRouter(
   routes: [_home, _login],
   initialLocation: NotedRoute._login,
-  errorBuilder: (context, state) => RouteErrorPage(),
+  errorBuilder: (context, state) => const RouteErrorPage(),
 );
 
 final GoRoute _login = GoRoute(
   path: NotedRoute._login,
-  builder: (context, state) => LoginPage(),
+  builder: (context, state) => const LoginPage(),
   redirect: (context, state) {
     AuthBloc auth = context.read<AuthBloc>();
     return auth.state.status == AuthStatus.authenticated ? NotedRoute._home : null;
@@ -38,22 +38,22 @@ final GoRoute _login = GoRoute(
   routes: [
     GoRoute(
       path: NotedRoute._login_signIn,
-      builder: (context, state) => SignInPage(),
+      builder: (context, state) => const SignInPage(),
     ),
     GoRoute(
       path: NotedRoute._login_register,
-      builder: (context, state) => RegisterPage(),
+      builder: (context, state) => const RegisterPage(),
     ),
     GoRoute(
       path: NotedRoute._login_resetPassword,
-      builder: (context, state) => PasswordResetPage(),
+      builder: (context, state) => const PasswordResetPage(),
     ),
   ],
 );
 
 final GoRoute _home = GoRoute(
   path: NotedRoute._home,
-  builder: (context, state) => HomePage(),
+  builder: (context, state) => const HomePage(),
   redirect: (context, state) {
     AuthBloc auth = context.read<AuthBloc>();
     return auth.state.status != AuthStatus.authenticated ? NotedRoute._settings : null;
@@ -66,58 +66,58 @@ final GoRoute _home = GoRoute(
 
 final GoRoute _settings = GoRoute(
   path: NotedRoute._settings,
-  builder: (context, state) => SettingsPage(),
+  builder: (context, state) => const SettingsPage(),
   routes: [
     GoRoute(
       path: NotedRoute._settings_account,
-      builder: (context, state) => AccountPage(),
+      builder: (context, state) => const AccountPage(),
       routes: [
         GoRoute(
           path: NotedRoute._settings_account_changePassword,
-          builder: (context, state) => ChangePasswordPage(),
+          builder: (context, state) => const ChangePasswordPage(),
         ),
       ],
     ),
     GoRoute(
       path: NotedRoute._settings_style,
-      builder: (context, state) => StylePage(),
+      builder: (context, state) => const StylePage(),
       routes: [
         GoRoute(
           path: NotedRoute._settings_style_theme,
-          builder: (context, state) => StyleThemePage(),
+          builder: (context, state) => const StyleThemePage(),
         ),
         GoRoute(
           path: NotedRoute._settings_style_fonts,
-          builder: (context, state) => StyleFontsPage(),
+          builder: (context, state) => const StyleFontsPage(),
         ),
       ],
     ),
     GoRoute(
       path: NotedRoute._settings_tags,
-      builder: (context, state) => TagsPage(),
+      builder: (context, state) => const TagsPage(),
     ),
     GoRoute(
       path: NotedRoute._settings_plugins,
-      builder: (context, state) => SettingsPage(),
+      builder: (context, state) => const SettingsPage(),
     ),
     GoRoute(
       path: NotedRoute._settings_deleted,
-      builder: (context, state) => SettingsPage(),
+      builder: (context, state) => const SettingsPage(),
     ),
     GoRoute(
       path: NotedRoute._settings_subscriptions,
-      builder: (context, state) => SettingsPage(),
+      builder: (context, state) => const SettingsPage(),
     ),
     GoRoute(
       path: NotedRoute._settings_help,
-      builder: (context, state) => SettingsPage(),
+      builder: (context, state) => const SettingsPage(),
     ),
   ],
 );
 
 final GoRoute _notes = GoRoute(
   path: NotedRoute._notes,
-  builder: (context, state) => HomePage(),
+  builder: (context, state) => const HomePage(),
   routes: [
     GoRoute(
       path: '${NotedRoute._notes_add}/:${NotedRoute._notes_pluginName}',

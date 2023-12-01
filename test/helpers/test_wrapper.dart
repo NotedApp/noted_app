@@ -9,18 +9,18 @@ import 'package:noted_models/noted_models.dart';
 import 'mocks/mock_classes.dart';
 
 final List<NoteModel> testNotes = [
-  NotebookNoteModel(
+  const NotebookNoteModel(
     id: 'notebook0',
     title: 'notebook',
     document: DocumentUtil.emptyDocument,
     tagIds: {'0'},
   ),
-  NotebookNoteModel(
+  const NotebookNoteModel(
     id: 'notebook1',
     title: '',
     document: DocumentUtil.emptyDocument,
   ),
-  CookbookNoteModel(
+  const CookbookNoteModel(
     id: 'cookbook0',
     title: 'cookbook',
     url: '',
@@ -30,7 +30,7 @@ final List<NoteModel> testNotes = [
     document: DocumentUtil.emptyDocument,
     tagIds: {'0'},
   ),
-  CookbookNoteModel(
+  const CookbookNoteModel(
     id: 'cookbook1',
     title: 'cookbook',
     url: 'https://www.onceuponachef.com/recipes/roasted-brussels-sprouts.html',

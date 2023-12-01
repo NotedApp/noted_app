@@ -21,7 +21,7 @@ void main() {
                 height: 300,
                 child: NotedTile(
                   noteId: 'notebook0',
-                  onPressed: callback,
+                  onPressed: callback.call,
                 ),
               )
             ],
@@ -51,7 +51,7 @@ void main() {
                 height: 300,
                 child: NotedTile(
                   noteId: 'notebook1',
-                  onPressed: callback,
+                  onPressed: callback.call,
                 ),
               )
             ],

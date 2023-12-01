@@ -11,35 +11,44 @@ import '../../../helpers/test_wrapper.dart';
 void main() {
   group('Noted Tile', () {
     testWidgets('tile builder works as expected', (tester) async {
+      tester.view.physicalSize = const Size(300, 2000);
+      tester.view.devicePixelRatio = 1.0;
+
+      addTearDown(() => tester.view.resetPhysicalSize());
+      addTearDown(() => tester.view.resetDevicePixelRatio());
+
       MockVoidCallback notebookCallback = MockVoidCallback();
       MockVoidCallback cookbookCallback = MockVoidCallback();
+
+      const double width = 300;
+      const double height = 300 / NotedWidgetConfig.tileAspectRatio;
 
       await tester.pumpWidget(
         TestWrapper(
           child: Column(
             children: [
               SizedBox(
-                width: 300,
-                height: 150,
+                width: width,
+                height: height,
                 child: NotedTile(
                   noteId: 'notebook0',
-                  onPressed: notebookCallback,
+                  onPressed: notebookCallback.call,
                 ),
               ),
               SizedBox(
-                width: 300,
-                height: 150,
+                width: width,
+                height: height,
                 child: NotedTile(
                   noteId: 'cookbook0',
-                  onPressed: cookbookCallback,
+                  onPressed: cookbookCallback.call,
                 ),
               ),
               SizedBox(
-                width: 300,
-                height: 150,
+                width: width,
+                height: height,
                 child: NotedTile(
                   noteId: 'cookbook1',
-                  onPressed: cookbookCallback,
+                  onPressed: cookbookCallback.call,
                 ),
               ),
             ],

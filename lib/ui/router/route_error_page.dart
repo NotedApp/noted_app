@@ -16,14 +16,14 @@ class RouteErrorPage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(child: NotedImageHeader(title: strings.router_errorTitle), flex: 4),
-          Spacer(),
+          Expanded(flex: 4, child: NotedImageHeader(title: strings.router_errorTitle)),
+          const Spacer(),
           NotedErrorWidget(
             text: strings.router_errorText,
             ctaText: strings.router_errorCta,
             ctaCallback: () => context.replace(HomeRoute()),
           ),
-          Spacer()
+          const Spacer()
         ],
       ),
     );

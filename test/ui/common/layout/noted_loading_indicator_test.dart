@@ -9,7 +9,7 @@ void main() {
     testWidgets('loading indicator renders as expected', (tester) async {
       await tester.pumpWidget(
         TestWrapper(
-          child: Center(
+          child: const Center(
             child: NotedLoadingIndicator(label: 'test label'),
           ),
         ),

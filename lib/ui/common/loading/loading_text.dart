@@ -10,7 +10,8 @@ class LoadingText extends StatelessWidget {
   final EdgeInsetsGeometry padding;
 
   const LoadingText({
-    this.width = null,
+    super.key,
+    this.width,
     required this.style,
     this.padding = EdgeInsets.zero,
   });
@@ -24,7 +25,7 @@ class LoadingText extends StatelessWidget {
     return LoadingBox(
       width: width,
       height: style?.fontSize,
-      padding: this.padding.add(heightPadding),
+      padding: padding.add(heightPadding),
     );
   }
 }

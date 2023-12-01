@@ -7,16 +7,18 @@ import 'package:noted_app/ui/router/router_config.dart';
 
 // coverage:ignore-file
 class HomeContent extends StatelessWidget {
+  const HomeContent({super.key});
+
   @override
   Widget build(BuildContext context) {
     return NotedBlocSelector<NotesBloc, NotesState, List<String>>(
       selector: (state) => state.notes.map((note) => note.id).toList(),
       builder: (context, _, state) => Padding(
-        padding: EdgeInsets.fromLTRB(12, 16, 12, 0),
+        padding: const EdgeInsets.fromLTRB(12, 16, 12, 0),
         child: GridView.builder(
           itemCount: state.length,
-          padding: EdgeInsets.only(bottom: 128),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          padding: const EdgeInsets.only(bottom: 128),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             mainAxisSpacing: 4,
             crossAxisSpacing: 4,

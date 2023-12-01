@@ -10,11 +10,11 @@ class CatalogProvider extends StatelessWidget {
   final Widget child;
   final NotesBloc? notesBloc;
 
-  final _MockNotesBloc mockNotesBloc = _MockNotesBloc();
+  final _MockNotesBloc _mockNotesBloc = _MockNotesBloc();
 
-  CatalogProvider({required this.child, this.notesBloc}) {
-    when(() => mockNotesBloc.state).thenAnswer((_) => NotesState.success(notes: _testNotes));
-    when(() => mockNotesBloc.stream).thenAnswer((_) => Stream.value(NotesState.success(notes: _testNotes)));
+  CatalogProvider({super.key, required this.child, this.notesBloc}) {
+    when(() => _mockNotesBloc.state).thenAnswer((_) => NotesState.success(notes: _testNotes));
+    when(() => _mockNotesBloc.stream).thenAnswer((_) => Stream.value(NotesState.success(notes: _testNotes)));
   }
 
   @override
@@ -22,7 +22,7 @@ class CatalogProvider extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => SettingsBloc()),
-        BlocProvider<NotesBloc>.value(value: notesBloc ?? mockNotesBloc),
+        BlocProvider<NotesBloc>.value(value: notesBloc ?? _mockNotesBloc),
       ],
       child: child,
     );
@@ -36,12 +36,12 @@ final DocumentModel _mockDelta0 = [
 class _MockNotesBloc extends Mock implements NotesBloc {}
 
 final List<NoteModel> _testNotes = [
-  NotebookNoteModel(
+  const NotebookNoteModel(
     id: 'notebook0',
     title: '',
     document: DocumentUtil.emptyDocument,
   ),
-  NotebookNoteModel(
+  const NotebookNoteModel(
     id: 'notebook1',
     title: 'test note',
     document: DocumentUtil.emptyDocument,
@@ -91,7 +91,7 @@ final List<NoteModel> _testNotes = [
     difficulty: 3,
     document: _mockDelta0,
   ),
-  CookbookNoteModel(
+  const CookbookNoteModel(
     id: 'cookbook3',
     title: 'a recipe with a super duper long title',
     url: 'https://www.onceuponachef.com/recipes/roasted-brussels-sprouts.html',
@@ -100,7 +100,7 @@ final List<NoteModel> _testNotes = [
     difficulty: 3,
     document: DocumentUtil.emptyDocument,
   ),
-  CookbookNoteModel(
+  const CookbookNoteModel(
     id: 'cookbook4',
     title: 'miso salmon',
     url: 'https://www.justonecookbook.com/miso-salmon/',

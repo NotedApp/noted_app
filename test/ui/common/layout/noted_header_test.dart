@@ -20,14 +20,14 @@ void main() {
               leadingAction: NotedIconButton(
                 icon: NotedIcons.chevronLeft,
                 type: NotedIconButtonType.simple,
-                onPressed: leading,
+                onPressed: leading.call,
               ),
               title: 'test page title',
               trailingActions: [
                 NotedIconButton(
                   icon: NotedIcons.account,
                   type: NotedIconButtonType.simple,
-                  onPressed: trailing,
+                  onPressed: trailing.call,
                 ),
               ],
             ),
@@ -61,13 +61,13 @@ void main() {
               leadingAction: NotedIconButton(
                 icon: NotedIcons.chevronLeft,
                 type: NotedIconButtonType.simple,
-                onPressed: leading,
+                onPressed: leading.call,
               ),
               trailingActions: [
                 NotedIconButton(
                   icon: NotedIcons.account,
                   type: NotedIconButtonType.simple,
-                  onPressed: trailing,
+                  onPressed: trailing.call,
                 ),
               ],
             ),

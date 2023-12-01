@@ -6,7 +6,7 @@ import 'package:shimmer/shimmer.dart';
 class LoadingProvider extends StatelessWidget {
   final Widget child;
 
-  const LoadingProvider({required this.child});
+  const LoadingProvider({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

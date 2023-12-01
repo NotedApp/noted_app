@@ -20,7 +20,7 @@ final class EditState extends Equatable {
   const EditState({
     this.status = EditStatus.initial,
     required this.note,
-    this.error = null,
+    this.error,
   });
 
   @override

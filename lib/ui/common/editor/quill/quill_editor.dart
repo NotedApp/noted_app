@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_quill/flutter_quill.dart' as Quill;
+import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:noted_app/ui/common/editor/noted_editor.dart';
 import 'package:noted_app/ui/common/editor/quill/quill_editor_controller.dart';
 import 'package:noted_app/util/extensions.dart';
 
 class QuillEditor extends NotedEditor {
-  QuillEditor({
+  const QuillEditor({
     required super.controller,
     super.focusNode,
     super.placeholder,
@@ -24,15 +24,15 @@ class QuillEditor extends NotedEditor {
     }
 
     ThemeData theme = Theme.of(context);
-    Quill.QuillController quillController = (controller as QuillEditorController).controller;
+    quill.QuillController quillController = (controller as QuillEditorController).controller;
 
-    return Quill.QuillProvider(
-      configurations: Quill.QuillConfigurations(controller: quillController),
-      child: Quill.QuillEditor(
+    return quill.QuillProvider(
+      configurations: quill.QuillConfigurations(controller: quillController),
+      child: quill.QuillEditor(
         scrollController: usePrimaryScrollController
             ? PrimaryScrollController.maybeOf(context) ?? ScrollController()
             : ScrollController(),
-        configurations: Quill.QuillEditorConfigurations(
+        configurations: quill.QuillEditorConfigurations(
           padding: padding,
           autoFocus: autofocus,
           readOnly: readonly,
@@ -49,7 +49,7 @@ class QuillEditor extends NotedEditor {
   }
 
   bool _handleTap(TapUpDetails details, TextPosition Function(Offset) position) {
-    Quill.QuillController quillController = (controller as QuillEditorController).controller;
+    quill.QuillController quillController = (controller as QuillEditorController).controller;
 
     if (quillController.selection.baseOffset == quillController.selection.extentOffset) {
       onPressed?.call();
@@ -59,7 +59,7 @@ class QuillEditor extends NotedEditor {
   }
 }
 
-Quill.DefaultStyles _getStyles(BuildContext context) {
+quill.DefaultStyles _getStyles(BuildContext context) {
   const double defaultSize = 16;
 
   final ColorScheme scheme = context.colorScheme();
@@ -69,65 +69,65 @@ Quill.DefaultStyles _getStyles(BuildContext context) {
     height: 1.3,
     decoration: TextDecoration.none,
   );
-  const Quill.VerticalSpacing baseSpacing = Quill.VerticalSpacing(6, 0);
+  const quill.VerticalSpacing baseSpacing = quill.VerticalSpacing(6, 0);
 
-  return Quill.DefaultStyles(
-    h1: Quill.DefaultTextBlockStyle(
+  return quill.DefaultStyles(
+    h1: quill.DefaultTextBlockStyle(
       defaultTextStyle.style.copyWith(
         fontSize: 34,
         height: 1.15,
         fontWeight: FontWeight.w300,
         decoration: TextDecoration.none,
       ),
-      const Quill.VerticalSpacing(16, 0),
-      const Quill.VerticalSpacing(0, 0),
+      const quill.VerticalSpacing(16, 0),
+      const quill.VerticalSpacing(0, 0),
       null,
     ),
-    h2: Quill.DefaultTextBlockStyle(
+    h2: quill.DefaultTextBlockStyle(
       defaultTextStyle.style.copyWith(
         fontSize: 24,
         height: 1.15,
         fontWeight: FontWeight.normal,
         decoration: TextDecoration.none,
       ),
-      const Quill.VerticalSpacing(8, 0),
-      const Quill.VerticalSpacing(0, 0),
+      const quill.VerticalSpacing(8, 0),
+      const quill.VerticalSpacing(0, 0),
       null,
     ),
-    h3: Quill.DefaultTextBlockStyle(
+    h3: quill.DefaultTextBlockStyle(
       defaultTextStyle.style.copyWith(
         fontSize: 20,
         height: 1.25,
         fontWeight: FontWeight.w500,
         decoration: TextDecoration.none,
       ),
-      const Quill.VerticalSpacing(8, 0),
-      const Quill.VerticalSpacing(0, 0),
+      const quill.VerticalSpacing(8, 0),
+      const quill.VerticalSpacing(0, 0),
       null,
     ),
-    placeHolder: Quill.DefaultTextBlockStyle(
+    placeHolder: quill.DefaultTextBlockStyle(
       baseStyle.copyWith(color: scheme.onBackground.withOpacity(0.4)),
-      const Quill.VerticalSpacing(0, 0),
-      const Quill.VerticalSpacing(0, 0),
+      const quill.VerticalSpacing(0, 0),
+      const quill.VerticalSpacing(0, 0),
       null,
     ),
-    paragraph: Quill.DefaultTextBlockStyle(
+    paragraph: quill.DefaultTextBlockStyle(
       baseStyle,
-      const Quill.VerticalSpacing(0, 0),
-      const Quill.VerticalSpacing(0, 0),
+      const quill.VerticalSpacing(0, 0),
+      const quill.VerticalSpacing(0, 0),
       null,
     ),
-    lists: Quill.DefaultListBlockStyle(
+    lists: quill.DefaultListBlockStyle(
       baseStyle,
-      const Quill.VerticalSpacing(4, 0),
-      const Quill.VerticalSpacing(0, 2),
+      const quill.VerticalSpacing(4, 0),
+      const quill.VerticalSpacing(0, 2),
       null,
       null,
     ),
-    quote: Quill.DefaultTextBlockStyle(
+    quote: quill.DefaultTextBlockStyle(
       TextStyle(color: scheme.onBackground.withOpacity(0.6)),
       baseSpacing,
-      const Quill.VerticalSpacing(6, 2),
+      const quill.VerticalSpacing(6, 2),
       BoxDecoration(
         border: Border(
           left: BorderSide(width: 4, color: scheme.onBackground.withOpacity(0.3)),
@@ -138,22 +138,22 @@ Quill.DefaultStyles _getStyles(BuildContext context) {
       color: scheme.tertiary,
       decoration: TextDecoration.underline,
     ),
-    indent: Quill.DefaultTextBlockStyle(
+    indent: quill.DefaultTextBlockStyle(
       baseStyle,
       baseSpacing,
-      const Quill.VerticalSpacing(0, 6),
+      const quill.VerticalSpacing(0, 6),
       null,
     ),
-    align: Quill.DefaultTextBlockStyle(
+    align: quill.DefaultTextBlockStyle(
       baseStyle,
-      const Quill.VerticalSpacing(0, 0),
-      const Quill.VerticalSpacing(0, 0),
+      const quill.VerticalSpacing(0, 0),
+      const quill.VerticalSpacing(0, 0),
       null,
     ),
-    leading: Quill.DefaultTextBlockStyle(
+    leading: quill.DefaultTextBlockStyle(
       baseStyle,
-      const Quill.VerticalSpacing(0, 0),
-      const Quill.VerticalSpacing(0, 0),
+      const quill.VerticalSpacing(0, 0),
+      const quill.VerticalSpacing(0, 0),
       null,
     ),
   );

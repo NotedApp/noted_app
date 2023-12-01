@@ -22,12 +22,12 @@ class Debouncer {
       }
 
       action.call();
-      _timer = Timer(this.interval, _cancel);
+      _timer = Timer(interval, _cancel);
       _isActiveController.add(true);
     } else {
       _timer?.cancel();
       _isActiveController.add(true);
-      _timer = Timer(this.interval, () => _cancel(action: action));
+      _timer = Timer(interval, () => _cancel(action: action));
     }
   }
 

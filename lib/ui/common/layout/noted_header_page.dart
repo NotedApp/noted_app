@@ -24,10 +24,10 @@ class NotedHeaderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget? _back;
+    Widget? back;
 
     if (hasBackButton) {
-      _back = backButton ??
+      back = backButton ??
           NotedIconButton(
             icon: NotedIcons.chevronLeft,
             type: NotedIconButtonType.filled,
@@ -39,7 +39,7 @@ class NotedHeaderPage extends StatelessWidget {
     return Scaffold(
       appBar: NotedHeader(
         context: context,
-        leadingAction: _back,
+        leadingAction: back,
         title: title,
         trailingActions: trailingActions ?? [],
       ),

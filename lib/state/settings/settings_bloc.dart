@@ -35,7 +35,7 @@ class SettingsBloc extends NotedBloc<SettingsEvent, SettingsState> {
     });
   }
 
-  void _onLoadUser(SettingsLoadUserEvent event, Emitter<SettingsState> emit) async {
+  Future<void> _onLoadUser(SettingsLoadUserEvent event, Emitter<SettingsState> emit) async {
     if (state.status == SettingsStatus.loading) {
       return;
     }
@@ -53,7 +53,7 @@ class SettingsBloc extends NotedBloc<SettingsEvent, SettingsState> {
     }
   }
 
-  void _onUpdateStyleColorScheme(
+  Future<void> _onUpdateStyleColorScheme(
     SettingsUpdateStyleColorSchemeEvent event,
     Emitter<SettingsState> emit,
   ) async {
@@ -63,7 +63,7 @@ class SettingsBloc extends NotedBloc<SettingsEvent, SettingsState> {
     );
   }
 
-  void _onUpdateStyleCustomColorScheme(
+  Future<void> _onUpdateStyleCustomColorScheme(
     SettingsUpdateStyleCustomColorSchemeEvent event,
     Emitter<SettingsState> emit,
   ) async {
@@ -73,7 +73,7 @@ class SettingsBloc extends NotedBloc<SettingsEvent, SettingsState> {
     );
   }
 
-  void _onUpdateStyleTextTheme(
+  Future<void> _onUpdateStyleTextTheme(
     SettingsUpdateStyleTextThemeEvent event,
     Emitter<SettingsState> emit,
   ) async {
@@ -99,8 +99,8 @@ class SettingsBloc extends NotedBloc<SettingsEvent, SettingsState> {
     }
   }
 
-  void _onReset(SettingsResetEvent event, Emitter<SettingsState> emit) async {
-    emit(SettingsState(settings: SettingsModel()));
+  Future<void> _onReset(SettingsResetEvent event, Emitter<SettingsState> emit) async {
+    emit(const SettingsState(settings: SettingsModel()));
   }
 
   @override

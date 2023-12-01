@@ -49,7 +49,7 @@ class _ToolbarColorPicker extends StatefulWidget {
   final NotedEditorController controller;
   final NotedEditorAttribute attribute;
   final Color defaultColor;
-  final ToolbarStateCallback setToolbarState;
+  final _ToolbarStateCallback setToolbarState;
 
   const _ToolbarColorPicker({
     required this.controller,
@@ -103,7 +103,7 @@ class _ToolbarColorPickerState extends State<_ToolbarColorPicker> {
           color: NotedWidgetColor.tertiary,
           onPressed: () => widget.setToolbarState(_ToolbarState.home),
         ),
-        SizedBox(width: 16),
+        const SizedBox(width: 16),
         Expanded(
           child: GridView.count(
             crossAxisCount: 6,

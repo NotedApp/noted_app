@@ -14,6 +14,8 @@ import 'package:noted_app/ui/router/noted_router.dart';
 
 // coverage:ignore-file
 class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return LoginFrame(
@@ -57,29 +59,29 @@ class _LoginPageContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        SizedBox(height: 18),
+        const SizedBox(height: 18),
         NotedTextButton(
           label: strings.login_signIn,
           type: NotedTextButtonType.filled,
           onPressed: () => context.push(LoginSignInRoute()),
         ),
-        SizedBox(height: 12),
+        const SizedBox(height: 12),
         NotedTextButton(
           label: strings.login_register,
           type: NotedTextButtonType.filled,
           color: NotedWidgetColor.secondary,
           onPressed: () => context.push(LoginRegisterRoute()),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(child: Divider(indent: 2, endIndent: 10)),
+            const Expanded(child: Divider(indent: 2, endIndent: 10)),
             Text(strings.login_signInWith, style: theme.bodySmall),
-            Expanded(child: Divider(indent: 10, endIndent: 2)),
+            const Expanded(child: Divider(indent: 10, endIndent: 2)),
           ],
         ),
-        SizedBox(height: 12),
+        const SizedBox(height: 12),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -110,7 +112,7 @@ class _LoginPageContent extends StatelessWidget {
           ],
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 36, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 20),
           child: RichText(
             textAlign: TextAlign.center,
             text: TextSpan(

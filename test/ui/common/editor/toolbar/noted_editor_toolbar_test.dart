@@ -43,7 +43,7 @@ void main() {
     });
 
     testWidgets('toggles formatting', (tester) async {
-      controller.controller.updateSelection(TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.local);
+      controller.controller.updateSelection(const TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.local);
       await tester.pumpWidget(TestWrapper(child: NotedEditorToolbar(controller: controller)));
 
       expect(controller.isAttributeToggled(NotedEditorAttribute.bold), false);
@@ -60,7 +60,7 @@ void main() {
     });
 
     testWidgets('toggles a link', (tester) async {
-      controller.controller.updateSelection(TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.local);
+      controller.controller.updateSelection(const TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.local);
       await tester.pumpWidget(TestWrapper(child: NotedEditorToolbar(controller: controller)));
 
       expect(controller.getLink(), null);

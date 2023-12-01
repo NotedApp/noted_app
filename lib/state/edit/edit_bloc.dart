@@ -20,7 +20,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
   EditBloc({required String noteId, NotesRepository? notesRepository, AuthRepository? authRepository})
       : _notes = notesRepository ?? locator<NotesRepository>(),
         _auth = authRepository ?? locator<AuthRepository>(),
-        super(EditState(note: null), 'note') {
+        super(const EditState(note: null), 'note') {
     _init();
     add(EditLoadEvent(noteId));
   }
@@ -28,13 +28,13 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
   EditBloc.add({required NotedPlugin plugin, NotesRepository? notesRepository, AuthRepository? authRepository})
       : _notes = notesRepository ?? locator<NotesRepository>(),
         _auth = authRepository ?? locator<AuthRepository>(),
-        super(EditState(note: null), 'note') {
+        super(const EditState(note: null), 'note') {
     _init();
 
     // coverage:ignore-start
     NoteModel model = switch (plugin) {
-      NotedPlugin.notebook => NotebookNoteModel.empty(),
-      NotedPlugin.cookbook => CookbookNoteModel.empty(),
+      NotedPlugin.notebook => const NotebookNoteModel.empty(),
+      NotedPlugin.cookbook => const CookbookNoteModel.empty(),
     };
     // coverage:ignore-end
 
@@ -69,7 +69,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
     });
   }
 
-  void _onLoadNote(EditLoadEvent event, Emitter<EditState> emit) async {
+  Future<void> _onLoadNote(EditLoadEvent event, Emitter<EditState> emit) async {
     try {
       if (state.status != EditStatus.initial) {
         throw NotedError(ErrorCode.notes_subscribe_failed, message: 'invalid status: ${state.status}');
@@ -86,7 +86,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
     }
   }
 
-  void _onAddNote(EditAddEvent event, Emitter<EditState> emit) async {
+  Future<void> _onAddNote(EditAddEvent event, Emitter<EditState> emit) async {
     try {
       if (state.status != EditStatus.initial) {
         throw NotedError(ErrorCode.notes_add_failed, message: 'invalid status: ${state.status}');
@@ -104,7 +104,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
     }
   }
 
-  void _onUpdateNote(EditUpdateEvent event, Emitter<EditState> emit) async {
+  Future<void> _onUpdateNote(EditUpdateEvent event, Emitter<EditState> emit) async {
     try {
       if (_auth.currentUser.isEmpty) {
         throw NotedError(ErrorCode.notes_update_failed, message: 'missing auth');
@@ -117,7 +117,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
     }
   }
 
-  void _onDeleteNote(EditDeleteEvent event, Emitter<EditState> emit) async {
+  Future<void> _onDeleteNote(EditDeleteEvent event, Emitter<EditState> emit) async {
     try {
       if (![EditStatus.loaded, EditStatus.updating].contains(state.status)) {
         throw NotedError(ErrorCode.notes_delete_failed, message: 'invalid status: ${state.status}');
@@ -129,22 +129,22 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
 
       emit(EditState(note: state.note, status: EditStatus.deleting));
       await _notes.deleteNote(userId: _auth.currentUser.id, noteId: state.note?.id ?? '');
-      emit(EditState(note: null, status: EditStatus.deleted));
+      emit(const EditState(note: null, status: EditStatus.deleted));
     } catch (e) {
       emit(EditState(note: state.note, status: EditStatus.loaded, error: NotedError.fromObject(e)));
     }
   }
 
-  void _onRemoteUpdateNote(EditRemoteUpdateEvent event, Emitter<EditState> emit) async {
+  Future<void> _onRemoteUpdateNote(EditRemoteUpdateEvent event, Emitter<EditState> emit) async {
     emit(EditState(note: event.note, status: EditStatus.loaded));
   }
 
-  void _onRemoteUpdateError(EditRemoteUpdateErrorEvent event, Emitter<EditState> emit) async {
+  Future<void> _onRemoteUpdateError(EditRemoteUpdateErrorEvent event, Emitter<EditState> emit) async {
     emit(EditState(note: state.note, status: EditStatus.loaded, error: event.error));
   }
 
-  void _onClose(EditCloseEvent event, Emitter<EditState> emit) async {
-    emit(EditState(note: null, status: EditStatus.loaded));
+  Future<void> _onClose(EditCloseEvent event, Emitter<EditState> emit) async {
+    emit(const EditState(note: null, status: EditStatus.loaded));
   }
 
   @override

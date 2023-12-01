@@ -19,7 +19,7 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
         super(
           (authRepository?.currentUser ?? locator<AuthRepository>().currentUser).isNotEmpty
               ? AuthState.authenticated(user: authRepository?.currentUser ?? locator<AuthRepository>().currentUser)
-              : AuthState.unauthenticated(),
+              : const AuthState.unauthenticated(),
           'auth',
         ) {
     on<AuthSignUpWithEmailEvent>(_onSignUpWithEmail, transformer: restartable());
@@ -37,26 +37,26 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
     _userSubscription = _repository.userStream.listen((user) => add(AuthUserUpdatedEvent(user)));
   }
 
-  void _onSignUpWithEmail(AuthSignUpWithEmailEvent event, Emitter<AuthState> emit) async {
+  Future<void> _onSignUpWithEmail(AuthSignUpWithEmailEvent event, Emitter<AuthState> emit) async {
     if (state.status != AuthStatus.unauthenticated) {
       return;
     }
 
     try {
-      emit(AuthState.authenticating(status: AuthStatus.signingUp));
+      emit(const AuthState.authenticating(status: AuthStatus.signingUp));
       await _repository.createUserWithEmailAndPassword(email: event.email, password: event.password);
     } catch (e) {
       emit(AuthState.unauthenticated(error: NotedError.fromObject(e)));
     }
   }
 
-  void _onSignIn(AuthEvent event, Emitter<AuthState> emit) async {
+  Future<void> _onSignIn(AuthEvent event, Emitter<AuthState> emit) async {
     if (state.status != AuthStatus.unauthenticated) {
       return;
     }
 
     try {
-      emit(AuthState.authenticating(status: AuthStatus.signingIn));
+      emit(const AuthState.authenticating(status: AuthStatus.signingIn));
 
       switch (event) {
         case AuthSignInWithEmailEvent _:
@@ -77,13 +77,13 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
     }
   }
 
-  void _onSignOut(AuthSignOutEvent event, Emitter<AuthState> emit) async {
+  Future<void> _onSignOut(AuthSignOutEvent event, Emitter<AuthState> emit) async {
     if (state.status != AuthStatus.authenticated) {
       return;
     }
 
     try {
-      emit(AuthState.authenticating(status: AuthStatus.signingOut));
+      emit(const AuthState.authenticating(status: AuthStatus.signingOut));
       await _repository.signOut();
     } catch (e) {
       UserModel current = _repository.currentUser;
@@ -93,27 +93,27 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
     }
   }
 
-  void _onResetPassword(AuthSendPasswordResetEvent event, Emitter<AuthState> emit) async {
+  Future<void> _onResetPassword(AuthSendPasswordResetEvent event, Emitter<AuthState> emit) async {
     if (state.status != AuthStatus.unauthenticated) {
       return;
     }
 
     try {
-      emit(AuthState.authenticating(status: AuthStatus.sendingPasswordReset));
+      emit(const AuthState.authenticating(status: AuthStatus.sendingPasswordReset));
       await _repository.sendPasswordResetEmail(email: event.email);
-      emit(AuthState.unauthenticated());
+      emit(const AuthState.unauthenticated());
     } catch (e) {
       emit(AuthState.unauthenticated(error: NotedError.fromObject(e)));
     }
   }
 
-  void _onChangePassword(AuthChangePasswordEvent event, Emitter<AuthState> emit) async {
+  Future<void> _onChangePassword(AuthChangePasswordEvent event, Emitter<AuthState> emit) async {
     if (state.status != AuthStatus.authenticated) {
       return;
     }
 
     try {
-      emit(AuthState.authenticating(status: AuthStatus.changingPassword));
+      emit(const AuthState.authenticating(status: AuthStatus.changingPassword));
       await _repository.changePassword(password: event.password);
       emit(AuthState.authenticated(user: _repository.currentUser));
     } catch (e) {
@@ -121,13 +121,13 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
     }
   }
 
-  void _onDeleteAccount(AuthDeleteAccountEvent event, Emitter<AuthState> emit) async {
+  Future<void> _onDeleteAccount(AuthDeleteAccountEvent event, Emitter<AuthState> emit) async {
     if (state.status != AuthStatus.authenticated) {
       return;
     }
 
     try {
-      emit(AuthState.authenticating(status: AuthStatus.deletingAccount));
+      emit(const AuthState.authenticating(status: AuthStatus.deletingAccount));
       await _repository.deleteAccount();
     } catch (e) {
       UserModel current = _repository.currentUser;
@@ -138,7 +138,7 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
   }
 
   void _onUserChanged(AuthUserUpdatedEvent event, Emitter<AuthState> emit) {
-    emit(event.user.isNotEmpty ? AuthState.authenticated(user: event.user) : AuthState.unauthenticated());
+    emit(event.user.isNotEmpty ? AuthState.authenticated(user: event.user) : const AuthState.unauthenticated());
   }
 
   @override

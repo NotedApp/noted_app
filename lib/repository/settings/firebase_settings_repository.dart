@@ -22,9 +22,9 @@ class FirebaseSettingsRepository extends SettingsRepository {
       if (snapshot.exists) {
         final Object? data = snapshot.data();
         final Map<String, dynamic>? map = data == null ? null : data as Map<String, dynamic>;
-        return map == null ? SettingsModel() : SettingsModel.fromMap(map);
+        return map == null ? const SettingsModel() : SettingsModel.fromMap(map);
       } else {
-        final SettingsModel settings = SettingsModel();
+        const SettingsModel settings = SettingsModel();
         await _settings(userId).set(settings);
         return settings;
       }

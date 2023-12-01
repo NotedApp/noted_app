@@ -10,6 +10,8 @@ import 'package:noted_models/noted_models.dart';
 
 // coverage:ignore-file
 class TagsPage extends StatelessWidget {
+  const TagsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return NotedHeaderPage(
@@ -19,7 +21,7 @@ class TagsPage extends StatelessWidget {
         buildWhen: (previous, current) => previous.settings.tags != current.settings.tags,
         listener: handleSettingsError,
         builder: (context, state) => switch (state) {
-          SettingsState(status: SettingsStatus.loading) => TagsLoading(),
+          SettingsState(status: SettingsStatus.loading) => const TagsLoading(),
           SettingsState(settings: SettingsModel(tags: TagSettingsModel(tags: const {}))) =>
             NotedErrorWidget(text: context.strings().settings_error_tags_empty),
           _ => Container(), // content

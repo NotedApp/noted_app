@@ -35,7 +35,7 @@ void main() {
         TestWrapper(
           child: NotedEditor.quill(
             controller: NotedEditorController.quill(),
-            onPressed: onPressed,
+            onPressed: onPressed.call,
           ),
         ),
       );
@@ -55,7 +55,7 @@ void main() {
         TestWrapper(
           child: NotedEditor.quill(
             controller: _MockController(),
-            onPressed: onPressed,
+            onPressed: onPressed.call,
           ),
         ),
       );

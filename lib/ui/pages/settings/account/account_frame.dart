@@ -12,7 +12,7 @@ class AccountFrame extends StatelessWidget {
   final Widget child;
   final void Function(BuildContext, AuthState)? stateListener;
 
-  const AccountFrame({required this.child, this.stateListener});
+  const AccountFrame({super.key, required this.child, this.stateListener});
 
   @override
   Widget build(BuildContext context) {
