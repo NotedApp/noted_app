@@ -10,7 +10,7 @@ void main() {
     testWidgets('svg renders as expected', (tester) async {
       await tester.pumpWidget(
         TestWrapper(
-          child: NotedSvg.asset(source: 'assets/svg/man_computer.svg', fit: BoxFit.fill),
+          child: const NotedSvg.asset(source: 'assets/svg/man_computer.svg', fit: BoxFit.fill),
         ),
       );
 

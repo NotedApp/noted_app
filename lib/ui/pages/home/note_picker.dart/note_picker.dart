@@ -8,6 +8,8 @@ const List<NotedPlugin> plugins = NotedPlugin.values;
 
 // coverage:ignore-file
 class NotePicker extends StatelessWidget {
+  const NotePicker({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -16,7 +18,7 @@ class NotePicker extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(context.strings().notes_addPicker, style: context.textTheme().displaySmall),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           Expanded(
             child: GridView.count(
               crossAxisCount: 2,
@@ -32,6 +34,6 @@ class NotePicker extends StatelessWidget {
   }
 
   static void show(BuildContext context) {
-    showModalBottomSheet(context: context, builder: (context) => NotePicker());
+    showModalBottomSheet(context: context, builder: (context) => const NotePicker());
   }
 }

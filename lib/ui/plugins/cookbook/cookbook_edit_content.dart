@@ -123,7 +123,7 @@ class _CookbookEditHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: NotedTextField(
             type: NotedTextFieldType.title,
             controller: titleController,
@@ -131,7 +131,7 @@ class _CookbookEditHeader extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.fromLTRB(16, 8, 16, 0),
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
           child: NotedTextField(
             type: NotedTextFieldType.plain,
             controller: linkController,
@@ -139,7 +139,7 @@ class _CookbookEditHeader extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.fromLTRB(16, 4, 16, 0),
+          padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
           child: NotedTextField(
             type: NotedTextFieldType.plain,
             controller: prepTimeController,
@@ -147,7 +147,7 @@ class _CookbookEditHeader extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.fromLTRB(16, 4, 16, 0),
+          padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
           child: NotedTextField(
             type: NotedTextFieldType.plain,
             controller: cookTimeController,

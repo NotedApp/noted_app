@@ -14,7 +14,7 @@ void main() {
         TestWrapper(
           child: NotedTextField(
             type: NotedTextFieldType.outlined,
-            onChanged: onChanged,
+            onChanged: onChanged.call,
           ),
         ),
       );
@@ -34,7 +34,7 @@ void main() {
         TestWrapper(
           child: NotedTextField(
             type: NotedTextFieldType.title,
-            onChanged: onChanged,
+            onChanged: onChanged.call,
           ),
         ),
       );
@@ -54,7 +54,7 @@ void main() {
         TestWrapper(
           child: NotedTextField(
             type: NotedTextFieldType.plain,
-            onChanged: onChanged,
+            onChanged: onChanged.call,
           ),
         ),
       );
@@ -76,7 +76,7 @@ void main() {
             type: NotedTextFieldType.outlined,
             onChanged: (_) {},
             icon: NotedIcons.pencil,
-            onIconPressed: onPressed,
+            onIconPressed: onPressed.call,
           ),
         ),
       );
@@ -90,7 +90,7 @@ void main() {
     });
 
     testWidgets('text field handles an error', (tester) async {
-      String? Function(String?) validator = (value) => value?.contains('error') ?? false ? 'validation' : null;
+      String? validator(value) => value?.contains('error') ?? false ? 'validation' : null;
 
       await tester.pumpWidget(
         TestWrapper(

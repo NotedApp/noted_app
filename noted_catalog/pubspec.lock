@@ -282,7 +282,7 @@ packages:
     source: hosted
     version: "2.24.0"
   firebase_core_platform_interface:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: firebase_core_platform_interface
       sha256: c437ae5d17e6b5cc7981cf6fd458a5db4d12979905f9aafd1fea930428a9fe63
@@ -351,7 +351,7 @@ packages:
     source: hosted
     version: "4.3.0"
   flutter_bloc:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_bloc
       sha256: e74efb89ee6945bcbce74a5b3a5a3376b088e5f21f55c263fc38cbdc6237faae
@@ -646,7 +646,7 @@ packages:
     source: git
     version: "1.0.1"
   noted_models:
-    dependency: transitive
+    dependency: "direct main"
     description:
       path: "."
       ref: "v0.0.5-alpha"

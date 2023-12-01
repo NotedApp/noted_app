@@ -52,7 +52,7 @@ class _NotebookEditContentState extends State<NotebookEditContent> {
               placeholder: strings.edit_textPlaceholder,
               autofocus: true,
               header: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: NotedTextField(
                   type: NotedTextFieldType.title,
                   controller: titleController,

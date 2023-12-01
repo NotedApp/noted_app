@@ -1,4 +1,4 @@
-import 'package:flutter/src/foundation/assertions.dart';
+import 'package:flutter/foundation.dart';
 import 'package:noted_app/util/errors/noted_crash_handler.dart';
 import 'dart:developer' as developer;
 

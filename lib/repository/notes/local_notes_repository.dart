@@ -114,16 +114,20 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
 
   @override
   FutureOr onDispose() {
-    _controllers.values.forEach((element) => element.close());
+    for (var element in _controllers.values) {
+      element.close();
+    }
+
     _notesController.close();
   }
 
   /// Adds an error to the state stream for testing.
   void addStreamError() {
     _notesController.addError(NotedError(ErrorCode.notes_parse_failed));
-    _controllers.values.forEach((element) {
+
+    for (var element in _controllers.values) {
       element.addError(NotedError(ErrorCode.notes_parse_failed));
-    });
+    }
   }
 
   void setShouldThrow(bool shouldThrow) => _shouldThrow = shouldThrow;

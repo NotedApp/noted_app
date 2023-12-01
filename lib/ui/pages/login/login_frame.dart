@@ -8,8 +8,8 @@ import 'package:noted_app/ui/router/router_config.dart';
 import 'package:noted_app/util/extensions.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
 
-const ValueKey _contentKey = const ValueKey('content');
-const ValueKey _loadingKey = const ValueKey('loading');
+const ValueKey _contentKey = ValueKey('content');
+const ValueKey _loadingKey = ValueKey('loading');
 
 // coverage:ignore-file
 class LoginFrame extends StatelessWidget {
@@ -39,9 +39,9 @@ class LoginFrame extends StatelessWidget {
       child: Align(
         alignment: Alignment.bottomCenter,
         child: ListView(
-          physics: ClampingScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
           shrinkWrap: true,
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           children: [
             if (contentTitle != null)
               Text(
@@ -49,9 +49,9 @@ class LoginFrame extends StatelessWidget {
                 style: theme.textTheme.displayLarge,
                 textAlign: TextAlign.center,
               ),
-            SizedBox(height: 36),
+            const SizedBox(height: 36),
             ConstrainedBox(
-              constraints: BoxConstraints.loose(Size.fromWidth(400)),
+              constraints: BoxConstraints.loose(const Size.fromWidth(400)),
               child: SvgPicture.asset(
                 'assets/svg/woman_reading.svg',
                 colorFilter: filter,

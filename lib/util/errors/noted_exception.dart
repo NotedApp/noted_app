@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+// ignore_for_file: constant_identifier_names
 class NotedError with EquatableMixin implements Exception {
   final ErrorCode code;
   final String message;

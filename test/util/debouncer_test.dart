@@ -12,16 +12,16 @@ void main() {
 
       expectLater(debouncer.activeStream, emitsInOrder([false, true, false]));
 
-      debouncer.run(action);
-      debouncer.run(action);
-      debouncer.run(action);
+      debouncer.run(action.call);
+      debouncer.run(action.call);
+      debouncer.run(action.call);
       expect(debouncer.isActive, true);
       verify(() => action()).called(1);
 
       await Future.delayed(const Duration(milliseconds: 15));
       expect(debouncer.isActive, false);
 
-      debouncer.run(action);
+      debouncer.run(action.call);
       verify(() => action()).called(1);
       expect(debouncer.isActive, true);
 
@@ -34,9 +34,9 @@ void main() {
 
       expectLater(debouncer.activeStream, emitsInOrder([false, true, true, true, false, true]));
 
-      debouncer.run(action);
-      debouncer.run(action);
-      debouncer.run(action);
+      debouncer.run(action.call);
+      debouncer.run(action.call);
+      debouncer.run(action.call);
       expect(debouncer.isActive, true);
       verifyNever(() => action());
 
@@ -44,7 +44,7 @@ void main() {
       expect(debouncer.isActive, false);
       verify(() => action()).called(1);
 
-      debouncer.run(action);
+      debouncer.run(action.call);
       expect(debouncer.isActive, true);
       verifyNever(() => action());
 

@@ -8,6 +8,8 @@ import 'package:noted_app/ui/router/noted_router.dart';
 
 // coverage:ignore-file
 class StylePage extends StatelessWidget {
+  const StylePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     Strings strings = context.strings();
@@ -17,7 +19,7 @@ class StylePage extends StatelessWidget {
       title: strings.settings_style_title,
       child: Column(
         children: [
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           SettingsRow(
             icon: NotedIcons.eyedropper,
             title: strings.settings_style_themeTitle,

@@ -11,17 +11,17 @@ import '../../helpers/test_wrapper.dart';
 
 void main() {
   group('Route Error Page', () {
-    MockRouter _mockRouter = MockRouter();
+    MockRouter mockRouter = MockRouter();
 
     setUpAll(() {
-      UnitTestEnvironment().configure(router: _mockRouter);
+      UnitTestEnvironment().configure(router: mockRouter);
       registerFallbackValue(LoginRoute());
       registerFallbackValue(FakeBuildContext());
-      when(() => _mockRouter.replace(captureAny(), captureAny())).thenAnswer((invocation) => Future.value());
+      when(() => mockRouter.replace(captureAny(), captureAny())).thenAnswer((invocation) => Future.value());
     });
 
     testWidgets('error page renders a header, image, text, and home button', (tester) async {
-      await tester.pumpWidget(TestWrapper(child: RouteErrorPage()));
+      await tester.pumpWidget(TestWrapper(child: const RouteErrorPage()));
 
       Finder action = find.text('back to home');
 
@@ -32,7 +32,7 @@ void main() {
       expect(find.text('sorry, we seem to be lost!'), findsOneWidget);
       expect(action, findsOneWidget);
 
-      verify(() => _mockRouter.replace(captureAny(), HomeRoute())).called(1);
+      verify(() => mockRouter.replace(captureAny(), HomeRoute())).called(1);
     });
   });
 }

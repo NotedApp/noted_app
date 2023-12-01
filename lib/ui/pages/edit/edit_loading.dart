@@ -4,6 +4,8 @@ import 'package:noted_app/util/extensions.dart';
 
 // coverage:ignore-file
 class EditLoading extends StatelessWidget {
+  const EditLoading({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -13,9 +15,9 @@ class EditLoading extends StatelessWidget {
           children: [
             LoadingText(
               style: context.textTheme().displaySmall,
-              padding: EdgeInsets.symmetric(vertical: 5),
+              padding: const EdgeInsets.symmetric(vertical: 5),
             ),
-            Expanded(child: LoadingBox()),
+            const Expanded(child: LoadingBox()),
           ],
         ),
       ),

@@ -46,7 +46,7 @@ abstract class Environment {
   }) async {
     FirebaseOptions? options = firebaseOptions ?? this.firebaseOptions;
 
-    await WidgetsFlutterBinding.ensureInitialized();
+    WidgetsFlutterBinding.ensureInitialized();
 
     if (options != null) {
       await Firebase.initializeApp(options: firebaseOptions);

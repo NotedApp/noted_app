@@ -8,7 +8,7 @@ import 'package:noted_models/noted_models.dart';
 class NotedThemeBuilder extends StatelessWidget {
   final Widget Function(BuildContext context, ThemeData theme) builder;
 
-  const NotedThemeBuilder({required this.builder});
+  const NotedThemeBuilder({super.key, required this.builder});
 
   @override
   Widget build(BuildContext context) {

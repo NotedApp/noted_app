@@ -15,17 +15,17 @@ void main() {
       await tester.pumpWidget(
         TestWrapper(
           child: NotedHeaderPage(
-            child: Text('test page content'),
             hasBackButton: true,
-            onBack: back,
+            onBack: back.call,
             title: 'test page title',
             trailingActions: [
               NotedIconButton(
                 icon: NotedIcons.account,
                 type: NotedIconButtonType.simple,
-                onPressed: trailing,
+                onPressed: trailing.call,
               ),
             ],
+            child: const Text('test page content'),
           ),
         ),
       );

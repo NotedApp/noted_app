@@ -9,7 +9,7 @@ import '../../../helpers/test_wrapper.dart';
 void main() {
   group('Noted Dialog', () {
     testWidgets('dialog renders title, body, and actions which register events', (tester) async {
-      tester.view.physicalSize = Size(600, 1200);
+      tester.view.physicalSize = const Size(600, 1200);
       tester.view.devicePixelRatio = 1.0;
 
       addTearDown(() => tester.view.resetPhysicalSize());
@@ -29,10 +29,10 @@ void main() {
                 builder: (context) => NotedDialog(
                   title: 'test dialog title',
                   leftActionText: 'test left',
-                  onLeftActionPressed: onLeft,
+                  onLeftActionPressed: onLeft.call,
                   rightActionText: 'test right',
-                  onRightActionPressed: onRight,
-                  child: Text('test dialog content'),
+                  onRightActionPressed: onRight.call,
+                  child: const Text('test dialog content'),
                 ),
               ),
             ),
@@ -60,7 +60,7 @@ void main() {
     });
 
     testWidgets('dialog handles only left action', (tester) async {
-      tester.view.physicalSize = Size(600, 1200);
+      tester.view.physicalSize = const Size(600, 1200);
       tester.view.devicePixelRatio = 1.0;
 
       addTearDown(() => tester.view.resetPhysicalSize());
@@ -79,8 +79,8 @@ void main() {
                 builder: (context) => NotedDialog(
                   title: 'test dialog title',
                   leftActionText: 'test left',
-                  onLeftActionPressed: onLeft,
-                  child: Text('test dialog content'),
+                  onLeftActionPressed: onLeft.call,
+                  child: const Text('test dialog content'),
                 ),
               ),
             ),
@@ -106,7 +106,7 @@ void main() {
     });
 
     testWidgets('dialog handles only right action', (tester) async {
-      tester.view.physicalSize = Size(600, 1200);
+      tester.view.physicalSize = const Size(600, 1200);
       tester.view.devicePixelRatio = 1.0;
 
       addTearDown(() => tester.view.resetPhysicalSize());
@@ -125,8 +125,8 @@ void main() {
                 builder: (context) => NotedDialog(
                   title: 'test dialog title',
                   rightActionText: 'test right',
-                  onRightActionPressed: onRight,
-                  child: Text('test dialog content'),
+                  onRightActionPressed: onRight.call,
+                  child: const Text('test dialog content'),
                 ),
               ),
             ),

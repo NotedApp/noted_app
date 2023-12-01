@@ -11,7 +11,7 @@ import 'package:noted_app/util/errors/noted_exception.dart';
 
 // coverage:ignore-file
 class ChangePasswordPage extends StatefulWidget {
-  const ChangePasswordPage();
+  const ChangePasswordPage({super.key});
 
   @override
   State<StatefulWidget> createState() => ChangePasswordPageState();
@@ -20,7 +20,7 @@ class ChangePasswordPage extends StatefulWidget {
 class ChangePasswordPageState extends State<ChangePasswordPage> {
   late final TextEditingController _passwordController;
   late final TextEditingController _confirmController;
-  String? _confirmError = null;
+  String? _confirmError;
   bool _showPassword = false;
 
   @override
@@ -56,7 +56,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
               icon: _showPassword ? NotedIcons.eyeClosed : NotedIcons.eye,
               onIconPressed: () => setState(() => _showPassword = !_showPassword),
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             NotedTextField(
               controller: _confirmController,
               name: strings.login_confirmPassword,
@@ -68,7 +68,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
               autocorrect: false,
               obscureText: !_showPassword,
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             NotedTextButton(
               label: strings.login_changePassword,
               type: NotedTextButtonType.filled,

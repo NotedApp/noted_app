@@ -16,7 +16,7 @@ void main() {
             title: 'title',
             text: 'text',
             ctaText: 'cta',
-            ctaCallback: cta,
+            ctaCallback: cta.call,
           ),
         ),
       );

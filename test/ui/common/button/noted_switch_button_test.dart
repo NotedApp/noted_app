@@ -22,12 +22,12 @@ void main() {
               NotedSwitchButton(
                 key: trueKey,
                 value: true,
-                onChanged: trueCallback,
+                onChanged: trueCallback.call,
               ),
               NotedSwitchButton(
                 key: falseKey,
                 value: false,
-                onChanged: falseCallback,
+                onChanged: falseCallback.call,
               ),
             ],
           ),

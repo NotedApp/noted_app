@@ -2,7 +2,7 @@ part of '../noted_editor_toolbar.dart';
 
 class _ToolbarHome extends StatelessWidget {
   final NotedEditorController controller;
-  final ToolbarStateCallback setToolbarState;
+  final _ToolbarStateCallback setToolbarState;
 
   const _ToolbarHome({required this.controller, required this.setToolbarState, super.key});
 

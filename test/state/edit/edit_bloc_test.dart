@@ -18,7 +18,7 @@ void main() {
     LocalNotesRepository notes() => locator<NotesRepository>() as LocalNotesRepository;
     LocalAuthRepository auth() => locator<AuthRepository>() as LocalAuthRepository;
 
-    NoteModel addedNote = NotebookNoteModel.empty().copyWith(id: 'note-2');
+    NoteModel addedNote = const NotebookNoteModel.empty().copyWith(id: 'note-2');
 
     NoteModel existing = localNotes.values.first.copyWith();
     NoteModel updated = existing.copyWith(title: 'updated');
@@ -44,10 +44,10 @@ void main() {
       },
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        EditState(note: null, status: EditStatus.loading),
+        const EditState(note: null, status: EditStatus.loading),
         EditState(note: addedNote, status: EditStatus.loaded),
         EditState(note: addedNote, status: EditStatus.deleting),
-        EditState(note: null, status: EditStatus.deleted),
+        const EditState(note: null, status: EditStatus.deleted),
       ],
     );
 
@@ -60,7 +60,7 @@ void main() {
       },
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        EditState(note: null, status: EditStatus.loading),
+        const EditState(note: null, status: EditStatus.loading),
         EditState(note: existing, status: EditStatus.loaded),
         EditState(note: existing, status: EditStatus.updating),
         EditState(note: updated, status: EditStatus.loaded),
@@ -76,9 +76,9 @@ void main() {
       },
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        EditState(note: null, status: EditStatus.loading),
+        const EditState(note: null, status: EditStatus.loading),
         EditState(note: existing, status: EditStatus.loaded),
-        EditState(note: null, status: EditStatus.loaded),
+        const EditState(note: null, status: EditStatus.loaded),
       ],
     );
 
@@ -88,7 +88,7 @@ void main() {
       build: () => EditBloc.add(plugin: NotedPlugin.notebook),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        EditState(note: null, status: EditStatus.loading),
+        const EditState(note: null, status: EditStatus.loading),
         EditState(note: null, status: EditStatus.loaded, error: NotedError(ErrorCode.notes_add_failed)),
       ],
     );
@@ -115,7 +115,7 @@ void main() {
       },
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        EditState(note: null, status: EditStatus.loading),
+        const EditState(note: null, status: EditStatus.loading),
         EditState(
           note: null,
           status: EditStatus.loaded,
@@ -131,7 +131,7 @@ void main() {
       build: () => EditBloc(noteId: 'test-note-0'),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        EditState(note: null, status: EditStatus.loading),
+        const EditState(note: null, status: EditStatus.loading),
         EditState(note: null, status: EditStatus.loaded, error: NotedError(ErrorCode.notes_subscribe_failed)),
       ],
     );
@@ -154,11 +154,11 @@ void main() {
       'load a note fails with wrong state',
       build: () => EditBloc(noteId: 'test-note-0'),
       act: (bloc) async {
-        bloc.add(EditLoadEvent('test-note-0'));
+        bloc.add(const EditLoadEvent('test-note-0'));
       },
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        EditState(note: null, status: EditStatus.loading),
+        const EditState(note: null, status: EditStatus.loading),
         EditState(
           note: null,
           status: EditStatus.loaded,
@@ -177,7 +177,7 @@ void main() {
       },
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        EditState(note: null, status: EditStatus.loading),
+        const EditState(note: null, status: EditStatus.loading),
         EditState(note: existing, status: EditStatus.loaded),
         EditState(note: existing, status: EditStatus.loaded, error: NotedError(ErrorCode.notes_parse_failed)),
       ],
@@ -194,7 +194,7 @@ void main() {
       },
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        EditState(note: null, status: EditStatus.loading),
+        const EditState(note: null, status: EditStatus.loading),
         EditState(note: existing, status: EditStatus.loaded),
         EditState(note: existing, status: EditStatus.updating),
         EditState(note: existing, status: EditStatus.loaded, error: NotedError(ErrorCode.notes_update_failed)),
@@ -213,9 +213,9 @@ void main() {
       },
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        EditState(note: null, status: EditStatus.loading),
+        const EditState(note: null, status: EditStatus.loading),
         EditState(note: existing, status: EditStatus.loaded),
-        EditState(note: null, status: EditStatus.loaded),
+        const EditState(note: null, status: EditStatus.loaded),
         EditState(
           note: null,
           status: EditStatus.loaded,
@@ -235,7 +235,7 @@ void main() {
       },
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        EditState(note: null, status: EditStatus.loading),
+        const EditState(note: null, status: EditStatus.loading),
         EditState(note: existing, status: EditStatus.loaded),
         EditState(note: existing, status: EditStatus.deleting),
         EditState(note: existing, status: EditStatus.loaded, error: NotedError(ErrorCode.notes_delete_failed)),
@@ -254,9 +254,9 @@ void main() {
       },
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        EditState(note: null, status: EditStatus.loading),
+        const EditState(note: null, status: EditStatus.loading),
         EditState(note: existing, status: EditStatus.loaded),
-        EditState(note: null, status: EditStatus.loaded),
+        const EditState(note: null, status: EditStatus.loaded),
         EditState(
           note: null,
           status: EditStatus.loaded,
@@ -273,7 +273,7 @@ void main() {
       },
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        EditState(note: null, status: EditStatus.loading),
+        const EditState(note: null, status: EditStatus.loading),
         EditState(
           note: null,
           status: EditStatus.loaded,

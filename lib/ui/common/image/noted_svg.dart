@@ -7,7 +7,7 @@ class NotedSvg extends StatelessWidget {
   final BoxFit fit;
   final Color? color;
 
-  const NotedSvg.asset({required this.source, required this.fit, this.color = null});
+  const NotedSvg.asset({super.key, required this.source, required this.fit, this.color});
 
   @override
   Widget build(BuildContext context) {

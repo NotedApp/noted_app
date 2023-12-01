@@ -50,12 +50,12 @@ void main() {
       },
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        NotesState.loading(),
+        const NotesState.loading(),
         NotesState.success(notes: localNotes.values.toList()),
         NotesState.success(notes: [...localNotes.values, testNote]),
         NotesState.success(notes: localNotes.values.toList()),
         NotesState.success(notes: [localNotes['test-note-0']!]),
-        NotesState.empty(),
+        const NotesState.empty(),
       ],
     );
 
@@ -68,7 +68,7 @@ void main() {
       },
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        NotesState.loading(),
+        const NotesState.loading(),
         NotesState.success(notes: localNotes.values.toList()),
       ],
     );
@@ -80,7 +80,7 @@ void main() {
       act: (bloc) => bloc.add(NotesSubscribeEvent()),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        NotesState.loading(),
+        const NotesState.loading(),
         NotesState.error(error: NotedError(ErrorCode.notes_subscribe_failed)),
       ],
     );
@@ -95,7 +95,7 @@ void main() {
       },
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        NotesState.loading(),
+        const NotesState.loading(),
         NotesState.success(notes: localNotes.values.toList()),
         NotesState.success(
           notes: localNotes.values.toList(),

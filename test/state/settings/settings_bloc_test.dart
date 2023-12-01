@@ -35,8 +35,8 @@ void main() {
       act: (bloc) => bloc.add(SettingsLoadUserEvent()),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        SettingsState(settings: SettingsModel(), status: SettingsStatus.loading),
-        SettingsState(settings: SettingsModel()),
+        const SettingsState(settings: SettingsModel(), status: SettingsStatus.loading),
+        const SettingsState(settings: SettingsModel()),
       ],
     );
 
@@ -49,9 +49,9 @@ void main() {
       },
       wait: const Duration(milliseconds: 20),
       expect: () => [
-        SettingsState(settings: SettingsModel()),
-        SettingsState(settings: SettingsModel(), status: SettingsStatus.loading),
-        SettingsState(settings: SettingsModel()),
+        const SettingsState(settings: SettingsModel()),
+        const SettingsState(settings: SettingsModel(), status: SettingsStatus.loading),
+        const SettingsState(settings: SettingsModel()),
       ],
     );
 
@@ -62,8 +62,8 @@ void main() {
       act: (bloc) => bloc.add(SettingsLoadUserEvent()),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        SettingsState(settings: SettingsModel(), status: SettingsStatus.loading),
-        SettingsState(settings: SettingsModel(), error: NotedError(ErrorCode.settings_fetch_failed)),
+        const SettingsState(settings: SettingsModel(), status: SettingsStatus.loading),
+        SettingsState(settings: const SettingsModel(), error: NotedError(ErrorCode.settings_fetch_failed)),
       ],
     );
 
@@ -75,7 +75,7 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         SettingsState(
-          settings: SettingsModel(),
+          settings: const SettingsModel(),
           error: NotedError(ErrorCode.settings_fetch_failed, message: 'missing auth'),
         ),
       ],
@@ -85,11 +85,11 @@ void main() {
       'update style fails with no auth',
       setUp: () async => auth().signOut(),
       build: SettingsBloc.new,
-      act: (bloc) => bloc.add(SettingsUpdateStyleColorSchemeEvent(ColorSchemeModelName.green)),
+      act: (bloc) => bloc.add(const SettingsUpdateStyleColorSchemeEvent(ColorSchemeModelName.green)),
       wait: const Duration(milliseconds: 10),
       expect: () => [
         SettingsState(
-          settings: SettingsModel(),
+          settings: const SettingsModel(),
           error: NotedError(ErrorCode.settings_updateStyle_failed, message: 'missing auth'),
         ),
       ],
@@ -98,10 +98,10 @@ void main() {
     blocTest(
       'updates current color scheme name',
       build: SettingsBloc.new,
-      act: (bloc) => bloc.add(SettingsUpdateStyleColorSchemeEvent(ColorSchemeModelName.green)),
+      act: (bloc) => bloc.add(const SettingsUpdateStyleColorSchemeEvent(ColorSchemeModelName.green)),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        SettingsState(
+        const SettingsState(
           settings: SettingsModel(style: StyleSettingsModel(colorSchemeName: ColorSchemeModelName.green)),
         ),
       ],
@@ -111,14 +111,14 @@ void main() {
       'updates current color scheme name and handles error',
       setUp: () => settings().setShouldThrow(true),
       build: SettingsBloc.new,
-      act: (bloc) => bloc.add(SettingsUpdateStyleColorSchemeEvent(ColorSchemeModelName.green)),
+      act: (bloc) => bloc.add(const SettingsUpdateStyleColorSchemeEvent(ColorSchemeModelName.green)),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        SettingsState(
+        const SettingsState(
           settings: SettingsModel(style: StyleSettingsModel(colorSchemeName: ColorSchemeModelName.green)),
         ),
         SettingsState(
-          settings: SettingsModel(style: StyleSettingsModel(colorSchemeName: ColorSchemeModelName.green)),
+          settings: const SettingsModel(style: StyleSettingsModel(colorSchemeName: ColorSchemeModelName.green)),
           error: NotedError(ErrorCode.settings_updateStyle_failed),
         ),
       ],
@@ -127,10 +127,10 @@ void main() {
     blocTest(
       'updates custom color scheme',
       build: SettingsBloc.new,
-      act: (bloc) => bloc.add(SettingsUpdateStyleCustomColorSchemeEvent(ColorSchemeModel.green)),
+      act: (bloc) => bloc.add(const SettingsUpdateStyleCustomColorSchemeEvent(ColorSchemeModel.green)),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        SettingsState(
+        const SettingsState(
           settings: SettingsModel(style: StyleSettingsModel(customColorScheme: ColorSchemeModel.green)),
         ),
       ],
@@ -140,14 +140,14 @@ void main() {
       'updates custom color scheme and handles error',
       setUp: () => settings().setShouldThrow(true),
       build: SettingsBloc.new,
-      act: (bloc) => bloc.add(SettingsUpdateStyleCustomColorSchemeEvent(ColorSchemeModel.green)),
+      act: (bloc) => bloc.add(const SettingsUpdateStyleCustomColorSchemeEvent(ColorSchemeModel.green)),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        SettingsState(
+        const SettingsState(
           settings: SettingsModel(style: StyleSettingsModel(customColorScheme: ColorSchemeModel.green)),
         ),
         SettingsState(
-          settings: SettingsModel(style: StyleSettingsModel(customColorScheme: ColorSchemeModel.green)),
+          settings: const SettingsModel(style: StyleSettingsModel(customColorScheme: ColorSchemeModel.green)),
           error: NotedError(ErrorCode.settings_updateStyle_failed),
         ),
       ],
@@ -156,10 +156,10 @@ void main() {
     blocTest(
       'updates current text theme',
       build: SettingsBloc.new,
-      act: (bloc) => bloc.add(SettingsUpdateStyleTextThemeEvent(TextThemeModelName.roboto)),
+      act: (bloc) => bloc.add(const SettingsUpdateStyleTextThemeEvent(TextThemeModelName.roboto)),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        SettingsState(
+        const SettingsState(
           settings: SettingsModel(style: StyleSettingsModel(textThemeName: TextThemeModelName.roboto)),
         ),
       ],
@@ -169,14 +169,14 @@ void main() {
       'updates current text theme and handles error',
       setUp: () => settings().setShouldThrow(true),
       build: SettingsBloc.new,
-      act: (bloc) => bloc.add(SettingsUpdateStyleTextThemeEvent(TextThemeModelName.roboto)),
+      act: (bloc) => bloc.add(const SettingsUpdateStyleTextThemeEvent(TextThemeModelName.roboto)),
       wait: const Duration(milliseconds: 10),
       expect: () => [
-        SettingsState(
+        const SettingsState(
           settings: SettingsModel(style: StyleSettingsModel(textThemeName: TextThemeModelName.roboto)),
         ),
         SettingsState(
-          settings: SettingsModel(style: StyleSettingsModel(textThemeName: TextThemeModelName.roboto)),
+          settings: const SettingsModel(style: StyleSettingsModel(textThemeName: TextThemeModelName.roboto)),
           error: NotedError(ErrorCode.settings_updateStyle_failed),
         ),
       ],

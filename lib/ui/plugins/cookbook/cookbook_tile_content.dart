@@ -53,13 +53,13 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
       header = Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           if (hasTitle)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Text(widget.note.title, style: Theme.of(context).textTheme.titleMedium),
             ),
-          if (hasTitle && hasTags) SizedBox(height: 8),
+          if (hasTitle && hasTags) const SizedBox(height: 8),
           if (hasTags) NotedTagRow(tags: widget.note.tagIds),
           if (hasPrepTime)
             Padding(
@@ -78,7 +78,7 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
     return NotedHeaderEditor(
       controller: _textController,
       readonly: true,
-      padding: EdgeInsets.fromLTRB(12, 12, 12, 36),
+      padding: const EdgeInsets.fromLTRB(12, 12, 12, 36),
       onPressed: widget.onPressed,
       header: header,
     );
@@ -111,13 +111,13 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
           },
         ),
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 12),
+          padding: const EdgeInsets.symmetric(vertical: 12),
           child: Column(
             children: [
-              Spacer(),
+              const Spacer(),
               if (widget.note.title.isNotEmpty)
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 12),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Text(
                     widget.note.title,
                     style: Theme.of(context).textTheme.titleMedium,
@@ -126,10 +126,10 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
                     maxLines: 2,
                   ),
                 ),
-              if (widget.note.title.isNotEmpty) SizedBox(height: 4),
+              if (widget.note.title.isNotEmpty) const SizedBox(height: 4),
               if (widget.note.prepTime.isNotEmpty)
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 12),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Text(
                     '$prepTime: ${widget.note.prepTime}',
                     style: Theme.of(context).textTheme.bodyMedium,
@@ -140,7 +140,7 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
                 ),
               if (widget.note.cookTime.isNotEmpty)
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 12),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Text(
                     '$cookTime: ${widget.note.cookTime}',
                     style: Theme.of(context).textTheme.bodyMedium,
@@ -149,12 +149,12 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
                     maxLines: 1,
                   ),
                 ),
-              Spacer(),
+              const Spacer(),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: NotedLink(url: widget.note.url),
               ),
-              if (widget.note.tagIds.isNotEmpty) SizedBox(height: 12),
+              if (widget.note.tagIds.isNotEmpty) const SizedBox(height: 12),
               if (widget.note.tagIds.isNotEmpty) NotedTagRow(tags: widget.note.tagIds)
             ],
           ),

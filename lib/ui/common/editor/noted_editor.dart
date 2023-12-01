@@ -12,7 +12,7 @@ abstract class NotedEditor extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final VoidCallback? onPressed;
 
-  NotedEditor({
+  const NotedEditor({
     required this.controller,
     this.focusNode,
     this.placeholder,

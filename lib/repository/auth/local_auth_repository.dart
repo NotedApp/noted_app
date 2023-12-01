@@ -28,7 +28,7 @@ const List<String> _localPasswords = [
 /// An [AuthRepository] that uses mock data as its source of truth.
 class LocalAuthRepository extends AuthRepository implements Disposable {
   final StreamController<UserModel> _userStreamController = StreamController.broadcast();
-  UserModel _currentUser = UserModel.empty();
+  UserModel _currentUser = const UserModel.empty();
   bool _shouldThrow = false;
   int _msDelay = 2000;
 
@@ -113,7 +113,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
 
   @override
   Future<void> signOut() async {
-    await _updateUser(UserModel.empty(), ErrorCode.auth_signOut_failed);
+    await _updateUser(const UserModel.empty(), ErrorCode.auth_signOut_failed);
   }
 
   @override
@@ -145,7 +145,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
     }
 
     _users.removeWhere((user) => user.id == _currentUser.id);
-    await _updateUser(UserModel.empty(), ErrorCode.auth_deleteAccount_failed, delay: false);
+    await _updateUser(const UserModel.empty(), ErrorCode.auth_deleteAccount_failed, delay: false);
   }
 
   @override
@@ -171,7 +171,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
   void reset() {
     _shouldThrow = false;
     _msDelay = 2000;
-    _currentUser = UserModel.empty();
+    _currentUser = const UserModel.empty();
     _users = [..._localUsers];
     _passwords = [..._localPasswords];
   }

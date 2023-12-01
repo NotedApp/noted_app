@@ -4,11 +4,11 @@ import 'package:noted_catalog/catalog_list_widget.dart';
 import 'package:noted_models/noted_models.dart';
 
 final List<String> tabs = ['all (20)', 'notes', 'to-do', 'climbing', 'finances'];
-final TagModel deleteTag = TagModel(id: 'delete', name: 'delete me', color: 0xFFB33951);
-final TagModel testTag = TagModel(id: 'test', name: 'test', color: 0xFF2A324B);
+const TagModel deleteTag = TagModel(id: 'delete', name: 'delete me', color: 0xFFB33951);
+const TagModel testTag = TagModel(id: 'test', name: 'test', color: 0xFF2A324B);
 
 class CatalogLayoutPage extends StatefulWidget {
-  CatalogLayoutPage({super.key});
+  const CatalogLayoutPage({super.key});
 
   @override
   State<StatefulWidget> createState() => _CatalogLayoutPageState();
@@ -60,12 +60,12 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProvid
         label: 'tags small',
         child: Row(
           children: [
-            NotedTag.add(size: NotedWidgetSize.small),
-            SizedBox(width: 4),
+            const NotedTag.add(size: NotedWidgetSize.small),
+            const SizedBox(width: 4),
             NotedTag.delete(size: NotedWidgetSize.small, model: deleteTag),
-            SizedBox(width: 4),
-            NotedTag.custom(size: NotedWidgetSize.small, text: 'custom', color: Color(0xFF789395)),
-            SizedBox(width: 4),
+            const SizedBox(width: 4),
+            const NotedTag.custom(size: NotedWidgetSize.small, text: 'custom', color: Color(0xFF789395)),
+            const SizedBox(width: 4),
             NotedTag(size: NotedWidgetSize.small, model: testTag),
           ],
         ),
@@ -75,12 +75,12 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProvid
         label: 'tags medium',
         child: Row(
           children: [
-            NotedTag.add(size: NotedWidgetSize.medium),
-            SizedBox(width: 6),
+            const NotedTag.add(size: NotedWidgetSize.medium),
+            const SizedBox(width: 6),
             NotedTag.delete(size: NotedWidgetSize.medium, model: deleteTag),
-            SizedBox(width: 6),
-            NotedTag.custom(size: NotedWidgetSize.medium, text: 'custom', color: Color(0xFF789395)),
-            SizedBox(width: 6),
+            const SizedBox(width: 6),
+            const NotedTag.custom(size: NotedWidgetSize.medium, text: 'custom', color: Color(0xFF789395)),
+            const SizedBox(width: 6),
             NotedTag(size: NotedWidgetSize.medium, model: testTag),
           ],
         ),
@@ -90,12 +90,12 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProvid
         label: 'tags large',
         child: Row(
           children: [
-            NotedTag.add(size: NotedWidgetSize.large),
-            SizedBox(width: 8),
+            const NotedTag.add(size: NotedWidgetSize.large),
+            const SizedBox(width: 8),
             NotedTag.delete(size: NotedWidgetSize.large, model: deleteTag),
-            SizedBox(width: 8),
-            NotedTag.custom(size: NotedWidgetSize.large, text: 'custom', color: Color(0xFF789395)),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
+            const NotedTag.custom(size: NotedWidgetSize.large, text: 'custom', color: Color(0xFF789395)),
+            const SizedBox(width: 8),
             NotedTag(size: NotedWidgetSize.large, model: testTag),
           ],
         ),
@@ -124,7 +124,7 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProvid
             size: NotedWidgetSize.medium,
             margin: EdgeInsets.zero,
             onPressed: () {},
-            child: Padding(
+            child: const Padding(
               padding: EdgeInsets.all(16),
               child: Text('medium card'),
             ),

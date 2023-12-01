@@ -19,7 +19,7 @@ void main() {
     });
 
     test('creates a controller with initial data, and updates data', () {
-      controller.controller.updateSelection(TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.local);
+      controller.controller.updateSelection(const TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.local);
       expect(controller.controller.getPlainText(), 'hello world');
 
       controller.value = testData1;
@@ -29,7 +29,7 @@ void main() {
     });
 
     test('validates and updates bold formatting', () {
-      controller.controller.updateSelection(TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.local);
+      controller.controller.updateSelection(const TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.local);
       expect(controller.isAttributeToggled(NotedEditorAttribute.bold), false);
 
       controller.setAttribute(NotedEditorAttribute.bold, true);
@@ -40,7 +40,7 @@ void main() {
     });
 
     test('validates and updates header formatting', () {
-      controller.controller.updateSelection(TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.local);
+      controller.controller.updateSelection(const TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.local);
       expect(controller.isAttributeToggled(NotedEditorAttribute.h1), false);
 
       controller.setAttribute(NotedEditorAttribute.h1, true);
@@ -52,7 +52,7 @@ void main() {
     });
 
     test('validates and updates color formatting', () {
-      controller.controller.updateSelection(TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.local);
+      controller.controller.updateSelection(const TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.local);
       expect(controller.getColor(NotedEditorAttribute.textColor), null);
 
       controller.setColor(NotedEditorAttribute.textColor, Colors.red.shade500);
@@ -63,7 +63,7 @@ void main() {
     });
 
     test('validates and updates list formatting', () {
-      controller.controller.updateSelection(TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.local);
+      controller.controller.updateSelection(const TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.local);
       expect(controller.isAttributeToggled(NotedEditorAttribute.ul), false);
 
       controller.setAttribute(NotedEditorAttribute.ul, true);
@@ -75,7 +75,7 @@ void main() {
     });
 
     test('validates and updates task list formatting', () {
-      controller.controller.updateSelection(TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.local);
+      controller.controller.updateSelection(const TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.local);
       expect(controller.isAttributeToggled(NotedEditorAttribute.taskList), false);
 
       controller.setAttribute(NotedEditorAttribute.taskList, true);
@@ -88,7 +88,7 @@ void main() {
     });
 
     test('validates and updates link formatting', () {
-      controller.controller.updateSelection(TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.local);
+      controller.controller.updateSelection(const TextSelection(baseOffset: 0, extentOffset: 11), ChangeSource.local);
       expect(controller.getLink(), null);
 
       controller.setLink('test.com');

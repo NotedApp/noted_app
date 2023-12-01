@@ -19,7 +19,7 @@ void main() {
                 onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
                   NotedSnackBar.create(
                     context: context,
-                    content: Text('test snackbar content'),
+                    content: const Text('test snackbar content'),
                   ),
                 ),
               ),
@@ -81,7 +81,7 @@ void main() {
                     context: context,
                     text: 'test snackbar content',
                     hasClose: true,
-                    onClose: close,
+                    onClose: close.call,
                   ),
                 ),
               ),

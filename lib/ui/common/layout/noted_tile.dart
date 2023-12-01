@@ -38,6 +38,7 @@ class NotedTagRow extends StatelessWidget {
   final EdgeInsetsGeometry padding;
 
   const NotedTagRow({
+    super.key,
     required this.tags,
     this.padding = const EdgeInsets.symmetric(horizontal: 12),
   });
@@ -51,22 +52,22 @@ class NotedTagRow extends StatelessWidget {
         children: [
           NotedTag(
             size: NotedWidgetSize.small,
-            model: TagModel(id: 'test-0', name: 'test', color: 0xFF2A324B),
+            model: const TagModel(id: 'test-0', name: 'test', color: 0xFF2A324B),
           ),
-          SizedBox(width: 4),
+          const SizedBox(width: 4),
           NotedTag(
             size: NotedWidgetSize.small,
-            model: TagModel(id: 'test-1', name: 'work', color: 0xFFB33951),
+            model: const TagModel(id: 'test-1', name: 'work', color: 0xFFB33951),
           ),
-          SizedBox(width: 4),
+          const SizedBox(width: 4),
           NotedTag(
             size: NotedWidgetSize.small,
-            model: TagModel(id: 'test-2', name: 'sports', color: 0xFF789395),
+            model: const TagModel(id: 'test-2', name: 'sports', color: 0xFF789395),
           ),
-          SizedBox(width: 4),
+          const SizedBox(width: 4),
           NotedTag(
             size: NotedWidgetSize.small,
-            model: TagModel(id: 'test-3', name: 'guitar', color: 0xFF000000),
+            model: const TagModel(id: 'test-3', name: 'guitar', color: 0xFF000000),
           ),
         ],
       ),

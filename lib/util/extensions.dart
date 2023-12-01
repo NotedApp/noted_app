@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:noted_models/noted_models.dart' as Models;
+import 'package:noted_models/noted_models.dart' as models;
 
 extension NotedColorExtensions on Color {
   MaterialStateProperty<Color> materialState() {
@@ -11,7 +11,7 @@ extension NotedColorExtensions on Color {
   /// Returns black or white, depending on the intensity of the color. This value can be used to generate a dynamic on
   /// surface color for the given color.
   Color getBW() {
-    return this.isLight() ? Colors.black : Colors.white;
+    return isLight() ? Colors.black : Colors.white;
   }
 
   bool isLight() {
@@ -19,7 +19,7 @@ extension NotedColorExtensions on Color {
   }
 
   bool isDark() {
-    return !this.isLight();
+    return !isLight();
   }
 
   static Color fromHex(String hexString) {
@@ -113,20 +113,20 @@ extension NotedBuildContextExtensions on BuildContext {
   }
 
   bool isCurrent() {
-    return ModalRoute.of(this)?.isCurrent ?? false;
+    return mounted && (ModalRoute.of(this)?.isCurrent ?? false);
   }
 }
 
-extension NotedBrightnessExtensions on Models.Brightness {
+extension NotedBrightnessExtensions on models.Brightness {
   Brightness toMaterial() {
     return switch (this) {
-      Models.Brightness.light => Brightness.light,
+      models.Brightness.light => Brightness.light,
       _ => Brightness.dark,
     };
   }
 }
 
-extension ColorSchemeModelExtensions on Models.ColorSchemeModel {
+extension ColorSchemeModelExtensions on models.ColorSchemeModel {
   ColorScheme toMaterial() {
     return ColorScheme(
       brightness: brightness.toMaterial(),
@@ -146,7 +146,7 @@ extension ColorSchemeModelExtensions on Models.ColorSchemeModel {
   }
 }
 
-extension TextThemeModelExtensions on Models.TextThemeModel {
+extension TextThemeModelExtensions on models.TextThemeModel {
   TextTheme toMaterial() {
     return TextTheme(
       displayLarge: TextStyle(fontFamily: fontFamily, fontSize: 57, height: 64 / 57, fontWeight: FontWeight.normal),

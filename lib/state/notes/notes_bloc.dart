@@ -20,7 +20,7 @@ class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
   NotesBloc({NotesRepository? notesRepository, AuthRepository? authRepository})
       : _notes = notesRepository ?? locator<NotesRepository>(),
         _auth = authRepository ?? locator<AuthRepository>(),
-        super(NotesState.loading(), 'notes') {
+        super(const NotesState.loading(), 'notes') {
     on<NotesSubscribeEvent>(_onSubscribeNotes, transformer: restartable());
     on<NotesUpdateEvent>(_onUpdateNotes);
     on<NotesUpdateErrorEvent>(_onUpdateError);
@@ -35,7 +35,7 @@ class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
     });
   }
 
-  void _onSubscribeNotes(NotesSubscribeEvent event, Emitter<NotesState> emit) async {
+  Future<void> _onSubscribeNotes(NotesSubscribeEvent event, Emitter<NotesState> emit) async {
     try {
       if (_auth.currentUser.isEmpty) {
         throw NotedError(ErrorCode.notes_subscribe_failed, message: 'missing auth');
@@ -44,7 +44,7 @@ class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
       _notesSubscription?.cancel();
       _notesSubscription = null;
 
-      emit(NotesState.loading());
+      emit(const NotesState.loading());
 
       _notesSubscription = (await _notes.subscribeNotes(userId: _auth.currentUser.id)).listen((event) {
         add(NotesUpdateEvent(event));
@@ -56,20 +56,20 @@ class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
     }
   }
 
-  void _onUpdateNotes(NotesUpdateEvent event, Emitter<NotesState> emit) async {
+  Future<void> _onUpdateNotes(NotesUpdateEvent event, Emitter<NotesState> emit) async {
     if (event.notes.isEmpty) {
-      emit(NotesState.empty());
+      emit(const NotesState.empty());
     } else {
       emit(NotesState.success(notes: event.notes));
     }
   }
 
-  void _onUpdateError(NotesUpdateErrorEvent event, Emitter<NotesState> emit) async {
+  Future<void> _onUpdateError(NotesUpdateErrorEvent event, Emitter<NotesState> emit) async {
     emit(NotesState.success(notes: state.notes, error: event.error));
   }
 
-  void _onReset(NotesResetEvent event, Emitter<NotesState> emit) async {
-    emit(NotesState.loading());
+  Future<void> _onReset(NotesResetEvent event, Emitter<NotesState> emit) async {
+    emit(const NotesState.loading());
 
     _notesSubscription?.cancel();
     _notesSubscription = null;

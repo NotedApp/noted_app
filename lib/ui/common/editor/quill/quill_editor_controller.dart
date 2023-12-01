@@ -32,7 +32,7 @@ class QuillEditorController extends NotedEditorController {
     if (initial != null) {
       controller = QuillController(
         document: Document.fromDelta(Delta.fromJson(initial)),
-        selection: TextSelection.collapsed(offset: 0),
+        selection: const TextSelection.collapsed(offset: 0),
       );
     }
 

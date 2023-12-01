@@ -9,7 +9,7 @@ class EditContent extends StatelessWidget {
   final NoteModel note;
   final NoteUpdateCallback updateNote;
 
-  const EditContent({required this.note, required this.updateNote});
+  const EditContent({super.key, required this.note, required this.updateNote});
 
   @override
   Widget build(BuildContext context) {

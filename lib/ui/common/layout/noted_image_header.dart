@@ -19,11 +19,11 @@ class NotedImageHeader extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (title != null) Spacer(flex: 2),
+          if (title != null) const Spacer(flex: 2),
           if (title != null) Text(title!, style: theme.textTheme.displayLarge),
-          Spacer(),
+          const Spacer(),
           ConstrainedBox(
-            constraints: BoxConstraints.loose(Size.fromWidth(400)),
+            constraints: BoxConstraints.loose(const Size.fromWidth(400)),
             child: SvgPicture.asset(
               'assets/svg/woman_reading.svg',
               colorFilter: filter,

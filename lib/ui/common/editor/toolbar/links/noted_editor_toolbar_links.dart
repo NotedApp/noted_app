@@ -2,7 +2,7 @@ part of '../noted_editor_toolbar.dart';
 
 class _ToolbarLinkPicker extends StatefulWidget {
   final NotedEditorController controller;
-  final ToolbarStateCallback setToolbarState;
+  final _ToolbarStateCallback setToolbarState;
 
   const _ToolbarLinkPicker({
     required this.controller,
@@ -41,7 +41,7 @@ class _ToolbarLinkPickerState extends State<_ToolbarLinkPicker> {
           color: NotedWidgetColor.tertiary,
           onPressed: () => widget.setToolbarState(_ToolbarState.home),
         ),
-        SizedBox(width: 16),
+        const SizedBox(width: 16),
         Expanded(
           child: NotedTextField(
             type: NotedTextFieldType.outlined,
@@ -50,7 +50,7 @@ class _ToolbarLinkPickerState extends State<_ToolbarLinkPicker> {
             onChanged: (value) => widget.controller.setLink(value),
           ),
         ),
-        SizedBox(width: 8),
+        const SizedBox(width: 8),
       ],
     );
   }

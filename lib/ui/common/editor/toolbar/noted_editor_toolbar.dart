@@ -9,7 +9,7 @@ part 'home/noted_editor_toolbar_home.dart';
 part 'colors/noted_editor_toolbar_colors.dart';
 part 'links/noted_editor_toolbar_links.dart';
 
-typedef ToolbarStateCallback = void Function(_ToolbarState);
+typedef _ToolbarStateCallback = void Function(_ToolbarState);
 
 enum _ToolbarState {
   home,
@@ -63,8 +63,8 @@ class _NotedEditorToolbarState extends State<NotedEditorToolbar> {
         switchOutCurve: Curves.easeOut,
         transitionBuilder: (Widget child, Animation<double> animation) => SlideTransition(
           position: Tween(
-            begin: child.key == _homeKey ? Offset(-1.0, 0.0) : Offset(1.0, 0.0),
-            end: Offset(0.0, 0.0),
+            begin: child.key == _homeKey ? const Offset(-1.0, 0.0) : const Offset(1.0, 0.0),
+            end: Offset.zero,
           ).animate(animation),
           child: child,
         ),

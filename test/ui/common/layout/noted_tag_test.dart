@@ -17,32 +17,32 @@ void main() {
           child: Column(
             children: [
               NotedTag(
-                model: TagModel(
+                model: const TagModel(
                   id: 'small',
                   name: 'small',
                   color: 0xFFFFFFFF,
                 ),
                 size: NotedWidgetSize.small,
-                onPressed: onPressed,
+                onPressed: onPressed.call,
               ),
               NotedTag.add(
                 size: NotedWidgetSize.medium,
-                onPressed: onPressed,
+                onPressed: onPressed.call,
               ),
               NotedTag.delete(
-                model: TagModel(
+                model: const TagModel(
                   id: 'large',
                   name: 'large',
                   color: 0xFFFFFFFF,
                 ),
                 size: NotedWidgetSize.large,
-                onPressed: onPressed,
+                onPressed: onPressed.call,
               ),
               NotedTag.custom(
                 text: 'custom',
                 color: Colors.red.shade500,
                 size: NotedWidgetSize.large,
-                onPressed: onPressed,
+                onPressed: onPressed.call,
               ),
             ],
           ),

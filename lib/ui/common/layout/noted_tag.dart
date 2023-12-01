@@ -16,24 +16,25 @@ class NotedTag extends StatelessWidget {
   final Color color;
   final VoidCallback? onPressed;
 
-  NotedTag({required this.size, required TagModel model, this.onPressed = null})
+  NotedTag({super.key, required this.size, required TagModel model, this.onPressed})
       : _type = _NotedTagType.normal,
         text = model.name,
         color = Color(model.color);
 
   const NotedTag.custom({
+    super.key,
     required this.size,
     required this.text,
     required this.color,
-    this.onPressed = null,
+    this.onPressed,
   }) : _type = _NotedTagType.normal;
 
-  NotedTag.add({required this.size, this.onPressed = null})
+  const NotedTag.add({super.key, required this.size, this.onPressed})
       : _type = _NotedTagType.add,
         text = '',
         color = Colors.transparent;
 
-  NotedTag.delete({required this.size, required TagModel model, this.onPressed = null})
+  NotedTag.delete({super.key, required this.size, required TagModel model, this.onPressed})
       : _type = _NotedTagType.delete,
         text = model.name,
         color = Color(model.color);
@@ -94,14 +95,14 @@ class NotedTag extends StatelessWidget {
           _NotedTagType.add => Row(
               children: [
                 Icon(NotedIcons.plus, size: params.$3, color: colors.$1),
-                SizedBox(width: 2),
+                const SizedBox(width: 2),
                 Text(context.strings().tags_addTag, style: params.$1),
               ],
             ),
           _NotedTagType.delete => Row(
               children: [
                 Text(text, style: params.$1),
-                SizedBox(width: 2),
+                const SizedBox(width: 2),
                 Icon(NotedIcons.trash, size: params.$3, color: colors.$1),
               ],
             ),

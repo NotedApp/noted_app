@@ -14,15 +14,15 @@ import '../../helpers/test_wrapper.dart';
 class _MockRouter extends Mock implements GoRouter {}
 
 void main() {
-  _MockRouter _mockRouter = _MockRouter();
+  _MockRouter mockRouter = _MockRouter();
 
   setUpAll(() {
     UnitTestEnvironment().configure(router: NotedGoRouter());
     registerFallbackValue(FakeBuildContext());
 
-    when(() => _mockRouter.push(captureAny())).thenAnswer((invocation) => Future.value());
-    when(() => _mockRouter.pushReplacement(captureAny())).thenAnswer((invocation) => Future.value());
-    when(() => _mockRouter.canPop()).thenReturn(true);
+    when(() => mockRouter.push(captureAny())).thenAnswer((invocation) => Future.value());
+    when(() => mockRouter.pushReplacement(captureAny())).thenAnswer((invocation) => Future.value());
+    when(() => mockRouter.canPop()).thenReturn(true);
   });
 
   group('NotedGoRouter', () {
@@ -30,7 +30,7 @@ void main() {
       await tester.pumpWidget(
         TestWrapper(
           child: InheritedGoRouter(
-            goRouter: _mockRouter,
+            goRouter: mockRouter,
             child: Builder(
               builder: (context) => Column(
                 children: [
@@ -66,10 +66,10 @@ void main() {
       await tester.tap(find.byIcon(NotedIcons.animation));
       await tester.tap(find.byIcon(NotedIcons.tag));
 
-      verify(() => _mockRouter.push('/settings/account')).called(1);
-      verify(() => _mockRouter.push('/settings/tags')).called(1);
-      verify(() => _mockRouter.pushReplacement('/settings/style')).called(1);
-      verify(() => _mockRouter.pop('result')).called(2);
+      verify(() => mockRouter.push('/settings/account')).called(1);
+      verify(() => mockRouter.push('/settings/tags')).called(1);
+      verify(() => mockRouter.pushReplacement('/settings/style')).called(1);
+      verify(() => mockRouter.pop('result')).called(2);
     });
   });
 }

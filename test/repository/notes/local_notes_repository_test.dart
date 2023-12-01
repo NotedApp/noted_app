@@ -77,7 +77,7 @@ void main() {
       await expectLater(
         () => repository.addNote(
           userId: 'test',
-          note: NotebookNoteModel(
+          note: const NotebookNoteModel(
             id: '',
             title: 'test note',
             document: [],
@@ -93,7 +93,7 @@ void main() {
       await expectLater(
         () => repository.updateNote(
           userId: 'test',
-          note: NotebookNoteModel(
+          note: const NotebookNoteModel(
             id: 'test-note-0',
             title: 'test note',
             document: [],

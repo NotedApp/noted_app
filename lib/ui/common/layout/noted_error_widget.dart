@@ -8,7 +8,7 @@ class NotedErrorWidget extends StatelessWidget {
   final String? ctaText;
   final VoidCallback? ctaCallback;
 
-  const NotedErrorWidget({this.title, this.text, this.ctaText, this.ctaCallback});
+  const NotedErrorWidget({super.key, this.title, this.text, this.ctaText, this.ctaCallback});
 
   @override
   Widget build(BuildContext context) {
@@ -18,16 +18,16 @@ class NotedErrorWidget extends StatelessWidget {
         children: [
           if (title != null)
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 48),
+              padding: const EdgeInsets.symmetric(horizontal: 48),
               child: Text(title!, textAlign: TextAlign.center, style: context.textTheme().displaySmall),
             ),
-          if (title != null) SizedBox(height: 12),
+          if (title != null) const SizedBox(height: 12),
           if (text != null)
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 48),
+              padding: const EdgeInsets.symmetric(horizontal: 48),
               child: Text(text!, textAlign: TextAlign.center),
             ),
-          if (ctaCallback != null) SizedBox(height: 16),
+          if (ctaCallback != null) const SizedBox(height: 16),
           if (ctaCallback != null)
             Align(
               child: NotedTextButton(

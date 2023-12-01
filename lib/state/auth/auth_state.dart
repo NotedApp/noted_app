@@ -21,7 +21,7 @@ final class AuthState extends Equatable {
   const AuthState({
     this.status = AuthStatus.unauthenticated,
     this.user = const UserModel.empty(),
-    this.error = null,
+    this.error,
   });
 
   const AuthState.unauthenticated({NotedError? error}) : this(error: error);

@@ -13,7 +13,7 @@ import 'package:noted_app/util/errors/noted_exception.dart';
 class PasswordResetPage extends StatefulWidget {
   final String initialEmail;
 
-  PasswordResetPage({this.initialEmail = '', super.key});
+  const PasswordResetPage({this.initialEmail = '', super.key});
 
   @override
   State<StatefulWidget> createState() => _PasswordResetPageState();
@@ -21,7 +21,7 @@ class PasswordResetPage extends StatefulWidget {
 
 class _PasswordResetPageState extends State<PasswordResetPage> {
   late final TextEditingController _emailController;
-  String? _emailError = null;
+  String? _emailError;
 
   @override
   void initState() {
@@ -44,9 +44,9 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
         key: key,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(height: 18),
+          const SizedBox(height: 18),
           Text(strings.login_resetPasswordBody),
-          SizedBox(height: 18),
+          const SizedBox(height: 18),
           NotedTextField(
             controller: _emailController,
             name: strings.login_email,
@@ -56,7 +56,7 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
             keyboardType: TextInputType.emailAddress,
             type: NotedTextFieldType.outlined,
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           NotedTextButton(
             label: strings.login_resetPasswordCta,
             type: NotedTextButtonType.filled,

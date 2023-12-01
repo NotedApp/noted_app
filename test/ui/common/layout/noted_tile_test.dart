@@ -23,7 +23,7 @@ void main() {
                 height: 150,
                 child: NotedTile(
                   noteId: 'notebook0',
-                  onPressed: notebookCallback,
+                  onPressed: notebookCallback.call,
                 ),
               ),
               SizedBox(
@@ -31,7 +31,7 @@ void main() {
                 height: 150,
                 child: NotedTile(
                   noteId: 'cookbook0',
-                  onPressed: cookbookCallback,
+                  onPressed: cookbookCallback.call,
                 ),
               ),
               SizedBox(
@@ -39,7 +39,7 @@ void main() {
                 height: 150,
                 child: NotedTile(
                   noteId: 'cookbook1',
-                  onPressed: cookbookCallback,
+                  onPressed: cookbookCallback.call,
                 ),
               ),
             ],
