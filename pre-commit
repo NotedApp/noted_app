@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Run Dart format
+formatOutput=$(dart format -l 120 .)
+
+echo
+echo "--- code formatted ---"
+echo "$formatOutput"
+echo
+
+# Run Dart analyze and check for errors
+if ! analyzeOutput=$(dart analyze); then
+    echo "--- commit rejected after dart analysis ---"
+    echo "$analyzeOutput"
+    echo
+    exit 1
+fi
+
+# If we made it this far, the commit is allowed
+exit 0
