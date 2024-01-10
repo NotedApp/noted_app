@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -21,6 +23,18 @@ void main() {
       controller = NotedEditorController.quill(
         initial: testData0,
       ) as QuillEditorController;
+    });
+
+    testWidgets('expands and collapses', (tester) async {
+      await tester.pumpWidget(TestWrapper(child: NotedEditorToolbar(controller: controller)));
+
+      Finder toolbar = find.byType(NotedEditorToolbar);
+
+      await tester.drag(toolbar, const Offset(0, 100));
+      await tester.pumpAndSettle();
+
+      await tester.drag(toolbar, const Offset(0, -100));
+      await tester.pumpAndSettle();
     });
 
     testWidgets('renders a set of formatting buttons', (tester) async {
