@@ -32,26 +32,29 @@ class _ToolbarLinkPickerState extends State<_ToolbarLinkPicker> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        NotedIconButton(
-          icon: NotedIcons.chevronLeft,
-          type: NotedIconButtonType.filled,
-          size: NotedWidgetSize.small,
-          color: NotedWidgetColor.tertiary,
-          onPressed: () => widget.setToolbarState(_ToolbarState.home),
-        ),
-        const SizedBox(width: 16),
-        Expanded(
-          child: NotedTextField(
-            type: NotedTextFieldType.outlined,
-            name: context.strings().editor_linkPickerTitle,
-            controller: textController,
-            onChanged: (value) => widget.controller.setLink(value),
+    return Padding(
+      padding: _toolbarPadding,
+      child: Row(
+        children: [
+          NotedIconButton(
+            icon: NotedIcons.chevronLeft,
+            type: NotedIconButtonType.filled,
+            size: NotedWidgetSize.small,
+            color: NotedWidgetColor.tertiary,
+            onPressed: () => widget.setToolbarState(_ToolbarState.home),
           ),
-        ),
-        const SizedBox(width: 8),
-      ],
+          const SizedBox(width: 16),
+          Expanded(
+            child: NotedTextField(
+              type: NotedTextFieldType.outlined,
+              name: context.strings().editor_linkPickerTitle,
+              controller: textController,
+              onChanged: (value) => widget.controller.setLink(value),
+            ),
+          ),
+          const SizedBox(width: 8),
+        ],
+      ),
     );
   }
 
