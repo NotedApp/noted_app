@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
+import 'package:flutter_quill/quill_delta.dart';
 import 'package:noted_app/ui/common/editor/noted_editor_attributes.dart';
 import 'package:noted_app/ui/common/editor/noted_editor_controller.dart';
 import 'package:noted_app/util/extensions.dart';
