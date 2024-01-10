@@ -11,6 +11,8 @@ class _ToolbarHome extends StatelessWidget {
     ColorScheme colors = Theme.of(context).colorScheme;
 
     return GridView.count(
+      padding: _toolbarPadding,
+      physics: const NeverScrollableScrollPhysics(),
       crossAxisCount: 7,
       mainAxisSpacing: 8,
       crossAxisSpacing: 12,

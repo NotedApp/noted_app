@@ -23,6 +23,18 @@ void main() {
       ) as QuillEditorController;
     });
 
+    testWidgets('expands and collapses', (tester) async {
+      await tester.pumpWidget(TestWrapper(child: NotedEditorToolbar(controller: controller)));
+
+      Finder toolbar = find.byType(NotedEditorToolbar);
+
+      await tester.drag(toolbar, const Offset(0, 100));
+      await tester.pumpAndSettle();
+
+      await tester.drag(toolbar, const Offset(0, -100));
+      await tester.pumpAndSettle();
+    });
+
     testWidgets('renders a set of formatting buttons', (tester) async {
       await tester.pumpWidget(TestWrapper(child: NotedEditorToolbar(controller: controller)));
 

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:noted_app/ui/common/editor/noted_editor_attributes.dart';
 import 'package:noted_app/ui/common/editor/toolbar/home/noted_editor_state_button.dart';
@@ -23,6 +24,16 @@ final Key _textColorKey = Key(_ToolbarState.textColor.name);
 final Key _highlightColorKey = Key(_ToolbarState.highlightColor.name);
 final Key _linkKey = Key(_ToolbarState.link.name);
 
+const double _toolbarHandleHeight = 4;
+const double _toolbarHandleWidth = 24;
+const double _toolbarHandlePadding = 6;
+
+const Duration _toolbarAnimationDuration = Duration(milliseconds: 200);
+const double _toolbarMaxHeight = 112;
+const double _toolbarMinHeight = 42;
+const double _toolbarMidHeight = (_toolbarMaxHeight + _toolbarMinHeight) / 2;
+const EdgeInsets _toolbarPadding = EdgeInsets.fromLTRB(14, 16, 14, 4);
+
 class NotedEditorToolbar extends StatefulWidget {
   final NotedEditorController controller;
 
@@ -34,6 +45,7 @@ class NotedEditorToolbar extends StatefulWidget {
 
 class _NotedEditorToolbarState extends State<NotedEditorToolbar> {
   _ToolbarState state = _ToolbarState.home;
+  double toolbarHeight = _toolbarMaxHeight;
 
   void setToolbarState(_ToolbarState newState) {
     setState(() => state = newState);
@@ -43,20 +55,95 @@ class _NotedEditorToolbarState extends State<NotedEditorToolbar> {
   Widget build(BuildContext context) {
     ColorScheme colors = Theme.of(context).colorScheme;
 
-    return Container(
-      width: double.infinity,
-      height: 112,
-      padding: const EdgeInsets.fromLTRB(14, 12, 14, 8),
-      decoration: BoxDecoration(
-        color: colors.secondary,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-        boxShadow: [
-          BoxShadow(
-            color: colors.onBackground.withAlpha(64),
-            blurRadius: 4,
-          ),
-        ],
+    return GestureDetector(
+      onVerticalDragUpdate: (details) {
+        final double dragY = details.delta.dy;
+        final double heightY = clampDouble(toolbarHeight - dragY, _toolbarMinHeight, _toolbarMaxHeight);
+
+        setState(() => toolbarHeight = heightY);
+      },
+      onVerticalDragEnd: (details) {
+        final double snappedHeight = toolbarHeight > _toolbarMidHeight ? _toolbarMaxHeight : _toolbarMinHeight;
+        setState(() => toolbarHeight = snappedHeight);
+      },
+      child: AnimatedContainer(
+        duration: _toolbarAnimationDuration,
+        curve: Curves.easeInOut,
+        width: double.infinity,
+        height: toolbarHeight,
+        decoration: BoxDecoration(
+          color: colors.secondary,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+          boxShadow: [
+            BoxShadow(
+              color: colors.onBackground.withAlpha(64),
+              blurRadius: 4,
+            ),
+          ],
+        ),
+        child: Stack(
+          alignment: AlignmentDirectional.topCenter,
+          children: [
+            Positioned.fill(
+              child: _NotedEditorToolbarContent(
+                opacity: (toolbarHeight - _toolbarMinHeight) / (_toolbarMaxHeight - _toolbarMinHeight),
+                state: state,
+                setState: setToolbarState,
+                controller: widget.controller,
+              ),
+            ),
+            const _NotedEditorToolbarDragHandle(),
+          ],
+        ),
       ),
+    );
+  }
+}
+
+class _NotedEditorToolbarDragHandle extends StatelessWidget {
+  const _NotedEditorToolbarDragHandle();
+
+  @override
+  Widget build(BuildContext context) {
+    ColorScheme colors = Theme.of(context).colorScheme;
+
+    return Padding(
+      padding: const EdgeInsets.only(top: _toolbarHandlePadding),
+      child: Container(
+        width: _toolbarHandleWidth,
+        height: _toolbarHandleHeight,
+        decoration: BoxDecoration(
+          color: colors.tertiary,
+          borderRadius: const BorderRadius.vertical(
+            top: Radius.circular(_toolbarHandleHeight / 2),
+            bottom: Radius.circular(_toolbarHandleHeight / 2),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _NotedEditorToolbarContent extends StatelessWidget {
+  final double opacity;
+  final _ToolbarState state;
+  final void Function(_ToolbarState) setState;
+  final NotedEditorController controller;
+
+  const _NotedEditorToolbarContent({
+    required this.opacity,
+    required this.state,
+    required this.setState,
+    required this.controller,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    ColorScheme colors = Theme.of(context).colorScheme;
+
+    return AnimatedOpacity(
+      opacity: opacity,
+      duration: _toolbarAnimationDuration,
       child: AnimatedSwitcher(
         duration: const Duration(milliseconds: 200),
         switchInCurve: Curves.easeIn,
@@ -70,27 +157,27 @@ class _NotedEditorToolbarState extends State<NotedEditorToolbar> {
         ),
         child: switch (state) {
           _ToolbarState.home => _ToolbarHome(
-              controller: widget.controller,
-              setToolbarState: setToolbarState,
+              controller: controller,
+              setToolbarState: setState,
               key: _homeKey,
             ),
           _ToolbarState.textColor => _ToolbarColorPicker(
-              controller: widget.controller,
+              controller: controller,
               attribute: NotedEditorAttribute.textColor,
               defaultColor: colors.onBackground,
-              setToolbarState: setToolbarState,
+              setToolbarState: setState,
               key: _textColorKey,
             ),
           _ToolbarState.highlightColor => _ToolbarColorPicker(
-              controller: widget.controller,
+              controller: controller,
               attribute: NotedEditorAttribute.textBackground,
               defaultColor: colors.background,
-              setToolbarState: setToolbarState,
+              setToolbarState: setState,
               key: _highlightColorKey,
             ),
           _ToolbarState.link => _ToolbarLinkPicker(
-              controller: widget.controller,
-              setToolbarState: setToolbarState,
+              controller: controller,
+              setToolbarState: setState,
               key: _linkKey,
             ),
         },

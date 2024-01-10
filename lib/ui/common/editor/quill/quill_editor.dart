@@ -26,25 +26,23 @@ class QuillEditor extends NotedEditor {
     ThemeData theme = Theme.of(context);
     quill.QuillController quillController = (controller as QuillEditorController).controller;
 
-    return quill.QuillProvider(
-      configurations: quill.QuillConfigurations(controller: quillController),
-      child: quill.QuillEditor(
-        scrollController: usePrimaryScrollController
-            ? PrimaryScrollController.maybeOf(context) ?? ScrollController()
-            : ScrollController(),
-        configurations: quill.QuillEditorConfigurations(
-          padding: padding,
-          autoFocus: autofocus,
-          readOnly: readonly,
-          expands: true,
-          placeholder: placeholder,
-          showCursor: !readonly,
-          keyboardAppearance: theme.brightness,
-          onTapUp: _handleTap,
-          customStyles: _getStyles(context),
-        ),
-        focusNode: focusNode ?? FocusNode(),
+    return quill.QuillEditor(
+      scrollController: usePrimaryScrollController
+          ? PrimaryScrollController.maybeOf(context) ?? ScrollController()
+          : ScrollController(),
+      configurations: quill.QuillEditorConfigurations(
+        controller: quillController,
+        padding: padding,
+        autoFocus: autofocus,
+        readOnly: readonly,
+        expands: true,
+        placeholder: placeholder,
+        showCursor: !readonly,
+        keyboardAppearance: theme.brightness,
+        onTapUp: _handleTap,
+        customStyles: _getStyles(context),
       ),
+      focusNode: focusNode ?? FocusNode(),
     );
   }
 

@@ -94,25 +94,28 @@ class _ToolbarColorPickerState extends State<_ToolbarColorPicker> {
       );
     }
 
-    return Row(
-      children: [
-        NotedIconButton(
-          icon: NotedIcons.chevronLeft,
-          type: NotedIconButtonType.filled,
-          size: NotedWidgetSize.small,
-          color: NotedWidgetColor.tertiary,
-          onPressed: () => widget.setToolbarState(_ToolbarState.home),
-        ),
-        const SizedBox(width: 16),
-        Expanded(
-          child: GridView.count(
-            crossAxisCount: 6,
-            mainAxisSpacing: 8,
-            crossAxisSpacing: 12,
-            children: widget._palette.map(createButton).toList(),
+    return Padding(
+      padding: _toolbarPadding,
+      child: Row(
+        children: [
+          NotedIconButton(
+            icon: NotedIcons.chevronLeft,
+            type: NotedIconButtonType.filled,
+            size: NotedWidgetSize.small,
+            color: NotedWidgetColor.tertiary,
+            onPressed: () => widget.setToolbarState(_ToolbarState.home),
           ),
-        ),
-      ],
+          const SizedBox(width: 16),
+          Expanded(
+            child: GridView.count(
+              crossAxisCount: 6,
+              mainAxisSpacing: 8,
+              crossAxisSpacing: 12,
+              children: widget._palette.map(createButton).toList(),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
