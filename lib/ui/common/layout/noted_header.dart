@@ -20,7 +20,7 @@ class NotedHeader extends AppBar {
             ...trailingActions.map(_getAction),
             const SizedBox(width: 4),
           ],
-          forceMaterialTransparency: true,
+          // forceMaterialTransparency: true,
         );
 }
 

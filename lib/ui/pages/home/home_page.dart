@@ -47,6 +47,7 @@ class _HomePageState extends State<HomePage> {
               icon: NotedIcons.trash,
               type: NotedIconButtonType.filled,
               size: NotedWidgetSize.small,
+              color: NotedWidgetColor.tertiary,
               onPressed: () => _confirmDeleteNotes(context, selectedNotes),
             ),
             NotedIconButton(
@@ -65,9 +66,9 @@ class _HomePageState extends State<HomePage> {
           ];
 
     return NotedHeaderPage(
-      title: strings.notes_title,
+      title: isSelecting ? selectedNotes.length.toString() : strings.notes_title,
       hasBackButton: false,
-      headerBackgroundColor: isSelecting ? colors.tertiary : colors.background,
+      headerBackgroundColor: isSelecting ? colors.secondary : colors.background,
       trailingActions: trailingActions,
       floatingActionButton: NotedIconButton(
         icon: NotedIcons.plus,

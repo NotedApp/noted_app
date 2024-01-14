@@ -25,10 +25,10 @@ class HomeContent extends StatelessWidget {
     return NotedBlocSelector<NotesBloc, NotesState, List<String>>(
       selector: (state) => state.notes.keys.toList(),
       builder: (context, _, state) => Padding(
-        padding: const EdgeInsets.fromLTRB(12, 16, 12, 0),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         child: GridView.builder(
           itemCount: state.length,
-          padding: const EdgeInsets.only(bottom: 128),
+          padding: const EdgeInsets.only(top: 16, bottom: 128),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             mainAxisSpacing: _noteSpacing,
