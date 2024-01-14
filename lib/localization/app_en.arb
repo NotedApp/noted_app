@@ -99,6 +99,8 @@
 
   "notes_title": "noted.",
   "notes_addPicker": "add a note...",
+  "notes_delete_confirmText": "are you sure you want to delete these notes? recently deleted notes can be recovered in the app settings.",
+  "notes_error_deleteNoteFailed": "failed to delete notes, please try again.",
 
   "notes_error_failed": "can't load notes, please refresh and try again.",
   "notes_error_empty": "get started by creating a note using the button below!",

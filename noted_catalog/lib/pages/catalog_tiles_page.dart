@@ -9,7 +9,7 @@ class CatalogTilesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> notes = context.select<NotesBloc, List<String>>(
-      (bloc) => bloc.state.notes.map((note) => note.id).toList(),
+      (bloc) => bloc.state.notes.keys.toList(),
     );
 
     return GridView.count(

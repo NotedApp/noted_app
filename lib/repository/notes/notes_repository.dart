@@ -16,4 +16,7 @@ abstract class NotesRepository {
 
   /// Deletes the note with the given ID for the given user.
   Future<void> deleteNote({required String userId, required String noteId});
+
+  /// Deletes all notes with the given IDs for the given user.
+  Future<void> deleteNotes({required String userId, required List<String> noteIds});
 }

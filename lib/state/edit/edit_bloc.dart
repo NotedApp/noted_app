@@ -10,24 +10,38 @@ import 'package:noted_app/state/noted_bloc.dart';
 import 'package:noted_app/util/environment/dependencies.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
+import 'package:rxdart/rxdart.dart';
+
+const int _defaultUpdateDebounceMs = 250;
 
 class EditBloc extends NotedBloc<EditEvent, EditState> {
+  final int _updateDebounceMs;
   final NotesRepository _notes;
   final AuthRepository _auth;
   late final StreamSubscription<UserModel> _userSubscription;
   StreamSubscription<NoteModel>? _noteSubscription;
 
-  EditBloc({required String noteId, NotesRepository? notesRepository, AuthRepository? authRepository})
-      : _notes = notesRepository ?? locator<NotesRepository>(),
+  EditBloc({
+    required String noteId,
+    NotesRepository? notesRepository,
+    AuthRepository? authRepository,
+    int? updateDebounceMs,
+  })  : _notes = notesRepository ?? locator<NotesRepository>(),
         _auth = authRepository ?? locator<AuthRepository>(),
+        _updateDebounceMs = updateDebounceMs ?? _defaultUpdateDebounceMs,
         super(const EditState(note: null), 'note') {
     _init();
     add(EditLoadEvent(noteId));
   }
 
-  EditBloc.add({required NotedPlugin plugin, NotesRepository? notesRepository, AuthRepository? authRepository})
-      : _notes = notesRepository ?? locator<NotesRepository>(),
+  EditBloc.add({
+    required NotedPlugin plugin,
+    NotesRepository? notesRepository,
+    AuthRepository? authRepository,
+    int? updateDebounceMs,
+  })  : _notes = notesRepository ?? locator<NotesRepository>(),
         _auth = authRepository ?? locator<AuthRepository>(),
+        _updateDebounceMs = updateDebounceMs ?? _defaultUpdateDebounceMs,
         super(const EditState(note: null), 'note') {
     _init();
 
@@ -44,11 +58,14 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
   void _init() {
     on<EditAddEvent>(_onAddNote, transformer: restartable());
     on<EditLoadEvent>(_onLoadNote, transformer: restartable());
-    on<EditUpdateEvent>(_onUpdateNote);
     on<EditDeleteEvent>(_onDeleteNote, transformer: restartable());
     on<EditRemoteUpdateEvent>(_onRemoteUpdateNote);
     on<EditRemoteUpdateErrorEvent>(_onRemoteUpdateError);
     on<EditCloseEvent>(_onClose);
+
+    on<EditUpdateEvent>(_onUpdateNote, transformer: (updates, mapper) {
+      return updates.debounceTime(Duration(milliseconds: _updateDebounceMs)).switchMap(mapper);
+    });
 
     _userSubscription = _auth.userStream.listen((user) {
       if (user.isEmpty) {
@@ -72,7 +89,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
   Future<void> _onLoadNote(EditLoadEvent event, Emitter<EditState> emit) async {
     try {
       if (state.status != EditStatus.initial) {
-        throw NotedError(ErrorCode.notes_subscribe_failed, message: 'invalid status: ${state.status}');
+        return;
       }
 
       if (_auth.currentUser.isEmpty) {
@@ -82,14 +99,14 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
       emit(EditState(note: state.note, status: EditStatus.loading));
       await _subscribeNote(event.id, emit);
     } catch (e) {
-      emit(EditState(note: null, status: EditStatus.loaded, error: NotedError.fromObject(e)));
+      emit(EditState(note: null, status: EditStatus.empty, error: NotedError.fromObject(e)));
     }
   }
 
   Future<void> _onAddNote(EditAddEvent event, Emitter<EditState> emit) async {
     try {
       if (state.status != EditStatus.initial) {
-        throw NotedError(ErrorCode.notes_add_failed, message: 'invalid status: ${state.status}');
+        return;
       }
 
       if (_auth.currentUser.isEmpty) {
@@ -100,7 +117,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
       String id = await _notes.addNote(userId: _auth.currentUser.id, note: event.note);
       await _subscribeNote(id, emit);
     } catch (e) {
-      emit(EditState(note: null, status: EditStatus.loaded, error: NotedError.fromObject(e)));
+      emit(EditState(note: null, status: EditStatus.empty, error: NotedError.fromObject(e)));
     }
   }
 
@@ -110,7 +127,6 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
         throw NotedError(ErrorCode.notes_update_failed, message: 'missing auth');
       }
 
-      emit(EditState(note: state.note, status: EditStatus.updating));
       await _notes.updateNote(userId: _auth.currentUser.id, note: event.note);
     } catch (e) {
       emit(EditState(note: state.note, status: EditStatus.loaded, error: NotedError.fromObject(e)));
@@ -119,12 +135,12 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
 
   Future<void> _onDeleteNote(EditDeleteEvent event, Emitter<EditState> emit) async {
     try {
-      if (![EditStatus.loaded, EditStatus.updating].contains(state.status)) {
-        throw NotedError(ErrorCode.notes_delete_failed, message: 'invalid status: ${state.status}');
+      if (state.status != EditStatus.loaded) {
+        return;
       }
 
       if (_auth.currentUser.isEmpty) {
-        throw NotedError(ErrorCode.notes_delete_failed, message: 'missing auth');
+        throw NotedError(ErrorCode.notes_update_failed, message: 'missing auth'); // coverage:ignore-line
       }
 
       emit(EditState(note: state.note, status: EditStatus.deleting));
@@ -144,7 +160,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
   }
 
   Future<void> _onClose(EditCloseEvent event, Emitter<EditState> emit) async {
-    emit(const EditState(note: null, status: EditStatus.loaded));
+    emit(const EditState(note: null, status: EditStatus.empty));
   }
 
   @override

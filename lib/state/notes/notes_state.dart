@@ -11,23 +11,23 @@ enum NotesStatus {
 
 final class NotesState extends Equatable {
   final NotesStatus status;
-  final List<NoteModel> notes;
+  final Map<String, NoteModel> notes;
   final NotedError? error;
 
   const NotesState.loading()
       : status = NotesStatus.loading,
-        notes = const [],
+        notes = const {},
         error = null;
 
   const NotesState.success({required this.notes, this.error}) : status = NotesStatus.loaded;
 
   const NotesState.error({required this.error})
       : status = NotesStatus.error,
-        notes = const [];
+        notes = const {};
 
   const NotesState.empty()
       : status = NotesStatus.empty,
-        notes = const [],
+        notes = const {},
         error = null;
 
   @override

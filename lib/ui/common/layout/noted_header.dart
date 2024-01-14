@@ -8,6 +8,7 @@ class NotedHeader extends AppBar {
     String? title,
     List<NotedIconButton> trailingActions = const [],
     super.bottom,
+    super.backgroundColor,
     super.key,
   }) : super(
           toolbarHeight: 72,
@@ -19,7 +20,7 @@ class NotedHeader extends AppBar {
             ...trailingActions.map(_getAction),
             const SizedBox(width: 4),
           ],
-          forceMaterialTransparency: true,
+          // forceMaterialTransparency: true,
         );
 }
 

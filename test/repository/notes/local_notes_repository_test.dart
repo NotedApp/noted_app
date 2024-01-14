@@ -32,6 +32,7 @@ void main() {
           [...localNotes.values, testNote],
           [...localNotes.values, testNote.copyWith(title: 'test updated note')],
           [...localNotes.values],
+          [],
         ]),
       );
 
@@ -50,6 +51,11 @@ void main() {
       await repository.deleteNote(
         userId: 'test',
         noteId: 'test-0',
+      );
+
+      await repository.deleteNotes(
+        userId: 'test',
+        noteIds: localNotes.values.map((note) => note.id).toList(),
       );
     });
 
@@ -108,6 +114,15 @@ void main() {
 
       await expectLater(
         () => repository.deleteNote(userId: 'test', noteId: 'test-note-0'),
+        throwsA(NotedError(ErrorCode.notes_delete_failed)),
+      );
+    });
+
+    test('handles delete multiple error', () async {
+      repository.setShouldThrow(true);
+
+      await expectLater(
+        () => repository.deleteNotes(userId: 'test', noteIds: ['test-note-0']),
         throwsA(NotedError(ErrorCode.notes_delete_failed)),
       );
     });

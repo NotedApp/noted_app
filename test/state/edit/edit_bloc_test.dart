@@ -53,7 +53,7 @@ void main() {
 
     blocTest(
       'loads and updates a note',
-      build: () => EditBloc(noteId: 'test-note-0'),
+      build: () => EditBloc(noteId: 'test-note-0', updateDebounceMs: 0),
       act: (bloc) async {
         await Future.delayed(const Duration(milliseconds: 10));
         bloc.add(EditUpdateEvent(updated));
@@ -62,7 +62,6 @@ void main() {
       expect: () => [
         const EditState(note: null, status: EditStatus.loading),
         EditState(note: existing, status: EditStatus.loaded),
-        EditState(note: existing, status: EditStatus.updating),
         EditState(note: updated, status: EditStatus.loaded),
       ],
     );
@@ -78,7 +77,7 @@ void main() {
       expect: () => [
         const EditState(note: null, status: EditStatus.loading),
         EditState(note: existing, status: EditStatus.loaded),
-        const EditState(note: null, status: EditStatus.loaded),
+        const EditState(note: null, status: EditStatus.empty),
       ],
     );
 
@@ -89,7 +88,7 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         const EditState(note: null, status: EditStatus.loading),
-        EditState(note: null, status: EditStatus.loaded, error: NotedError(ErrorCode.notes_add_failed)),
+        EditState(note: null, status: EditStatus.empty, error: NotedError(ErrorCode.notes_add_failed)),
       ],
     );
 
@@ -101,7 +100,7 @@ void main() {
       expect: () => [
         EditState(
           note: null,
-          status: EditStatus.loaded,
+          status: EditStatus.empty,
           error: NotedError(ErrorCode.notes_add_failed, message: 'missing auth'),
         ),
       ],
@@ -116,11 +115,6 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         const EditState(note: null, status: EditStatus.loading),
-        EditState(
-          note: null,
-          status: EditStatus.loaded,
-          error: NotedError(ErrorCode.notes_add_failed, message: 'invalid status: EditStatus.loading'),
-        ),
         EditState(note: addedNote, status: EditStatus.loaded),
       ],
     );
@@ -132,7 +126,7 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         const EditState(note: null, status: EditStatus.loading),
-        EditState(note: null, status: EditStatus.loaded, error: NotedError(ErrorCode.notes_subscribe_failed)),
+        EditState(note: null, status: EditStatus.empty, error: NotedError(ErrorCode.notes_subscribe_failed)),
       ],
     );
 
@@ -144,7 +138,7 @@ void main() {
       expect: () => [
         EditState(
           note: null,
-          status: EditStatus.loaded,
+          status: EditStatus.empty,
           error: NotedError(ErrorCode.notes_subscribe_failed, message: 'missing auth'),
         ),
       ],
@@ -159,11 +153,6 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         const EditState(note: null, status: EditStatus.loading),
-        EditState(
-          note: null,
-          status: EditStatus.loaded,
-          error: NotedError(ErrorCode.notes_subscribe_failed, message: 'invalid status: EditStatus.loading'),
-        ),
         EditState(note: existing, status: EditStatus.loaded),
       ],
     );
@@ -185,7 +174,7 @@ void main() {
 
     blocTest(
       'updates a note and handles error',
-      build: () => EditBloc(noteId: 'test-note-0'),
+      build: () => EditBloc(noteId: 'test-note-0', updateDebounceMs: 0),
       act: (bloc) async {
         await Future.delayed(const Duration(milliseconds: 10));
         notes().setShouldThrow(true);
@@ -196,7 +185,6 @@ void main() {
       expect: () => [
         const EditState(note: null, status: EditStatus.loading),
         EditState(note: existing, status: EditStatus.loaded),
-        EditState(note: existing, status: EditStatus.updating),
         EditState(note: existing, status: EditStatus.loaded, error: NotedError(ErrorCode.notes_update_failed)),
       ],
     );
@@ -215,7 +203,7 @@ void main() {
       expect: () => [
         const EditState(note: null, status: EditStatus.loading),
         EditState(note: existing, status: EditStatus.loaded),
-        const EditState(note: null, status: EditStatus.loaded),
+        const EditState(note: null, status: EditStatus.empty),
         EditState(
           note: null,
           status: EditStatus.loaded,
@@ -256,12 +244,7 @@ void main() {
       expect: () => [
         const EditState(note: null, status: EditStatus.loading),
         EditState(note: existing, status: EditStatus.loaded),
-        const EditState(note: null, status: EditStatus.loaded),
-        EditState(
-          note: null,
-          status: EditStatus.loaded,
-          error: NotedError(ErrorCode.notes_delete_failed, message: 'missing auth'),
-        ),
+        const EditState(note: null, status: EditStatus.empty),
       ],
     );
 
@@ -274,11 +257,6 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         const EditState(note: null, status: EditStatus.loading),
-        EditState(
-          note: null,
-          status: EditStatus.loaded,
-          error: NotedError(ErrorCode.notes_delete_failed, message: 'invalid status: EditStatus.loading'),
-        ),
         EditState(note: existing, status: EditStatus.loaded),
       ],
     );

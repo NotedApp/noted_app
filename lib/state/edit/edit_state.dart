@@ -7,7 +7,6 @@ enum EditStatus {
   empty,
   loading,
   loaded,
-  updating,
   deleting,
   deleted,
 }

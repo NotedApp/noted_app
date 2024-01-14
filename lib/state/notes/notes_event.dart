@@ -20,4 +20,10 @@ class NotesUpdateErrorEvent extends NotesEvent {
   const NotesUpdateErrorEvent(this.error);
 }
 
+class NotesDeleteEvent extends NotesEvent {
+  final List<String> noteIds;
+
+  const NotesDeleteEvent(this.noteIds);
+}
+
 class NotesResetEvent extends NotesEvent {}

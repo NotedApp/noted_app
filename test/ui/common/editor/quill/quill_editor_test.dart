@@ -48,6 +48,26 @@ void main() {
       verify(() => onPressed()).called(1);
     });
 
+    testWidgets('quill editor handles long tap', (tester) async {
+      MockVoidCallback onLongPressed = MockVoidCallback();
+
+      await tester.pumpWidget(
+        TestWrapper(
+          child: NotedEditor.quill(
+            controller: NotedEditorController.quill(),
+            onLongPressed: onLongPressed.call,
+          ),
+        ),
+      );
+
+      Finder editor = find.byType(QuillEditor);
+
+      await tester.longPress(editor);
+
+      expect(editor, findsOneWidget);
+      verify(() => onLongPressed()).called(1);
+    });
+
     testWidgets('quill editor handles tap with invalid controller', (tester) async {
       MockVoidCallback onPressed = MockVoidCallback();
 

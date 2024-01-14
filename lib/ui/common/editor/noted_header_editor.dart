@@ -10,6 +10,7 @@ class NotedHeaderEditor extends StatelessWidget {
   final bool autofocus;
   final EdgeInsetsGeometry padding;
   final VoidCallback? onPressed;
+  final VoidCallback? onLongPressed;
 
   const NotedHeaderEditor({
     required this.controller,
@@ -20,6 +21,7 @@ class NotedHeaderEditor extends StatelessWidget {
     this.autofocus = false,
     this.padding = EdgeInsets.zero,
     this.onPressed,
+    this.onLongPressed,
     super.key,
   });
 
@@ -38,6 +40,7 @@ class NotedHeaderEditor extends StatelessWidget {
         usePrimaryScrollController: true,
         padding: padding,
         onPressed: onPressed,
+        onLongPressed: onLongPressed,
       ),
     );
   }

@@ -9,8 +9,9 @@ import 'package:ogp_data_extract/ogp_data_extract.dart';
 class CookbookTileContent extends StatefulWidget {
   final CookbookNoteModel note;
   final VoidCallback? onPressed;
+  final VoidCallback? onLongPressed;
 
-  const CookbookTileContent({required this.note, this.onPressed, super.key});
+  const CookbookTileContent({required this.note, this.onPressed, this.onLongPressed, super.key});
 
   @override
   State<StatefulWidget> createState() => _CookbookTileContentState();
@@ -80,14 +81,18 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
       readonly: true,
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 36),
       onPressed: widget.onPressed,
+      onLongPressed: widget.onLongPressed,
       header: header,
     );
   }
 
   Widget _buildLinkedTile(BuildContext context) {
-    Strings strings = context.strings();
-    final String prepTime = strings.cookbook_prepTime;
-    final String cookTime = strings.cookbook_cookTime;
+    final strings = context.strings();
+    final prepTime = strings.cookbook_prepTime;
+    final cookTime = strings.cookbook_cookTime;
+
+    final info = MediaQuery.of(context);
+    final imageSize = (info.size.width * info.devicePixelRatio / 4 / NotedWidgetConfig.tileAspectRatio).round();
 
     return Stack(
       fit: StackFit.expand,
@@ -102,6 +107,8 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
                 child: CachedNetworkImage(
                   imageUrl: snapshot.data!,
                   fit: BoxFit.cover,
+                  memCacheHeight: imageSize,
+                  maxHeightDiskCache: imageSize,
                 ),
               );
               // coverage:ignore-end
