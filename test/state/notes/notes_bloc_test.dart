@@ -43,9 +43,7 @@ void main() {
         await Future.delayed(const Duration(milliseconds: 10));
         notes().deleteNote(userId: auth().currentUser.id, noteId: 'test');
         await Future.delayed(const Duration(milliseconds: 5));
-        notes().deleteNote(userId: auth().currentUser.id, noteId: 'test-note-1');
-        await Future.delayed(const Duration(milliseconds: 5));
-        notes().deleteNote(userId: auth().currentUser.id, noteId: 'test-note-0');
+        bloc.add(NotesDeleteEvent(localNotes.values.map((note) => note.id).toList()));
         await Future.delayed(const Duration(milliseconds: 10));
       },
       wait: const Duration(milliseconds: 10),
@@ -54,7 +52,6 @@ void main() {
         NotesState.success(notes: localNotes.values.toList()),
         NotesState.success(notes: [...localNotes.values, testNote]),
         NotesState.success(notes: localNotes.values.toList()),
-        NotesState.success(notes: [localNotes['test-note-0']!]),
         const NotesState.empty(),
       ],
     );
@@ -112,6 +109,20 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         NotesState.error(error: NotedError(ErrorCode.notes_subscribe_failed, message: 'missing auth')),
+      ],
+    );
+
+    blocTest(
+      'delete notes for a user fails with no auth',
+      setUp: () async => auth().signOut(),
+      build: NotesBloc.new,
+      act: (bloc) => bloc.add(const NotesDeleteEvent([])),
+      wait: const Duration(milliseconds: 10),
+      expect: () => [
+        NotesState.success(
+          notes: const [],
+          error: NotedError(ErrorCode.notes_delete_failed, message: 'missing auth'),
+        ),
       ],
     );
   });

@@ -12,25 +12,36 @@ import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 import 'package:rxdart/rxdart.dart';
 
-const int _updateDebounceMs = 250;
+const int _defaultUpdateDebounceMs = 250;
 
 class EditBloc extends NotedBloc<EditEvent, EditState> {
+  final int _updateDebounceMs;
   final NotesRepository _notes;
   final AuthRepository _auth;
   late final StreamSubscription<UserModel> _userSubscription;
   StreamSubscription<NoteModel>? _noteSubscription;
 
-  EditBloc({required String noteId, NotesRepository? notesRepository, AuthRepository? authRepository})
-      : _notes = notesRepository ?? locator<NotesRepository>(),
+  EditBloc({
+    required String noteId,
+    NotesRepository? notesRepository,
+    AuthRepository? authRepository,
+    int? updateDebounceMs,
+  })  : _notes = notesRepository ?? locator<NotesRepository>(),
         _auth = authRepository ?? locator<AuthRepository>(),
+        _updateDebounceMs = updateDebounceMs ?? _defaultUpdateDebounceMs,
         super(const EditState(note: null), 'note') {
     _init();
     add(EditLoadEvent(noteId));
   }
 
-  EditBloc.add({required NotedPlugin plugin, NotesRepository? notesRepository, AuthRepository? authRepository})
-      : _notes = notesRepository ?? locator<NotesRepository>(),
+  EditBloc.add({
+    required NotedPlugin plugin,
+    NotesRepository? notesRepository,
+    AuthRepository? authRepository,
+    int? updateDebounceMs,
+  })  : _notes = notesRepository ?? locator<NotesRepository>(),
         _auth = authRepository ?? locator<AuthRepository>(),
+        _updateDebounceMs = updateDebounceMs ?? _defaultUpdateDebounceMs,
         super(const EditState(note: null), 'note') {
     _init();
 
@@ -53,7 +64,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
     on<EditCloseEvent>(_onClose);
 
     on<EditUpdateEvent>(_onUpdateNote, transformer: (updates, mapper) {
-      return updates.debounceTime(const Duration(milliseconds: _updateDebounceMs)).switchMap(mapper);
+      return updates.debounceTime(Duration(milliseconds: _updateDebounceMs)).switchMap(mapper);
     });
 
     _userSubscription = _auth.userStream.listen((user) {
@@ -78,7 +89,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
   Future<void> _onLoadNote(EditLoadEvent event, Emitter<EditState> emit) async {
     try {
       if (state.status != EditStatus.initial) {
-        throw NotedError(ErrorCode.notes_subscribe_failed, message: 'invalid status: ${state.status}');
+        return;
       }
 
       if (_auth.currentUser.isEmpty) {
@@ -95,7 +106,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
   Future<void> _onAddNote(EditAddEvent event, Emitter<EditState> emit) async {
     try {
       if (state.status != EditStatus.initial) {
-        throw NotedError(ErrorCode.notes_add_failed, message: 'invalid status: ${state.status}');
+        return;
       }
 
       if (_auth.currentUser.isEmpty) {
@@ -125,11 +136,11 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
   Future<void> _onDeleteNote(EditDeleteEvent event, Emitter<EditState> emit) async {
     try {
       if (state.status != EditStatus.loaded) {
-        throw NotedError(ErrorCode.notes_delete_failed, message: 'invalid status: ${state.status}');
+        return;
       }
 
       if (_auth.currentUser.isEmpty) {
-        throw NotedError(ErrorCode.notes_delete_failed, message: 'missing auth');
+        throw NotedError(ErrorCode.notes_update_failed, message: 'missing auth'); // coverage:ignore-line
       }
 
       emit(EditState(note: state.note, status: EditStatus.deleting));
