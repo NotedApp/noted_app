@@ -5,14 +5,18 @@ class NotedCard extends StatelessWidget {
   final NotedWidgetSize size;
   final EdgeInsetsGeometry? margin;
   final Color? color;
+  final Color? borderColor;
   final VoidCallback? onPressed;
+  final VoidCallback? onLongPressed;
   final Widget? child;
 
   const NotedCard({
     required this.size,
     this.margin,
     this.color,
+    this.borderColor,
     this.onPressed,
+    this.onLongPressed,
     this.child,
     super.key,
   });
@@ -30,7 +34,7 @@ class NotedCard extends StatelessWidget {
     );
 
     ShapeBorder shape = RoundedRectangleBorder(
-      side: BorderSide(color: colors.onBackground, width: 2),
+      side: BorderSide(color: borderColor ?? colors.onBackground, width: 2),
       borderRadius: borderRadius,
     );
 
@@ -38,6 +42,7 @@ class NotedCard extends StatelessWidget {
         ? child
         : InkWell(
             onTap: onPressed,
+            onLongPress: onLongPressed,
             borderRadius: borderRadius,
             child: child,
           );

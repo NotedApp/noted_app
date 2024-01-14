@@ -35,7 +35,7 @@ final DocumentModel _mockDelta0 = [
 
 class _MockNotesBloc extends Mock implements NotesBloc {}
 
-final List<NoteModel> _testNotes = [
+final Map<String, NoteModel> _testNotes = Map.fromEntries([
   const NotebookNoteModel(
     id: 'notebook0',
     title: '',
@@ -110,4 +110,4 @@ final List<NoteModel> _testNotes = [
     document: DocumentUtil.emptyDocument,
     tagIds: {'0'},
   ),
-];
+].map((model) => MapEntry(model.id, model)));

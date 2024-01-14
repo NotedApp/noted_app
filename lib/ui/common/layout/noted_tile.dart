@@ -5,26 +5,41 @@ import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/plugins/cookbook/cookbook_tile_content.dart';
 import 'package:noted_app/ui/plugins/notebook/notebook_tile_content.dart';
 import 'package:noted_app/util/extensions.dart';
-import 'package:noted_models/noted_models.dart';
+import 'package:noted_models/noted_models.dart' hide Brightness;
+
+const double _selectedBrightness = 0.2;
 
 class NotedTile extends StatelessWidget {
   final String noteId;
+  final bool isSelected;
   final VoidCallback? onPressed;
   final VoidCallback? onLongPressed;
 
-  const NotedTile({required this.noteId, this.onPressed, this.onLongPressed, super.key});
+  const NotedTile({
+    required this.noteId,
+    this.isSelected = false,
+    this.onPressed,
+    this.onLongPressed,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme();
+    final colors = theme.colorScheme;
+    final highlighted = colors.background.brighten(
+      theme.brightness == Brightness.dark ? _selectedBrightness : -_selectedBrightness,
+    );
+
     return NotedCard(
+      key: ValueKey('note-tile-$noteId'),
       size: NotedWidgetSize.small,
-      color: context.colorScheme().background,
+      color: isSelected ? highlighted : colors.background,
+      borderColor: isSelected ? colors.tertiary : null,
       onPressed: onPressed,
+      onLongPressed: onLongPressed,
       child: NotedBlocSelector<NotesBloc, NotesState, NoteModel>(
-        selector: (state) => state.notes.firstWhere(
-          (note) => note.id == noteId,
-          orElse: NotebookNoteModel.empty,
-        ),
+        selector: (state) => state.notes[noteId] ?? const NotebookNoteModel.empty(),
         builder: (context, _, note) => switch (note) {
           NotebookNoteModel() => NotebookTileContent(note: note, onPressed: onPressed, onLongPressed: onLongPressed),
           CookbookNoteModel() => CookbookTileContent(note: note, onPressed: onPressed, onLongPressed: onLongPressed),

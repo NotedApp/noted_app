@@ -49,9 +49,12 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         const NotesState.loading(),
-        NotesState.success(notes: localNotes.values.toList()),
-        NotesState.success(notes: [...localNotes.values, testNote]),
-        NotesState.success(notes: localNotes.values.toList()),
+        const NotesState.success(notes: localNotes),
+        NotesState.success(notes: {
+          ...localNotes,
+          ...{testNote.id: testNote},
+        }),
+        const NotesState.success(notes: localNotes),
         const NotesState.empty(),
       ],
     );
@@ -66,7 +69,7 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         const NotesState.loading(),
-        NotesState.success(notes: localNotes.values.toList()),
+        const NotesState.success(notes: localNotes),
       ],
     );
 
@@ -93,11 +96,8 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         const NotesState.loading(),
-        NotesState.success(notes: localNotes.values.toList()),
-        NotesState.success(
-          notes: localNotes.values.toList(),
-          error: NotedError(ErrorCode.notes_parse_failed),
-        ),
+        const NotesState.success(notes: localNotes),
+        NotesState.success(notes: localNotes, error: NotedError(ErrorCode.notes_parse_failed)),
       ],
     );
 
@@ -120,7 +120,7 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         NotesState.success(
-          notes: const [],
+          notes: const {},
           error: NotedError(ErrorCode.notes_delete_failed, message: 'missing auth'),
         ),
       ],

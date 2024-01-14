@@ -8,7 +8,7 @@ import 'package:noted_models/noted_models.dart';
 
 import 'mocks/mock_classes.dart';
 
-final List<NoteModel> testNotes = [
+final Map<String, NoteModel> testNotes = Map.fromEntries([
   const NotebookNoteModel(
     id: 'notebook0',
     title: 'notebook',
@@ -40,7 +40,7 @@ final List<NoteModel> testNotes = [
     document: DocumentUtil.emptyDocument,
     tagIds: {'0'},
   ),
-];
+].map((model) => MapEntry(model.id, model)));
 
 class TestWrapper extends StatelessWidget {
   final Widget child;

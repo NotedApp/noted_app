@@ -57,6 +57,14 @@ extension NotedColorExtensions on Color {
     HSVColor hsv = HSVColor.fromColor(this);
     return hsv.withValue(clampDouble(hsv.value + value, 0, 1)).toColor();
   }
+
+  /// Brightens (or darkens) a [Color] by the given [amount]. Give a positive number from 0.0 to 1.0 to brighten, and a
+  /// negative number from -1.0 to 0.0 to darken.
+  Color brighten(double amount) {
+    final HSLColor hsl = HSLColor.fromColor(this);
+    final double lightness = (hsl.lightness + amount).clamp(0, 1);
+    return hsl.withLightness(lightness).toColor();
+  }
 }
 
 extension NotedThemeExtensions on ThemeData {

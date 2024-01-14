@@ -59,7 +59,11 @@ class QuillEditor extends NotedEditor {
   }
 
   bool _handleLongPress(LongPressStartDetails details, TextPosition Function(Offset) position) {
-    onLongPressed?.call();
+    if (onLongPressed != null) {
+      onLongPressed!.call();
+      return true;
+    }
+
     return false;
   }
 }

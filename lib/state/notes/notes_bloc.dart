@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -61,7 +62,13 @@ class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
     if (event.notes.isEmpty) {
       emit(const NotesState.empty());
     } else {
-      emit(NotesState.success(notes: event.notes));
+      emit(
+        NotesState.success(
+          notes: HashMap.fromEntries(
+            event.notes.map((model) => MapEntry(model.id, model)),
+          ),
+        ),
+      );
     }
   }
 
