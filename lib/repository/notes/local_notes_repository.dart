@@ -6,7 +6,7 @@ import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 /// Default local notes.
-const Map<String, NoteModel> localNotes = {
+Map<String, NoteModel> localNotes = {
   'test-note-0': NotebookNoteModel(
     id: 'test-note-0',
     title: 'Note 0',

@@ -23,7 +23,7 @@ class HomeContent extends StatelessWidget {
     final isSelecting = selectedIds.isNotEmpty;
 
     return NotedBlocSelector<NotesBloc, NotesState, List<String>>(
-      selector: (state) => state.notes.keys.toList(),
+      selector: (state) => state.sortedNoteIds,
       builder: (context, _, state) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: GridView.builder(

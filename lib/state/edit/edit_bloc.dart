@@ -47,8 +47,8 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
 
     // coverage:ignore-start
     NoteModel model = switch (plugin) {
-      NotedPlugin.notebook => const NotebookNoteModel.empty(),
-      NotedPlugin.cookbook => const CookbookNoteModel.empty(),
+      NotedPlugin.notebook => NotebookNoteModel.empty(),
+      NotedPlugin.cookbook => CookbookNoteModel.empty(),
     };
     // coverage:ignore-end
 
@@ -127,7 +127,10 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
         throw NotedError(ErrorCode.notes_update_failed, message: 'missing auth');
       }
 
-      await _notes.updateNote(userId: _auth.currentUser.id, note: event.note);
+      await _notes.updateNote(
+        userId: _auth.currentUser.id,
+        note: event.note.copyWith(lastUpdatedUtc: DateTime.now().toUtc()),
+      );
     } catch (e) {
       emit(EditState(note: state.note, status: EditStatus.loaded, error: NotedError.fromObject(e)));
     }

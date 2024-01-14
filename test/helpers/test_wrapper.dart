@@ -9,18 +9,18 @@ import 'package:noted_models/noted_models.dart';
 import 'mocks/mock_classes.dart';
 
 final Map<String, NoteModel> testNotes = Map.fromEntries([
-  const NotebookNoteModel(
+  NotebookNoteModel(
     id: 'notebook0',
     title: 'notebook',
     document: DocumentUtil.emptyDocument,
     tagIds: {'0'},
   ),
-  const NotebookNoteModel(
+  NotebookNoteModel(
     id: 'notebook1',
     title: '',
     document: DocumentUtil.emptyDocument,
   ),
-  const CookbookNoteModel(
+  CookbookNoteModel(
     id: 'cookbook0',
     title: 'cookbook',
     url: '',
@@ -30,7 +30,7 @@ final Map<String, NoteModel> testNotes = Map.fromEntries([
     document: DocumentUtil.emptyDocument,
     tagIds: {'0'},
   ),
-  const CookbookNoteModel(
+  CookbookNoteModel(
     id: 'cookbook1',
     title: 'cookbook',
     url: 'https://www.onceuponachef.com/recipes/roasted-brussels-sprouts.html',

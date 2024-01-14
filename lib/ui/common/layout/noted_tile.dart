@@ -39,7 +39,7 @@ class NotedTile extends StatelessWidget {
       onPressed: onPressed,
       onLongPressed: onLongPressed,
       child: NotedBlocSelector<NotesBloc, NotesState, NoteModel>(
-        selector: (state) => state.notes[noteId] ?? const NotebookNoteModel.empty(),
+        selector: (state) => state.notes[noteId] ?? NotebookNoteModel.empty(),
         builder: (context, _, note) => switch (note) {
           NotebookNoteModel() => NotebookTileContent(note: note, onPressed: onPressed, onLongPressed: onLongPressed),
           CookbookNoteModel() => CookbookTileContent(note: note, onPressed: onPressed, onLongPressed: onLongPressed),
