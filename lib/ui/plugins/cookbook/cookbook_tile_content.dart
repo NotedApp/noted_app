@@ -9,8 +9,9 @@ import 'package:ogp_data_extract/ogp_data_extract.dart';
 class CookbookTileContent extends StatefulWidget {
   final CookbookNoteModel note;
   final VoidCallback? onPressed;
+  final VoidCallback? onLongPressed;
 
-  const CookbookTileContent({required this.note, this.onPressed, super.key});
+  const CookbookTileContent({required this.note, this.onPressed, this.onLongPressed, super.key});
 
   @override
   State<StatefulWidget> createState() => _CookbookTileContentState();

@@ -5,8 +5,9 @@ import 'package:noted_models/noted_models.dart';
 class NotebookTileContent extends StatefulWidget {
   final NotebookNoteModel note;
   final VoidCallback? onPressed;
+  final VoidCallback? onLongPressed;
 
-  const NotebookTileContent({required this.note, this.onPressed, super.key});
+  const NotebookTileContent({required this.note, this.onPressed, this.onLongPressed, super.key});
 
   @override
   State<StatefulWidget> createState() => _NotebookTileContentState();
@@ -50,6 +51,7 @@ class _NotebookTileContentState extends State<NotebookTileContent> {
       readonly: true,
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 36),
       onPressed: widget.onPressed,
+      onLongPressed: widget.onLongPressed,
       header: header,
     );
   }

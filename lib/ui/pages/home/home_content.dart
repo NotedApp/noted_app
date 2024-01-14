@@ -27,6 +27,7 @@ class HomeContent extends StatelessWidget {
           itemBuilder: (context, index) => NotedTile(
             noteId: state[index],
             onPressed: () => context.push(NotesEditRoute(noteId: state[index])),
+            onLongPressed: () => {},
           ),
         ),
       ),

@@ -30,7 +30,7 @@ const double _toolbarHandlePadding = 6;
 
 const Duration _toolbarAnimationDuration = Duration(milliseconds: 200);
 const double _toolbarMaxHeight = 112;
-const double _toolbarMinHeight = 42;
+const double _toolbarMinHeight = 32;
 const double _toolbarMidHeight = (_toolbarMaxHeight + _toolbarMinHeight) / 2;
 const EdgeInsets _toolbarPadding = EdgeInsets.fromLTRB(14, 16, 14, 4);
 
@@ -59,7 +59,6 @@ class _NotedEditorToolbarState extends State<NotedEditorToolbar> {
       onVerticalDragUpdate: (details) {
         final double dragY = details.delta.dy;
         final double heightY = clampDouble(toolbarHeight - dragY, _toolbarMinHeight, _toolbarMaxHeight);
-
         setState(() => toolbarHeight = heightY);
       },
       onVerticalDragEnd: (details) {

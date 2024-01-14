@@ -14,6 +14,7 @@ class QuillEditor extends NotedEditor {
     super.usePrimaryScrollController,
     super.padding,
     super.onPressed,
+    super.onLongPressed,
     super.key,
   });
 
@@ -40,6 +41,7 @@ class QuillEditor extends NotedEditor {
         showCursor: !readonly,
         keyboardAppearance: theme.brightness,
         onTapUp: _handleTap,
+        onSingleLongTapStart: _handleLongPress,
         customStyles: _getStyles(context),
       ),
       focusNode: focusNode ?? FocusNode(),
@@ -53,6 +55,11 @@ class QuillEditor extends NotedEditor {
       onPressed?.call();
     }
 
+    return false;
+  }
+
+  bool _handleLongPress(LongPressStartDetails details, TextPosition Function(Offset) position) {
+    onLongPressed?.call();
     return false;
   }
 }

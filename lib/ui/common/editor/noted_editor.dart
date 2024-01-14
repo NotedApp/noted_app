@@ -11,6 +11,7 @@ abstract class NotedEditor extends StatelessWidget {
   final bool usePrimaryScrollController;
   final EdgeInsetsGeometry padding;
   final VoidCallback? onPressed;
+  final VoidCallback? onLongPressed;
 
   const NotedEditor({
     required this.controller,
@@ -21,6 +22,7 @@ abstract class NotedEditor extends StatelessWidget {
     this.usePrimaryScrollController = false,
     this.padding = EdgeInsets.zero,
     this.onPressed,
+    this.onLongPressed,
     super.key,
   });
 
@@ -33,6 +35,7 @@ abstract class NotedEditor extends StatelessWidget {
     bool usePrimaryScrollController = false,
     EdgeInsetsGeometry padding = EdgeInsets.zero,
     VoidCallback? onPressed,
+    VoidCallback? onLongPressed,
     Key? key,
   }) {
     return QuillEditor(
@@ -44,6 +47,7 @@ abstract class NotedEditor extends StatelessWidget {
       usePrimaryScrollController: usePrimaryScrollController,
       padding: padding,
       onPressed: onPressed,
+      onLongPressed: onLongPressed,
       key: key,
     );
   }

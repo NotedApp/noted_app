@@ -10,8 +10,9 @@ import 'package:noted_models/noted_models.dart';
 class NotedTile extends StatelessWidget {
   final String noteId;
   final VoidCallback? onPressed;
+  final VoidCallback? onLongPressed;
 
-  const NotedTile({required this.noteId, this.onPressed, super.key});
+  const NotedTile({required this.noteId, this.onPressed, this.onLongPressed, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +26,8 @@ class NotedTile extends StatelessWidget {
           orElse: NotebookNoteModel.empty,
         ),
         builder: (context, _, note) => switch (note) {
-          NotebookNoteModel() => NotebookTileContent(note: note, onPressed: onPressed),
-          CookbookNoteModel() => CookbookTileContent(note: note, onPressed: onPressed),
+          NotebookNoteModel() => NotebookTileContent(note: note, onPressed: onPressed, onLongPressed: onLongPressed),
+          CookbookNoteModel() => CookbookTileContent(note: note, onPressed: onPressed, onLongPressed: onLongPressed),
         },
       ),
     );
