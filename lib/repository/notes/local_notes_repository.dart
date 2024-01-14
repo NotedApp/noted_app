@@ -113,6 +113,23 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
   }
 
   @override
+  Future<void> deleteNotes({required String userId, required String noteIds}) async {
+    await Future.delayed(Duration(milliseconds: _msDelay));
+
+    if (_shouldThrow || userId.isEmpty) {
+      throw NotedError(ErrorCode.notes_delete_failed);
+    }
+
+    _notes.removeWhere((key, value) => noteIds.contains(key));
+
+    for (String noteId in noteIds) {
+      _controllers[noteId]?.close();
+      _controllers.remove(noteId);
+    }
+    _notesController.add(_notes.values.toList());
+  }
+
+  @override
   FutureOr onDispose() {
     for (var element in _controllers.values) {
       element.close();

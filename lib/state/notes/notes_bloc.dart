@@ -24,6 +24,7 @@ class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
     on<NotesSubscribeEvent>(_onSubscribeNotes, transformer: restartable());
     on<NotesUpdateEvent>(_onUpdateNotes);
     on<NotesUpdateErrorEvent>(_onUpdateError);
+    on<NotesDeleteEvent>(_onDelete);
     on<NotesResetEvent>(_onReset);
 
     _userSubscription = _auth.userStream.listen((user) {
@@ -66,6 +67,18 @@ class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
 
   Future<void> _onUpdateError(NotesUpdateErrorEvent event, Emitter<NotesState> emit) async {
     emit(NotesState.success(notes: state.notes, error: event.error));
+  }
+
+  Future<void> _onDelete(NotesDeleteEvent event, Emitter<NotesState> emit) async {
+    try {
+      if (_auth.currentUser.isEmpty) {
+        throw NotedError(ErrorCode.notes_delete_failed, message: 'missing auth');
+      }
+
+      await _notes.deleteNotes(userId: _auth.currentUser.id, noteIds: event.noteIds);
+    } catch (e) {
+      emit(NotesState.success(notes: state.notes, error: NotedError.fromObject(e)));
+    }
   }
 
   Future<void> _onReset(NotesResetEvent event, Emitter<NotesState> emit) async {

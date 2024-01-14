@@ -84,4 +84,13 @@ class FirebaseNotesRepository extends NotesRepository {
       throw NotedError(ErrorCode.notes_delete_failed);
     }
   }
+
+  @override
+  Future<void> deleteNotes({required String userId, required List<String> noteIds}) async {
+    try {
+      await Future.wait(noteIds.map((id) => _notes(userId).child(id).remove()));
+    } catch (_) {
+      throw NotedError(ErrorCode.notes_delete_failed);
+    }
+  }
 }
