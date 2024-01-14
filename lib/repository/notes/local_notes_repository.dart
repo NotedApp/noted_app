@@ -113,7 +113,7 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
   }
 
   @override
-  Future<void> deleteNotes({required String userId, required String noteIds}) async {
+  Future<void> deleteNotes({required String userId, required List<String> noteIds}) async {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (_shouldThrow || userId.isEmpty) {
@@ -126,6 +126,7 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
       _controllers[noteId]?.close();
       _controllers.remove(noteId);
     }
+
     _notesController.add(_notes.values.toList());
   }
 

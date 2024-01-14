@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/state/notes/notes_bloc.dart';
 import 'package:noted_app/state/notes/notes_event.dart';
@@ -16,58 +15,53 @@ import 'package:noted_models/noted_models.dart';
 
 // coverage:ignore-file
 class HomePage extends StatelessWidget {
-  final NotesBloc? bloc;
-
-  const HomePage({super.key, this.bloc});
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     Strings strings = context.strings();
 
-    return BlocProvider(
-      create: (context) => bloc ?? NotesBloc(),
-      child: NotedHeaderPage(
-        title: strings.notes_title,
-        hasBackButton: false,
-        trailingActions: [
-          NotedIconButton(
-            icon: NotedIcons.settings,
-            type: NotedIconButtonType.filled,
-            size: NotedWidgetSize.small,
-            onPressed: () => context.push(SettingsRoute()),
-          ),
-        ],
-        floatingActionButton: NotedIconButton(
-          icon: NotedIcons.plus,
+    return NotedHeaderPage(
+      title: strings.notes_title,
+      hasBackButton: false,
+      trailingActions: [
+        NotedIconButton(
+          icon: NotedIcons.settings,
           type: NotedIconButtonType.filled,
-          size: NotedWidgetSize.large,
-          onPressed: () => context.push(const NotesAddRoute(plugin: NotedPlugin.notebook)),
-          onLongPress: () => NotePicker.show(context),
+          size: NotedWidgetSize.small,
+          onPressed: () => context.push(SettingsRoute()),
         ),
-        child: NotedBlocSelector<NotesBloc, NotesState, NotesStatus>(
-          selector: (state) => state.status,
-          listener: (context, state) {
-            if (state.error?.code == ErrorCode.notes_subscribe_failed) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                NotedSnackBar.createWithText(
-                  context: context,
-                  text: strings.edit_error_updateNoteFailed,
-                  hasClose: true,
-                ),
-              );
-            }
-          },
-          builder: (context, bloc, state) => switch (state) {
-            NotesStatus.loading => const HomeLoading(),
-            NotesStatus.error => NotedErrorWidget(
-                text: strings.notes_error_failed,
-                ctaText: strings.common_refresh,
-                ctaCallback: () => bloc.add(NotesSubscribeEvent()),
+      ],
+      floatingActionButton: NotedIconButton(
+        icon: NotedIcons.plus,
+        type: NotedIconButtonType.filled,
+        size: NotedWidgetSize.large,
+        onPressed: () => context.push(const NotesAddRoute(plugin: NotedPlugin.notebook)),
+        onLongPress: () => NotePicker.show(context),
+      ),
+      child: NotedBlocSelector<NotesBloc, NotesState, NotesStatus>(
+        selector: (state) => state.status,
+        listener: (context, state) {
+          if (state.error?.code == ErrorCode.notes_subscribe_failed) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              NotedSnackBar.createWithText(
+                context: context,
+                text: strings.edit_error_updateNoteFailed,
+                hasClose: true,
               ),
-            NotesStatus.empty => NotedErrorWidget(text: strings.notes_error_empty),
-            NotesStatus.loaded => const HomeContent(),
-          },
-        ),
+            );
+          }
+        },
+        builder: (context, bloc, state) => switch (state) {
+          NotesStatus.loading => const HomeLoading(),
+          NotesStatus.error => NotedErrorWidget(
+              text: strings.notes_error_failed,
+              ctaText: strings.common_refresh,
+              ctaCallback: () => bloc.add(NotesSubscribeEvent()),
+            ),
+          NotesStatus.empty => NotedErrorWidget(text: strings.notes_error_empty),
+          NotesStatus.loaded => const HomeContent(),
+        },
       ),
     );
   }

@@ -7,12 +7,14 @@ class NotedBlocSelector<B extends StateStreamable<S>, S, T> extends StatefulWidg
   final B? bloc;
   final BlocWidgetSelector<S, T> selector;
   final NotedBlocBuilder<B, T> builder;
+  final BlocListenerCondition<S>? listenWhen;
   final BlocWidgetListener<S>? listener;
   final BlocWidgetListener<T>? selectedListener;
 
   const NotedBlocSelector({
     required this.selector,
     required this.builder,
+    this.listenWhen,
     this.listener,
     this.selectedListener,
     this.bloc,
@@ -66,8 +68,11 @@ class _NotedBlocSelector<B extends StateStreamable<S>, S, T> extends State<Noted
         final T previousState = widget.selector(previous);
         final T currentState = widget.selector(current);
         final bool hasChanged = previousState != currentState;
+        final bool shouldListen = widget.listenWhen == null || widget.listenWhen!(previous, current);
 
-        widget.listener?.call(context, current);
+        if (shouldListen) {
+          widget.listener?.call(context, current);
+        }
 
         if (hasChanged) {
           widget.selectedListener?.call(context, currentState);

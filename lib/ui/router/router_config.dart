@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:noted_app/state/auth/auth_bloc.dart';
 import 'package:noted_app/state/auth/auth_state.dart';
+import 'package:noted_app/state/edit/edit_bloc.dart';
+import 'package:noted_app/state/notes/notes_bloc.dart';
 import 'package:noted_app/ui/pages/edit/edit_page.dart';
 import 'package:noted_app/ui/pages/home/home_page.dart';
 import 'package:noted_app/ui/pages/login/login_page.dart';
@@ -53,7 +55,7 @@ final GoRoute _login = GoRoute(
 
 final GoRoute _home = GoRoute(
   path: NotedRoute._home,
-  builder: (context, state) => const HomePage(),
+  builder: (context, state) => BlocProvider(create: (context) => NotesBloc(), child: const HomePage()),
   redirect: (context, state) {
     AuthBloc auth = context.read<AuthBloc>();
     return auth.state.status != AuthStatus.authenticated ? NotedRoute._settings : null;
@@ -127,14 +129,16 @@ final GoRoute _notes = GoRoute(
           orElse: () => NotedPlugin.notebook,
         );
 
-        return EditPage.add(plugin: plugin);
+        return BlocProvider(create: (context) => EditBloc.add(plugin: plugin), child: const EditPage());
       },
     ),
     GoRoute(
       path: ':${NotedRoute._notes_noteId}',
-      builder: (context, state) => EditPage(
-        initialId: state.pathParameters[NotedRoute._notes_noteId] ?? '',
-      ),
+      builder: (context, state) {
+        String noteId = state.pathParameters[NotedRoute._notes_noteId] ?? '';
+
+        return BlocProvider(create: (context) => EditBloc(noteId: noteId), child: const EditPage());
+      },
     ),
   ],
 );
