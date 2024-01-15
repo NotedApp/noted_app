@@ -33,6 +33,33 @@ void main() {
       await Future.delayed(const Duration(milliseconds: 5));
     });
 
+    test('sorts notes by updated date', () {
+      final state = NotesState.success(
+        notes: {
+          'third': NotebookNoteModel(
+            id: 'third',
+            title: 'third',
+            document: testData0,
+            lastUpdatedUtc: DateTime.fromMillisecondsSinceEpoch(500),
+          ),
+          'first': NotebookNoteModel(
+            id: 'first',
+            title: 'first',
+            document: testData0,
+            lastUpdatedUtc: DateTime.fromMillisecondsSinceEpoch(1000),
+          ),
+          'second': NotebookNoteModel(
+            id: 'second',
+            title: 'second',
+            document: testData0,
+            lastUpdatedUtc: DateTime.fromMillisecondsSinceEpoch(750),
+          ),
+        },
+      );
+
+      expect(state.sortedNoteIds, const ['first', 'second', 'third']);
+    });
+
     blocTest(
       'loads and updates notes for a user',
       build: NotesBloc.new,
@@ -49,12 +76,12 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         const NotesState.loading(),
-        const NotesState.success(notes: localNotes),
+        NotesState.success(notes: localNotes),
         NotesState.success(notes: {
           ...localNotes,
           ...{testNote.id: testNote},
         }),
-        const NotesState.success(notes: localNotes),
+        NotesState.success(notes: localNotes),
         const NotesState.empty(),
       ],
     );
@@ -69,7 +96,7 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         const NotesState.loading(),
-        const NotesState.success(notes: localNotes),
+        NotesState.success(notes: localNotes),
       ],
     );
 
@@ -96,7 +123,7 @@ void main() {
       wait: const Duration(milliseconds: 10),
       expect: () => [
         const NotesState.loading(),
-        const NotesState.success(notes: localNotes),
+        NotesState.success(notes: localNotes),
         NotesState.success(notes: localNotes, error: NotedError(ErrorCode.notes_parse_failed)),
       ],
     );

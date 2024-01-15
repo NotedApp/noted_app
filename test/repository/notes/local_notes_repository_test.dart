@@ -5,7 +5,7 @@ import 'package:noted_app/repository/notes/local_notes_repository.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
-const NotebookNoteModel testNote = NotebookNoteModel(
+NotebookNoteModel testNote = NotebookNoteModel(
   id: 'test-0',
   title: 'test note',
   document: [],
@@ -83,7 +83,7 @@ void main() {
       await expectLater(
         () => repository.addNote(
           userId: 'test',
-          note: const NotebookNoteModel(
+          note: NotebookNoteModel(
             id: '',
             title: 'test note',
             document: [],
@@ -99,7 +99,7 @@ void main() {
       await expectLater(
         () => repository.updateNote(
           userId: 'test',
-          note: const NotebookNoteModel(
+          note: NotebookNoteModel(
             id: 'test-note-0',
             title: 'test note',
             document: [],

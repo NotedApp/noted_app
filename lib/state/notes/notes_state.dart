@@ -14,6 +14,22 @@ final class NotesState extends Equatable {
   final Map<String, NoteModel> notes;
   final NotedError? error;
 
+  List<String> get sortedNoteIds {
+    List<String> noteIds = notes.keys.toList();
+    noteIds.sort((id0, id1) {
+      final note0 = notes[id0];
+      final note1 = notes[id1];
+
+      if (note0 != null && note1 != null) {
+        return note1.lastUpdatedUtc.millisecondsSinceEpoch - note0.lastUpdatedUtc.millisecondsSinceEpoch;
+      } else {
+        return note0?.title.compareTo(note1?.title ?? '') ?? 0; // coverage:ignore-line
+      }
+    });
+
+    return noteIds;
+  }
+
   const NotesState.loading()
       : status = NotesStatus.loading,
         notes = const {},

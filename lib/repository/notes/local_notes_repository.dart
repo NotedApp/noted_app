@@ -6,7 +6,7 @@ import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 /// Default local notes.
-const Map<String, NoteModel> localNotes = {
+Map<String, NoteModel> localNotes = {
   'test-note-0': NotebookNoteModel(
     id: 'test-note-0',
     title: 'Note 0',
@@ -26,7 +26,7 @@ const Map<String, NoteModel> localNotes = {
 /// A [NotesRepository] that uses mock data as its source of truth.
 class LocalNotesRepository extends NotesRepository implements Disposable {
   late final StreamController<List<NoteModel>> _notesController;
-  late final Map<String, StreamController<NoteModel>> _controllers;
+  Map<String, StreamController<NoteModel>> _controllers = {};
   Map<String, NoteModel> _notes = {...localNotes};
   bool _shouldThrow = false;
   int _msDelay = 2000;
@@ -154,5 +154,12 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
     _shouldThrow = false;
     _msDelay = 2000;
     _notes = {...localNotes};
+
+    _controllers = _notes.map(
+      (key, value) => MapEntry(
+        key,
+        StreamController.broadcast(onListen: () => _controllers[key]?.add(value)),
+      ),
+    );
   }
 }

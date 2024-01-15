@@ -36,12 +36,12 @@ final DocumentModel _mockDelta0 = [
 class _MockNotesBloc extends Mock implements NotesBloc {}
 
 final Map<String, NoteModel> _testNotes = Map.fromEntries([
-  const NotebookNoteModel(
+  NotebookNoteModel(
     id: 'notebook0',
     title: '',
     document: DocumentUtil.emptyDocument,
   ),
-  const NotebookNoteModel(
+  NotebookNoteModel(
     id: 'notebook1',
     title: 'test note',
     document: DocumentUtil.emptyDocument,
@@ -91,7 +91,7 @@ final Map<String, NoteModel> _testNotes = Map.fromEntries([
     difficulty: 3,
     document: _mockDelta0,
   ),
-  const CookbookNoteModel(
+  CookbookNoteModel(
     id: 'cookbook3',
     title: 'a recipe with a super duper long title',
     url: 'https://www.onceuponachef.com/recipes/roasted-brussels-sprouts.html',
@@ -100,7 +100,7 @@ final Map<String, NoteModel> _testNotes = Map.fromEntries([
     difficulty: 3,
     document: DocumentUtil.emptyDocument,
   ),
-  const CookbookNoteModel(
+  CookbookNoteModel(
     id: 'cookbook4',
     title: 'miso salmon',
     url: 'https://www.justonecookbook.com/miso-salmon/',
