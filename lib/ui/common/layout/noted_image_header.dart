@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/util/extensions.dart';
 
 const String _notedImageHeaderTag = 'noted-image-header';
@@ -12,7 +12,6 @@ class NotedImageHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = context.theme();
-    ColorFilter filter = ColorFilter.mode(theme.colorScheme.tertiary, BlendMode.srcIn);
 
     return Hero(
       tag: _notedImageHeaderTag,
@@ -24,9 +23,9 @@ class NotedImageHeader extends StatelessWidget {
           const Spacer(),
           ConstrainedBox(
             constraints: BoxConstraints.loose(const Size.fromWidth(400)),
-            child: SvgPicture.asset(
-              'assets/svg/woman_reading.svg',
-              colorFilter: filter,
+            child: NotedSvg.asset(
+              source: 'assets/svg/woman_reading.svg',
+              color: theme.colorScheme.tertiary,
               fit: BoxFit.fitWidth,
             ),
           ),

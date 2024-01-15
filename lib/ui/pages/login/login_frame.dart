@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:noted_app/state/auth/auth_bloc.dart';
 import 'package:noted_app/state/auth/auth_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
@@ -31,7 +30,6 @@ class LoginFrame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = context.theme();
-    ColorFilter filter = ColorFilter.mode(theme.colorScheme.tertiary, BlendMode.srcIn);
 
     return NotedHeaderPage(
       hasBackButton: hasBackButton,
@@ -52,9 +50,9 @@ class LoginFrame extends StatelessWidget {
             const SizedBox(height: 36),
             ConstrainedBox(
               constraints: BoxConstraints.loose(const Size.fromWidth(400)),
-              child: SvgPicture.asset(
-                'assets/svg/woman_reading.svg',
-                colorFilter: filter,
+              child: NotedSvg.asset(
+                source: 'assets/svg/woman_reading.svg',
+                color: theme.colorScheme.tertiary,
                 fit: BoxFit.fitWidth,
               ),
             ),
