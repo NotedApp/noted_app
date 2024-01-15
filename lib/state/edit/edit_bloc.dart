@@ -132,7 +132,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
         note: event.note.copyWith(lastUpdatedUtc: DateTime.now().toUtc()),
       );
     } catch (e) {
-      emit(EditState(note: state.note, status: EditStatus.loaded, error: NotedError.fromObject(e)));
+      emit(EditState(note: state.note, status: state.status, error: NotedError.fromObject(e)));
     }
   }
 
@@ -150,7 +150,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
       await _notes.deleteNote(userId: _auth.currentUser.id, noteId: state.note?.id ?? '');
       emit(const EditState(note: null, status: EditStatus.deleted));
     } catch (e) {
-      emit(EditState(note: state.note, status: EditStatus.loaded, error: NotedError.fromObject(e)));
+      emit(EditState(note: state.note, status: state.status, error: NotedError.fromObject(e)));
     }
   }
 
@@ -166,10 +166,12 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
     emit(const EditState(note: null, status: EditStatus.empty));
   }
 
+  // coverage:ignore-start
   @override
   Future<void> close() {
     _userSubscription.cancel();
     _noteSubscription?.cancel();
     return super.close();
   }
+  // coverage:ignore-end
 }

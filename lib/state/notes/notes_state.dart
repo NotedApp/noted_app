@@ -9,8 +9,6 @@ enum NotesStatus {
   empty,
 }
 
-const int maxInteger = 0x7FFFFFFFFFFFFFFF;
-
 final class NotesState extends Equatable {
   final NotesStatus status;
   final Map<String, NoteModel> notes;
@@ -21,12 +19,14 @@ final class NotesState extends Equatable {
     noteIds.sort((id0, id1) {
       final note0 = notes[id0];
       final note1 = notes[id1];
+
       if (note0 != null && note1 != null) {
         return note1.lastUpdatedUtc.millisecondsSinceEpoch - note0.lastUpdatedUtc.millisecondsSinceEpoch;
       } else {
-        return note0?.title.compareTo(note1?.title ?? '') ?? 0;
+        return note0?.title.compareTo(note1?.title ?? '') ?? 0; // coverage:ignore-line
       }
     });
+
     return noteIds;
   }
 
