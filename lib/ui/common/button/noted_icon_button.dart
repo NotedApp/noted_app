@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:noted_app/util/extensions.dart';
+import 'package:noted_app/util/extensions/extensions.dart';
 import 'package:noted_app/ui/common/noted_widget_config.dart';
 
 enum NotedIconButtonType {

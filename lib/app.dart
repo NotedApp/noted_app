@@ -5,7 +5,7 @@ import 'package:noted_app/state/auth/auth_bloc.dart';
 import 'package:noted_app/state/settings/settings_bloc.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/router/router_config.dart';
-import 'package:noted_app/util/extensions.dart';
+import 'package:noted_app/util/extensions/extensions.dart';
 
 class NotedApp extends StatelessWidget {
   const NotedApp({super.key});

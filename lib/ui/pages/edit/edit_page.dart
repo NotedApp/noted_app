@@ -9,7 +9,7 @@ import 'package:noted_app/ui/pages/edit/edit_content.dart';
 import 'package:noted_app/ui/pages/edit/edit_loading.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
-import 'package:noted_app/util/extensions.dart';
+import 'package:noted_app/util/extensions/extensions.dart';
 import 'package:noted_models/noted_models.dart';
 
 typedef NoteUpdateCallback = void Function(NoteModel);

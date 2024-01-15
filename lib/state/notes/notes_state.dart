@@ -35,7 +35,10 @@ final class NotesState extends Equatable {
         notes = const {},
         error = null;
 
-  const NotesState.success({required this.notes, this.error}) : status = NotesStatus.loaded;
+  const NotesState.success({
+    required this.notes,
+    this.error,
+  }) : status = NotesStatus.loaded;
 
   const NotesState.error({required this.error})
       : status = NotesStatus.error,
@@ -48,4 +51,14 @@ final class NotesState extends Equatable {
 
   @override
   List<Object?> get props => [status, notes, error];
+}
+
+final class NotesFilter extends Equatable {
+  final List<NotedPlugin> plugins;
+  final List<String> tagIds;
+
+  const NotesFilter({required this.plugins, required this.tagIds});
+
+  @override
+  List<Object?> get props => [plugins, tagIds];
 }

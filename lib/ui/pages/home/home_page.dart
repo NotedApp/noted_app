@@ -10,7 +10,7 @@ import 'package:noted_app/ui/pages/home/home_loading.dart';
 import 'package:noted_app/ui/pages/home/note_picker.dart/note_picker.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
 import 'package:noted_app/ui/router/router_config.dart';
-import 'package:noted_app/util/extensions.dart';
+import 'package:noted_app/util/extensions/extensions.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 

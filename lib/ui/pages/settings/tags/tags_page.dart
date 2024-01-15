@@ -5,7 +5,7 @@ import 'package:noted_app/state/settings/settings_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/pages/settings/settings_page.dart';
 import 'package:noted_app/ui/pages/settings/tags/tags_loading.dart';
-import 'package:noted_app/util/extensions.dart';
+import 'package:noted_app/util/extensions/extensions.dart';
 import 'package:noted_models/noted_models.dart';
 
 // coverage:ignore-file

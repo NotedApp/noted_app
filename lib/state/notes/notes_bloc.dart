@@ -13,13 +13,18 @@ import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
+  final NotesFilter? _filter;
   final NotesRepository _notes;
   final AuthRepository _auth;
   late final StreamSubscription<UserModel> _userSubscription;
   StreamSubscription<List<NoteModel>>? _notesSubscription;
 
-  NotesBloc({NotesRepository? notesRepository, AuthRepository? authRepository})
-      : _notes = notesRepository ?? locator<NotesRepository>(),
+  NotesBloc({
+    NotesFilter? filter,
+    NotesRepository? notesRepository,
+    AuthRepository? authRepository,
+  })  : _filter = filter,
+        _notes = notesRepository ?? locator<NotesRepository>(),
         _auth = authRepository ?? locator<AuthRepository>(),
         super(const NotesState.loading(), 'notes') {
     on<NotesSubscribeEvent>(_onSubscribeNotes, transformer: restartable());
@@ -48,7 +53,7 @@ class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
 
       emit(const NotesState.loading());
 
-      _notesSubscription = (await _notes.subscribeNotes(userId: _auth.currentUser.id)).listen((event) {
+      _notesSubscription = (await _notes.subscribeNotes(userId: _auth.currentUser.id, filter: _filter)).listen((event) {
         add(NotesUpdateEvent(event));
       }, onError: (e) {
         add(NotesUpdateErrorEvent(NotedError.fromObject(e)));

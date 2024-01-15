@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:get_it/get_it.dart';
 import 'package:noted_app/repository/notes/notes_repository.dart';
+import 'package:noted_app/state/notes/notes_state.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
@@ -45,14 +46,14 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
   }
 
   @override
-  Future<Stream<List<NoteModel>>> subscribeNotes({required String userId}) async {
+  Future<Stream<List<NoteModel>>> subscribeNotes({required String userId, NotesFilter? filter}) async {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (_shouldThrow || userId.isEmpty) {
       throw NotedError(ErrorCode.notes_subscribe_failed);
     }
 
-    return _notesController.stream;
+    return _notesController.stream.map((event) => filterModels(filter, event));
   }
 
   @override

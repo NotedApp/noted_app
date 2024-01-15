@@ -7,7 +7,7 @@ import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/plugins/cookbook/cookbook_edit_content.dart';
 import 'package:noted_app/ui/plugins/notebook/notebook_edit_content.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
-import 'package:noted_app/util/extensions.dart';
+import 'package:noted_app/util/extensions/extensions.dart';
 import 'package:noted_models/noted_models.dart';
 
 // coverage:ignore-file

@@ -8,7 +8,7 @@ import 'package:noted_app/state/auth/auth_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/pages/login/login_frame.dart';
 import 'package:noted_app/ui/router/router_config.dart';
-import 'package:noted_app/util/extensions.dart';
+import 'package:noted_app/util/extensions/extensions.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
 
