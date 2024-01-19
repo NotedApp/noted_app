@@ -17,3 +17,5 @@ class HomeUpdateAvailableEvent extends HomeEvent {
 }
 
 class HomeResetSelectionsEvent extends HomeEvent {}
+
+class HomeDeleteSelectionsEvent extends HomeEvent {}
