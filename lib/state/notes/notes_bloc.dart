@@ -20,13 +20,14 @@ class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
   StreamSubscription<List<NoteModel>>? _notesSubscription;
 
   NotesBloc({
+    String page = 'notes',
     NotesFilter? filter,
     NotesRepository? notesRepository,
     AuthRepository? authRepository,
   })  : _filter = filter,
         _notes = notesRepository ?? locator<NotesRepository>(),
         _auth = authRepository ?? locator<AuthRepository>(),
-        super(const NotesState.loading(), 'notes') {
+        super(const NotesState.loading(), page) {
     on<NotesSubscribeEvent>(_onSubscribeNotes, transformer: restartable());
     on<NotesUpdateEvent>(_onUpdateNotes);
     on<NotesUpdateErrorEvent>(_onUpdateError);
