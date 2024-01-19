@@ -29,12 +29,11 @@ class NotePickerCard extends StatelessWidget {
             fit: BoxFit.cover,
           ),
           Center(
-            child: Text(
+            child: StrokedText(
               title,
-              style: theme.textTheme.titleLarge?.copyWith(
-                height: 1,
-                fontWeight: FontWeight.bold,
-              ),
+              style: theme.textTheme.headlineSmall,
+              strokeColor: theme.colorScheme.background,
+              strokeWidth: 4,
             ),
           ),
         ],

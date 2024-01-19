@@ -54,10 +54,10 @@ final class NotesState extends Equatable {
 }
 
 final class NotesFilter extends Equatable {
-  final List<NotedPlugin> plugins;
-  final List<String> tagIds;
+  final Set<NotedPlugin> plugins;
+  final Set<String> tagIds;
 
-  const NotesFilter({required this.plugins, required this.tagIds});
+  const NotesFilter({required this.plugins, this.tagIds = const {}});
 
   @override
   List<Object?> get props => [plugins, tagIds];

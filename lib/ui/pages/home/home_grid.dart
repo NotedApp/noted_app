@@ -8,7 +8,7 @@ import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
 import 'package:noted_app/ui/router/router_config.dart';
 
-const double _noteSpacing = 4;
+const double _noteSpacing = 2;
 
 // coverage:ignore-file
 class HomeGrid extends StatelessWidget {
@@ -28,7 +28,7 @@ class HomeGrid extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: GridView.builder(
               itemCount: sortedIds.length,
-              padding: const EdgeInsets.only(top: 16, bottom: 128),
+              padding: const EdgeInsets.only(top: 4, bottom: 128),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisSpacing: _noteSpacing,

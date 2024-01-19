@@ -11,3 +11,4 @@ export './noted_tab_bar.dart';
 export './noted_tag.dart';
 export './noted_theme_builder.dart';
 export './noted_tile.dart';
+export './stroked_text.dart';

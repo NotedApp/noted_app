@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/state/home/home_bloc.dart';
 import 'package:noted_app/state/home/home_event.dart';
 import 'package:noted_app/state/home/home_state.dart';
-import 'package:noted_app/state/notes/notes_bloc.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
-import 'package:noted_app/ui/pages/home/home_frame.dart';
+import 'package:noted_app/ui/pages/home/all/all_content.dart';
+import 'package:noted_app/ui/pages/home/cookbook/cookbook_content.dart';
 import 'package:noted_app/ui/pages/home/note_picker/note_picker.dart';
+import 'package:noted_app/ui/pages/home/notebook/notebook_content.dart';
+import 'package:noted_app/ui/pages/home/plugin_bar.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
 import 'package:noted_app/ui/router/router_config.dart';
 import 'package:noted_app/util/extensions/extensions.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
+
+const _plugins = [NotedPlugin.notebook, NotedPlugin.cookbook];
 
 // coverage:ignore-file
 class HomePage extends StatelessWidget {
@@ -20,8 +23,10 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Strings strings = context.strings();
-    ColorScheme colors = context.colorScheme();
+    final strings = context.strings();
+    final colors = context.colorScheme();
+
+    final controller = PageController();
 
     return NotedBlocSelector<HomeBloc, HomeState, Set<String>>(
       listenWhen: (previous, current) => previous.error != current.error,
@@ -76,12 +81,43 @@ class HomePage extends StatelessWidget {
             onPressed: () => context.push(const NotesAddRoute(plugin: NotedPlugin.notebook)),
             onLongPress: () => NotePicker.show(context),
           ),
-          child: BlocProvider(
-            create: (context) => NotesBloc(),
-            child: const HomeFrame(),
+          child: Column(
+            children: [
+              PluginBar(controller: controller),
+              _HomeContent(controller: controller, bloc: bloc),
+            ],
           ),
         );
       },
+    );
+  }
+}
+
+class _HomeContent extends StatelessWidget {
+  final PageController controller;
+  final HomeBloc bloc;
+
+  const _HomeContent({required this.controller, required this.bloc});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: PageView.builder(
+        controller: controller,
+        onPageChanged: (_) => bloc.add(HomeResetSelectionsEvent()),
+        itemCount: _plugins.length + 1,
+        itemBuilder: (context, index) {
+          if (index <= 0) {
+            return const AllContent();
+          }
+
+          return switch (_plugins.elementAtOrNull(index - 1)) {
+            NotedPlugin.notebook => const NotebookContent(),
+            NotedPlugin.cookbook => const CookbookContent(),
+            _ => const AllContent(),
+          };
+        },
+      ),
     );
   }
 }

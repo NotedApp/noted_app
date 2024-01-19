@@ -1,5 +1,4 @@
 import 'package:noted_app/state/notes/notes_state.dart';
-import 'package:noted_app/util/extensions/list_extensions.dart';
 import 'package:noted_models/noted_models.dart';
 
 /// A repository that handles the notebook module.
