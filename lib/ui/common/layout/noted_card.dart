@@ -34,7 +34,7 @@ class NotedCard extends StatelessWidget {
     );
 
     ShapeBorder shape = RoundedRectangleBorder(
-      side: BorderSide(color: borderColor ?? colors.onBackground, width: 2),
+      side: BorderSide(color: borderColor ?? colors.onBackground),
       borderRadius: borderRadius,
     );
 

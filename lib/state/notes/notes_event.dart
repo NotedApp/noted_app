@@ -26,4 +26,14 @@ class NotesDeleteEvent extends NotesEvent {
   const NotesDeleteEvent(this.noteIds);
 }
 
+class NotesToggleSelectionEvent extends NotesEvent {
+  final String id;
+
+  const NotesToggleSelectionEvent(this.id);
+}
+
+class NotesResetSelectionsEvent extends NotesEvent {}
+
+class NotesDeleteSelectionsEvent extends NotesEvent {}
+
 class NotesResetEvent extends NotesEvent {}

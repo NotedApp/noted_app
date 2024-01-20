@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:noted_app/state/auth/auth_bloc.dart';
 import 'package:noted_app/state/auth/auth_state.dart';
 import 'package:noted_app/state/edit/edit_bloc.dart';
-import 'package:noted_app/state/home/home_bloc.dart';
+import 'package:noted_app/state/notes/notes_bloc.dart';
 import 'package:noted_app/ui/pages/edit/edit_page.dart';
 import 'package:noted_app/ui/pages/home/home_page.dart';
 import 'package:noted_app/ui/pages/login/login_page.dart';
@@ -55,7 +55,7 @@ final GoRoute _login = GoRoute(
 
 final GoRoute _home = GoRoute(
   path: NotedRoute._home,
-  builder: (context, state) => BlocProvider(create: (context) => HomeBloc(), child: const HomePage()),
+  builder: (context, state) => BlocProvider(create: (context) => NotesBloc(), child: const HomePage()),
   redirect: (context, state) {
     AuthBloc auth = context.read<AuthBloc>();
     return auth.state.status != AuthStatus.authenticated ? NotedRoute._settings : null;

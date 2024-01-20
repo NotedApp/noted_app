@@ -32,6 +32,9 @@ class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
     on<NotesUpdateEvent>(_onUpdateNotes);
     on<NotesUpdateErrorEvent>(_onUpdateError);
     on<NotesDeleteEvent>(_onDelete);
+    on<NotesToggleSelectionEvent>(_onToggleSelection);
+    on<NotesResetSelectionsEvent>(_onResetSelections);
+    on<NotesDeleteSelectionsEvent>(_onHomeDeleteSelections);
     on<NotesResetEvent>(_onReset);
 
     _userSubscription = _auth.userStream.listen((user) {
@@ -70,16 +73,15 @@ class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
     } else {
       emit(
         NotesState.success(
-          notes: HashMap.fromEntries(
-            event.notes.map((model) => MapEntry(model.id, model)),
-          ),
+          notes: HashMap.fromEntries(event.notes.map((model) => MapEntry(model.id, model))),
+          selectedIds: state.selectedIds.intersection(event.notes.map((model) => model.id).toSet()),
         ),
       );
     }
   }
 
   Future<void> _onUpdateError(NotesUpdateErrorEvent event, Emitter<NotesState> emit) async {
-    emit(NotesState.success(notes: state.notes, error: event.error));
+    emit(NotesState.success(notes: state.notes, selectedIds: state.selectedIds, error: event.error));
   }
 
   Future<void> _onDelete(NotesDeleteEvent event, Emitter<NotesState> emit) async {
@@ -90,8 +92,25 @@ class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
 
       await _notes.deleteNotes(userId: _auth.currentUser.id, noteIds: event.noteIds);
     } catch (e) {
-      emit(NotesState.success(notes: state.notes, error: NotedError.fromObject(e)));
+      emit(NotesState.success(notes: state.notes, selectedIds: state.selectedIds, error: NotedError.fromObject(e)));
     }
+  }
+
+  void _onToggleSelection(NotesToggleSelectionEvent event, Emitter<NotesState> emit) {
+    final updated = state.selectedIds.toSet();
+    if (!updated.remove(event.id) && state.sortedNoteIds.contains(event.id)) {
+      updated.add(event.id);
+    }
+
+    emit(NotesState.success(notes: state.notes, selectedIds: updated));
+  }
+
+  void _onResetSelections(NotesResetSelectionsEvent event, Emitter<NotesState> emit) {
+    emit(NotesState.success(notes: state.notes));
+  }
+
+  Future<void> _onHomeDeleteSelections(NotesDeleteSelectionsEvent event, Emitter<NotesState> emit) async {
+    add(NotesDeleteEvent(state.selectedIds.toList()));
   }
 
   Future<void> _onReset(NotesResetEvent event, Emitter<NotesState> emit) async {

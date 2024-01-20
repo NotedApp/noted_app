@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:noted_app/state/home/home_bloc.dart';
-import 'package:noted_app/state/home/home_event.dart';
-import 'package:noted_app/state/home/home_state.dart';
+import 'package:noted_app/state/notes/notes_bloc.dart';
+import 'package:noted_app/state/notes/notes_event.dart';
+import 'package:noted_app/state/notes/notes_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
-import 'package:noted_app/ui/pages/home/all/all_content.dart';
-import 'package:noted_app/ui/pages/home/cookbook/cookbook_content.dart';
+import 'package:noted_app/ui/pages/home/home_content.dart';
 import 'package:noted_app/ui/pages/home/note_picker/note_picker.dart';
-import 'package:noted_app/ui/pages/home/notebook/notebook_content.dart';
-import 'package:noted_app/ui/pages/home/plugin_bar.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
 import 'package:noted_app/ui/router/router_config.dart';
 import 'package:noted_app/util/extensions/extensions.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
-
-const _plugins = [NotedPlugin.notebook, NotedPlugin.cookbook];
 
 // coverage:ignore-file
 class HomePage extends StatelessWidget {
@@ -26,24 +21,40 @@ class HomePage extends StatelessWidget {
     final strings = context.strings();
     final colors = context.colorScheme();
 
-    final controller = PageController();
-
-    return NotedBlocSelector<HomeBloc, HomeState, Set<String>>(
+    return NotedBlocSelector<NotesBloc, NotesState, int>(
       listenWhen: (previous, current) => previous.error != current.error,
       listener: (context, state) {
-        if (state.error?.code == ErrorCode.notes_delete_failed) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            NotedSnackBar.createWithText(
-              context: context,
-              text: strings.notes_error_deleteNoteFailed,
-              hasClose: true,
-            ),
-          );
+        final errorCode = state.error?.code;
+
+        if (errorCode == null) {
+          return;
+        }
+
+        final strings = context.strings();
+
+        switch (errorCode) {
+          case ErrorCode.notes_subscribe_failed:
+            ScaffoldMessenger.of(context).showSnackBar(
+              NotedSnackBar.createWithText(
+                context: context,
+                text: strings.notes_error_failed,
+                hasClose: true,
+              ),
+            );
+          case ErrorCode.notes_delete_failed:
+            ScaffoldMessenger.of(context).showSnackBar(
+              NotedSnackBar.createWithText(
+                context: context,
+                text: strings.notes_error_deleteNoteFailed,
+                hasClose: true,
+              ),
+            );
+          default:
         }
       },
-      selector: (state) => state.selectedIds,
+      selector: (state) => state.selectedIds.length,
       builder: (context, bloc, state) {
-        final isSelecting = state.isNotEmpty;
+        final isSelecting = state > 0;
 
         List<NotedIconButton> trailingActions = isSelecting
             ? [
@@ -57,7 +68,7 @@ class HomePage extends StatelessWidget {
                 NotedIconButton(
                   icon: NotedIcons.close,
                   type: NotedIconButtonType.simple,
-                  onPressed: () => bloc.add(HomeResetSelectionsEvent()),
+                  onPressed: () => bloc.add(NotesResetSelectionsEvent()),
                 ),
               ]
             : [
@@ -70,7 +81,7 @@ class HomePage extends StatelessWidget {
               ];
 
         return NotedHeaderPage(
-          title: isSelecting ? state.length.toString() : strings.notes_title,
+          title: isSelecting ? state.toString() : strings.notes_title,
           hasBackButton: false,
           headerBackgroundColor: isSelecting ? colors.secondary : colors.background,
           trailingActions: trailingActions,
@@ -81,48 +92,14 @@ class HomePage extends StatelessWidget {
             onPressed: () => context.push(const NotesAddRoute(plugin: NotedPlugin.notebook)),
             onLongPress: () => NotePicker.show(context),
           ),
-          child: Column(
-            children: [
-              PluginBar(controller: controller),
-              _HomeContent(controller: controller, bloc: bloc),
-            ],
-          ),
+          child: const HomeContent(),
         );
       },
     );
   }
 }
 
-class _HomeContent extends StatelessWidget {
-  final PageController controller;
-  final HomeBloc bloc;
-
-  const _HomeContent({required this.controller, required this.bloc});
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: PageView.builder(
-        controller: controller,
-        onPageChanged: (_) => bloc.add(HomeResetSelectionsEvent()),
-        itemCount: _plugins.length + 1,
-        itemBuilder: (context, index) {
-          if (index <= 0) {
-            return const AllContent();
-          }
-
-          return switch (_plugins.elementAtOrNull(index - 1)) {
-            NotedPlugin.notebook => const NotebookContent(),
-            NotedPlugin.cookbook => const CookbookContent(),
-            _ => const AllContent(),
-          };
-        },
-      ),
-    );
-  }
-}
-
-Future<void> _confirmDeleteNotes(BuildContext context, HomeBloc bloc) async {
+Future<void> _confirmDeleteNotes(BuildContext context, NotesBloc bloc) async {
   Strings strings = context.strings();
 
   showDialog<bool>(
@@ -130,7 +107,7 @@ Future<void> _confirmDeleteNotes(BuildContext context, HomeBloc bloc) async {
     builder: (context) => NotedDialog(
       leftActionText: strings.common_confirm,
       onLeftActionPressed: () {
-        bloc.add(HomeDeleteSelectionsEvent());
+        bloc.add(NotesDeleteSelectionsEvent());
         context.pop();
       },
       rightActionText: strings.common_cancel,

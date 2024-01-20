@@ -8,21 +8,8 @@ import 'package:noted_app/ui/pages/home/home_grid.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_app/util/extensions/extensions.dart';
 
-class HomeFrame extends StatelessWidget {
-  final Widget child;
-  final Widget loading;
-  final Widget error;
-  final Widget empty;
-  final void Function(BuildContext, ErrorCode)? handleError;
-
-  const HomeFrame({
-    this.child = const HomeGrid(),
-    this.loading = const _HomeLoading(),
-    this.error = const _HomeError(),
-    this.empty = const _HomeEmpty(),
-    this.handleError,
-    super.key,
-  });
+class HomeContent extends StatelessWidget {
+  const HomeContent({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,20 +18,20 @@ class HomeFrame extends StatelessWidget {
       listenWhen: (previous, current) => previous.error?.code != current.error?.code,
       listener: (context, state) {
         if (state.error != null) {
-          (handleError ?? _homeHandleError).call(context, state.error!.code);
+          _handleError.call(context, state.error!.code);
         }
       },
       builder: (context, bloc, state) => switch (state) {
-        NotesStatus.loading => loading,
-        NotesStatus.error => error,
-        NotesStatus.empty => empty,
-        NotesStatus.loaded => child,
+        NotesStatus.loading => const _HomeLoading(),
+        NotesStatus.error => const _HomeError(),
+        NotesStatus.empty => const _HomeEmpty(),
+        NotesStatus.loaded => const HomeGrid(),
       },
     );
   }
 }
 
-void _homeHandleError(BuildContext context, ErrorCode errorCode) {
+void _handleError(BuildContext context, ErrorCode errorCode) {
   final strings = context.strings();
 
   switch (errorCode) {
