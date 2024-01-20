@@ -10,6 +10,7 @@ enum NotedTextFieldType {
 
 class NotedTextField extends StatelessWidget {
   final NotedTextFieldType type;
+  final FocusNode? focusNode;
   final String? name;
   final String? hint;
   final String? errorText;
@@ -28,6 +29,7 @@ class NotedTextField extends StatelessWidget {
 
   const NotedTextField({
     required this.type,
+    this.focusNode,
     this.name,
     this.hint,
     this.errorText,
@@ -90,6 +92,7 @@ class NotedTextField extends StatelessWidget {
         );
 
     return TextFormField(
+      focusNode: focusNode,
       style: style,
       decoration: decoration,
       controller: controller,

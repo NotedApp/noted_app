@@ -44,7 +44,7 @@ flutter:
   fonts:
     - family: NotedIcons
       fonts:
-        - asset: fonts/icons/NotedIcons.ttf
+        - asset: fonts/icons/NotedIcons.otf
     - family: Poppins
       fonts:
         - asset: fonts/poppins/Poppins-Regular.ttf

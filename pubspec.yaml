@@ -53,6 +53,7 @@ dev_dependencies:
   bloc_test: ^9.1.1
   mocktail: ^1.0.0
   firebase_core_platform_interface: ^5.0.0
+  icon_font_generator: ^4.0.0
 
 flutter:
   uses-material-design: true
@@ -67,7 +68,7 @@ flutter:
   fonts:
     - family: NotedIcons
       fonts:
-        - asset: fonts/icons/NotedIcons.ttf
+        - asset: fonts/icons/NotedIcons.otf
     - family: Poppins
       fonts:
         - asset: fonts/poppins/Poppins-Regular.ttf

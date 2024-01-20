@@ -19,6 +19,8 @@ class _CatalogTextInputPageState extends State<CatalogTextInputPage> {
 
   final TextEditingController controller3 = TextEditingController();
 
+  final TextEditingController controller4 = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     List<CatalogListItem> children = [
@@ -62,6 +64,11 @@ class _CatalogTextInputPageState extends State<CatalogTextInputPage> {
           hint: 'title',
           controller: controller3,
         ),
+      ),
+      CatalogListItem(
+        type: CatalogListItemType.column,
+        label: 'search bar',
+        child: NotedSearchBar(controller: controller4),
       ),
     ];
 
