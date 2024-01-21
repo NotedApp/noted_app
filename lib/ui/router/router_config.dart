@@ -6,7 +6,7 @@ import 'package:noted_app/state/auth/auth_state.dart';
 import 'package:noted_app/state/edit/edit_bloc.dart';
 import 'package:noted_app/state/notes/notes_bloc.dart';
 import 'package:noted_app/ui/pages/edit/edit_page.dart';
-import 'package:noted_app/ui/pages/home/home_page.dart';
+import 'package:noted_app/ui/pages/notes/home/home_page.dart';
 import 'package:noted_app/ui/pages/login/login_page.dart';
 import 'package:noted_app/ui/pages/login/password_reset_page.dart';
 import 'package:noted_app/ui/pages/login/register_page.dart';

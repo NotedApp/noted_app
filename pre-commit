@@ -5,10 +5,10 @@
 echo
 echo "--- formatting code ---"
 
-formatOutput=$(dart format -l 120 .)
+formatOutput=$(dart format -l 120 lib noted_catalog/lib)
 
-echo "--- code formatted ---"
 echo "$formatOutput"
+echo "--- code formatted ---"
 echo
 
 echo "--- analyzing code ---"
@@ -20,6 +20,10 @@ if ! analyzeOutput=$(dart analyze); then
     echo
     exit 1
 fi
+
+echo "$analyzeOutput"
+echo "--- code analyzed ---"
+echo
 
 # If we made it this far, the commit is allowed
 exit 0
