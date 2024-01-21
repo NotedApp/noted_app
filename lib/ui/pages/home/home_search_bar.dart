@@ -14,7 +14,7 @@ class _HomeSearchBarState extends State<HomeSearchBar> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       child: NotedSearchBar(controller: controller),
     );
   }

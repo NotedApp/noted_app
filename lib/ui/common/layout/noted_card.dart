@@ -51,7 +51,7 @@ class NotedCard extends StatelessWidget {
       color: color ?? colors.background,
       elevation: 4,
       shape: shape,
-      margin: margin,
+      margin: margin ?? EdgeInsets.zero,
       child: ClipRRect(
         borderRadius: borderRadius,
         child: contents,
