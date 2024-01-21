@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:noted_app/ui/common/layout/noted_plugin_card.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_catalog/catalog_list_widget.dart';
 import 'package:noted_models/noted_models.dart';
@@ -145,6 +146,21 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProvid
             ),
           ),
         ),
+      ),
+      const CatalogListItem(
+        type: CatalogListItemType.column,
+        label: 'plugin card large',
+        child: NotedPluginCard(plugin: NotedPlugin.notebook, size: NotedWidgetSize.large),
+      ),
+      const CatalogListItem(
+        type: CatalogListItemType.column,
+        label: 'plugin card medium',
+        child: NotedPluginCard(plugin: NotedPlugin.cookbook),
+      ),
+      const CatalogListItem(
+        type: CatalogListItemType.column,
+        label: 'plugin card small',
+        child: NotedPluginCard(plugin: NotedPlugin.notebook, size: NotedWidgetSize.small),
       ),
       CatalogListItem(
         type: CatalogListItemType.column,
