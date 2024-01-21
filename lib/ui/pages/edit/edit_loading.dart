@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
-import 'package:noted_app/util/extensions.dart';
+import 'package:noted_app/util/extensions/extensions.dart';
 
 // coverage:ignore-file
 class EditLoading extends StatelessWidget {

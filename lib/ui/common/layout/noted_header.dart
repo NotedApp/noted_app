@@ -11,7 +11,7 @@ class NotedHeader extends AppBar {
     super.backgroundColor,
     super.key,
   }) : super(
-          toolbarHeight: 72,
+          toolbarHeight: 64,
           automaticallyImplyLeading: false,
           leadingWidth: 60,
           leading: _getLeading(leadingAction),
@@ -20,7 +20,6 @@ class NotedHeader extends AppBar {
             ...trailingActions.map(_getAction),
             const SizedBox(width: 4),
           ],
-          // forceMaterialTransparency: true,
         );
 }
 

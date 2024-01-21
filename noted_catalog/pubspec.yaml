@@ -38,13 +38,15 @@ flutter:
   generate: true
 
   assets:
+    - assets/svg/man_computer.svg
     - assets/svg/woman_climbing.svg
+    - assets/svg/woman_cooking.svg
     - assets/svg/woman_reading.svg
 
   fonts:
     - family: NotedIcons
       fonts:
-        - asset: fonts/icons/NotedIcons.ttf
+        - asset: fonts/icons/NotedIcons.otf
     - family: Poppins
       fonts:
         - asset: fonts/poppins/Poppins-Regular.ttf

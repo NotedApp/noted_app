@@ -10,6 +10,7 @@ enum NotedTextFieldType {
 
 class NotedTextField extends StatelessWidget {
   final NotedTextFieldType type;
+  final FocusNode? focusNode;
   final String? name;
   final String? hint;
   final String? errorText;
@@ -25,9 +26,11 @@ class NotedTextField extends StatelessWidget {
   final bool enabled;
   final IconData? icon;
   final VoidCallback? onIconPressed;
+  final double? strokeWidth;
 
   const NotedTextField({
     required this.type,
+    this.focusNode,
     this.name,
     this.hint,
     this.errorText,
@@ -43,6 +46,7 @@ class NotedTextField extends StatelessWidget {
     this.enabled = true,
     this.icon,
     this.onIconPressed,
+    this.strokeWidth,
     super.key,
   });
 
@@ -51,7 +55,7 @@ class NotedTextField extends StatelessWidget {
     ThemeData theme = Theme.of(context);
 
     _NotedTextFieldBuilder builder = switch (type) {
-      NotedTextFieldType.outlined => _StandardTextFieldBuilder(this),
+      NotedTextFieldType.outlined => _StandardTextFieldBuilder(this, strokeWidth ?? 1),
       NotedTextFieldType.title => _TitleTextFieldBuilder(this),
       NotedTextFieldType.plain => _PlainTextFieldBuilder(this),
     };
@@ -90,6 +94,7 @@ class NotedTextField extends StatelessWidget {
         );
 
     return TextFormField(
+      focusNode: focusNode,
       style: style,
       decoration: decoration,
       controller: controller,
@@ -120,7 +125,9 @@ abstract class _NotedTextFieldBuilder {
 }
 
 class _StandardTextFieldBuilder extends _NotedTextFieldBuilder {
-  const _StandardTextFieldBuilder(super.source);
+  final double strokeWidth;
+
+  const _StandardTextFieldBuilder(super.source, this.strokeWidth);
 
   @override
   TextStyle? styleOf(TextTheme theme) {
@@ -133,12 +140,12 @@ class _StandardTextFieldBuilder extends _NotedTextFieldBuilder {
       labelText: source.name,
       contentPadding: EdgeInsets.fromLTRB(16, 10, source.icon == null ? 16 : 48, 10),
       border: OutlineInputBorder(
-        borderSide: BorderSide(color: scheme.onBackground),
-        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(color: scheme.onBackground, width: strokeWidth),
+        borderRadius: BorderRadius.circular(12),
       ),
       errorBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: scheme.error),
-        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(color: scheme.error, width: strokeWidth),
+        borderRadius: BorderRadius.circular(12),
       ),
     );
   }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
 import 'package:noted_app/ui/router/router_config.dart';
-import 'package:noted_app/util/extensions.dart';
+import 'package:noted_app/util/extensions/extensions.dart';
 
 class NotedGoRouter extends NotedRouter {
   @override

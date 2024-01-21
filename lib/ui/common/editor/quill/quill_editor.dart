@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:noted_app/ui/common/editor/noted_editor.dart';
 import 'package:noted_app/ui/common/editor/quill/quill_editor_controller.dart';
-import 'package:noted_app/util/extensions.dart';
+import 'package:noted_app/util/extensions/extensions.dart';
 
 class QuillEditor extends NotedEditor {
   const QuillEditor({

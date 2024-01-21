@@ -146,6 +146,21 @@ class _CatalogLayoutPageState extends State<CatalogLayoutPage> with TickerProvid
           ),
         ),
       ),
+      const CatalogListItem(
+        type: CatalogListItemType.column,
+        label: 'plugin card large',
+        child: NotedPluginCard(plugin: NotedPlugin.notebook, size: NotedWidgetSize.large),
+      ),
+      const CatalogListItem(
+        type: CatalogListItemType.column,
+        label: 'plugin card medium',
+        child: NotedPluginCard(plugin: NotedPlugin.cookbook),
+      ),
+      const CatalogListItem(
+        type: CatalogListItemType.column,
+        label: 'plugin card small',
+        child: NotedPluginCard(plugin: NotedPlugin.notebook, size: NotedWidgetSize.small),
+      ),
       CatalogListItem(
         type: CatalogListItemType.column,
         label: 'snackbar no close',

@@ -2,24 +2,28 @@ import 'dart:async';
 
 import 'package:get_it/get_it.dart';
 import 'package:noted_app/repository/notes/notes_repository.dart';
+import 'package:noted_app/state/notes/notes_state.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 /// Default local notes.
-Map<String, NoteModel> localNotes = {
-  'test-note-0': NotebookNoteModel(
-    id: 'test-note-0',
-    title: 'Note 0',
-    document: [
-      {'insert': 'hello world\n'},
-    ],
-  ),
-  'test-note-1': NotebookNoteModel(
+final Map<String, NoteModel> localNotes = {
+  'test-note-0': NotebookNoteModel(id: 'test-note-0', title: 'Note 0', document: const [
+    {'insert': 'hello world\n'},
+  ], tagIds: const {
+    'test-tag-0'
+  }),
+  'test-note-1': CookbookNoteModel(
     id: 'test-note-1',
     title: 'Note 1',
-    document: [
+    document: const [
       {'insert': 'hello world\n'},
     ],
+    url: '',
+    prepTime: '',
+    cookTime: '',
+    difficulty: 3,
+    tagIds: const {'test-tag-1'},
   ),
 };
 
@@ -45,14 +49,14 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
   }
 
   @override
-  Future<Stream<List<NoteModel>>> subscribeNotes({required String userId}) async {
+  Future<Stream<List<NoteModel>>> subscribeNotes({required String userId, NotesFilter? filter}) async {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
     if (_shouldThrow || userId.isEmpty) {
       throw NotedError(ErrorCode.notes_subscribe_failed);
     }
 
-    return _notesController.stream;
+    return _notesController.stream.map((event) => filterModels(filter, event));
   }
 
   @override

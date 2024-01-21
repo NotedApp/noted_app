@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:noted_app/repository/notes/notes_repository.dart';
+import 'package:noted_app/state/notes/notes_state.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
@@ -15,18 +16,21 @@ class FirebaseNotesRepository extends NotesRepository {
   DatabaseReference _notes(String userId) => _database.ref('notes/$userId');
 
   @override
-  Future<Stream<List<NoteModel>>> subscribeNotes({required String userId}) async {
+  Future<Stream<List<NoteModel>>> subscribeNotes({required String userId, NotesFilter? filter}) async {
     try {
       return _notes(userId).onValue.map((event) {
-        return event.snapshot.children.map((obj) {
-          Object? val = obj.value;
+        return filterModels(
+          filter,
+          event.snapshot.children.map((obj) {
+            Object? val = obj.value;
 
-          if (val == null || val is! Map) {
-            throw NotedError(ErrorCode.notes_parse_failed);
-          }
+            if (val == null || val is! Map) {
+              throw NotedError(ErrorCode.notes_parse_failed);
+            }
 
-          return NoteModel.fromMap(Map<String, dynamic>.from(val));
-        }).toList();
+            return NoteModel.fromMap(Map<String, dynamic>.from(val));
+          }).toList(),
+        );
       });
     } catch (_) {
       throw NotedError(ErrorCode.notes_subscribe_failed);

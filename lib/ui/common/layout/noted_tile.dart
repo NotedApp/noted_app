@@ -4,7 +4,7 @@ import 'package:noted_app/state/notes/notes_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/plugins/cookbook/cookbook_tile_content.dart';
 import 'package:noted_app/ui/plugins/notebook/notebook_tile_content.dart';
-import 'package:noted_app/util/extensions.dart';
+import 'package:noted_app/util/extensions/extensions.dart';
 import 'package:noted_models/noted_models.dart' hide Brightness;
 
 const double _selectedBrightness = 0.2;

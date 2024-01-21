@@ -4,7 +4,7 @@ import 'package:noted_app/ui/common/editor/noted_editor_attributes.dart';
 import 'package:noted_app/ui/common/editor/toolbar/home/noted_editor_state_button.dart';
 import 'package:noted_app/ui/common/editor/toolbar/home/noted_editor_toggle_button.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
-import 'package:noted_app/util/extensions.dart';
+import 'package:noted_app/util/extensions/extensions.dart';
 
 part 'home/noted_editor_toolbar_home.dart';
 part 'colors/noted_editor_toolbar_colors.dart';

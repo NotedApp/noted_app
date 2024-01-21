@@ -4,8 +4,15 @@ class NotedTabBar extends StatelessWidget {
   final List<String> tabs;
   final TabController? controller;
   final ValueChanged<int>? onPressed;
+  final EdgeInsets padding;
 
-  const NotedTabBar({required this.tabs, this.controller, this.onPressed, super.key});
+  const NotedTabBar({
+    required this.tabs,
+    this.controller,
+    this.onPressed,
+    this.padding = const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +22,7 @@ class NotedTabBar extends StatelessWidget {
       tabs: tabs.map((text) => _NotedTab(text: text, theme: theme)).toList(),
       controller: controller,
       isScrollable: true,
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      padding: padding,
       labelPadding: EdgeInsets.zero,
       automaticIndicatorColorAdjustment: false,
       indicator: BoxDecoration(
@@ -28,6 +35,7 @@ class NotedTabBar extends StatelessWidget {
       indicatorWeight: 0,
       onTap: onPressed,
       splashBorderRadius: BorderRadius.circular(16),
+      tabAlignment: TabAlignment.start,
     );
   }
 }

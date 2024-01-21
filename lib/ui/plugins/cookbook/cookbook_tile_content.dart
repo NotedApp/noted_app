@@ -1,8 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
-import 'package:noted_app/util/extensions.dart';
+import 'package:noted_app/util/extensions/extensions.dart';
 import 'package:noted_models/noted_models.dart';
 import 'package:ogp_data_extract/ogp_data_extract.dart';
 
@@ -104,11 +103,10 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
               // coverage:ignore-start
               return Opacity(
                 opacity: 0.2,
-                child: CachedNetworkImage(
-                  imageUrl: snapshot.data!,
+                child: NotedImage.network(
+                  source: snapshot.data!,
                   fit: BoxFit.cover,
-                  memCacheHeight: imageSize,
-                  maxHeightDiskCache: imageSize,
+                  imageHeight: imageSize,
                 ),
               );
               // coverage:ignore-end

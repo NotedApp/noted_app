@@ -152,5 +152,38 @@ void main() {
         ),
       ],
     );
+
+    test('toggles selections for a user', () async {
+      final notesBloc = NotesBloc();
+      notesBloc.add(NotesSubscribeEvent());
+      await notesBloc.stream.firstWhere((state) => state.status == NotesStatus.loaded);
+
+      expect(notesBloc.state.selectedIds.isEmpty, true);
+      notesBloc.add(const NotesToggleSelectionEvent('test-note-0'));
+      await notesBloc.stream.first;
+
+      expect(notesBloc.state.selectedIds.isEmpty, false);
+      notesBloc.add(const NotesToggleSelectionEvent('test-note-0'));
+      await notesBloc.stream.first;
+
+      expect(notesBloc.state.selectedIds.isEmpty, true);
+      notesBloc.add(const NotesToggleSelectionEvent('test-note-0'));
+      await notesBloc.stream.first;
+
+      expect(notesBloc.state.selectedIds.isEmpty, false);
+      notesBloc.add(NotesResetSelectionsEvent());
+      await notesBloc.stream.first;
+
+      expect(notesBloc.state.selectedIds.isEmpty, true);
+      notesBloc.add(const NotesToggleSelectionEvent('test-note-0'));
+      await notesBloc.stream.first;
+
+      expect(notesBloc.state.selectedIds.isEmpty, false);
+      notesBloc.add(NotesDeleteSelectionsEvent());
+      await notesBloc.stream.first;
+
+      expect(notesBloc.state.sortedNoteIds.length, 1);
+      expect(notesBloc.state.selectedIds.isEmpty, true);
+    });
   });
 }

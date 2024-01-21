@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:noted_app/repository/notes/local_notes_repository.dart';
+import 'package:noted_app/state/notes/notes_state.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
@@ -56,6 +57,32 @@ void main() {
       await repository.deleteNotes(
         userId: 'test',
         noteIds: localNotes.values.map((note) => note.id).toList(),
+      );
+    });
+
+    test('filters notes', () async {
+      var stream = await repository.subscribeNotes(
+        userId: 'test',
+        filter: const NotesFilter(plugins: {NotedPlugin.notebook}),
+      );
+
+      expectLater(
+        stream,
+        emitsInOrder([
+          [localNotes.values.first]
+        ]),
+      );
+
+      stream = await repository.subscribeNotes(
+        userId: 'test',
+        filter: const NotesFilter(plugins: {NotedPlugin.cookbook}),
+      );
+
+      expectLater(
+        stream,
+        emitsInOrder([
+          [localNotes.values.elementAt(1)]
+        ]),
       );
     });
 

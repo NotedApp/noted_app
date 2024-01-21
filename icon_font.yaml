@@ -1,0 +1,10 @@
+icon_font:
+  input_svg_dir: "icons/"
+  output_font_file: "fonts/icons/NotedIcons.otf"
+
+  output_class_file: "lib/ui/common/image/noted_icons.dart"
+  class_name: "NotedIcons"
+  format: true
+
+  font_name: "NotedIcons"
+  normalize: false
