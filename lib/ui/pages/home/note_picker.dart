@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
-import 'package:noted_app/ui/pages/home/note_picker/note_picker_card.dart';
+import 'package:noted_app/ui/router/noted_router.dart';
+import 'package:noted_app/ui/router/router_config.dart';
 import 'package:noted_app/util/extensions/extensions.dart';
 import 'package:noted_models/noted_models.dart';
 
@@ -22,10 +23,19 @@ class NotePicker extends StatelessWidget {
           Expanded(
             child: GridView.count(
               crossAxisCount: 2,
-              crossAxisSpacing: 4,
-              mainAxisSpacing: 4,
-              childAspectRatio: NotedWidgetConfig.goldenRatio,
-              children: plugins.map((plugin) => NotePickerCard.buildCard(context: context, plugin: plugin)).toList(),
+              crossAxisSpacing: 8,
+              mainAxisSpacing: 8,
+              childAspectRatio: 2,
+              children: plugins
+                  .map(
+                    (plugin) => NotedPluginCard(
+                      plugin: plugin,
+                      size: NotedWidgetSize.large,
+                      width: double.infinity,
+                      onPressed: () => context.push(NotesAddRoute(plugin: plugin)),
+                    ),
+                  )
+                  .toList(),
             ),
           ),
         ],

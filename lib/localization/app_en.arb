@@ -99,6 +99,8 @@
   "settings_error_tags_empty": "get started by creating a tag using the button below!",
 
   "notes_title": "noted.",
+  "notes_plugins_header": "plugins",
+  "notes_notes_header": "notes",
   "notes_addPicker": "add a note...",
   "notes_delete_confirmText": "are you sure you want to delete these notes? recently deleted notes can be recovered in the app settings.",
   "notes_error_deleteNoteFailed": "failed to delete notes, please try again.",

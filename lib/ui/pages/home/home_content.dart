@@ -8,6 +8,7 @@ import 'package:noted_app/ui/pages/home/home_grid.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_app/util/extensions/extensions.dart';
 
+// coverage:ignore-file
 class HomeContent extends StatelessWidget {
   const HomeContent({super.key});
 

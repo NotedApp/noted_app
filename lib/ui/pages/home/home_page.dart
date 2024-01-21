@@ -5,7 +5,7 @@ import 'package:noted_app/state/notes/notes_event.dart';
 import 'package:noted_app/state/notes/notes_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/pages/home/home_content.dart';
-import 'package:noted_app/ui/pages/home/note_picker/note_picker.dart';
+import 'package:noted_app/ui/pages/home/note_picker.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
 import 'package:noted_app/ui/router/router_config.dart';
 import 'package:noted_app/util/extensions/extensions.dart';

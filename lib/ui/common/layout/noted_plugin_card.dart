@@ -7,11 +7,15 @@ class NotedPluginCard extends StatelessWidget {
   final NotedPlugin plugin;
   final NotedWidgetSize size;
   final VoidCallback? onPressed;
+  final double? width;
+  final double? height;
 
   const NotedPluginCard({
     required this.plugin,
     this.size = NotedWidgetSize.medium,
     this.onPressed,
+    this.width,
+    this.height,
     super.key,
   });
 
@@ -22,8 +26,8 @@ class NotedPluginCard extends StatelessWidget {
     final config = _NotedPluginCardConfig.fromSize(context, size);
 
     return SizedBox(
-      width: config.width,
-      height: config.height,
+      width: width ?? config.width,
+      height: height ?? config.height,
       child: NotedCard(
         size: config.cardSize,
         color: colors.secondary,

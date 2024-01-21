@@ -37,6 +37,7 @@ class _NotedSearchBarState extends State<NotedSearchBar> {
       type: NotedTextFieldType.outlined,
       icon: icon,
       onIconPressed: onIconPressed,
+      strokeWidth: 2,
     );
   }
 
