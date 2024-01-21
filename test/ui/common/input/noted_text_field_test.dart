@@ -107,8 +107,26 @@ void main() {
       Finder error = find.text('validation');
 
       await tester.enterText(input, 'error');
-      await tester.pump(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
       expect(error, findsOneWidget);
+    });
+
+    testWidgets('text field can be disabled', (tester) async {
+      await tester.pumpWidget(
+        TestWrapper(
+          child: const NotedTextField(
+            type: NotedTextFieldType.outlined,
+            enabled: false,
+          ),
+        ),
+      );
+
+      Finder input = find.byType(NotedTextField);
+      Finder test = find.text('test');
+
+      await tester.enterText(input, 'test');
+      await tester.pumpAndSettle();
+      expect(test, findsNothing);
     });
   });
 }

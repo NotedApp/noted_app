@@ -45,7 +45,7 @@ class NotedPluginCard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Text(text, style: config.textStyle),
             ),
           ],

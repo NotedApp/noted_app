@@ -139,13 +139,23 @@ class _StandardTextFieldBuilder extends _NotedTextFieldBuilder {
     return InputDecoration(
       labelText: source.name,
       contentPadding: EdgeInsets.fromLTRB(16, 10, source.icon == null ? 16 : 48, 10),
-      border: OutlineInputBorder(
-        borderSide: BorderSide(color: scheme.onBackground, width: strokeWidth),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      errorBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: scheme.error, width: strokeWidth),
-        borderRadius: BorderRadius.circular(12),
+      border: MaterialStateOutlineInputBorder.resolveWith(
+        (states) {
+          var color = scheme.onBackground;
+
+          if (states.contains(MaterialState.error)) {
+            color = scheme.error;
+          }
+
+          if (states.contains(MaterialState.disabled)) {
+            color = color.withAlpha(128);
+          }
+
+          return OutlineInputBorder(
+            borderSide: BorderSide(color: color, width: strokeWidth),
+            borderRadius: BorderRadius.circular(12),
+          );
+        },
       ),
     );
   }

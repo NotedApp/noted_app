@@ -479,10 +479,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_quill
-      sha256: fa680ce48f017f57aec3b5352010e45d4208f1447debf41085f31bc2a73003c4
+      sha256: "4ed407aadd18e3a06fa8c6d544a54c3109ec7633074c0a4dacab61a3b162a6c1"
       url: "https://pub.dev"
     source: hosted
-    version: "9.2.6"
+    version: "9.2.8"
   flutter_svg:
     dependency: "direct main"
     description:

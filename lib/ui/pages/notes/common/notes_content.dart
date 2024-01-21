@@ -4,52 +4,34 @@ import 'package:noted_app/state/notes/notes_bloc.dart';
 import 'package:noted_app/state/notes/notes_event.dart';
 import 'package:noted_app/state/notes/notes_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
-import 'package:noted_app/ui/pages/home/home_grid.dart';
-import 'package:noted_app/util/errors/noted_exception.dart';
+import 'package:noted_app/ui/pages/notes/common/notes_grid.dart';
 import 'package:noted_app/util/extensions/extensions.dart';
 
 // coverage:ignore-file
-class HomeContent extends StatelessWidget {
-  const HomeContent({super.key});
+class NotesContent extends StatelessWidget {
+  final Widget? loading;
+  final Widget? error;
+  final Widget? empty;
+  final Widget? loaded;
+
+  const NotesContent({this.loading, this.error, this.empty, this.loaded, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return NotedBlocSelector<NotesBloc, NotesState, NotesStatus>(
+    return BlocSelector<NotesBloc, NotesState, NotesStatus>(
       selector: (state) => state.status,
-      listenWhen: (previous, current) => previous.error?.code != current.error?.code,
-      listener: (context, state) {
-        if (state.error != null) {
-          _handleError.call(context, state.error!.code);
-        }
-      },
-      builder: (context, bloc, state) => switch (state) {
-        NotesStatus.loading => const _HomeLoading(),
-        NotesStatus.error => const _HomeError(),
-        NotesStatus.empty => const _HomeEmpty(),
-        NotesStatus.loaded => const HomeGrid(),
+      builder: (context, state) => switch (state) {
+        NotesStatus.loading => loading ?? const _NotesLoading(),
+        NotesStatus.error => error ?? const _NotesError(),
+        NotesStatus.empty => empty ?? const _NotesEmpty(),
+        NotesStatus.loaded => loaded ?? const NotesGrid(),
       },
     );
   }
 }
 
-void _handleError(BuildContext context, ErrorCode errorCode) {
-  final strings = context.strings();
-
-  switch (errorCode) {
-    case ErrorCode.notes_subscribe_failed:
-      ScaffoldMessenger.of(context).showSnackBar(
-        NotedSnackBar.createWithText(
-          context: context,
-          text: strings.notes_error_failed,
-          hasClose: true,
-        ),
-      );
-    default:
-  }
-}
-
-class _HomeLoading extends StatelessWidget {
-  const _HomeLoading();
+class _NotesLoading extends StatelessWidget {
+  const _NotesLoading();
 
   @override
   Widget build(BuildContext context) {
@@ -69,8 +51,8 @@ class _HomeLoading extends StatelessWidget {
   }
 }
 
-class _HomeError extends StatelessWidget {
-  const _HomeError();
+class _NotesError extends StatelessWidget {
+  const _NotesError();
 
   @override
   Widget build(BuildContext context) {
@@ -85,8 +67,8 @@ class _HomeError extends StatelessWidget {
   }
 }
 
-class _HomeEmpty extends StatelessWidget {
-  const _HomeEmpty();
+class _NotesEmpty extends StatelessWidget {
+  const _NotesEmpty();
 
   @override
   Widget build(BuildContext context) {
