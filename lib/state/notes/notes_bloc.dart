@@ -34,7 +34,7 @@ class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
     on<NotesDeleteEvent>(_onDelete);
     on<NotesToggleSelectionEvent>(_onToggleSelection);
     on<NotesResetSelectionsEvent>(_onResetSelections);
-    on<NotesDeleteSelectionsEvent>(_onHomeDeleteSelections);
+    on<NotesDeleteSelectionsEvent>(_onDeleteSelections);
     on<NotesResetEvent>(_onReset);
 
     _userSubscription = _auth.userStream.listen((user) {
@@ -97,6 +97,10 @@ class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
   }
 
   void _onToggleSelection(NotesToggleSelectionEvent event, Emitter<NotesState> emit) {
+    if (state.status != NotesStatus.loaded) {
+      return;
+    }
+
     final updated = state.selectedIds.toSet();
     if (!updated.remove(event.id) && state.sortedNoteIds.contains(event.id)) {
       updated.add(event.id);
@@ -106,10 +110,18 @@ class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
   }
 
   void _onResetSelections(NotesResetSelectionsEvent event, Emitter<NotesState> emit) {
+    if (state.status != NotesStatus.loaded) {
+      return;
+    }
+
     emit(NotesState.success(notes: state.notes));
   }
 
-  Future<void> _onHomeDeleteSelections(NotesDeleteSelectionsEvent event, Emitter<NotesState> emit) async {
+  Future<void> _onDeleteSelections(NotesDeleteSelectionsEvent event, Emitter<NotesState> emit) async {
+    if (state.status != NotesStatus.loaded) {
+      return;
+    }
+
     add(NotesDeleteEvent(state.selectedIds.toList()));
   }
 

@@ -7,20 +7,23 @@ import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 /// Default local notes.
-Map<String, NoteModel> localNotes = {
-  'test-note-0': NotebookNoteModel(
-    id: 'test-note-0',
-    title: 'Note 0',
-    document: [
-      {'insert': 'hello world\n'},
-    ],
-  ),
-  'test-note-1': NotebookNoteModel(
+final Map<String, NoteModel> localNotes = {
+  'test-note-0': NotebookNoteModel(id: 'test-note-0', title: 'Note 0', document: const [
+    {'insert': 'hello world\n'},
+  ], tagIds: const {
+    'test-tag-0'
+  }),
+  'test-note-1': CookbookNoteModel(
     id: 'test-note-1',
     title: 'Note 1',
-    document: [
+    document: const [
       {'insert': 'hello world\n'},
     ],
+    url: '',
+    prepTime: '',
+    cookTime: '',
+    difficulty: 3,
+    tagIds: const {'test-tag-1'},
   ),
 };
 

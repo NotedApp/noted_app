@@ -64,6 +64,8 @@ final class NotesFilter extends Equatable {
 
   const NotesFilter({required this.plugins, this.tagIds = const {}});
 
+  // coverage:ignore-start
   @override
   List<Object?> get props => [plugins, tagIds];
+  // coverage:ignore-end
 }
