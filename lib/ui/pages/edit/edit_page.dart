@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/state/edit/edit_bloc.dart';
 import 'package:noted_app/state/edit/edit_event.dart';
 import 'package:noted_app/state/edit/edit_state.dart';
@@ -20,10 +19,10 @@ class EditPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Strings strings = context.strings();
+    final strings = context.strings();
 
-    return NotedBlocSelector<EditBloc, EditState, EditStatus>(
-      selector: (state) => state.status,
+    return NotedBlocSelector<EditBloc, EditState, (EditStatus, bool)>(
+      selector: (state) => (state.status, state.note?.hidden ?? false),
       listenWhen: (previous, current) => previous.status != current.status || previous.error != current.error,
       listener: (context, state) {
         if (state.error != null) {
@@ -34,36 +33,54 @@ class EditPage extends StatelessWidget {
           context.pop();
         }
       },
-      builder: (context, bloc, status) => NotedHeaderPage(
-        hasBackButton: true,
-        trailingActions: [
-          if (status == EditStatus.loaded)
-            NotedIconButton(
-              icon: NotedIcons.trash,
-              type: NotedIconButtonType.filled,
-              size: NotedWidgetSize.small,
-              onPressed: () => _confirmDeleteNote(context),
-            ),
-        ],
-        child: switch (status) {
-          EditStatus.initial => const EditLoading(),
-          EditStatus.loading => const EditLoading(),
-          EditStatus.deleting => const EditLoading(),
-          EditStatus.deleted => const EditLoading(),
-          EditStatus.empty => NotedErrorWidget(
-              text: strings.edit_error_empty,
-              ctaText: strings.router_errorCta,
-              ctaCallback: () => context.pop(),
-            ),
-          EditStatus.loaded => const EditContent(),
-        },
-      ),
+      builder: (context, bloc, state) {
+        final status = state.$1;
+        final hidden = state.$2;
+        final trailingActions = <NotedIconButton>[];
+
+        switch (status) {
+          case EditStatus.loaded:
+            trailingActions.addAll([
+              NotedIconButton(
+                icon: hidden ? NotedIcons.eyeClosed : NotedIcons.eye,
+                type: NotedIconButtonType.filled,
+                color: hidden ? NotedWidgetColor.tertiary : NotedWidgetColor.primary,
+                size: NotedWidgetSize.small,
+                onPressed: () => bloc.add(const EditToggleHiddenEvent()),
+              ),
+              NotedIconButton(
+                icon: NotedIcons.trash,
+                type: NotedIconButtonType.filled,
+                size: NotedWidgetSize.small,
+                onPressed: () => _confirmDeleteNote(context),
+              ),
+            ]);
+          default:
+        }
+
+        return NotedHeaderPage(
+          hasBackButton: true,
+          trailingActions: trailingActions,
+          child: switch (status) {
+            EditStatus.initial => const EditLoading(),
+            EditStatus.loading => const EditLoading(),
+            EditStatus.deleting => const EditLoading(),
+            EditStatus.deleted => const EditLoading(),
+            EditStatus.empty => NotedErrorWidget(
+                text: strings.edit_error_empty,
+                ctaText: strings.router_errorCta,
+                ctaCallback: () => context.pop(),
+              ),
+            EditStatus.loaded => const EditContent(),
+          },
+        );
+      },
     );
   }
 
   Future<void> _confirmDeleteNote(BuildContext context) async {
-    Strings strings = context.strings();
-    EditBloc bloc = context.read();
+    final strings = context.strings();
+    final bloc = context.read<EditBloc>();
 
     showDialog<bool>(
       context: context,
@@ -81,7 +98,7 @@ class EditPage extends StatelessWidget {
   }
 
   void _handleEditError(BuildContext context, NotedError? error) {
-    Strings strings = context.strings();
+    final strings = context.strings();
 
     final String? message = switch (error?.code) {
       ErrorCode.notes_add_failed => strings.edit_error_addNoteFailed,

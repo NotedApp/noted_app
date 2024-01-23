@@ -12,17 +12,26 @@ final Map<String, NoteModel> testNotes = Map.fromEntries([
   NotebookNoteModel(
     id: 'notebook0',
     title: 'notebook',
+    hidden: false,
     document: DocumentUtil.emptyDocument,
     tagIds: {'0'},
   ),
   NotebookNoteModel(
     id: 'notebook1',
     title: '',
+    hidden: false,
+    document: DocumentUtil.emptyDocument,
+  ),
+  NotebookNoteModel(
+    id: 'notebook2',
+    title: '',
+    hidden: true,
     document: DocumentUtil.emptyDocument,
   ),
   CookbookNoteModel(
     id: 'cookbook0',
     title: 'cookbook',
+    hidden: false,
     url: '',
     prepTime: '1hr',
     cookTime: '15m',
@@ -33,6 +42,7 @@ final Map<String, NoteModel> testNotes = Map.fromEntries([
   CookbookNoteModel(
     id: 'cookbook1',
     title: 'cookbook',
+    hidden: false,
     url: 'https://www.onceuponachef.com/recipes/roasted-brussels-sprouts.html',
     prepTime: '1hr',
     cookTime: '15m',

@@ -86,7 +86,7 @@ Future<void> _confirmDeleteNotes(BuildContext context, NotesBloc bloc) async {
     builder: (context) => NotedDialog(
       leftActionText: strings.common_confirm,
       onLeftActionPressed: () {
-        bloc.add(NotesDeleteSelectionsEvent());
+        bloc.add(const NotesDeleteSelectionsEvent());
         context.pop();
       },
       rightActionText: strings.common_cancel,
@@ -110,7 +110,7 @@ NotedIconButton _notesCancelButton(NotesBloc bloc) {
   return NotedIconButton(
     icon: NotedIcons.close,
     type: NotedIconButtonType.simple,
-    onPressed: () => bloc.add(NotesResetSelectionsEvent()),
+    onPressed: () => bloc.add(const NotesResetSelectionsEvent()),
   );
 }
 

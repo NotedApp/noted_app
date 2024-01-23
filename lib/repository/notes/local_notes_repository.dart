@@ -8,11 +8,15 @@ import 'package:noted_models/noted_models.dart';
 
 /// Default local notes.
 final Map<String, NoteModel> localNotes = {
-  'test-note-0': NotebookNoteModel(id: 'test-note-0', title: 'Note 0', document: const [
-    {'insert': 'hello world\n'},
-  ], tagIds: const {
-    'test-tag-0'
-  }),
+  'test-note-0': NotebookNoteModel(
+    id: 'test-note-0',
+    title: 'Note 0',
+    document: const [
+      {'insert': 'hello world\n'},
+    ],
+    tagIds: const {'test-tag-0'},
+    hidden: false,
+  ),
   'test-note-1': CookbookNoteModel(
     id: 'test-note-1',
     title: 'Note 1',
@@ -24,6 +28,7 @@ final Map<String, NoteModel> localNotes = {
     cookTime: '',
     difficulty: 3,
     tagIds: const {'test-tag-1'},
+    hidden: false,
   ),
 };
 
@@ -33,6 +38,7 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
   Map<String, StreamController<NoteModel>> _controllers = {};
   Map<String, NoteModel> _notes = {...localNotes};
   bool _shouldThrow = false;
+  bool _streamShouldThrow = false;
   int _msDelay = 2000;
 
   LocalNotesRepository() {
@@ -56,7 +62,9 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
       throw NotedError(ErrorCode.notes_subscribe_failed);
     }
 
-    return _notesController.stream.map((event) => filterModels(filter, event));
+    return _streamShouldThrow
+        ? _notesController.stream.map((event) => throw NotedError(ErrorCode.notes_subscribe_failed))
+        : _notesController.stream.map((event) => filterModels(filter, event));
   }
 
   @override
@@ -153,9 +161,11 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
   }
 
   void setShouldThrow(bool shouldThrow) => _shouldThrow = shouldThrow;
+  void setStreamShouldThrow(bool streamShouldThrow) => _streamShouldThrow = streamShouldThrow;
   void setMsDelay(int msDelay) => _msDelay = msDelay;
   void reset() {
     _shouldThrow = false;
+    _streamShouldThrow = false;
     _msDelay = 2000;
     _notes = {...localNotes};
 

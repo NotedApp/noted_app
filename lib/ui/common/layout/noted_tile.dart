@@ -41,9 +41,48 @@ class NotedTile extends StatelessWidget {
       child: NotedBlocSelector<NotesBloc, NotesState, NoteModel>(
         selector: (state) => state.notes[noteId] ?? NotebookNoteModel.empty(),
         builder: (context, _, note) => switch (note) {
-          NotebookNoteModel() => NotebookTileContent(note: note, onPressed: onPressed, onLongPressed: onLongPressed),
-          CookbookNoteModel() => CookbookTileContent(note: note, onPressed: onPressed, onLongPressed: onLongPressed),
+          NoteModel(hidden: true) => _HiddenTileContent(
+              title: note.title,
+              onPressed: onPressed,
+              onLongPressed: onLongPressed,
+            ),
+          NotebookNoteModel() => NotebookTileContent(
+              note: note,
+              onPressed: onPressed,
+              onLongPressed: onLongPressed,
+            ),
+          CookbookNoteModel() => CookbookTileContent(
+              note: note,
+              onPressed: onPressed,
+              onLongPressed: onLongPressed,
+            ),
         },
+      ),
+    );
+  }
+}
+
+class _HiddenTileContent extends StatelessWidget {
+  final String title;
+  final VoidCallback? onPressed;
+  final VoidCallback? onLongPressed;
+
+  const _HiddenTileContent({
+    required this.title,
+    required this.onPressed,
+    required this.onLongPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: Text(
+          title,
+          style: Theme.of(context).textTheme.titleMedium,
+          textAlign: TextAlign.center,
+        ),
       ),
     );
   }

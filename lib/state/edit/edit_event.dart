@@ -24,6 +24,10 @@ class EditUpdateEvent extends EditEvent {
   const EditUpdateEvent(this.note);
 }
 
+class EditToggleHiddenEvent extends EditEvent {
+  const EditToggleHiddenEvent();
+}
+
 class EditDeleteEvent extends EditEvent {}
 
 class EditRemoteUpdateEvent extends EditEvent {
@@ -38,4 +42,6 @@ class EditRemoteUpdateErrorEvent extends EditEvent {
   const EditRemoteUpdateErrorEvent(this.error);
 }
 
-class EditCloseEvent extends EditEvent {}
+class EditCloseEvent extends EditEvent {
+  const EditCloseEvent();
+}

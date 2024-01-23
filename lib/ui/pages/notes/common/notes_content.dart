@@ -62,7 +62,7 @@ class _NotesError extends StatelessWidget {
     return NotedErrorWidget(
       text: strings.notes_error_failed,
       ctaText: strings.common_refresh,
-      ctaCallback: () => bloc.add(NotesSubscribeEvent()),
+      ctaCallback: () => bloc.add(const NotesSubscribeEvent()),
     );
   }
 }

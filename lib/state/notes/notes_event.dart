@@ -6,7 +6,9 @@ sealed class NotesEvent extends NotedEvent implements TrackableEvent {
   const NotesEvent();
 }
 
-class NotesSubscribeEvent extends NotesEvent {}
+class NotesSubscribeEvent extends NotesEvent {
+  const NotesSubscribeEvent();
+}
 
 class NotesUpdateEvent extends NotesEvent {
   final List<NoteModel> notes;
@@ -32,8 +34,14 @@ class NotesToggleSelectionEvent extends NotesEvent {
   const NotesToggleSelectionEvent(this.id);
 }
 
-class NotesResetSelectionsEvent extends NotesEvent {}
+class NotesResetSelectionsEvent extends NotesEvent {
+  const NotesResetSelectionsEvent();
+}
 
-class NotesDeleteSelectionsEvent extends NotesEvent {}
+class NotesDeleteSelectionsEvent extends NotesEvent {
+  const NotesDeleteSelectionsEvent();
+}
 
-class NotesResetEvent extends NotesEvent {}
+class NotesResetEvent extends NotesEvent {
+  const NotesResetEvent();
+}
