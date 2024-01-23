@@ -67,9 +67,11 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
       return updates.debounceTime(Duration(milliseconds: _updateDebounceMs)).switchMap(mapper);
     });
 
+    on<EditToggleHiddenEvent>(_onToggleHidden);
+
     _userSubscription = _auth.userStream.listen((user) {
       if (user.isEmpty) {
-        add(EditCloseEvent());
+        add(const EditCloseEvent());
       }
     });
   }
@@ -130,6 +132,27 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
       await _notes.updateNote(
         userId: _auth.currentUser.id,
         note: event.note.copyWith(lastUpdatedUtc: DateTime.now().toUtc()),
+      );
+    } catch (e) {
+      emit(EditState(note: state.note, status: state.status, error: NotedError.fromObject(e)));
+    }
+  }
+
+  Future<void> _onToggleHidden(EditToggleHiddenEvent event, Emitter<EditState> emit) async {
+    try {
+      final note = state.note;
+
+      if (_auth.currentUser.isEmpty) {
+        throw NotedError(ErrorCode.notes_update_failed, message: 'missing auth');
+      }
+
+      if (note == null) {
+        throw NotedError(ErrorCode.notes_update_failed, message: 'missing note');
+      }
+
+      await _notes.updateNote(
+        userId: _auth.currentUser.id,
+        note: note.copyWith(hidden: !note.hidden),
       );
     } catch (e) {
       emit(EditState(note: state.note, status: state.status, error: NotedError.fromObject(e)));

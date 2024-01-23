@@ -39,9 +39,9 @@ class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
 
     _userSubscription = _auth.userStream.listen((user) {
       if (user.isEmpty) {
-        add(NotesResetEvent());
+        add(const NotesResetEvent());
       } else {
-        add(NotesSubscribeEvent());
+        add(const NotesSubscribeEvent());
       }
     });
   }
@@ -81,7 +81,12 @@ class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
   }
 
   Future<void> _onUpdateError(NotesUpdateErrorEvent event, Emitter<NotesState> emit) async {
-    emit(NotesState.success(notes: state.notes, selectedIds: state.selectedIds, error: event.error));
+    switch (state.status) {
+      case NotesStatus.loaded:
+        emit(NotesState.success(notes: state.notes, selectedIds: state.selectedIds, error: event.error));
+      default:
+        emit(NotesState.error(error: event.error));
+    }
   }
 
   Future<void> _onDelete(NotesDeleteEvent event, Emitter<NotesState> emit) async {

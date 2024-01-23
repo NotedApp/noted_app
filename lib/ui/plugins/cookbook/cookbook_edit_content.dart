@@ -76,11 +76,8 @@ class _CookbookEditContentState extends State<CookbookEditContent> {
 
   void _updateNote() {
     widget.updateNote(
-      CookbookNoteModel(
-        id: widget.note.id,
+      widget.note.copyWith(
         title: titleController.text,
-        tagIds: widget.note.tagIds,
-        hidden: widget.note.hidden,
         url: linkController.text,
         prepTime: prepTimeController.text,
         cookTime: cookTimeController.text,

@@ -72,7 +72,7 @@ void main() {
       'loads and updates notes for a user',
       build: NotesBloc.new,
       act: (bloc) async {
-        bloc.add(NotesSubscribeEvent());
+        bloc.add(const NotesSubscribeEvent());
         await Future.delayed(const Duration(milliseconds: 15));
         notes().addNote(userId: auth().currentUser.id, note: testNote);
         await Future.delayed(const Duration(milliseconds: 10));
@@ -112,7 +112,7 @@ void main() {
       'loads notes for a user and handles error',
       setUp: () => notes().setShouldThrow(true),
       build: NotesBloc.new,
-      act: (bloc) => bloc.add(NotesSubscribeEvent()),
+      act: (bloc) => bloc.add(const NotesSubscribeEvent()),
       wait: const Duration(milliseconds: 10),
       expect: () => [
         const NotesState.loading(),
@@ -124,7 +124,7 @@ void main() {
       'loads notes for a user and handles stream error',
       build: NotesBloc.new,
       act: (bloc) async {
-        bloc.add(NotesSubscribeEvent());
+        bloc.add(const NotesSubscribeEvent());
         await Future.delayed(const Duration(milliseconds: 5));
         notes().addStreamError();
       },
@@ -140,7 +140,7 @@ void main() {
       'loads notes for a user fails with no auth',
       setUp: () async => auth().signOut(),
       build: NotesBloc.new,
-      act: (bloc) => bloc.add(NotesSubscribeEvent()),
+      act: (bloc) => bloc.add(const NotesSubscribeEvent()),
       wait: const Duration(milliseconds: 10),
       expect: () => [
         NotesState.error(error: NotedError(ErrorCode.notes_subscribe_failed, message: 'missing auth')),
@@ -163,7 +163,7 @@ void main() {
 
     test('toggles selections for a user', () async {
       final notesBloc = NotesBloc();
-      notesBloc.add(NotesSubscribeEvent());
+      notesBloc.add(const NotesSubscribeEvent());
       await notesBloc.stream.firstWhere((state) => state.status == NotesStatus.loaded);
 
       expect(notesBloc.state.selectedIds.isEmpty, true);
@@ -179,7 +179,7 @@ void main() {
       await notesBloc.stream.first;
 
       expect(notesBloc.state.selectedIds.isEmpty, false);
-      notesBloc.add(NotesResetSelectionsEvent());
+      notesBloc.add(const NotesResetSelectionsEvent());
       await notesBloc.stream.first;
 
       expect(notesBloc.state.selectedIds.isEmpty, true);
@@ -187,7 +187,7 @@ void main() {
       await notesBloc.stream.first;
 
       expect(notesBloc.state.selectedIds.isEmpty, false);
-      notesBloc.add(NotesDeleteSelectionsEvent());
+      notesBloc.add(const NotesDeleteSelectionsEvent());
       await notesBloc.stream.first;
 
       expect(notesBloc.state.sortedNoteIds.length, 1);
