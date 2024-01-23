@@ -10,6 +10,7 @@ List<dynamic> _testData0 = [
 NotebookNoteModel testNote0 = NotebookNoteModel(
   id: 'test-0',
   title: '',
+  hidden: false,
   document: _testData0,
   tagIds: {'test'},
 );
@@ -17,12 +18,14 @@ NotebookNoteModel testNote0 = NotebookNoteModel(
 NotebookNoteModel testNote1 = NotebookNoteModel(
   id: 'test-1',
   title: 'Test Note 1',
+  hidden: false,
   document: _testData0,
 );
 
 NotebookNoteModel testNote2 = NotebookNoteModel(
   id: 'test-2',
   title: 'Test Note 2',
+  hidden: false,
   document: _testData0,
   tagIds: {'test'},
 );

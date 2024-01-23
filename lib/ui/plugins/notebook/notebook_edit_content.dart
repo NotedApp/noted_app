@@ -69,8 +69,7 @@ class _NotebookEditContentState extends State<NotebookEditContent> {
 
   void _updateNote() {
     widget.updateNote(
-      NotebookNoteModel(
-        id: widget.note.id,
+      widget.note.copyWith(
         title: titleController.text,
         document: textController.value,
       ),

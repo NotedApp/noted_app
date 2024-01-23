@@ -479,10 +479,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_quill
-      sha256: "4ed407aadd18e3a06fa8c6d544a54c3109ec7633074c0a4dacab61a3b162a6c1"
+      sha256: da24b2119d2789291c057536721252f53bb9985ed011db137561453b4452d5d3
       url: "https://pub.dev"
     source: hosted
-    version: "9.2.8"
+    version: "9.2.10"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -770,8 +770,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "v0.0.6-alpha"
-      resolved-ref: "1b36984bc5e62353fa2e90db905fd0e29d47bd57"
+      ref: "v0.0.7-alpha"
+      resolved-ref: c0ab0ccc44e0001d88da2057bc8c9d9e65dd32fd
       url: "https://github.com/NotedApp/noted_models.git"
     source: git
     version: "0.0.1"
@@ -1168,10 +1168,10 @@ packages:
     dependency: "direct main"
     description:
       name: url_launcher
-      sha256: d25bb0ca00432a5e1ee40e69c36c85863addf7cc45e433769d61bed3fe81fd96
+      sha256: c512655380d241a337521703af62d2c122bf7b77a46ff7dd750092aa9433499c
       url: "https://pub.dev"
     source: hosted
-    version: "6.2.3"
+    version: "6.2.4"
   url_launcher_android:
     dependency: transitive
     description:

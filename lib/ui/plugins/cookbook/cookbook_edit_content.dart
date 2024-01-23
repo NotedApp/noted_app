@@ -7,7 +7,6 @@ import 'package:noted_app/ui/pages/edit/edit_page.dart';
 import 'package:noted_app/util/extensions/extensions.dart';
 import 'package:noted_models/noted_models.dart';
 
-// TODO: Update this to be specific to the cookbook plugin.
 // coverage:ignore-file
 class CookbookEditContent extends StatefulWidget {
   final CookbookNoteModel note;
@@ -80,6 +79,8 @@ class _CookbookEditContentState extends State<CookbookEditContent> {
       CookbookNoteModel(
         id: widget.note.id,
         title: titleController.text,
+        tagIds: widget.note.tagIds,
+        hidden: widget.note.hidden,
         url: linkController.text,
         prepTime: prepTimeController.text,
         cookTime: cookTimeController.text,

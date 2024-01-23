@@ -9,6 +9,7 @@ import 'package:noted_models/noted_models.dart';
 NotebookNoteModel testNote = NotebookNoteModel(
   id: 'test-0',
   title: 'test note',
+  hidden: false,
   document: [],
 );
 
@@ -113,6 +114,7 @@ void main() {
           note: NotebookNoteModel(
             id: '',
             title: 'test note',
+            hidden: false,
             document: [],
           ),
         ),
@@ -129,6 +131,7 @@ void main() {
           note: NotebookNoteModel(
             id: 'test-note-0',
             title: 'test note',
+            hidden: false,
             document: [],
           ),
         ),

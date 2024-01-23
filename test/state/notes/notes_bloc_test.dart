@@ -15,7 +15,12 @@ import '../../helpers/environment/unit_test_environment.dart';
 import '../../helpers/mocks/mock_delta.dart';
 
 void main() {
-  NotebookNoteModel testNote = NotebookNoteModel(id: 'test', title: 'test', document: testData0);
+  NotebookNoteModel testNote = NotebookNoteModel(
+    id: 'test',
+    title: 'test',
+    hidden: false,
+    document: testData0,
+  );
 
   group('NotesBloc', () {
     LocalNotesRepository notes() => locator<NotesRepository>() as LocalNotesRepository;
@@ -39,18 +44,21 @@ void main() {
           'third': NotebookNoteModel(
             id: 'third',
             title: 'third',
+            hidden: false,
             document: testData0,
             lastUpdatedUtc: DateTime.fromMillisecondsSinceEpoch(500),
           ),
           'first': NotebookNoteModel(
             id: 'first',
             title: 'first',
+            hidden: false,
             document: testData0,
             lastUpdatedUtc: DateTime.fromMillisecondsSinceEpoch(1000),
           ),
           'second': NotebookNoteModel(
             id: 'second',
             title: 'second',
+            hidden: false,
             document: testData0,
             lastUpdatedUtc: DateTime.fromMillisecondsSinceEpoch(750),
           ),
