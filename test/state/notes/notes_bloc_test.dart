@@ -121,6 +121,21 @@ void main() {
     );
 
     blocTest(
+      'loads notes for a user and handles initial stream error',
+      build: NotesBloc.new,
+      act: (bloc) async {
+        notes().setStreamShouldThrow(true);
+        bloc.add(const NotesSubscribeEvent());
+        await Future.delayed(const Duration(milliseconds: 5));
+      },
+      wait: const Duration(milliseconds: 10),
+      expect: () => [
+        const NotesState.loading(),
+        NotesState.error(error: NotedError(ErrorCode.notes_subscribe_failed)),
+      ],
+    );
+
+    blocTest(
       'loads notes for a user and handles stream error',
       build: NotesBloc.new,
       act: (bloc) async {

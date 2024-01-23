@@ -10,6 +10,35 @@ import '../../../helpers/test_wrapper.dart';
 
 void main() {
   group('Noted Tile', () {
+    testWidgets('empty tile renders as expected', (tester) async {
+      MockVoidCallback notebookCallback = MockVoidCallback();
+      const double width = 300;
+      const double height = 300 / NotedWidgetConfig.tileAspectRatio;
+
+      await tester.pumpWidget(
+        TestWrapper(
+          child: SizedBox(
+            width: width,
+            height: height,
+            child: NotedTile(
+              noteId: 'notebook2',
+              onPressed: notebookCallback.call,
+            ),
+          ),
+        ),
+      );
+
+      Finder titleFinder = find.byType(Text);
+      Finder noteFinder = find.byType(NotedTile);
+      Finder editorFinder = find.byType(NotedEditor);
+
+      await tester.tap(noteFinder);
+
+      expect(titleFinder, findsOneWidget);
+      expect(editorFinder, findsNothing);
+      verify(() => notebookCallback()).called(1);
+    });
+
     testWidgets('tile builder works as expected', (tester) async {
       tester.view.physicalSize = const Size(300, 2000);
       tester.view.devicePixelRatio = 1.0;

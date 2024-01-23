@@ -22,6 +22,12 @@ final Map<String, NoteModel> testNotes = Map.fromEntries([
     hidden: false,
     document: DocumentUtil.emptyDocument,
   ),
+  NotebookNoteModel(
+    id: 'notebook2',
+    title: '',
+    hidden: true,
+    document: DocumentUtil.emptyDocument,
+  ),
   CookbookNoteModel(
     id: 'cookbook0',
     title: 'cookbook',

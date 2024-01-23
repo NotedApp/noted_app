@@ -38,6 +38,7 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
   Map<String, StreamController<NoteModel>> _controllers = {};
   Map<String, NoteModel> _notes = {...localNotes};
   bool _shouldThrow = false;
+  bool _streamShouldThrow = false;
   int _msDelay = 2000;
 
   LocalNotesRepository() {
@@ -61,7 +62,9 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
       throw NotedError(ErrorCode.notes_subscribe_failed);
     }
 
-    return _notesController.stream.map((event) => filterModels(filter, event));
+    return _streamShouldThrow
+        ? _notesController.stream.map((event) => throw NotedError(ErrorCode.notes_subscribe_failed))
+        : _notesController.stream.map((event) => filterModels(filter, event));
   }
 
   @override
@@ -158,9 +161,11 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
   }
 
   void setShouldThrow(bool shouldThrow) => _shouldThrow = shouldThrow;
+  void setStreamShouldThrow(bool streamShouldThrow) => _streamShouldThrow = streamShouldThrow;
   void setMsDelay(int msDelay) => _msDelay = msDelay;
   void reset() {
     _shouldThrow = false;
+    _streamShouldThrow = false;
     _msDelay = 2000;
     _notes = {...localNotes};
 
