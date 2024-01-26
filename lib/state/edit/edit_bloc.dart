@@ -49,6 +49,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
     NoteModel model = switch (plugin) {
       NotedPlugin.notebook => NotebookNoteModel.empty(),
       NotedPlugin.cookbook => CookbookNoteModel.empty(),
+      NotedPlugin.climbing => ClimbingNoteModel.empty(),
     };
     // coverage:ignore-end
 

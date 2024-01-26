@@ -160,6 +160,8 @@ final GoRoute _plugins = GoRoute(
         return switch (plugin) {
           NotedPlugin.notebook => const NotebookPage(),
           NotedPlugin.cookbook => const CookbookPage(),
+          // TODO: Update this to the climbing page.
+          NotedPlugin.climbing => const CookbookPage(),
         };
       },
     ),
