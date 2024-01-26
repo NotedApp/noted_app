@@ -50,6 +50,11 @@ final Map<String, NoteModel> testNotes = Map.fromEntries([
     document: Document.empty,
     tagIds: {'0'},
   ),
+  ClimbingNoteModel(
+    id: 'climbing0',
+    title: 'climbing',
+    tagIds: {'0'},
+  ),
 ].map((model) => MapEntry(model.id, model)));
 
 class TestWrapper extends StatelessWidget {

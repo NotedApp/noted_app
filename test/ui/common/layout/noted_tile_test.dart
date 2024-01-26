@@ -48,6 +48,7 @@ void main() {
 
       MockVoidCallback notebookCallback = MockVoidCallback();
       MockVoidCallback cookbookCallback = MockVoidCallback();
+      MockVoidCallback climbingCallback = MockVoidCallback();
 
       const double width = 300;
       const double height = 300 / NotedWidgetConfig.tileAspectRatio;
@@ -80,6 +81,14 @@ void main() {
                   onPressed: cookbookCallback.call,
                 ),
               ),
+              SizedBox(
+                width: width,
+                height: height,
+                child: NotedTile(
+                  noteId: 'climbing0',
+                  onPressed: climbingCallback.call,
+                ),
+              ),
             ],
           ),
         ),
@@ -87,14 +96,18 @@ void main() {
 
       Finder notebookFinder = find.byType(NotebookTileContent);
       Finder cookbookFinder = find.byType(CookbookTileContent);
+      Finder climbingFinder = find.byType(CircularProgressIndicator);
 
       await tester.tap(notebookFinder);
       await tester.tap(cookbookFinder.first);
+      await tester.tap(climbingFinder);
 
       expect(notebookFinder, findsOneWidget);
       expect(cookbookFinder, findsNWidgets(2));
+      expect(notebookFinder, findsOneWidget);
       verify(() => notebookCallback()).called(1);
       verify(() => cookbookCallback()).called(1);
+      verify(() => climbingCallback()).called(1);
     });
   });
 }
