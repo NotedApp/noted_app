@@ -56,6 +56,8 @@ class NotedTile extends StatelessWidget {
               onPressed: onPressed,
               onLongPressed: onLongPressed,
             ),
+          // TODO: Add climbing note content.
+          ClimbingNoteModel() => const Center(child: CircularProgressIndicator()),
         },
       ),
     );

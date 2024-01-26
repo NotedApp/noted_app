@@ -13,20 +13,20 @@ final Map<String, NoteModel> testNotes = Map.fromEntries([
     id: 'notebook0',
     title: 'notebook',
     hidden: false,
-    document: DocumentUtil.emptyDocument,
+    document: Document.empty,
     tagIds: {'0'},
   ),
   NotebookNoteModel(
     id: 'notebook1',
     title: '',
     hidden: false,
-    document: DocumentUtil.emptyDocument,
+    document: Document.empty,
   ),
   NotebookNoteModel(
     id: 'notebook2',
     title: '',
     hidden: true,
-    document: DocumentUtil.emptyDocument,
+    document: Document.empty,
   ),
   CookbookNoteModel(
     id: 'cookbook0',
@@ -36,7 +36,7 @@ final Map<String, NoteModel> testNotes = Map.fromEntries([
     prepTime: '1hr',
     cookTime: '15m',
     difficulty: 3,
-    document: DocumentUtil.emptyDocument,
+    document: Document.empty,
     tagIds: {'0'},
   ),
   CookbookNoteModel(
@@ -47,7 +47,12 @@ final Map<String, NoteModel> testNotes = Map.fromEntries([
     prepTime: '1hr',
     cookTime: '15m',
     difficulty: 3,
-    document: DocumentUtil.emptyDocument,
+    document: Document.empty,
+    tagIds: {'0'},
+  ),
+  ClimbingNoteModel(
+    id: 'climbing0',
+    title: 'climbing',
     tagIds: {'0'},
   ),
 ].map((model) => MapEntry(model.id, model)));

@@ -40,13 +40,13 @@ final Map<String, NoteModel> _testNotes = Map.fromEntries([
     id: 'notebook0',
     title: '',
     hidden: false,
-    document: DocumentUtil.emptyDocument,
+    document: Document.empty,
   ),
   NotebookNoteModel(
     id: 'notebook1',
     title: 'test note',
     hidden: false,
-    document: DocumentUtil.emptyDocument,
+    document: Document.empty,
   ),
   NotebookNoteModel(
     id: 'notebook2',
@@ -107,7 +107,7 @@ final Map<String, NoteModel> _testNotes = Map.fromEntries([
     prepTime: '',
     cookTime: '30m',
     difficulty: 3,
-    document: DocumentUtil.emptyDocument,
+    document: Document.empty,
   ),
   CookbookNoteModel(
     id: 'cookbook4',
@@ -117,7 +117,7 @@ final Map<String, NoteModel> _testNotes = Map.fromEntries([
     prepTime: '1hr',
     cookTime: '15m',
     difficulty: 3,
-    document: DocumentUtil.emptyDocument,
+    document: Document.empty,
     tagIds: {'0'},
   ),
 ].map((model) => MapEntry(model.id, model)));

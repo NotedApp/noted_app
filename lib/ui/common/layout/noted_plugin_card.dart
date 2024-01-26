@@ -61,6 +61,7 @@ String _getPluginName(BuildContext context, NotedPlugin plugin) {
   return switch (plugin) {
     NotedPlugin.notebook => strings.plugin_notebook_title,
     NotedPlugin.cookbook => strings.plugin_cookbook_title,
+    NotedPlugin.climbing => strings.plugin_climbing_title,
   };
 }
 
@@ -68,6 +69,7 @@ String _getPluginAsset(NotedPlugin plugin) {
   return switch (plugin) {
     NotedPlugin.notebook => 'assets/svg/man_computer.svg',
     NotedPlugin.cookbook => 'assets/svg/woman_cooking.svg',
+    NotedPlugin.climbing => 'assets/svg/woman_climbing.svg',
   };
 }
 

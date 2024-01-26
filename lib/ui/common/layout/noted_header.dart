@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:noted_app/ui/common/button/noted_icon_button.dart';
+import 'package:noted_app/ui/common/noted_library.dart';
 
 class NotedHeader extends AppBar {
   NotedHeader({
@@ -11,14 +11,14 @@ class NotedHeader extends AppBar {
     super.backgroundColor,
     super.key,
   }) : super(
-          toolbarHeight: 64,
+          toolbarHeight: Dimens.size_64,
           automaticallyImplyLeading: false,
-          leadingWidth: 60,
+          leadingWidth: Dimens.size_64,
           leading: _getLeading(leadingAction),
           title: _getTitle(title, context),
           actions: [
             ...trailingActions.map(_getAction),
-            const SizedBox(width: 4),
+            const SizedBox(width: Dimens.spacing_xs),
           ],
         );
 }
@@ -36,9 +36,9 @@ Widget? _getTitle(String? title, BuildContext context) {
     return null;
   }
 
-  return Text(title, style: Theme.of(context).textTheme.displayMedium);
+  return Text(title, style: Theme.of(context).textTheme.displaySmall);
 }
 
 Widget _getAction(NotedIconButton action) {
-  return Padding(padding: const EdgeInsets.only(right: 12), child: action);
+  return Padding(padding: const EdgeInsets.only(right: Dimens.spacing_m), child: action);
 }

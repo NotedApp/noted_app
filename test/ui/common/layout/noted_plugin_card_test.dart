@@ -30,7 +30,7 @@ void main() {
                 key: mediumKey,
               ),
               NotedPluginCard(
-                plugin: NotedPlugin.notebook,
+                plugin: NotedPlugin.climbing,
                 size: NotedWidgetSize.large,
                 onPressed: onPressed.call,
                 key: largeKey,
