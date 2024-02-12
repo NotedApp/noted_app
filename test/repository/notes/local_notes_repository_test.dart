@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:noted_app/repository/notes/local_notes_repository.dart';
 import 'package:noted_app/state/notes/notes_state.dart';
@@ -9,7 +7,7 @@ import 'package:noted_models/noted_models.dart';
 final testNote = NoteModel.value(
   NotedPlugin.notebook,
   overrides: [const NoteFieldValue(NoteField.title, 'test note')],
-);
+).copyWith(id: 'test-note-3');
 
 void main() {
   late LocalNotesRepository repository;
@@ -21,9 +19,8 @@ void main() {
 
   group('LocalNotesRepository', () {
     test('creates, updates, and deletes notes', () async {
-      Stream<List<NoteModel>> stream = await repository.subscribeNotes(userId: 'test');
-
-      Stream<NoteModel> singleStream = await repository.subscribeNote(userId: 'test', noteId: 'test-note-0');
+      final stream = await repository.subscribeNotes(userId: 'test');
+      final singleStream = await repository.subscribeNote(userId: 'test', noteId: 'test-notebook-0');
 
       expectLater(
         stream,
@@ -50,7 +47,7 @@ void main() {
 
       await repository.deleteNote(
         userId: 'test',
-        noteId: 'test-0',
+        noteId: 'test-note-3',
       );
 
       await repository.deleteNotes(

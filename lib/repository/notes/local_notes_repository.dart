@@ -68,13 +68,11 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
       throw NotedError(ErrorCode.notes_add_failed);
     }
 
-    String id = note.id.isEmpty ? 'note-${_notes.length}' : note.id;
-    _notes[id] = note.copyWith(id: id);
+    final id = note.id.isEmpty ? 'note-${_notes.length}' : note.id;
+    final updated = note.copyWith(id: id);
+    _notes[id] = updated;
 
-    _controllers[id] = StreamController.broadcast(
-      onListen: () => _controllers[id]?.add(note.copyWith(id: id)),
-    );
-
+    _controllers[id] = StreamController.broadcast(onListen: () => _controllers[id]?.add(updated));
     _notesController.add(_notes.values.toList());
     return id;
   }
