@@ -9,7 +9,7 @@ import 'package:noted_models/noted_models.dart';
 
 // coverage:ignore-file
 class NotebookEditContent extends StatefulWidget {
-  final NotebookNoteModel note;
+  final NoteModel note;
   final NoteUpdateCallback updateNote;
 
   const NotebookEditContent({required this.note, required this.updateNote, super.key});
@@ -28,8 +28,8 @@ class _NotebookEditContentState extends State<NotebookEditContent> {
   void initState() {
     super.initState();
 
-    textController = NotedEditorController.quill(initial: widget.note.document);
-    titleController = TextEditingController(text: widget.note.title);
+    textController = NotedEditorController.quill(initial: widget.note.field(NoteField.document));
+    titleController = TextEditingController(text: widget.note.field(NoteField.title));
 
     textSubscription = textController.valueStream.listen((_) => _updateNote());
     titleController.addListener(_updateNote);
@@ -69,10 +69,9 @@ class _NotebookEditContentState extends State<NotebookEditContent> {
 
   void _updateNote() {
     widget.updateNote(
-      widget.note.copyWith(
-        title: titleController.text,
-        document: textController.value,
-      ),
+      widget.note
+          .copyWithField(NoteFieldValue<String>(NoteField.title, titleController.text))
+          .copyWithField(NoteFieldValue<DocumentModel>(NoteField.document, textController.value)),
     );
   }
 

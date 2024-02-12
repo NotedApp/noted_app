@@ -6,7 +6,7 @@ import 'package:noted_models/noted_models.dart';
 import 'package:ogp_data_extract/ogp_data_extract.dart';
 
 class CookbookTileContent extends StatefulWidget {
-  final CookbookNoteModel note;
+  final NoteModel note;
   final VoidCallback? onPressed;
   final VoidCallback? onLongPressed;
 
@@ -24,13 +24,13 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
   void initState() {
     super.initState();
 
-    _textController = NotedEditorController.quill(initial: widget.note.document);
-    _imageUrl = _getOgpImage(widget.note.url);
+    _textController = NotedEditorController.quill(initial: widget.note.field(NoteField.document));
+    _imageUrl = _getOgpImage(widget.note.field(NoteField.link));
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.note.url.isNotEmpty) {
+    if (widget.note.field(NoteField.link).isNotEmpty) {
       return _buildLinkedTile(context);
     } else {
       return _buildUnlinkedTile(context);
@@ -44,10 +44,10 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
 
     Widget? header;
 
-    final bool hasTitle = widget.note.title.isNotEmpty;
-    final bool hasTags = widget.note.tagIds.isNotEmpty;
-    final bool hasPrepTime = widget.note.prepTime.isNotEmpty;
-    final bool hasCookTime = widget.note.cookTime.isNotEmpty;
+    final bool hasTitle = widget.note.field(NoteField.title).isNotEmpty;
+    final bool hasTags = widget.note.field(NoteField.tagIds).isNotEmpty;
+    final bool hasPrepTime = widget.note.field(NoteField.cookbookPrepTime).isNotEmpty;
+    final bool hasCookTime = widget.note.field(NoteField.cookbookCookTime).isNotEmpty;
 
     if (hasTitle || hasTags || hasPrepTime || hasCookTime) {
       header = Column(
@@ -57,19 +57,25 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
           if (hasTitle)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Text(widget.note.title, style: Theme.of(context).textTheme.titleMedium),
+              child: Text(widget.note.field(NoteField.title), style: Theme.of(context).textTheme.titleMedium),
             ),
           if (hasTitle && hasTags) const SizedBox(height: 8),
-          if (hasTags) NotedTagRow(tags: widget.note.tagIds),
+          if (hasTags) NotedTagRow(tags: widget.note.field(NoteField.tagIds)),
           if (hasPrepTime)
             Padding(
               padding: const EdgeInsets.fromLTRB(12, 4, 12, 0),
-              child: Text('$prepTime: ${widget.note.prepTime}', style: Theme.of(context).textTheme.bodyMedium),
+              child: Text(
+                '$prepTime: ${widget.note.field(NoteField.cookbookPrepTime)}',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
             ),
           if (hasCookTime)
             Padding(
               padding: const EdgeInsets.fromLTRB(12, 4, 12, 0),
-              child: Text('$cookTime: ${widget.note.cookTime}', style: Theme.of(context).textTheme.bodyMedium),
+              child: Text(
+                '$cookTime: ${widget.note.field(NoteField.cookbookCookTime)}',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
             ),
         ],
       );
@@ -120,34 +126,34 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
           child: Column(
             children: [
               const Spacer(),
-              if (widget.note.title.isNotEmpty)
+              if (widget.note.field(NoteField.title).isNotEmpty)
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Text(
-                    widget.note.title,
+                    widget.note.field(NoteField.title),
                     style: Theme.of(context).textTheme.titleMedium,
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                   ),
                 ),
-              if (widget.note.title.isNotEmpty) const SizedBox(height: 4),
-              if (widget.note.prepTime.isNotEmpty)
+              if (widget.note.field(NoteField.title).isNotEmpty) const SizedBox(height: 4),
+              if (widget.note.field(NoteField.cookbookPrepTime).isNotEmpty)
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Text(
-                    '$prepTime: ${widget.note.prepTime}',
+                    '$prepTime: ${widget.note.field(NoteField.cookbookPrepTime)}',
                     style: Theme.of(context).textTheme.bodyMedium,
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                   ),
                 ),
-              if (widget.note.cookTime.isNotEmpty)
+              if (widget.note.field(NoteField.cookbookCookTime).isNotEmpty)
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Text(
-                    '$cookTime: ${widget.note.cookTime}',
+                    '$cookTime: ${widget.note.field(NoteField.cookbookCookTime)}',
                     style: Theme.of(context).textTheme.bodyMedium,
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
@@ -157,10 +163,11 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
               const Spacer(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: NotedLink(url: widget.note.url),
+                child: NotedLink(url: widget.note.field(NoteField.link)),
               ),
-              if (widget.note.tagIds.isNotEmpty) const SizedBox(height: 12),
-              if (widget.note.tagIds.isNotEmpty) NotedTagRow(tags: widget.note.tagIds)
+              if (widget.note.field(NoteField.tagIds).isNotEmpty) const SizedBox(height: 12),
+              if (widget.note.field(NoteField.tagIds).isNotEmpty)
+                NotedTagRow(tags: widget.note.field(NoteField.tagIds)),
             ],
           ),
         ),
@@ -171,7 +178,7 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
   // coverage:ignore-start
   @override
   void didUpdateWidget(covariant CookbookTileContent oldWidget) {
-    _textController.value = widget.note.document;
+    _textController.value = widget.note.field(NoteField.document);
     super.didUpdateWidget(oldWidget);
   }
   // coverage:ignore-end

@@ -32,7 +32,7 @@ List<NoteModel> filterModels(NotesFilter? filter, List<NoteModel> models) {
       return false;
     }
 
-    if (filter.tagIds.isNotEmpty && !filter.tagIds.containsAll(model.tagIds)) {
+    if (filter.tagIds.isNotEmpty && !filter.tagIds.containsAll(model.field(NoteField.tagIds))) {
       return false;
     }
 

@@ -13,7 +13,7 @@ dependencies:
   noted_models:
     git:
       url: https://github.com/NotedApp/noted_models.git
-      ref: v0.0.8-alpha
+      ref: v0.0.11-alpha
 
   flutter_bloc: any
   flutter_localizations:

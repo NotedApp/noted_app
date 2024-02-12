@@ -6,11 +6,9 @@ import 'package:noted_app/state/notes/notes_state.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
-NotebookNoteModel testNote = NotebookNoteModel(
-  id: 'test-0',
-  title: 'test note',
-  hidden: false,
-  document: [],
+final testNote = NoteModel.value(
+  NotedPlugin.notebook,
+  overrides: [const NoteFieldValue(NoteField.title, 'test note')],
 );
 
 void main() {
@@ -32,7 +30,7 @@ void main() {
         emitsInOrder([
           [...localNotes.values],
           [...localNotes.values, testNote],
-          [...localNotes.values, testNote.copyWith(title: 'test updated note')],
+          [...localNotes.values, testNote.copyWithField(const NoteFieldValue(NoteField.title, 'test updated note'))],
           [...localNotes.values],
           [],
         ]),
@@ -47,7 +45,7 @@ void main() {
 
       await repository.updateNote(
         userId: 'test',
-        note: testNote.copyWith(title: 'test updated note'),
+        note: testNote.copyWithField(const NoteFieldValue(NoteField.title, 'test updated note')),
       );
 
       await repository.deleteNote(
@@ -111,12 +109,7 @@ void main() {
       await expectLater(
         () => repository.addNote(
           userId: 'test',
-          note: NotebookNoteModel(
-            id: '',
-            title: 'test note',
-            hidden: false,
-            document: [],
-          ),
+          note: testNote,
         ),
         throwsA(NotedError(ErrorCode.notes_add_failed)),
       );
@@ -128,12 +121,7 @@ void main() {
       await expectLater(
         () => repository.updateNote(
           userId: 'test',
-          note: NotebookNoteModel(
-            id: 'test-note-0',
-            title: 'test note',
-            hidden: false,
-            document: [],
-          ),
+          note: testNote,
         ),
         throwsA(NotedError(ErrorCode.notes_update_failed)),
       );

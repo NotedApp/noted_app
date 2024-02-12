@@ -22,9 +22,10 @@ final class NotesState extends Equatable {
       final note1 = notes[id1];
 
       if (note0 != null && note1 != null) {
-        return note1.lastUpdatedUtc.millisecondsSinceEpoch - note0.lastUpdatedUtc.millisecondsSinceEpoch;
+        return (note1.field(NoteField.lastUpdatedUtc)?.millisecondsSinceEpoch ?? 0) -
+            (note0.field(NoteField.lastUpdatedUtc)?.millisecondsSinceEpoch ?? 0);
       } else {
-        return note0?.title.compareTo(note1?.title ?? '') ?? 0; // coverage:ignore-line
+        return note0?.field(NoteField.title).compareTo(note1?.field(NoteField.title) ?? '') ?? 0;
       }
     });
 

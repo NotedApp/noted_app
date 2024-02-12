@@ -47,9 +47,9 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
 
     // coverage:ignore-start
     NoteModel model = switch (plugin) {
-      NotedPlugin.notebook => NotebookNoteModel.empty(),
-      NotedPlugin.cookbook => CookbookNoteModel.empty(),
-      NotedPlugin.climbing => ClimbingNoteModel.empty(),
+      NotedPlugin.notebook => NoteModel.empty(NotedPlugin.notebook),
+      NotedPlugin.cookbook => NoteModel.empty(NotedPlugin.cookbook),
+      NotedPlugin.climbing => NoteModel.empty(NotedPlugin.climbing),
     };
     // coverage:ignore-end
 
@@ -132,7 +132,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
 
       await _notes.updateNote(
         userId: _auth.currentUser.id,
-        note: event.note.copyWith(lastUpdatedUtc: DateTime.now().toUtc()),
+        note: event.note.copyWithField(NoteFieldValue(NoteField.lastUpdatedUtc, DateTime.now().toUtc())),
       );
     } catch (e) {
       emit(EditState(note: state.note, status: state.status, error: NotedError.fromObject(e)));
@@ -153,7 +153,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
 
       await _notes.updateNote(
         userId: _auth.currentUser.id,
-        note: note.copyWith(hidden: !note.hidden),
+        note: note.copyWithField(NoteFieldValue(NoteField.hidden, !note.field(NoteField.hidden))),
       );
     } catch (e) {
       emit(EditState(note: state.note, status: state.status, error: NotedError.fromObject(e)));
