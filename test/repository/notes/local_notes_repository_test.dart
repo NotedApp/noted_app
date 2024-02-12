@@ -128,7 +128,7 @@ void main() {
       repository.setShouldThrow(true);
 
       await expectLater(
-        () => repository.deleteNote(userId: 'test', noteId: 'test-note-0'),
+        () => repository.deleteNote(userId: 'test', noteId: 'test-notebook-0'),
         throwsA(NotedError(ErrorCode.notes_delete_failed)),
       );
     });
@@ -137,7 +137,7 @@ void main() {
       repository.setShouldThrow(true);
 
       await expectLater(
-        () => repository.deleteNotes(userId: 'test', noteIds: ['test-note-0']),
+        () => repository.deleteNotes(userId: 'test', noteIds: ['test-notebook-0']),
         throwsA(NotedError(ErrorCode.notes_delete_failed)),
       );
     });

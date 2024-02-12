@@ -16,20 +16,13 @@ final class NotesState extends Equatable {
   final NotedError? error;
 
   List<String> get sortedNoteIds {
-    List<String> noteIds = notes.keys.toList();
-    noteIds.sort((id0, id1) {
-      final note0 = notes[id0];
-      final note1 = notes[id1];
-
-      if (note0 != null && note1 != null) {
-        return (note1.field(NoteField.lastUpdatedUtc)?.millisecondsSinceEpoch ?? 0) -
-            (note0.field(NoteField.lastUpdatedUtc)?.millisecondsSinceEpoch ?? 0);
-      } else {
-        return note0?.field(NoteField.title).compareTo(note1?.field(NoteField.title) ?? '') ?? 0;
-      }
+    final models = notes.values.toList();
+    models.sort((note0, note1) {
+      final dateCompare = note1.msSinceEpoch - note0.msSinceEpoch;
+      return dateCompare == 0 ? note0.field(NoteField.title).compareTo(note1.field(NoteField.title)) : dateCompare;
     });
 
-    return noteIds;
+    return models.map((model) => model.id).toList();
   }
 
   const NotesState.loading()
@@ -69,4 +62,8 @@ final class NotesFilter extends Equatable {
   @override
   List<Object?> get props => [plugins, tagIds];
   // coverage:ignore-end
+}
+
+extension _NoteDate on NoteModel {
+  int get msSinceEpoch => field(NoteField.lastUpdatedUtc)?.millisecondsSinceEpoch ?? 0;
 }

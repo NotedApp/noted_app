@@ -6,7 +6,7 @@ class MockNotes {
     NotedPlugin.notebook,
     overrides: [
       const NoteFieldValue(NoteField.title, 'Notebook 0'),
-      const NoteFieldValue(NoteField.document, [Document.mock]),
+      const NoteFieldValue(NoteField.document, Document.mock),
       const NoteFieldValue(NoteField.tagIds, ['test-tag-0']),
     ],
   ).copyWith(id: 'test-notebook-0');
@@ -15,7 +15,7 @@ class MockNotes {
     NotedPlugin.cookbook,
     overrides: [
       const NoteFieldValue(NoteField.title, 'Cookbook 0'),
-      const NoteFieldValue(NoteField.document, [Document.mock]),
+      const NoteFieldValue(NoteField.document, Document.mock),
       const NoteFieldValue(NoteField.tagIds, ['test-tag-0']),
     ],
   ).copyWith(id: 'test-cookbook-0');
@@ -24,7 +24,7 @@ class MockNotes {
     NotedPlugin.climbing,
     overrides: [
       const NoteFieldValue(NoteField.title, 'Climbing 0'),
-      const NoteFieldValue(NoteField.document, [Document.mock]),
+      const NoteFieldValue(NoteField.document, Document.mock),
       const NoteFieldValue(NoteField.tagIds, ['test-tag-0']),
     ],
   ).copyWith(id: 'test-climbing-0');

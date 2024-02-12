@@ -42,6 +42,20 @@ void main() {
     test('sorts notes by updated date', () {
       final state = NotesState.success(
         notes: {
+          'zzz-last-1': NoteModel.value(
+            NotedPlugin.notebook,
+            overrides: [
+              const NoteFieldValue(NoteField.title, 'zzz-last-1'),
+              const NoteFieldValue(NoteField.document, testData0),
+            ],
+          ).copyWith(id: 'zzz-last-1'),
+          'zzz-last-0': NoteModel.value(
+            NotedPlugin.notebook,
+            overrides: [
+              const NoteFieldValue(NoteField.title, 'zzz-last-0'),
+              const NoteFieldValue(NoteField.document, testData0),
+            ],
+          ).copyWith(id: 'zzz-last-0'),
           'third': NoteModel.value(
             NotedPlugin.notebook,
             overrides: [
@@ -57,7 +71,7 @@ void main() {
               const NoteFieldValue(NoteField.document, testData0),
               NoteFieldValue(NoteField.lastUpdatedUtc, DateTime.fromMillisecondsSinceEpoch(1000)),
             ],
-          ).copyWith(id: 'third'),
+          ).copyWith(id: 'first'),
           'second': NoteModel.value(
             NotedPlugin.notebook,
             overrides: [
@@ -69,7 +83,7 @@ void main() {
         },
       );
 
-      expect(state.sortedNoteIds, const ['first', 'second', 'third']);
+      expect(state.sortedNoteIds, const ['first', 'second', 'third', 'zzz-last-0', 'zzz-last-1']);
     });
 
     blocTest(
@@ -186,15 +200,15 @@ void main() {
       await notesBloc.stream.firstWhere((state) => state.status == NotesStatus.loaded);
 
       expect(notesBloc.state.selectedIds.isEmpty, true);
-      notesBloc.add(const NotesToggleSelectionEvent('test-note-0'));
+      notesBloc.add(const NotesToggleSelectionEvent('test-notebook-0'));
       await notesBloc.stream.first;
 
       expect(notesBloc.state.selectedIds.isEmpty, false);
-      notesBloc.add(const NotesToggleSelectionEvent('test-note-0'));
+      notesBloc.add(const NotesToggleSelectionEvent('test-notebook-0'));
       await notesBloc.stream.first;
 
       expect(notesBloc.state.selectedIds.isEmpty, true);
-      notesBloc.add(const NotesToggleSelectionEvent('test-note-0'));
+      notesBloc.add(const NotesToggleSelectionEvent('test-notebook-0'));
       await notesBloc.stream.first;
 
       expect(notesBloc.state.selectedIds.isEmpty, false);
@@ -202,14 +216,14 @@ void main() {
       await notesBloc.stream.first;
 
       expect(notesBloc.state.selectedIds.isEmpty, true);
-      notesBloc.add(const NotesToggleSelectionEvent('test-note-0'));
+      notesBloc.add(const NotesToggleSelectionEvent('test-notebook-0'));
       await notesBloc.stream.first;
 
       expect(notesBloc.state.selectedIds.isEmpty, false);
       notesBloc.add(const NotesDeleteSelectionsEvent());
       await notesBloc.stream.first;
 
-      expect(notesBloc.state.sortedNoteIds.length, 1);
+      expect(notesBloc.state.sortedNoteIds.length, 2);
       expect(notesBloc.state.selectedIds.isEmpty, true);
     });
   });
