@@ -1,3 +1,4 @@
+import 'package:noted_app/repository/local_repository_config.dart';
 import 'package:noted_app/repository/settings/settings_repository.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
@@ -9,9 +10,9 @@ const SettingsModel _localSettings = SettingsModel();
 class LocalSettingsRepository extends SettingsRepository {
   SettingsModel _settings = _localSettings.copyWith();
   bool _shouldThrow = false;
-  int _msDelay = 2000;
+  int _msDelay = LocalRepositoryConfig.mockNetworkDelayMs;
 
-  LocalSettingsRepository({int msDelay = 2000}) {
+  LocalSettingsRepository({int msDelay = LocalRepositoryConfig.mockNetworkDelayMs}) {
     _msDelay = msDelay;
   }
 
@@ -63,7 +64,7 @@ class LocalSettingsRepository extends SettingsRepository {
   void setMsDelay(int msDelay) => _msDelay = msDelay;
   void reset() {
     _shouldThrow = false;
-    _msDelay = 2000;
+    _msDelay = LocalRepositoryConfig.mockNetworkDelayMs;
     _settings = _localSettings.copyWith();
   }
 }

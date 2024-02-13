@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:get_it/get_it.dart';
+import 'package:noted_app/repository/local_repository_config.dart';
 import 'package:noted_app/repository/notes/mock_notes.dart';
 import 'package:noted_app/repository/notes/notes_repository.dart';
 import 'package:noted_app/state/notes/notes_state.dart';
@@ -21,7 +22,7 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
   Map<String, NoteModel> _notes = {...localNotes};
   bool _shouldThrow = false;
   bool _streamShouldThrow = false;
-  int _msDelay = 2000;
+  int _msDelay = LocalRepositoryConfig.mockNetworkDelayMs;
 
   LocalNotesRepository() {
     _notesController = StreamController.broadcast(
@@ -34,6 +35,30 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
         StreamController.broadcast(onListen: () => _controllers[key]?.add(value)),
       ),
     );
+  }
+
+  @override
+  Future<List<NoteModel>> fetchNotes({required String userId, NotesFilter? filter}) async {
+    await Future.delayed(Duration(milliseconds: _msDelay));
+
+    if (_shouldThrow || userId.isEmpty) {
+      throw NotedError(ErrorCode.notes_subscribe_failed);
+    }
+
+    return filterModels(filter, _notes.values.toList());
+  }
+
+  @override
+  Future<NoteModel> fetchNote({required String userId, required String noteId}) async {
+    await Future.delayed(Duration(milliseconds: _msDelay));
+
+    final note = _notes[noteId];
+
+    if (_shouldThrow || userId.isEmpty || note == null) {
+      throw NotedError(ErrorCode.notes_subscribe_failed);
+    }
+
+    return note;
   }
 
   @override
@@ -146,7 +171,7 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
   void reset() {
     _shouldThrow = false;
     _streamShouldThrow = false;
-    _msDelay = 2000;
+    _msDelay = LocalRepositoryConfig.mockNetworkDelayMs;
     _notes = {...localNotes};
 
     _controllers = _notes.map(

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:get_it/get_it.dart';
 import 'package:noted_app/repository/auth/auth_repository.dart';
+import 'package:noted_app/repository/local_repository_config.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
@@ -30,7 +31,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
   final StreamController<UserModel> _userStreamController = StreamController.broadcast();
   UserModel _currentUser = const UserModel.empty();
   bool _shouldThrow = false;
-  int _msDelay = 2000;
+  int _msDelay = LocalRepositoryConfig.mockNetworkDelayMs;
 
   List<UserModel> _users = [..._localUsers];
   List<String> _passwords = [..._localPasswords];
@@ -41,7 +42,10 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
   @override
   Stream<UserModel> get userStream => _userStreamController.stream;
 
-  LocalAuthRepository({UserModel user = const UserModel.empty(), int msDelay = 2000}) {
+  LocalAuthRepository({
+    UserModel user = const UserModel.empty(),
+    int msDelay = LocalRepositoryConfig.mockNetworkDelayMs,
+  }) {
     if (user.isNotEmpty) {
       _currentUser = user;
     }
@@ -170,7 +174,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
   void setMsDelay(int msDelay) => _msDelay = msDelay;
   void reset() {
     _shouldThrow = false;
-    _msDelay = 2000;
+    _msDelay = LocalRepositoryConfig.mockNetworkDelayMs;
     _currentUser = const UserModel.empty();
     _users = [..._localUsers];
     _passwords = [..._localPasswords];

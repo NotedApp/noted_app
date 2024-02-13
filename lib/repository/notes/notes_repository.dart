@@ -3,7 +3,13 @@ import 'package:noted_models/noted_models.dart';
 
 /// A repository that handles the notebook module.
 abstract class NotesRepository {
-  /// Subscribes to the notebook notes for the given user, with the given filter.
+  /// Fetches the notes for the given user, with the given filter.
+  Future<List<NoteModel>> fetchNotes({required String userId, NotesFilter? filter});
+
+  /// Fetches a specific note for the given user.
+  Future<NoteModel> fetchNote({required String userId, required String noteId});
+
+  /// Subscribes to the notes for the given user, with the given filter.
   Future<Stream<List<NoteModel>>> subscribeNotes({required String userId, NotesFilter? filter});
 
   /// Subscribes to a specific note for the given user.
