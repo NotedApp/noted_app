@@ -9,7 +9,7 @@ import 'package:noted_models/noted_models.dart';
 
 // coverage:ignore-file
 class CookbookEditContent extends StatefulWidget {
-  final CookbookNoteModel note;
+  final NoteModel note;
   final NoteUpdateCallback updateNote;
 
   const CookbookEditContent({required this.note, required this.updateNote, super.key});
@@ -31,11 +31,11 @@ class _CookbookEditContentState extends State<CookbookEditContent> {
   void initState() {
     super.initState();
 
-    textController = NotedEditorController.quill(initial: widget.note.document);
-    titleController = TextEditingController(text: widget.note.title);
-    linkController = TextEditingController(text: widget.note.url);
-    prepTimeController = TextEditingController(text: widget.note.prepTime);
-    cookTimeController = TextEditingController(text: widget.note.cookTime);
+    textController = NotedEditorController.quill(initial: widget.note.field(NoteField.document));
+    titleController = TextEditingController(text: widget.note.field(NoteField.title));
+    linkController = TextEditingController(text: widget.note.field(NoteField.link));
+    prepTimeController = TextEditingController(text: widget.note.field(NoteField.cookbookPrepTime));
+    cookTimeController = TextEditingController(text: widget.note.field(NoteField.cookbookCookTime));
 
     textSubscription = textController.valueStream.listen((_) => _updateNote());
     titleController.addListener(_updateNote);
@@ -76,14 +76,12 @@ class _CookbookEditContentState extends State<CookbookEditContent> {
 
   void _updateNote() {
     widget.updateNote(
-      widget.note.copyWith(
-        title: titleController.text,
-        url: linkController.text,
-        prepTime: prepTimeController.text,
-        cookTime: cookTimeController.text,
-        difficulty: 3,
-        document: textController.value,
-      ),
+      widget.note
+          .copyWithField(NoteFieldValue(NoteField.title, titleController.text))
+          .copyWithField(NoteFieldValue(NoteField.link, linkController.text))
+          .copyWithField(NoteFieldValue(NoteField.cookbookPrepTime, prepTimeController.text))
+          .copyWithField(NoteFieldValue(NoteField.cookbookCookTime, cookTimeController.text))
+          .copyWithField(NoteFieldValue(NoteField.document, textController.value)),
     );
   }
 

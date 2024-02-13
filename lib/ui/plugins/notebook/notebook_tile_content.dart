@@ -3,7 +3,7 @@ import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_models/noted_models.dart';
 
 class NotebookTileContent extends StatefulWidget {
-  final NotebookNoteModel note;
+  final NoteModel note;
   final VoidCallback? onPressed;
   final VoidCallback? onLongPressed;
 
@@ -20,15 +20,15 @@ class _NotebookTileContentState extends State<NotebookTileContent> {
   void initState() {
     super.initState();
 
-    _textController = NotedEditorController.quill(initial: widget.note.document);
+    _textController = NotedEditorController.quill(initial: widget.note.field(NoteField.document));
   }
 
   @override
   Widget build(BuildContext context) {
     Widget? header;
 
-    final bool hasTitle = widget.note.title.isNotEmpty;
-    final bool hasTags = widget.note.tagIds.isNotEmpty;
+    final bool hasTitle = widget.note.field(NoteField.title).isNotEmpty;
+    final bool hasTags = widget.note.field(NoteField.tagIds).isNotEmpty;
 
     if (hasTitle || hasTags) {
       header = Column(
@@ -38,10 +38,10 @@ class _NotebookTileContentState extends State<NotebookTileContent> {
           if (hasTitle)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Text(widget.note.title, style: Theme.of(context).textTheme.titleMedium),
+              child: Text(widget.note.field(NoteField.title), style: Theme.of(context).textTheme.titleMedium),
             ),
           if (hasTitle && hasTags) const SizedBox(height: 8),
-          if (hasTags) NotedTagRow(tags: widget.note.tagIds)
+          if (hasTags) NotedTagRow(tags: widget.note.field(NoteField.tagIds))
         ],
       );
     }
@@ -59,7 +59,7 @@ class _NotebookTileContentState extends State<NotebookTileContent> {
   // coverage:ignore-start
   @override
   void didUpdateWidget(covariant NotebookTileContent oldWidget) {
-    _textController.value = widget.note.document;
+    _textController.value = widget.note.field(NoteField.document);
     super.didUpdateWidget(oldWidget);
   }
   // coverage:ignore-end

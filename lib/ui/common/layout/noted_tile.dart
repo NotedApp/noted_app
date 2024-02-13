@@ -39,25 +39,30 @@ class NotedTile extends StatelessWidget {
       onPressed: onPressed,
       onLongPressed: onLongPressed,
       child: NotedBlocSelector<NotesBloc, NotesState, NoteModel>(
-        selector: (state) => state.notes[noteId] ?? NotebookNoteModel.empty(),
-        builder: (context, _, note) => switch (note) {
-          NoteModel(hidden: true) => _HiddenTileContent(
-              title: note.title,
+        selector: (state) => state.notes[noteId] ?? NoteModel.empty(NotedPlugin.notebook),
+        builder: (context, _, note) {
+          if (note.field(NoteField.hidden)) {
+            return _HiddenTileContent(
+              title: note.field(NoteField.title),
               onPressed: onPressed,
               onLongPressed: onLongPressed,
-            ),
-          NotebookNoteModel() => NotebookTileContent(
-              note: note,
-              onPressed: onPressed,
-              onLongPressed: onLongPressed,
-            ),
-          CookbookNoteModel() => CookbookTileContent(
-              note: note,
-              onPressed: onPressed,
-              onLongPressed: onLongPressed,
-            ),
-          // TODO: Add climbing note content.
-          ClimbingNoteModel() => const Center(child: CircularProgressIndicator()),
+            );
+          }
+
+          return switch (note.plugin) {
+            NotedPlugin.notebook => NotebookTileContent(
+                note: note,
+                onPressed: onPressed,
+                onLongPressed: onLongPressed,
+              ),
+            NotedPlugin.cookbook => CookbookTileContent(
+                note: note,
+                onPressed: onPressed,
+                onLongPressed: onLongPressed,
+              ),
+            // TODO: Add climbing note content.
+            NotedPlugin.climbing => const Center(child: CircularProgressIndicator()),
+          };
         },
       ),
     );
@@ -91,7 +96,7 @@ class _HiddenTileContent extends StatelessWidget {
 }
 
 class NotedTagRow extends StatelessWidget {
-  final Set<String> tags;
+  final List<TagId> tags;
   final EdgeInsetsGeometry padding;
 
   const NotedTagRow({

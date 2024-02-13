@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:get_it/get_it.dart';
+import 'package:noted_app/repository/notes/mock_notes.dart';
 import 'package:noted_app/repository/notes/notes_repository.dart';
 import 'package:noted_app/state/notes/notes_state.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
@@ -8,28 +9,9 @@ import 'package:noted_models/noted_models.dart';
 
 /// Default local notes.
 final Map<String, NoteModel> localNotes = {
-  'test-note-0': NotebookNoteModel(
-    id: 'test-note-0',
-    title: 'Note 0',
-    document: const [
-      {'insert': 'hello world\n'},
-    ],
-    tagIds: const {'test-tag-0'},
-    hidden: false,
-  ),
-  'test-note-1': CookbookNoteModel(
-    id: 'test-note-1',
-    title: 'Note 1',
-    document: const [
-      {'insert': 'hello world\n'},
-    ],
-    url: '',
-    prepTime: '',
-    cookTime: '',
-    difficulty: 3,
-    tagIds: const {'test-tag-1'},
-    hidden: false,
-  ),
+  MockNotes.notebook0.id: MockNotes.notebook0,
+  MockNotes.cookbook0.id: MockNotes.cookbook0,
+  MockNotes.climbing0.id: MockNotes.climbing0,
 };
 
 /// A [NotesRepository] that uses mock data as its source of truth.
@@ -86,13 +68,11 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
       throw NotedError(ErrorCode.notes_add_failed);
     }
 
-    String id = note.id.isEmpty ? 'note-${_notes.length}' : note.id;
-    _notes[id] = note.copyWith(id: id);
+    final id = note.id.isEmpty ? 'note-${_notes.length}' : note.id;
+    final updated = note.copyWith(id: id);
+    _notes[id] = updated;
 
-    _controllers[id] = StreamController.broadcast(
-      onListen: () => _controllers[id]?.add(note.copyWith(id: id)),
-    );
-
+    _controllers[id] = StreamController.broadcast(onListen: () => _controllers[id]?.add(updated));
     _notesController.add(_notes.values.toList());
     return id;
   }

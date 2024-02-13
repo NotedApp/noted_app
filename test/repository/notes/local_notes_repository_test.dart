@@ -1,17 +1,13 @@
-import 'dart:async';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:noted_app/repository/notes/local_notes_repository.dart';
 import 'package:noted_app/state/notes/notes_state.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
-NotebookNoteModel testNote = NotebookNoteModel(
-  id: 'test-0',
-  title: 'test note',
-  hidden: false,
-  document: [],
-);
+final testNote = NoteModel.value(
+  NotedPlugin.notebook,
+  overrides: [const NoteFieldValue(NoteField.title, 'test note')],
+).copyWith(id: 'test-note-3');
 
 void main() {
   late LocalNotesRepository repository;
@@ -23,16 +19,15 @@ void main() {
 
   group('LocalNotesRepository', () {
     test('creates, updates, and deletes notes', () async {
-      Stream<List<NoteModel>> stream = await repository.subscribeNotes(userId: 'test');
-
-      Stream<NoteModel> singleStream = await repository.subscribeNote(userId: 'test', noteId: 'test-note-0');
+      final stream = await repository.subscribeNotes(userId: 'test');
+      final singleStream = await repository.subscribeNote(userId: 'test', noteId: 'test-notebook-0');
 
       expectLater(
         stream,
         emitsInOrder([
           [...localNotes.values],
           [...localNotes.values, testNote],
-          [...localNotes.values, testNote.copyWith(title: 'test updated note')],
+          [...localNotes.values, testNote.copyWithField(const NoteFieldValue(NoteField.title, 'test updated note'))],
           [...localNotes.values],
           [],
         ]),
@@ -47,12 +42,12 @@ void main() {
 
       await repository.updateNote(
         userId: 'test',
-        note: testNote.copyWith(title: 'test updated note'),
+        note: testNote.copyWithField(const NoteFieldValue(NoteField.title, 'test updated note')),
       );
 
       await repository.deleteNote(
         userId: 'test',
-        noteId: 'test-0',
+        noteId: 'test-note-3',
       );
 
       await repository.deleteNotes(
@@ -111,12 +106,7 @@ void main() {
       await expectLater(
         () => repository.addNote(
           userId: 'test',
-          note: NotebookNoteModel(
-            id: '',
-            title: 'test note',
-            hidden: false,
-            document: [],
-          ),
+          note: testNote,
         ),
         throwsA(NotedError(ErrorCode.notes_add_failed)),
       );
@@ -128,12 +118,7 @@ void main() {
       await expectLater(
         () => repository.updateNote(
           userId: 'test',
-          note: NotebookNoteModel(
-            id: 'test-note-0',
-            title: 'test note',
-            hidden: false,
-            document: [],
-          ),
+          note: testNote,
         ),
         throwsA(NotedError(ErrorCode.notes_update_failed)),
       );
@@ -143,7 +128,7 @@ void main() {
       repository.setShouldThrow(true);
 
       await expectLater(
-        () => repository.deleteNote(userId: 'test', noteId: 'test-note-0'),
+        () => repository.deleteNote(userId: 'test', noteId: 'test-notebook-0'),
         throwsA(NotedError(ErrorCode.notes_delete_failed)),
       );
     });
@@ -152,7 +137,7 @@ void main() {
       repository.setShouldThrow(true);
 
       await expectLater(
-        () => repository.deleteNotes(userId: 'test', noteIds: ['test-note-0']),
+        () => repository.deleteNotes(userId: 'test', noteIds: ['test-notebook-0']),
         throwsA(NotedError(ErrorCode.notes_delete_failed)),
       );
     });

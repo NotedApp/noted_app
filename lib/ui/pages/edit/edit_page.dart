@@ -22,7 +22,7 @@ class EditPage extends StatelessWidget {
     final strings = context.strings();
 
     return NotedBlocSelector<EditBloc, EditState, (EditStatus, bool)>(
-      selector: (state) => (state.status, state.note?.hidden ?? false),
+      selector: (state) => (state.status, state.note?.field(NoteField.hidden) ?? false),
       listenWhen: (previous, current) => previous.status != current.status || previous.error != current.error,
       listener: (context, state) {
         if (state.error != null) {
