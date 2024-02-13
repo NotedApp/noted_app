@@ -27,7 +27,7 @@ void main() {
 
     setUp(() {
       getRepository().reset();
-      getRepository().setMsDelay(1);
+      getRepository().msDelay = 1;
     });
 
     blocTest(
@@ -89,7 +89,7 @@ void main() {
       'signs in with google and handles error',
       build: AuthBloc.new,
       act: (bloc) {
-        getRepository().setShouldThrow(true);
+        getRepository().shouldThrow = true;
         bloc.add(AuthSignInWithGoogleEvent());
       },
       wait: const Duration(milliseconds: 10),
@@ -150,7 +150,7 @@ void main() {
       'signs out and handles error',
       setUp: () async {
         await getRepository().signInWithGoogle();
-        getRepository().setShouldThrow(true);
+        getRepository().shouldThrow = true;
       },
       build: AuthBloc.new,
       act: (bloc) => bloc.add(AuthSignOutEvent()),
@@ -175,7 +175,7 @@ void main() {
     blocTest(
       'sends password reset email and handles error',
       setUp: () async {
-        getRepository().setShouldThrow(true);
+        getRepository().shouldThrow = true;
       },
       build: AuthBloc.new,
       act: (bloc) => bloc.add(const AuthSendPasswordResetEvent('test')),
@@ -204,7 +204,7 @@ void main() {
       'changes account password and handles error',
       setUp: () async {
         await getRepository().signInWithGoogle();
-        getRepository().setShouldThrow(true);
+        getRepository().shouldThrow = true;
       },
       build: AuthBloc.new,
       act: (bloc) => bloc.add(const AuthChangePasswordEvent('test')),
@@ -233,7 +233,7 @@ void main() {
       'deletes current account and handles error',
       setUp: () async {
         await getRepository().signInWithGoogle();
-        getRepository().setShouldThrow(true);
+        getRepository().shouldThrow = true;
       },
       build: AuthBloc.new,
       act: (bloc) => bloc.add(AuthDeleteAccountEvent()),

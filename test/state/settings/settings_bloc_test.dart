@@ -22,10 +22,10 @@ void main() {
 
     setUp(() async {
       settings().reset();
-      settings().setMsDelay(1);
+      settings().msDelay = 1;
 
       auth().reset();
-      auth().setMsDelay(1);
+      auth().msDelay = 1;
       await auth().signInWithGoogle();
     });
 
@@ -57,7 +57,7 @@ void main() {
 
     blocTest(
       'loads user and handles error',
-      setUp: () => settings().setShouldThrow(true),
+      setUp: () => settings().shouldThrow = true,
       build: SettingsBloc.new,
       act: (bloc) => bloc.add(SettingsLoadUserEvent()),
       wait: const Duration(milliseconds: 10),
@@ -109,7 +109,7 @@ void main() {
 
     blocTest(
       'updates current color scheme name and handles error',
-      setUp: () => settings().setShouldThrow(true),
+      setUp: () => settings().shouldThrow = true,
       build: SettingsBloc.new,
       act: (bloc) => bloc.add(const SettingsUpdateStyleColorSchemeEvent(ColorSchemeModelName.green)),
       wait: const Duration(milliseconds: 10),
@@ -138,7 +138,7 @@ void main() {
 
     blocTest(
       'updates custom color scheme and handles error',
-      setUp: () => settings().setShouldThrow(true),
+      setUp: () => settings().shouldThrow = true,
       build: SettingsBloc.new,
       act: (bloc) => bloc.add(const SettingsUpdateStyleCustomColorSchemeEvent(ColorSchemeModel.green)),
       wait: const Duration(milliseconds: 10),
@@ -167,7 +167,7 @@ void main() {
 
     blocTest(
       'updates current text theme and handles error',
-      setUp: () => settings().setShouldThrow(true),
+      setUp: () => settings().shouldThrow = true,
       build: SettingsBloc.new,
       act: (bloc) => bloc.add(const SettingsUpdateStyleTextThemeEvent(TextThemeModelName.roboto)),
       wait: const Duration(milliseconds: 10),

@@ -8,7 +8,7 @@ void main() {
 
   setUp(() {
     repository = LocalSettingsRepository();
-    repository.setMsDelay(1);
+    repository.msDelay = 1;
   });
 
   group('LocalSettingsRepository', () {
@@ -50,7 +50,7 @@ void main() {
     });
 
     test('handles fetch error', () async {
-      repository.setShouldThrow(true);
+      repository.shouldThrow = true;
 
       await expectLater(
         () => repository.fetchSettings(userId: 'test'),
@@ -59,7 +59,7 @@ void main() {
     });
 
     test('handles update style error', () async {
-      repository.setShouldThrow(true);
+      repository.shouldThrow = true;
 
       await expectLater(
         () => repository.updateStyleSettings(userId: 'test', style: const StyleSettingsModel()),
@@ -68,7 +68,7 @@ void main() {
     });
 
     test('handles update tags error', () async {
-      repository.setShouldThrow(true);
+      repository.shouldThrow = true;
 
       await expectLater(
         () => repository.updateTagSettings(userId: 'test', tags: const TagSettingsModel()),
@@ -77,7 +77,7 @@ void main() {
     });
 
     test('handles update plugins error', () async {
-      repository.setShouldThrow(true);
+      repository.shouldThrow = true;
 
       await expectLater(
         () => repository.updatePluginSettings(userId: 'test', plugins: const PluginSettingsModel()),
@@ -86,7 +86,7 @@ void main() {
     });
 
     test('throws and resets when requested', () async {
-      repository.setShouldThrow(true);
+      repository.shouldThrow = true;
 
       await expectLater(
         () => repository.fetchSettings(userId: 'test'),

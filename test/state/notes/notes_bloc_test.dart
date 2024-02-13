@@ -31,10 +31,10 @@ void main() {
 
     setUp(() async {
       notes().reset();
-      notes().setMsDelay(1);
+      notes().msDelay = 1;
 
       auth().reset();
-      auth().setMsDelay(1);
+      auth().msDelay = 1;
       await auth().signInWithGoogle();
       await Future.delayed(const Duration(milliseconds: 5));
     });
@@ -128,7 +128,7 @@ void main() {
 
     blocTest(
       'loads notes for a user and handles error',
-      setUp: () => notes().setShouldThrow(true),
+      setUp: () => notes().shouldThrow = true,
       build: NotesBloc.new,
       act: (bloc) => bloc.add(const NotesSubscribeEvent()),
       wait: const Duration(milliseconds: 10),
@@ -142,7 +142,7 @@ void main() {
       'loads notes for a user and handles initial stream error',
       build: NotesBloc.new,
       act: (bloc) async {
-        notes().setStreamShouldThrow(true);
+        notes().streamShouldThrow = true;
         bloc.add(const NotesSubscribeEvent());
         await Future.delayed(const Duration(milliseconds: 5));
       },

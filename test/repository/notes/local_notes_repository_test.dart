@@ -14,7 +14,7 @@ void main() {
 
   setUp(() {
     repository = LocalNotesRepository();
-    repository.setMsDelay(1);
+    repository.msDelay = 1;
   });
 
   group('LocalNotesRepository', () {
@@ -83,7 +83,7 @@ void main() {
     });
 
     test('handles fetch error', () async {
-      repository.setShouldThrow(true);
+      repository.shouldThrow = true;
 
       await expectLater(
         () => repository.subscribeNotes(userId: 'test'),
@@ -92,7 +92,7 @@ void main() {
     });
 
     test('handles fetch single error', () async {
-      repository.setShouldThrow(true);
+      repository.shouldThrow = true;
 
       await expectLater(
         () => repository.subscribeNote(userId: 'test', noteId: 'test'),
@@ -101,7 +101,7 @@ void main() {
     });
 
     test('handles add error', () async {
-      repository.setShouldThrow(true);
+      repository.shouldThrow = true;
 
       await expectLater(
         () => repository.addNote(
@@ -113,7 +113,7 @@ void main() {
     });
 
     test('handles update error', () async {
-      repository.setShouldThrow(true);
+      repository.shouldThrow = true;
 
       await expectLater(
         () => repository.updateNote(
@@ -125,7 +125,7 @@ void main() {
     });
 
     test('handles delete error', () async {
-      repository.setShouldThrow(true);
+      repository.shouldThrow = true;
 
       await expectLater(
         () => repository.deleteNote(userId: 'test', noteId: 'test-notebook-0'),
@@ -134,7 +134,7 @@ void main() {
     });
 
     test('handles delete multiple error', () async {
-      repository.setShouldThrow(true);
+      repository.shouldThrow = true;
 
       await expectLater(
         () => repository.deleteNotes(userId: 'test', noteIds: ['test-notebook-0']),
@@ -143,7 +143,7 @@ void main() {
     });
 
     test('throws and resets when requested', () async {
-      repository.setShouldThrow(true);
+      repository.shouldThrow = true;
 
       await expectLater(
         () => repository.addNote(userId: 'test', note: testNote),

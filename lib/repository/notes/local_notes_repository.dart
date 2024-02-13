@@ -9,7 +9,7 @@ import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 /// Default local notes.
-final Map<String, NoteModel> localNotes = {
+final localNotes = <String, NoteModel>{
   MockNotes.notebook0.id: MockNotes.notebook0,
   MockNotes.cookbook0.id: MockNotes.cookbook0,
   MockNotes.climbing0.id: MockNotes.climbing0,
@@ -17,25 +17,19 @@ final Map<String, NoteModel> localNotes = {
 
 /// A [NotesRepository] that uses mock data as its source of truth.
 class LocalNotesRepository extends NotesRepository implements Disposable {
-  late final StreamController<List<NoteModel>> _notesController;
-  Map<String, StreamController<NoteModel>> _controllers = {};
-  Map<String, NoteModel> _notes = {...localNotes};
-  bool _shouldThrow = false;
-  bool _streamShouldThrow = false;
-  int _msDelay = LocalRepositoryConfig.mockNetworkDelayMs;
+  final _notesController = StreamController<List<NoteModel>>.broadcast();
+  final _controllers = localNotes.map((key, _) => MapEntry(key, StreamController<NoteModel>.broadcast()));
+  final _notes = Map<String, NoteModel>.of(localNotes);
 
-  LocalNotesRepository() {
-    _notesController = StreamController.broadcast(
-      onListen: () => _notesController.add(_notes.values.toList()),
-    );
+  var _shouldThrow = false;
+  var _streamShouldThrow = false;
+  var _msDelay = LocalRepositoryConfig.mockNetworkDelayMs;
 
-    _controllers = _notes.map(
-      (key, value) => MapEntry(
-        key,
-        StreamController.broadcast(onListen: () => _controllers[key]?.add(value)),
-      ),
-    );
-  }
+  set shouldThrow(bool value) => _shouldThrow = value;
+  set streamShouldThrow(bool value) => _streamShouldThrow = value;
+  set msDelay(int value) => _msDelay = value;
+
+  LocalNotesRepository();
 
   @override
   Future<List<NoteModel>> fetchNotes({required String userId, NotesFilter? filter}) async {
@@ -139,7 +133,7 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
 
     _notes.removeWhere((key, value) => noteIds.contains(key));
 
-    for (String noteId in noteIds) {
+    for (final noteId in noteIds) {
       _controllers[noteId]?.close();
       _controllers.remove(noteId);
     }
@@ -149,7 +143,7 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
 
   @override
   FutureOr onDispose() {
-    for (var element in _controllers.values) {
+    for (final element in _controllers.values) {
       element.close();
     }
 
@@ -160,25 +154,20 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
   void addStreamError() {
     _notesController.addError(NotedError(ErrorCode.notes_parse_failed));
 
-    for (var element in _controllers.values) {
+    for (final element in _controllers.values) {
       element.addError(NotedError(ErrorCode.notes_parse_failed));
     }
   }
 
-  void setShouldThrow(bool shouldThrow) => _shouldThrow = shouldThrow;
-  void setStreamShouldThrow(bool streamShouldThrow) => _streamShouldThrow = streamShouldThrow;
-  void setMsDelay(int msDelay) => _msDelay = msDelay;
   void reset() {
-    _shouldThrow = false;
-    _streamShouldThrow = false;
-    _msDelay = LocalRepositoryConfig.mockNetworkDelayMs;
-    _notes = {...localNotes};
+    shouldThrow = false;
+    streamShouldThrow = false;
+    msDelay = LocalRepositoryConfig.mockNetworkDelayMs;
 
-    _controllers = _notes.map(
-      (key, value) => MapEntry(
-        key,
-        StreamController.broadcast(onListen: () => _controllers[key]?.add(value)),
-      ),
-    );
+    _notes.clear();
+    _notes.addAll(localNotes);
+
+    _controllers.clear();
+    _controllers.addAll(localNotes.map((key, value) => MapEntry(key, StreamController<NoteModel>.broadcast())));
   }
 }
