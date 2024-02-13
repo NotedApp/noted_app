@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:noted_app/ui/common/layout/layout.dart';
+import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/util/extensions/extensions.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -16,13 +16,13 @@ class NotedLink extends StatelessWidget {
 
     return InkWell(
       onTap: () => _openLink(context),
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(Dimens.radius_m),
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: theme.colorScheme.onBackground),
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(Dimens.radius_m),
         ),
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(Dimens.spacing_s),
         child: Text(
           url,
           style: theme.textTheme.labelLarge?.copyWith(decoration: TextDecoration.underline),

@@ -44,6 +44,10 @@ class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
         add(const NotesSubscribeEvent());
       }
     });
+
+    if (_auth.currentUser.isNotEmpty) {
+      add(const NotesSubscribeEvent());
+    }
   }
 
   Future<void> _onSubscribeNotes(NotesSubscribeEvent event, Emitter<NotesState> emit) async {
@@ -57,7 +61,15 @@ class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
 
       emit(const NotesState.loading());
 
-      _notesSubscription = (await _notes.subscribeNotes(userId: _auth.currentUser.id, filter: _filter)).listen((event) {
+      final notes = await _notes.fetchNotes(userId: _auth.currentUser.id, filter: _filter);
+      if (notes.isEmpty) {
+        emit(const NotesState.empty());
+      } else {
+        emit(NotesState.success(notes: {for (final note in notes) note.id: note}));
+      }
+
+      final stream = await _notes.subscribeNotes(userId: _auth.currentUser.id, filter: _filter);
+      _notesSubscription = stream.listen((event) {
         add(NotesUpdateEvent(event));
       }, onError: (e) {
         add(NotesUpdateErrorEvent(NotedError.fromObject(e)));
@@ -68,6 +80,10 @@ class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
   }
 
   Future<void> _onUpdateNotes(NotesUpdateEvent event, Emitter<NotesState> emit) async {
+    if (isClosed) {
+      return;
+    }
+
     if (event.notes.isEmpty) {
       emit(const NotesState.empty());
     } else {
@@ -81,6 +97,10 @@ class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
   }
 
   Future<void> _onUpdateError(NotesUpdateErrorEvent event, Emitter<NotesState> emit) async {
+    if (isClosed) {
+      return;
+    }
+
     switch (state.status) {
       case NotesStatus.loaded:
         emit(NotesState.success(notes: state.notes, selectedIds: state.selectedIds, error: event.error));

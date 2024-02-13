@@ -69,7 +69,7 @@ class NotesPage extends StatelessWidget {
             type: NotedIconButtonType.filled,
             size: NotedWidgetSize.large,
             onPressed: onAdded,
-            onLongPress: onAdded,
+            onLongPress: onLongAdded,
           ),
           child: child,
         );

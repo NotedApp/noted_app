@@ -32,7 +32,7 @@ class NotePicker extends StatelessWidget {
                       plugin: plugin,
                       size: NotedWidgetSize.large,
                       width: double.infinity,
-                      onPressed: () => context.push(NotesAddRoute(plugin: plugin)),
+                      onPressed: () => context.popAndPush(NotesAddRoute(plugin: plugin)),
                     ),
                   )
                   .toList(),
