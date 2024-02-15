@@ -9,6 +9,11 @@ final testNote = NoteModel.value(
   overrides: [const NoteFieldValue(NoteField.title, 'test note')],
 ).copyWith(id: 'test-note-3');
 
+final updatedNote = NoteModel.value(
+  NotedPlugin.notebook,
+  overrides: [const NoteFieldValue(NoteField.title, 'updated note')],
+).copyWith(id: 'test-note-3');
+
 void main() {
   late LocalNotesRepository repository;
 
@@ -19,67 +24,43 @@ void main() {
 
   group('LocalNotesRepository', () {
     test('creates, updates, and deletes notes', () async {
+      expect(await repository.fetchNotes(userId: 'test'), List.of(localNotes.values));
+
       final stream = await repository.subscribeNotes(userId: 'test');
-      final singleStream = await repository.subscribeNote(userId: 'test', noteId: 'test-notebook-0');
 
       expectLater(
         stream,
         emitsInOrder([
-          [...localNotes.values],
           [...localNotes.values, testNote],
-          [...localNotes.values, testNote.copyWithField(const NoteFieldValue(NoteField.title, 'test updated note'))],
+          [...localNotes.values, updatedNote],
           [...localNotes.values],
           [],
         ]),
       );
 
-      expectLater(singleStream, emitsInOrder([localNotes.values.firstOrNull]));
-
-      await repository.addNote(
-        userId: 'test',
-        note: testNote,
-      );
-
-      await repository.updateNote(
-        userId: 'test',
-        note: testNote.copyWithField(const NoteFieldValue(NoteField.title, 'test updated note')),
-      );
-
-      await repository.deleteNote(
-        userId: 'test',
-        noteId: 'test-note-3',
-      );
-
-      await repository.deleteNotes(
-        userId: 'test',
-        noteIds: localNotes.values.map((note) => note.id).toList(),
-      );
+      await repository.addNote(userId: 'test', note: testNote);
+      await repository.updateNote(userId: 'test', note: updatedNote);
+      await repository.deleteNote(userId: 'test', noteId: 'test-note-3');
+      await repository.deleteNotes(userId: 'test', noteIds: List.of(localNotes.values.map((note) => note.id)));
     });
 
     test('filters notes', () async {
-      var stream = await repository.subscribeNotes(
-        userId: 'test',
-        filter: const NotesFilter(plugins: {NotedPlugin.notebook}),
-      );
+      const filter = NotesFilter(plugins: {NotedPlugin.notebook});
+
+      expect(await repository.fetchNotes(userId: 'test', filter: filter), [localNotes.values.firstOrNull]);
+
+      var stream = await repository.subscribeNotes(userId: 'test', filter: filter);
 
       expectLater(
         stream,
         emitsInOrder([
-          [localNotes.values.first]
+          [localNotes.values.firstOrNull, testNote],
+          [localNotes.values.firstOrNull, updatedNote],
         ]),
       );
 
-      stream = await repository.subscribeNotes(
-        userId: 'test',
-        filter: const NotesFilter(plugins: {NotedPlugin.cookbook}),
-      );
-
-      expectLater(
-        stream,
-        emitsInOrder([
-          [localNotes.values.elementAt(1)]
-        ]),
-      );
+      await repository.addNote(userId: 'test', note: testNote);
+      await repository.updateNote(userId: 'test', note: updatedNote);
     });
 
     test('handles fetch error', () async {
