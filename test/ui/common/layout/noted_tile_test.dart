@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:noted_app/repository/ogp/local_ogp_repository.dart';
+import 'package:noted_app/repository/ogp/ogp_repository.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/plugins/cookbook/cookbook_tile_content.dart';
 import 'package:noted_app/ui/plugins/notebook/notebook_tile_content.dart';
+import 'package:noted_app/util/environment/environment.dart';
 
+import '../../../helpers/environment/unit_test_environment.dart';
 import '../../../helpers/mocks/mock_callbacks.dart';
 import '../../../helpers/test_wrapper.dart';
 
 void main() {
   group('Noted Tile', () {
+    setUpAll(() {
+      UnitTestEnvironment().configure();
+      (locator<OgpRepository>() as LocalOgpRepository).msDelay = 0;
+    });
+
     testWidgets('empty tile renders as expected', (tester) async {
       MockVoidCallback notebookCallback = MockVoidCallback();
       const double width = 300;
@@ -101,6 +110,7 @@ void main() {
       await tester.tap(notebookFinder);
       await tester.tap(cookbookFinder.first);
       await tester.tap(climbingFinder);
+      await tester.pump(const Duration(milliseconds: 1));
 
       expect(notebookFinder, findsOneWidget);
       expect(cookbookFinder, findsNWidgets(2));
