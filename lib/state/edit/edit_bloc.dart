@@ -6,6 +6,7 @@ import 'package:noted_app/repository/auth/auth_repository.dart';
 import 'package:noted_app/repository/notes/notes_repository.dart';
 import 'package:noted_app/state/edit/edit_event.dart';
 import 'package:noted_app/state/edit/edit_state.dart';
+import 'package:noted_app/state/edit/plugins/cookbook/cookbook_edit_bloc.dart';
 import 'package:noted_app/state/noted_bloc.dart';
 import 'package:noted_app/util/debouncer.dart';
 import 'package:noted_app/util/environment/environment.dart';
@@ -21,6 +22,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
   StreamSubscription<NoteModel>? _noteSubscription;
 
   final _updateMap = <NoteField, NoteFieldValue>{};
+  EditUpdateHandler? _updateHandler;
 
   EditBloc.load({
     required String noteId,
@@ -88,6 +90,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
       emit(EditState(note: state.note, status: EditStatus.loading));
 
       final note = await _notes.fetchNote(userId: _auth.currentUser.id, noteId: event.id);
+      _updateHandler = note.plugin._updateHandler();
       emit(EditState(note: note, status: EditStatus.loaded));
 
       await _subscribeNote(event.id, emit);
@@ -114,6 +117,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
       );
 
       final note = await _notes.fetchNote(userId: _auth.currentUser.id, noteId: id);
+      _updateHandler = note.plugin._updateHandler();
       emit(EditState(note: note, status: EditStatus.loaded));
 
       await _subscribeNote(id, emit);
@@ -171,6 +175,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
     }
 
     emit(EditState(note: event.note, status: EditStatus.loaded));
+    _updateHandler?.run(event.note, this);
   }
 
   Future<void> _onRemoteUpdateError(EditRemoteUpdateErrorEvent event, Emitter<EditState> emit) async {
@@ -193,8 +198,8 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
   }
 }
 
-// coverage:ignore-start
 extension on NotedPlugin {
+  // coverage:ignore-start
   NoteModel _emptyModel() {
     return switch (this) {
       NotedPlugin.notebook => NoteModel.empty(NotedPlugin.notebook),
@@ -202,5 +207,18 @@ extension on NotedPlugin {
       NotedPlugin.climbing => NoteModel.empty(NotedPlugin.climbing),
     };
   }
+  // coverage:ignore-end
+
+  EditUpdateHandler? _updateHandler() {
+    return switch (this) {
+      NotedPlugin.cookbook => CookbookEditUpdateHandler(),
+      _ => null,
+    };
+  }
 }
-// coverage:ignore-end
+
+abstract class EditUpdateHandler {
+  const EditUpdateHandler();
+
+  void run(NoteModel updated, EditBloc bloc);
+}
