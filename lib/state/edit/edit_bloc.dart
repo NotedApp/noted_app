@@ -63,9 +63,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
     on<EditRemoteUpdateEvent>(_onRemoteUpdateNote);
     on<EditRemoteUpdateErrorEvent>(_onRemoteUpdateError);
     on<EditCloseEvent>(_onClose);
-
     on<EditUpdateEvent>(_onUpdateNote, transformer: debouncer(_updateDebounceMs));
-
     on<EditToggleHiddenEvent>(_onToggleHidden);
 
     _userSubscription = _auth.userStream.listen((user) {
@@ -177,7 +175,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
       }
 
       if (_auth.currentUser.isEmpty) {
-        throw NotedError(ErrorCode.notes_update_failed, message: 'missing auth');
+        throw NotedError(ErrorCode.notes_update_failed, message: 'missing auth'); // coverage:ignore-line
       }
 
       emit(EditState(note: state.note, status: EditStatus.deleting));

@@ -85,6 +85,14 @@ void main() {
       expect(state.sortedNoteIds, const ['first', 'second', 'third', 'zzz-last-0', 'zzz-last-1']);
     });
 
+    test('loads empty notes for a user', () async {
+      await notes().deleteNotes(userId: 'test', noteIds: localNotes.values.map((note) => note.id).toList());
+
+      final bloc = NotesBloc();
+      final loaded = await bloc.stream.firstWhere((state) => state.status == NotesStatus.empty);
+      expect(loaded.notes.length, 0);
+    });
+
     test('loads and updates notes for a user', () async {
       final bloc = NotesBloc();
       final loaded = await bloc.stream.firstWhere((state) => state.status == NotesStatus.loaded);
@@ -101,6 +109,8 @@ void main() {
       bloc.add(NotesDeleteEvent(localNotes.values.map((note) => note.id).toList()));
       final empty = await bloc.stream.first;
       expect(empty, const NotesState.empty());
+
+      await bloc.close();
     });
 
     test('loads notes on auth change', () async {

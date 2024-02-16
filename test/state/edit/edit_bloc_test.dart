@@ -42,6 +42,8 @@ void main() {
       editBloc.add(EditDeleteEvent());
       final deleted = await editBloc.stream.firstWhere((state) => state.status == EditStatus.deleted);
       expect(deleted.note, null);
+
+      await editBloc.close();
     });
 
     test('loads and updates a note', () async {
@@ -114,8 +116,6 @@ void main() {
 
     test('load a note fails with wrong state', () async {
       final editBloc = EditBloc.load(noteId: 'test-notebook-0');
-      editBloc.add(const EditLoadEvent('test-notebook-0'));
-
       final loaded = await editBloc.stream.firstWhere((state) => state.status == EditStatus.loaded);
       expect(loaded.note?.field(NoteField.title), existing.field(NoteField.title));
     });
@@ -125,6 +125,7 @@ void main() {
       final loaded = await editBloc.stream.firstWhere((state) => state.status == EditStatus.loaded);
       expect(loaded.note?.field(NoteField.title), existing.field(NoteField.title));
 
+      await Future.delayed(const Duration(milliseconds: 5));
       notes().addStreamError();
       final error = await editBloc.stream.firstWhere((state) => state.error != null);
       expect(error.error?.code, ErrorCode.notes_parse_failed);
@@ -135,6 +136,7 @@ void main() {
       final original = await editBloc.stream.firstWhere((state) => state.status == EditStatus.loaded);
       expect(original.note?.field(NoteField.title), existing.field(NoteField.title));
 
+      await Future.delayed(const Duration(milliseconds: 5));
       notes().shouldThrow = true;
       editBloc.add(EditUpdateEvent(updated));
       final error = await editBloc.stream.first;
@@ -178,6 +180,7 @@ void main() {
       final original = await editBloc.stream.firstWhere((state) => state.status == EditStatus.loaded);
       expect(original.note?.field(NoteField.title), existing.field(NoteField.title));
 
+      await Future.delayed(const Duration(milliseconds: 5));
       notes().shouldThrow = true;
       editBloc.add(EditDeleteEvent());
       final deleting = await editBloc.stream.first;

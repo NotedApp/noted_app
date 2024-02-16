@@ -24,7 +24,7 @@ Attribute _getQuillAttribute(NotedEditorAttribute attribute) {
     NotedEditorAttribute.link => Attribute.link,
   };
 }
-// coverage:ignore-start
+// coverage:ignore-end
 
 class QuillEditorController extends NotedEditorController {
   QuillController controller = QuillController.basic();

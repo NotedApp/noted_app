@@ -143,8 +143,8 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
 
   @override
   FutureOr onDispose() {
-    for (final element in _controllers.values) {
-      element.close();
+    for (final controller in _controllers.values) {
+      controller.close();
     }
 
     _notesController.close();
@@ -154,8 +154,8 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
   void addStreamError() {
     _notesController.addError(NotedError(ErrorCode.notes_parse_failed));
 
-    for (final element in _controllers.values) {
-      element.addError(NotedError(ErrorCode.notes_parse_failed));
+    for (final controller in _controllers.values) {
+      controller.addError(NotedError(ErrorCode.notes_parse_failed));
     }
   }
 

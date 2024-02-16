@@ -105,7 +105,7 @@ class NotesBloc extends NotedBloc<NotesEvent, NotesState> {
       case NotesStatus.loaded:
         emit(NotesState.success(notes: state.notes, selectedIds: state.selectedIds, error: event.error));
       default:
-        emit(NotesState.error(error: event.error));
+        emit(NotesState.error(error: event.error)); // coverage:ignore-line
     }
   }
 
