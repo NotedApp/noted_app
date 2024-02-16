@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rxdart/rxdart.dart';
 
 class Debouncer {
   final Duration interval;
@@ -32,4 +34,8 @@ class Debouncer {
   void _run({VoidCallback? action}) {
     action?.call();
   }
+}
+
+EventTransformer<Event> debounced<Event>(int debounceMs) {
+  return (updates, mapper) => updates.debounceTime(Duration(milliseconds: debounceMs)).switchMap(mapper);
 }

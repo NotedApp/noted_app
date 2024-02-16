@@ -24,6 +24,10 @@ class EditUpdateEvent extends EditEvent {
   const EditUpdateEvent(this.update);
 }
 
+class EditCommitUpdatesEvent extends EditEvent {
+  const EditCommitUpdatesEvent();
+}
+
 class EditDeleteEvent extends EditEvent {}
 
 class EditRemoteUpdateEvent extends EditEvent {
