@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:noted_app/repository/auth/auth_repository.dart';
 import 'package:noted_app/repository/notes/notes_repository.dart';
+import 'package:noted_app/repository/ogp/ogp_repository.dart';
 import 'package:noted_app/repository/settings/settings_repository.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
 import 'package:noted_app/util/environment/environment.dart';
@@ -29,4 +30,7 @@ class ProdEnvironment extends Environment {
 
   @override
   NotesRepository get notebookRepository => throw UnimplementedError();
+
+  @override
+  OgpRepository get ogpRepository => throw UnimplementedError();
 }

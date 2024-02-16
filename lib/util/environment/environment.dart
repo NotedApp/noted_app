@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:noted_app/repository/auth/auth_repository.dart';
 import 'package:noted_app/repository/notes/notes_repository.dart';
+import 'package:noted_app/repository/ogp/ogp_repository.dart';
 import 'package:noted_app/repository/settings/settings_repository.dart';
 import 'package:noted_app/util/errors/noted_crash_handler.dart';
 import 'package:noted_app/util/logging/noted_logger.dart';
@@ -21,6 +22,7 @@ abstract class Environment {
   AuthRepository get authRepository;
   SettingsRepository get settingsRepository;
   NotesRepository get notebookRepository;
+  OgpRepository get ogpRepository;
 
   Future<void> configure({
     FirebaseOptions? firebaseOptions,
@@ -30,6 +32,7 @@ abstract class Environment {
     AuthRepository? authRepository,
     SettingsRepository? settingsRepository,
     NotesRepository? notebookRepository,
+    OgpRepository? ogpRepository,
   }) async {
     FirebaseOptions? options = firebaseOptions ?? this.firebaseOptions;
 
@@ -49,5 +52,6 @@ abstract class Environment {
     locator.registerSingleton<AuthRepository>(authRepository ?? this.authRepository);
     locator.registerSingleton<SettingsRepository>(settingsRepository ?? this.settingsRepository);
     locator.registerSingleton<NotesRepository>(notebookRepository ?? this.notebookRepository);
+    locator.registerSingleton<OgpRepository>(ogpRepository ?? this.ogpRepository);
   }
 }

@@ -4,6 +4,8 @@ import 'package:noted_app/repository/auth/auth_repository.dart';
 import 'package:noted_app/repository/auth/local_auth_repository.dart';
 import 'package:noted_app/repository/notes/local_notes_repository.dart';
 import 'package:noted_app/repository/notes/notes_repository.dart';
+import 'package:noted_app/repository/ogp/local_ogp_repository.dart';
+import 'package:noted_app/repository/ogp/ogp_repository.dart';
 import 'package:noted_app/repository/settings/local_settings_repository.dart';
 import 'package:noted_app/repository/settings/settings_repository.dart';
 import 'package:noted_app/ui/router/noted_go_router.dart';
@@ -35,4 +37,7 @@ class LocalEnvironment extends Environment {
 
   @override
   NotesRepository get notebookRepository => LocalNotesRepository();
+
+  @override
+  OgpRepository get ogpRepository => LocalOgpRepository();
 }
