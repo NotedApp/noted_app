@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:noted_app/ui/router/router_config.dart';
-import 'package:noted_app/util/environment/dependencies.dart';
+import 'package:noted_app/util/environment/environment.dart';
 
 abstract class NotedRouter {
   Future<T?> push<T extends Object?>(BuildContext context, NotedRoute route);

@@ -5,7 +5,7 @@ import 'package:noted_app/repository/auth/local_auth_repository.dart';
 import 'package:noted_app/state/auth/auth_bloc.dart';
 import 'package:noted_app/state/auth/auth_event.dart';
 import 'package:noted_app/state/auth/auth_state.dart';
-import 'package:noted_app/util/environment/dependencies.dart';
+import 'package:noted_app/util/environment/environment.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
@@ -17,17 +17,15 @@ void main() {
     UserModel local0 = const UserModel(id: 'local-0', email: 'local-0@noted.com', name: 'shaquille.oatmeal');
     UserModel google = const UserModel(id: 'local-google', email: 'local-google@noted.com', name: 'googly_woogly');
 
-    LocalAuthRepository getRepository() {
-      return locator<AuthRepository>() as LocalAuthRepository;
-    }
+    LocalAuthRepository auth() => locator<AuthRepository>() as LocalAuthRepository;
 
     setUpAll(() {
       UnitTestEnvironment().configure();
     });
 
     setUp(() {
-      getRepository().reset();
-      getRepository().msDelay = 1;
+      auth().reset();
+      auth().msDelay = 1;
     });
 
     blocTest(
@@ -89,7 +87,7 @@ void main() {
       'signs in with google and handles error',
       build: AuthBloc.new,
       act: (bloc) {
-        getRepository().shouldThrow = true;
+        auth().shouldThrow = true;
         bloc.add(AuthSignInWithGoogleEvent());
       },
       wait: const Duration(milliseconds: 10),
@@ -135,7 +133,7 @@ void main() {
     blocTest(
       'signs out',
       setUp: () async {
-        await getRepository().signInWithGoogle();
+        await auth().signInWithGoogle();
       },
       build: AuthBloc.new,
       act: (bloc) => bloc.add(AuthSignOutEvent()),
@@ -149,8 +147,8 @@ void main() {
     blocTest(
       'signs out and handles error',
       setUp: () async {
-        await getRepository().signInWithGoogle();
-        getRepository().shouldThrow = true;
+        await auth().signInWithGoogle();
+        auth().shouldThrow = true;
       },
       build: AuthBloc.new,
       act: (bloc) => bloc.add(AuthSignOutEvent()),
@@ -175,7 +173,7 @@ void main() {
     blocTest(
       'sends password reset email and handles error',
       setUp: () async {
-        getRepository().shouldThrow = true;
+        auth().shouldThrow = true;
       },
       build: AuthBloc.new,
       act: (bloc) => bloc.add(const AuthSendPasswordResetEvent('test')),
@@ -189,7 +187,7 @@ void main() {
     blocTest(
       'changes account password',
       setUp: () async {
-        await getRepository().signInWithGoogle();
+        await auth().signInWithGoogle();
       },
       build: AuthBloc.new,
       act: (bloc) => bloc.add(const AuthChangePasswordEvent('test')),
@@ -203,8 +201,8 @@ void main() {
     blocTest(
       'changes account password and handles error',
       setUp: () async {
-        await getRepository().signInWithGoogle();
-        getRepository().shouldThrow = true;
+        await auth().signInWithGoogle();
+        auth().shouldThrow = true;
       },
       build: AuthBloc.new,
       act: (bloc) => bloc.add(const AuthChangePasswordEvent('test')),
@@ -218,7 +216,7 @@ void main() {
     blocTest(
       'deletes current account',
       setUp: () async {
-        await getRepository().signInWithGoogle();
+        await auth().signInWithGoogle();
       },
       build: AuthBloc.new,
       act: (bloc) => bloc.add(AuthDeleteAccountEvent()),
@@ -232,8 +230,8 @@ void main() {
     blocTest(
       'deletes current account and handles error',
       setUp: () async {
-        await getRepository().signInWithGoogle();
-        getRepository().shouldThrow = true;
+        await auth().signInWithGoogle();
+        auth().shouldThrow = true;
       },
       build: AuthBloc.new,
       act: (bloc) => bloc.add(AuthDeleteAccountEvent()),

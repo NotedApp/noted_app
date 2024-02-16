@@ -7,7 +7,7 @@ import 'package:noted_app/repository/settings/settings_repository.dart';
 import 'package:noted_app/state/noted_bloc.dart';
 import 'package:noted_app/state/settings/settings_event.dart';
 import 'package:noted_app/state/settings/settings_state.dart';
-import 'package:noted_app/util/environment/dependencies.dart';
+import 'package:noted_app/util/environment/environment.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:noted_app/repository/ogp/ogp_repository.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
+import 'package:noted_app/util/environment/environment.dart';
 import 'package:noted_app/util/extensions/extensions.dart';
 import 'package:noted_models/noted_models.dart';
-import 'package:ogp_data_extract/ogp_data_extract.dart';
 
 class CookbookTileContent extends StatefulWidget {
   final NoteModel note;
@@ -18,14 +19,14 @@ class CookbookTileContent extends StatefulWidget {
 
 class _CookbookTileContentState extends State<CookbookTileContent> {
   late final NotedEditorController _textController;
-  late final Future<String?> _imageUrl;
+  late final Future<String> _imageUrl;
 
   @override
   void initState() {
     super.initState();
 
     _textController = NotedEditorController.quill(initial: widget.note.field(NoteField.document));
-    _imageUrl = _getOgpImage(widget.note.field(NoteField.link));
+    _imageUrl = locator<OgpRepository>().fetchImage(widget.note.field(NoteField.link));
   }
 
   @override
@@ -187,10 +188,5 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
   void dispose() {
     _textController.dispose();
     super.dispose();
-  }
-
-  Future<String?> _getOgpImage(String url) async {
-    final OgpData? ogpData = await OgpDataExtract.execute(url);
-    return ogpData?.image; // coverage:ignore-line
   }
 }

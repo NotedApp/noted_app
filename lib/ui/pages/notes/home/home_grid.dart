@@ -16,13 +16,17 @@ class HomeGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return NotedBlocSelector<NotesBloc, NotesState, (List<String>, Set<String>)>(
       selector: (state) => (state.sortedNoteIds, state.selectedIds),
-      builder: (context, bloc, state) => CustomScrollView(
-        physics: NotedWidgetConfig.scrollPhysics,
-        slivers: [
-          const _HomeSearchSliver(),
-          _pluginsRow(context),
-          notesSliverGrid(state.$1, state.$2, bloc),
-        ],
+      builder: (context, bloc, state) => Scrollbar(
+        interactive: true,
+        radius: const Radius.circular(Dimens.radius_xs),
+        child: CustomScrollView(
+          physics: NotedWidgetConfig.scrollPhysics,
+          slivers: [
+            const _HomeSearchSliver(),
+            _pluginsRow(context),
+            notesSliverGrid(state.$1, state.$2, bloc),
+          ],
+        ),
       ),
     );
   }
