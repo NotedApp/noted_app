@@ -42,11 +42,11 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
   void _init() {
     on<EditAddEvent>(_onAddNote, transformer: restartable());
     on<EditLoadEvent>(_onLoadNote, transformer: restartable());
+    on<EditUpdateEvent>(_onUpdateNote);
     on<EditDeleteEvent>(_onDeleteNote, transformer: restartable());
     on<EditRemoteUpdateEvent>(_onRemoteUpdateNote);
     on<EditRemoteUpdateErrorEvent>(_onRemoteUpdateError);
     on<EditCloseEvent>(_onClose);
-    on<EditUpdateEvent>(_onUpdateNote);
 
     _userSubscription = _auth.userStream.listen((user) {
       if (user.isEmpty) {
