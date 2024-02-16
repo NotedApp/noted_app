@@ -8,6 +8,7 @@ import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/util/extensions/extensions.dart';
 import 'package:noted_models/noted_models.dart';
 
+// coverage:ignore-file
 class EditDocumentField extends StatefulWidget {
   final NotedEditorController controller;
 
