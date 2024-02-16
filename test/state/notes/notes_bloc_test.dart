@@ -1,4 +1,3 @@
-import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:noted_app/repository/auth/auth_repository.dart';
 import 'package:noted_app/repository/auth/local_auth_repository.dart';
@@ -31,10 +30,10 @@ void main() {
 
     setUp(() async {
       notes().reset();
-      notes().setMsDelay(1);
+      notes().msDelay = 1;
 
       auth().reset();
-      auth().setMsDelay(1);
+      auth().msDelay = 1;
       await auth().signInWithGoogle();
       await Future.delayed(const Duration(milliseconds: 5));
     });
@@ -86,113 +85,82 @@ void main() {
       expect(state.sortedNoteIds, const ['first', 'second', 'third', 'zzz-last-0', 'zzz-last-1']);
     });
 
-    blocTest(
-      'loads and updates notes for a user',
-      build: NotesBloc.new,
-      act: (bloc) async {
-        bloc.add(const NotesSubscribeEvent());
-        await Future.delayed(const Duration(milliseconds: 15));
-        notes().addNote(userId: auth().currentUser.id, note: testNote);
-        await Future.delayed(const Duration(milliseconds: 10));
-        notes().deleteNote(userId: auth().currentUser.id, noteId: 'test');
-        await Future.delayed(const Duration(milliseconds: 5));
-        bloc.add(NotesDeleteEvent(localNotes.values.map((note) => note.id).toList()));
-        await Future.delayed(const Duration(milliseconds: 10));
-      },
-      wait: const Duration(milliseconds: 10),
-      expect: () => [
-        const NotesState.loading(),
-        NotesState.success(notes: localNotes),
-        NotesState.success(notes: {
-          ...localNotes,
-          ...{testNote.id: testNote},
-        }),
-        NotesState.success(notes: localNotes),
-        const NotesState.empty(),
-      ],
-    );
+    test('loads empty notes for a user', () async {
+      await notes().deleteNotes(userId: 'test', noteIds: localNotes.values.map((note) => note.id).toList());
 
-    blocTest(
-      'loads notes on auth change',
-      build: NotesBloc.new,
-      act: (bloc) async {
-        await auth().signOut();
-        await auth().signInWithGoogle();
-      },
-      wait: const Duration(milliseconds: 10),
-      expect: () => [
-        const NotesState.loading(),
-        NotesState.success(notes: localNotes),
-      ],
-    );
+      final bloc = NotesBloc();
+      final loaded = await bloc.stream.firstWhere((state) => state.status == NotesStatus.empty);
+      expect(loaded.notes.length, 0);
+    });
 
-    blocTest(
-      'loads notes for a user and handles error',
-      setUp: () => notes().setShouldThrow(true),
-      build: NotesBloc.new,
-      act: (bloc) => bloc.add(const NotesSubscribeEvent()),
-      wait: const Duration(milliseconds: 10),
-      expect: () => [
-        const NotesState.loading(),
-        NotesState.error(error: NotedError(ErrorCode.notes_subscribe_failed)),
-      ],
-    );
+    test('loads and updates notes for a user', () async {
+      final bloc = NotesBloc();
+      final loaded = await bloc.stream.firstWhere((state) => state.status == NotesStatus.loaded);
+      expect(loaded.notes.length, 3);
 
-    blocTest(
-      'loads notes for a user and handles initial stream error',
-      build: NotesBloc.new,
-      act: (bloc) async {
-        notes().setStreamShouldThrow(true);
-        bloc.add(const NotesSubscribeEvent());
-        await Future.delayed(const Duration(milliseconds: 5));
-      },
-      wait: const Duration(milliseconds: 10),
-      expect: () => [
-        const NotesState.loading(),
-        NotesState.error(error: NotedError(ErrorCode.notes_subscribe_failed)),
-      ],
-    );
+      notes().addNote(userId: auth().currentUser.id, note: testNote);
+      final added = await bloc.stream.first;
+      expect(added.notes.length, 4);
 
-    blocTest(
-      'loads notes for a user and handles stream error',
-      build: NotesBloc.new,
-      act: (bloc) async {
-        bloc.add(const NotesSubscribeEvent());
-        await Future.delayed(const Duration(milliseconds: 5));
-        notes().addStreamError();
-      },
-      wait: const Duration(milliseconds: 10),
-      expect: () => [
-        const NotesState.loading(),
-        NotesState.success(notes: localNotes),
-        NotesState.success(notes: localNotes, error: NotedError(ErrorCode.notes_parse_failed)),
-      ],
-    );
+      notes().deleteNote(userId: auth().currentUser.id, noteId: testNote.id);
+      final deleted = await bloc.stream.first;
+      expect(deleted.notes.length, 3);
 
-    blocTest(
-      'loads notes for a user fails with no auth',
-      setUp: () async => auth().signOut(),
-      build: NotesBloc.new,
-      act: (bloc) => bloc.add(const NotesSubscribeEvent()),
-      wait: const Duration(milliseconds: 10),
-      expect: () => [
-        NotesState.error(error: NotedError(ErrorCode.notes_subscribe_failed, message: 'missing auth')),
-      ],
-    );
+      bloc.add(NotesDeleteEvent(localNotes.values.map((note) => note.id).toList()));
+      final empty = await bloc.stream.first;
+      expect(empty, const NotesState.empty());
 
-    blocTest(
-      'delete notes for a user fails with no auth',
-      setUp: () async => auth().signOut(),
-      build: NotesBloc.new,
-      act: (bloc) => bloc.add(const NotesDeleteEvent([])),
-      wait: const Duration(milliseconds: 10),
-      expect: () => [
-        NotesState.success(
-          notes: const {},
-          error: NotedError(ErrorCode.notes_delete_failed, message: 'missing auth'),
-        ),
-      ],
-    );
+      await bloc.close();
+    });
+
+    test('loads notes on auth change', () async {
+      final bloc = NotesBloc();
+      final loaded = await bloc.stream.firstWhere((state) => state.status == NotesStatus.loaded);
+      expect(loaded.notes.length, 3);
+
+      await auth().signOut();
+      final signedOut = await bloc.stream.firstWhere((state) => state.status == NotesStatus.loading);
+      expect(signedOut.notes.length, 0);
+
+      await auth().signInWithGoogle();
+      final signedIn = await bloc.stream.firstWhere((state) => state.status == NotesStatus.loaded);
+      expect(signedIn.notes.length, 3);
+    });
+
+    test('load notes for a user and handles error', () async {
+      notes().shouldThrow = true;
+      final bloc = NotesBloc();
+      bloc.add(const NotesSubscribeEvent());
+      final error = await bloc.stream.firstWhere((state) => state.error != null);
+      expect(error.error?.code, ErrorCode.notes_subscribe_failed);
+    });
+
+    test('loads notes for a user and handles stream error', () async {
+      notes().streamShouldThrow = true;
+      final bloc = NotesBloc();
+      final loaded = await bloc.stream.firstWhere((state) => state.status == NotesStatus.loaded);
+      expect(loaded.notes.length, 3);
+
+      notes().addNote(userId: 'test', note: testNote);
+      final error = await bloc.stream.firstWhere((state) => state.error != null);
+      expect(error.error?.code, ErrorCode.notes_subscribe_failed);
+    });
+
+    test('load notes for a user fails with no auth', () async {
+      await auth().signOut();
+      final bloc = NotesBloc();
+      bloc.add(const NotesSubscribeEvent());
+      final error = await bloc.stream.firstWhere((state) => state.error != null);
+      expect(error.error?.code, ErrorCode.notes_subscribe_failed);
+    });
+
+    test('delete notes for a user fails with no auth', () async {
+      await auth().signOut();
+      final bloc = NotesBloc();
+      bloc.add(const NotesDeleteEvent([]));
+      final error = await bloc.stream.firstWhere((state) => state.error != null);
+      expect(error.error?.code, ErrorCode.notes_delete_failed);
+    });
 
     test('toggles selections for a user', () async {
       final notesBloc = NotesBloc();

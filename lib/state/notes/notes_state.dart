@@ -18,7 +18,7 @@ final class NotesState extends Equatable {
   List<String> get sortedNoteIds {
     final models = notes.values.toList();
     models.sort((note0, note1) {
-      final dateCompare = note1.msSinceEpoch - note0.msSinceEpoch;
+      final dateCompare = note1._msSinceEpoch - note0._msSinceEpoch;
       return dateCompare == 0 ? note0.field(NoteField.title).compareTo(note1.field(NoteField.title)) : dateCompare;
     });
 
@@ -64,6 +64,6 @@ final class NotesFilter extends Equatable {
   // coverage:ignore-end
 }
 
-extension _NoteDate on NoteModel {
-  int get msSinceEpoch => field(NoteField.lastUpdatedUtc)?.millisecondsSinceEpoch ?? 0;
+extension on NoteModel {
+  int get _msSinceEpoch => field(NoteField.lastUpdatedUtc)?.millisecondsSinceEpoch ?? 0;
 }

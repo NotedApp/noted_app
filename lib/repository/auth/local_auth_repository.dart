@@ -2,11 +2,12 @@ import 'dart:async';
 
 import 'package:get_it/get_it.dart';
 import 'package:noted_app/repository/auth/auth_repository.dart';
+import 'package:noted_app/repository/local_repository_config.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 /// A list of [UserModel]s who can be logged in in a local environment.
-const List<UserModel> _localUsers = [
+const _localUsers = <UserModel>[
   UserModel(id: 'local-0', email: 'local-0@noted.com', name: 'shaquille.oatmeal'),
   UserModel(id: 'local-1', email: 'local-1@noted.com', name: 'averagestudent'),
   UserModel(id: 'local-2', email: 'local-2@noted.com', name: 'me_for_president'),
@@ -21,19 +22,22 @@ const List<UserModel> _localUsers = [
 ];
 
 /// A list of [String]s that are accepted as passwords for all [_localUsers].
-const List<String> _localPasswords = [
+const _localPasswords = <String>[
   'local',
 ];
 
 /// An [AuthRepository] that uses mock data as its source of truth.
 class LocalAuthRepository extends AuthRepository implements Disposable {
-  final StreamController<UserModel> _userStreamController = StreamController.broadcast();
-  UserModel _currentUser = const UserModel.empty();
-  bool _shouldThrow = false;
-  int _msDelay = 2000;
+  final _userStreamController = StreamController<UserModel>.broadcast();
+  final _users = List<UserModel>.of(_localUsers);
+  final _passwords = List<String>.of(_localPasswords);
+  var _currentUser = const UserModel.empty();
 
-  List<UserModel> _users = [..._localUsers];
-  List<String> _passwords = [..._localPasswords];
+  var _shouldThrow = false;
+  var _msDelay = LocalRepositoryConfig.mockNetworkDelayMs;
+
+  set shouldThrow(bool value) => _shouldThrow = value;
+  set msDelay(int value) => _msDelay = value;
 
   @override
   UserModel get currentUser => _currentUser;
@@ -41,12 +45,15 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
   @override
   Stream<UserModel> get userStream => _userStreamController.stream;
 
-  LocalAuthRepository({UserModel user = const UserModel.empty(), int msDelay = 2000}) {
+  LocalAuthRepository({
+    UserModel user = const UserModel.empty(),
+    int msDelay = LocalRepositoryConfig.mockNetworkDelayMs,
+  }) {
     if (user.isNotEmpty) {
       _currentUser = user;
     }
 
-    _msDelay = msDelay;
+    msDelay = msDelay;
   }
 
   @override
@@ -61,7 +68,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
       throw NotedError(ErrorCode.auth_createUser_weakPassword);
     }
 
-    UserModel user = UserModel(
+    final user = UserModel(
       id: 'local-${_users.length}',
       email: email,
       name: 'Local ${_users.length}',
@@ -77,7 +84,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
   Future<void> signInWithEmailAndPassword({String email = '', String password = ''}) async {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
-    UserModel user = _users.firstWhere((user) => user.email == email, orElse: UserModel.empty);
+    final user = _users.firstWhere((user) => user.email == email, orElse: () => const UserModel.empty());
 
     if (user.isEmpty) {
       throw NotedError(ErrorCode.auth_emailSignIn_invalidEmail);
@@ -92,7 +99,7 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
 
   @override
   Future<void> signInWithGoogle() async {
-    UserModel googleUser = _users.firstWhere((user) => user.id == 'local-google');
+    final googleUser = _users.firstWhere((user) => user.id == 'local-google');
     await _updateUser(googleUser, ErrorCode.auth_googleSignIn_failed);
   }
 
@@ -166,13 +173,14 @@ class LocalAuthRepository extends AuthRepository implements Disposable {
     _userStreamController.add(user);
   }
 
-  void setShouldThrow(bool shouldThrow) => _shouldThrow = shouldThrow;
-  void setMsDelay(int msDelay) => _msDelay = msDelay;
   void reset() {
-    _shouldThrow = false;
-    _msDelay = 2000;
+    shouldThrow = false;
+    msDelay = LocalRepositoryConfig.mockNetworkDelayMs;
+
     _currentUser = const UserModel.empty();
-    _users = [..._localUsers];
-    _passwords = [..._localPasswords];
+    _users.clear();
+    _users.addAll(_localUsers);
+    _passwords.clear();
+    _passwords.addAll(_localPasswords);
   }
 }

@@ -7,12 +7,12 @@ import 'package:noted_app/repository/notes/notes_repository.dart';
 import 'package:noted_app/state/edit/edit_event.dart';
 import 'package:noted_app/state/edit/edit_state.dart';
 import 'package:noted_app/state/noted_bloc.dart';
+import 'package:noted_app/util/debouncer.dart';
 import 'package:noted_app/util/environment/dependencies.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
-import 'package:rxdart/rxdart.dart';
 
-const int _defaultUpdateDebounceMs = 250;
+const _defaultUpdateDebounceMs = 250;
 
 class EditBloc extends NotedBloc<EditEvent, EditState> {
   final int _updateDebounceMs;
@@ -21,7 +21,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
   late final StreamSubscription<UserModel> _userSubscription;
   StreamSubscription<NoteModel>? _noteSubscription;
 
-  EditBloc({
+  EditBloc.load({
     required String noteId,
     NotesRepository? notesRepository,
     AuthRepository? authRepository,
@@ -29,7 +29,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
   })  : _notes = notesRepository ?? locator<NotesRepository>(),
         _auth = authRepository ?? locator<AuthRepository>(),
         _updateDebounceMs = updateDebounceMs ?? _defaultUpdateDebounceMs,
-        super(const EditState(note: null), 'note') {
+        super(const EditState(note: null), 'edit') {
     _init();
     add(EditLoadEvent(noteId));
   }
@@ -42,7 +42,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
   })  : _notes = notesRepository ?? locator<NotesRepository>(),
         _auth = authRepository ?? locator<AuthRepository>(),
         _updateDebounceMs = updateDebounceMs ?? _defaultUpdateDebounceMs,
-        super(const EditState(note: null), 'note') {
+        super(const EditState(note: null), 'edit') {
     _init();
 
     // coverage:ignore-start
@@ -63,11 +63,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
     on<EditRemoteUpdateEvent>(_onRemoteUpdateNote);
     on<EditRemoteUpdateErrorEvent>(_onRemoteUpdateError);
     on<EditCloseEvent>(_onClose);
-
-    on<EditUpdateEvent>(_onUpdateNote, transformer: (updates, mapper) {
-      return updates.debounceTime(Duration(milliseconds: _updateDebounceMs)).switchMap(mapper);
-    });
-
+    on<EditUpdateEvent>(_onUpdateNote, transformer: debouncer(_updateDebounceMs));
     on<EditToggleHiddenEvent>(_onToggleHidden);
 
     _userSubscription = _auth.userStream.listen((user) {
@@ -81,7 +77,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
     _noteSubscription?.cancel();
     _noteSubscription = null;
 
-    Stream<NoteModel> stream = await _notes.subscribeNote(userId: _auth.currentUser.id, noteId: noteId);
+    final stream = await _notes.subscribeNote(userId: _auth.currentUser.id, noteId: noteId);
     _noteSubscription = stream.listen((event) {
       add(EditRemoteUpdateEvent(event));
     }, onError: (e) {
@@ -100,6 +96,10 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
       }
 
       emit(EditState(note: state.note, status: EditStatus.loading));
+
+      final note = await _notes.fetchNote(userId: _auth.currentUser.id, noteId: event.id);
+      emit(EditState(note: note, status: EditStatus.loaded));
+
       await _subscribeNote(event.id, emit);
     } catch (e) {
       emit(EditState(note: null, status: EditStatus.empty, error: NotedError.fromObject(e)));
@@ -117,7 +117,15 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
       }
 
       emit(EditState(note: state.note, status: EditStatus.loading));
-      String id = await _notes.addNote(userId: _auth.currentUser.id, note: event.note);
+
+      final id = await _notes.addNote(
+        userId: _auth.currentUser.id,
+        note: event.note.copyWithField(NoteFieldValue(NoteField.lastUpdatedUtc, DateTime.now().toUtc())),
+      );
+
+      final note = await _notes.fetchNote(userId: _auth.currentUser.id, noteId: id);
+      emit(EditState(note: note, status: EditStatus.loaded));
+
       await _subscribeNote(id, emit);
     } catch (e) {
       emit(EditState(note: null, status: EditStatus.empty, error: NotedError.fromObject(e)));
@@ -179,10 +187,18 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
   }
 
   Future<void> _onRemoteUpdateNote(EditRemoteUpdateEvent event, Emitter<EditState> emit) async {
+    if (isClosed) {
+      return;
+    }
+
     emit(EditState(note: event.note, status: EditStatus.loaded));
   }
 
   Future<void> _onRemoteUpdateError(EditRemoteUpdateErrorEvent event, Emitter<EditState> emit) async {
+    if (isClosed) {
+      return;
+    }
+
     emit(EditState(note: state.note, status: EditStatus.loaded, error: event.error));
   }
 
@@ -190,12 +206,10 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
     emit(const EditState(note: null, status: EditStatus.empty));
   }
 
-  // coverage:ignore-start
   @override
   Future<void> close() {
     _userSubscription.cancel();
     _noteSubscription?.cancel();
     return super.close();
   }
-  // coverage:ignore-end
 }

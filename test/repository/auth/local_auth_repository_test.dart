@@ -11,7 +11,7 @@ void main() {
 
   setUp(() {
     repository = LocalAuthRepository();
-    repository.setMsDelay(1);
+    repository.msDelay = 1;
   });
 
   group('LocalAuthRepository', () {
@@ -106,7 +106,7 @@ void main() {
     });
 
     test('throws for a password reset email', () async {
-      repository.setShouldThrow(true);
+      repository.shouldThrow = true;
 
       await expectLater(
         () => repository.sendPasswordResetEmail(email: 'test'),
@@ -132,7 +132,7 @@ void main() {
       await repository.signInWithEmailAndPassword(email: 'local-0@noted.com', password: 'local');
       expect(repository.currentUser, local);
 
-      repository.setShouldThrow(true);
+      repository.shouldThrow = true;
 
       await expectLater(
         () => repository.changePassword(password: 'password'),
@@ -157,7 +157,7 @@ void main() {
       await repository.signInWithEmailAndPassword(email: 'local-0@noted.com', password: 'local');
       expect(repository.currentUser, local);
 
-      repository.setShouldThrow(true);
+      repository.shouldThrow = true;
 
       await expectLater(
         () => repository.deleteAccount(),
@@ -168,7 +168,7 @@ void main() {
     test('throws and resets when requested', () async {
       UserModel expected = const UserModel(id: 'local-google', name: 'googly_woogly', email: 'local-google@noted.com');
 
-      repository.setShouldThrow(true);
+      repository.shouldThrow = true;
 
       await expectLater(
         () => repository.signInWithGoogle(),

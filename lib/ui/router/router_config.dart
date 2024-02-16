@@ -139,7 +139,7 @@ final GoRoute _notes = GoRoute(
       builder: (context, state) {
         String noteId = state.pathParameters[NotedRoute._notes_noteId] ?? '';
 
-        return BlocProvider(create: (context) => EditBloc(noteId: noteId), child: const EditPage());
+        return BlocProvider(create: (context) => EditBloc.load(noteId: noteId), child: const EditPage());
       },
     ),
   ],

@@ -26,10 +26,10 @@ void main() {
 
     setUp(() async {
       notes().reset();
-      notes().setMsDelay(1);
+      notes().msDelay = 1;
 
       auth().reset();
-      auth().setMsDelay(1);
+      auth().msDelay = 1;
       auth().signInWithGoogle();
       await auth().userStream.firstWhere((user) => user.isNotEmpty);
     });
@@ -42,10 +42,12 @@ void main() {
       editBloc.add(EditDeleteEvent());
       final deleted = await editBloc.stream.firstWhere((state) => state.status == EditStatus.deleted);
       expect(deleted.note, null);
+
+      await editBloc.close();
     });
 
     test('loads and updates a note', () async {
-      final editBloc = EditBloc(noteId: 'test-notebook-0', updateDebounceMs: 0);
+      final editBloc = EditBloc.load(noteId: 'test-notebook-0', updateDebounceMs: 0);
       final original = await editBloc.stream.firstWhere((state) => state.status == EditStatus.loaded);
       expect(original.note?.field(NoteField.title), existing.field(NoteField.title));
 
@@ -55,7 +57,7 @@ void main() {
     });
 
     test('toggles a note\'s visibility', () async {
-      final editBloc = EditBloc(noteId: 'test-notebook-0', updateDebounceMs: 0);
+      final editBloc = EditBloc.load(noteId: 'test-notebook-0', updateDebounceMs: 0);
       final original = await editBloc.stream.firstWhere((state) => state.status == EditStatus.loaded);
       expect(original.note?.field(NoteField.hidden), existing.field(NoteField.hidden));
 
@@ -65,7 +67,7 @@ void main() {
     });
 
     test('closes a note when auth is lost', () async {
-      final editBloc = EditBloc(noteId: 'test-notebook-0');
+      final editBloc = EditBloc.load(noteId: 'test-notebook-0');
       final original = await editBloc.stream.firstWhere((state) => state.status == EditStatus.loaded);
       expect(original.note?.field(NoteField.title), existing.field(NoteField.title));
 
@@ -75,7 +77,7 @@ void main() {
     });
 
     test('adds a note and handles error', () async {
-      notes().setShouldThrow(true);
+      notes().shouldThrow = true;
 
       final editBloc = EditBloc.add(plugin: NotedPlugin.notebook);
       final error = await editBloc.stream.firstWhere((state) => state.status == EditStatus.empty);
@@ -98,44 +100,44 @@ void main() {
     });
 
     test('loads a note and handles error', () async {
-      notes().setShouldThrow(true);
+      notes().shouldThrow = true;
 
-      final editBloc = EditBloc(noteId: 'test-notebook-0');
+      final editBloc = EditBloc.load(noteId: 'test-notebook-0');
       final error = await editBloc.stream.firstWhere((state) => state.status == EditStatus.empty);
       expect(error.note, null);
     });
 
     test('load a note fails with no auth', () async {
       await auth().signOut();
-      final editBloc = EditBloc(noteId: 'test-notebook-0');
+      final editBloc = EditBloc.load(noteId: 'test-notebook-0');
       final empty = await editBloc.stream.firstWhere((state) => state.status == EditStatus.empty);
       expect(empty.note, null);
     });
 
     test('load a note fails with wrong state', () async {
-      final editBloc = EditBloc(noteId: 'test-notebook-0');
-      editBloc.add(const EditLoadEvent('test-notebook-0'));
-
+      final editBloc = EditBloc.load(noteId: 'test-notebook-0');
       final loaded = await editBloc.stream.firstWhere((state) => state.status == EditStatus.loaded);
       expect(loaded.note?.field(NoteField.title), existing.field(NoteField.title));
     });
 
     test('load a note and handles stream error', () async {
-      final editBloc = EditBloc(noteId: 'test-notebook-0');
+      final editBloc = EditBloc.load(noteId: 'test-notebook-0');
       final loaded = await editBloc.stream.firstWhere((state) => state.status == EditStatus.loaded);
       expect(loaded.note?.field(NoteField.title), existing.field(NoteField.title));
 
+      await Future.delayed(const Duration(milliseconds: 5));
       notes().addStreamError();
       final error = await editBloc.stream.firstWhere((state) => state.error != null);
       expect(error.error?.code, ErrorCode.notes_parse_failed);
     });
 
     test('updates a note and handles error', () async {
-      final editBloc = EditBloc(noteId: 'test-notebook-0');
+      final editBloc = EditBloc.load(noteId: 'test-notebook-0');
       final original = await editBloc.stream.firstWhere((state) => state.status == EditStatus.loaded);
       expect(original.note?.field(NoteField.title), existing.field(NoteField.title));
 
-      notes().setShouldThrow(true);
+      await Future.delayed(const Duration(milliseconds: 5));
+      notes().shouldThrow = true;
       editBloc.add(EditUpdateEvent(updated));
       final error = await editBloc.stream.first;
       expect(error.error?.code, ErrorCode.notes_update_failed);
@@ -143,7 +145,7 @@ void main() {
 
     test('update a note fails with no auth', () async {
       await auth().signOut();
-      final editBloc = EditBloc(noteId: 'test-notebook-0');
+      final editBloc = EditBloc.load(noteId: 'test-notebook-0');
       final empty = await editBloc.stream.firstWhere((state) => state.status == EditStatus.empty);
       expect(empty.note, null);
 
@@ -154,7 +156,7 @@ void main() {
 
     test('toggle a note\'s visibility fails with no auth', () async {
       await auth().signOut();
-      final editBloc = EditBloc(noteId: 'test-notebook-0', updateDebounceMs: 0);
+      final editBloc = EditBloc.load(noteId: 'test-notebook-0', updateDebounceMs: 0);
       final empty = await editBloc.stream.firstWhere((state) => state.status == EditStatus.empty);
       expect(empty.note, null);
 
@@ -164,7 +166,7 @@ void main() {
     });
 
     test('toggle a note\'s visibility fails with no note', () async {
-      final editBloc = EditBloc(noteId: 'test-note-2', updateDebounceMs: 0);
+      final editBloc = EditBloc.load(noteId: 'test-note-2', updateDebounceMs: 0);
       final empty = await editBloc.stream.firstWhere((state) => state.status == EditStatus.empty);
       expect(empty.note, null);
 
@@ -174,11 +176,12 @@ void main() {
     });
 
     test('deletes a note and handles error', () async {
-      final editBloc = EditBloc(noteId: 'test-notebook-0');
+      final editBloc = EditBloc.load(noteId: 'test-notebook-0');
       final original = await editBloc.stream.firstWhere((state) => state.status == EditStatus.loaded);
       expect(original.note?.field(NoteField.title), existing.field(NoteField.title));
 
-      notes().setShouldThrow(true);
+      await Future.delayed(const Duration(milliseconds: 5));
+      notes().shouldThrow = true;
       editBloc.add(EditDeleteEvent());
       final deleting = await editBloc.stream.first;
       final error = await editBloc.stream.first;
@@ -188,7 +191,7 @@ void main() {
     });
 
     test('delete a note fails with wrong state', () async {
-      final editBloc = EditBloc(noteId: 'test-notebook-0');
+      final editBloc = EditBloc.load(noteId: 'test-notebook-0');
       editBloc.add(EditDeleteEvent());
 
       final loaded = await editBloc.stream.firstWhere((state) => state.status == EditStatus.loaded);

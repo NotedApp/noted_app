@@ -1,17 +1,22 @@
+import 'package:noted_app/repository/local_repository_config.dart';
 import 'package:noted_app/repository/settings/settings_repository.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
 /// Default local settings.
-const SettingsModel _localSettings = SettingsModel();
+const _localSettings = SettingsModel();
 
 /// A [SettingsRepository] that uses mock data as its source of truth.
 class LocalSettingsRepository extends SettingsRepository {
-  SettingsModel _settings = _localSettings.copyWith();
-  bool _shouldThrow = false;
-  int _msDelay = 2000;
+  var _settings = _localSettings.copyWith();
 
-  LocalSettingsRepository({int msDelay = 2000}) {
+  var _shouldThrow = false;
+  var _msDelay = LocalRepositoryConfig.mockNetworkDelayMs;
+
+  set shouldThrow(bool value) => _shouldThrow = value;
+  set msDelay(int value) => _msDelay = value;
+
+  LocalSettingsRepository({int msDelay = LocalRepositoryConfig.mockNetworkDelayMs}) {
     _msDelay = msDelay;
   }
 
@@ -59,11 +64,10 @@ class LocalSettingsRepository extends SettingsRepository {
     _settings = _settings.copyWith(plugins: plugins);
   }
 
-  void setShouldThrow(bool shouldThrow) => _shouldThrow = shouldThrow;
-  void setMsDelay(int msDelay) => _msDelay = msDelay;
   void reset() {
-    _shouldThrow = false;
-    _msDelay = 2000;
+    shouldThrow = false;
+    msDelay = LocalRepositoryConfig.mockNetworkDelayMs;
+
     _settings = _localSettings.copyWith();
   }
 }
