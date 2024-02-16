@@ -197,10 +197,10 @@ packages:
     dependency: transitive
     description:
       name: dart_quill_delta
-      sha256: "66b98298d1cbfb4df7d4d3ad39458daf409705034c6d44ed03387b775861615f"
+      sha256: "56111be3b4de7cce7abb4076ce7c9cf3fd3d27ca7e2b96f64e6ab544fd933f12"
       url: "https://pub.dev"
     source: hosted
-    version: "9.2.13"
+    version: "9.2.14"
   dart_style:
     dependency: transitive
     description:
@@ -479,10 +479,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_quill
-      sha256: e0eca50a04047255e2f035650a4d9af6083e1424e7da944ddaa45f070e3c0fec
+      sha256: "6f547382315f4752379f8aab95e1f5c1cd72e7344c407f86469e922f539b5214"
       url: "https://pub.dev"
     source: hosted
-    version: "9.2.13"
+    version: "9.2.14"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -561,10 +561,10 @@ packages:
     dependency: transitive
     description:
       name: google_sign_in_ios
-      sha256: f3336d9e44d4d28063ac90271f6db5caf99f0480cb07281330e7a432edb95226
+      sha256: a7d653803468d30b82ceb47ea00fe86d23c56e63eb2e5c2248bb68e9df203217
       url: "https://pub.dev"
     source: hosted
-    version: "5.7.3"
+    version: "5.7.4"
   google_sign_in_platform_interface:
     dependency: transitive
     description:
@@ -770,8 +770,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "v0.0.11-alpha"
-      resolved-ref: "83b78c87b888c8403f8b4552ab5732e75e8e2b6d"
+      ref: "v0.0.12-alpha"
+      resolved-ref: "4af48792ab52514070f1820af5ba979a95c9b46a"
       url: "https://github.com/NotedApp/noted_models.git"
     source: git
     version: "0.0.1"
@@ -891,10 +891,10 @@ packages:
     dependency: transitive
     description:
       name: pixel_snap
-      sha256: d31591a4f4aa8ed5dc6fc00b8d027338a5614dfbf5ca658b69d1faa7aba80af7
+      sha256: "677410ea37b07cd37ecb6d5e6c0d8d7615a7cf3bd92ba406fd1ac57e937d1fb0"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.4"
+    version: "0.1.5"
   platform:
     dependency: transitive
     description:
@@ -1208,10 +1208,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_platform_interface
-      sha256: a932c3a8082e118f80a475ce692fde89dc20fddb24c57360b96bc56f7035de1f
+      sha256: "552f8a1e663569be95a8190206a38187b531910283c3e982193e4f2733f01029"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.1"
+    version: "2.3.2"
   url_launcher_web:
     dependency: transitive
     description:
@@ -1350,4 +1350,4 @@ packages:
     version: "3.1.2"
 sdks:
   dart: ">=3.2.3 <4.0.0"
-  flutter: ">=3.16.0"
+  flutter: ">=3.16.6"
