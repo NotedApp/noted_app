@@ -113,9 +113,16 @@
   "cookbook_cookTime": "cook time",
   "cookbook_url": "recipe link",
 
-  "climbing_setting": "setting",
   "climbing_rating": "rating",
+  "climbing_setting": "setting",
+  "climbing_setting_indoors": "indoor",
+  "climbing_setting_outdoors": "outdoor",
   "climbing_type": "type",
+  "climbing_type_sport": "sport",
+  "climbing_type_traditional": "traditional",
+  "climbing_type_boulder": "boulder",
+  "climbing_attempts": "{count, plural, =0{no attempts} =1{1 attempt} other{{count} attempts}}",
+  "climbing_tops": "{count, plural, =0{no tops} =1{1 top} other{{count} tops}}",
 
   "edit_titlePlaceholder": "title",
   "edit_textPlaceholder": "enter a note...",

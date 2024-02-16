@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:noted_app/state/notes/notes_bloc.dart';
 import 'package:noted_app/state/notes/notes_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
+import 'package:noted_app/ui/plugins/climbing/climbing_tile_content.dart';
 import 'package:noted_app/ui/plugins/cookbook/cookbook_tile_content.dart';
 import 'package:noted_app/ui/plugins/notebook/notebook_tile_content.dart';
 import 'package:noted_app/util/extensions/extensions.dart';
@@ -60,8 +61,7 @@ class NotedTile extends StatelessWidget {
                 onPressed: onPressed,
                 onLongPressed: onLongPressed,
               ),
-            // TODO: Add climbing note content.
-            NotedPlugin.climbing => const Center(child: CircularProgressIndicator()),
+            NotedPlugin.climbing => ClimbingTileContent(note: note),
           };
         },
       ),
@@ -132,6 +132,81 @@ class NotedTagRow extends StatelessWidget {
             model: const TagModel(id: 'test-3', name: 'guitar', color: 0xFF000000),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class NotedTileBackgroundImage extends StatelessWidget {
+  final String imageUrl;
+
+  const NotedTileBackgroundImage({required this.imageUrl, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final info = MediaQuery.of(context);
+    final imageSize = (info.size.width * info.devicePixelRatio / 4 / NotedWidgetConfig.tileAspectRatio).round();
+
+    return Opacity(
+      opacity: NotedWidgetConfig.tileImageOpacity,
+      child: NotedImage.network(
+        source: imageUrl,
+        fit: BoxFit.cover,
+        imageHeight: imageSize,
+      ),
+    );
+  }
+}
+
+class NotedTileTitle extends StatelessWidget {
+  final String title;
+  final TextAlign? textAlign;
+
+  const NotedTileTitle(this.title, {this.textAlign, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        Dimens.spacing_m,
+        Dimens.size_0,
+        Dimens.spacing_m,
+        Dimens.spacing_xs,
+      ),
+      child: Text(
+        title,
+        style: context.textTheme().titleMedium,
+        textAlign: textAlign ?? TextAlign.center,
+        overflow: TextOverflow.ellipsis,
+        maxLines: 2,
+      ),
+    );
+  }
+}
+
+class NotedTileText extends StatelessWidget {
+  final String text;
+  final TextAlign textAlign;
+  final int? maxLines;
+  final FontWeight fontWeight;
+
+  const NotedTileText(
+    this.text, {
+    this.textAlign = TextAlign.center,
+    this.maxLines = 1,
+    this.fontWeight = FontWeight.normal,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: Dimens.spacing_m),
+      child: Text(
+        text,
+        style: context.textTheme().bodyMedium?.copyWith(fontWeight: fontWeight),
+        overflow: TextOverflow.ellipsis,
+        maxLines: maxLines,
       ),
     );
   }
