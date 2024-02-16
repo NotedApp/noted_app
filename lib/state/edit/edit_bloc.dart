@@ -7,15 +7,11 @@ import 'package:noted_app/repository/notes/notes_repository.dart';
 import 'package:noted_app/state/edit/edit_event.dart';
 import 'package:noted_app/state/edit/edit_state.dart';
 import 'package:noted_app/state/noted_bloc.dart';
-import 'package:noted_app/util/debouncer.dart';
 import 'package:noted_app/util/environment/environment.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
-const _defaultUpdateDebounceMs = 250;
-
 class EditBloc extends NotedBloc<EditEvent, EditState> {
-  final int _updateDebounceMs;
   final NotesRepository _notes;
   final AuthRepository _auth;
   late final StreamSubscription<UserModel> _userSubscription;
@@ -25,10 +21,8 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
     required String noteId,
     NotesRepository? notesRepository,
     AuthRepository? authRepository,
-    int? updateDebounceMs,
   })  : _notes = notesRepository ?? locator<NotesRepository>(),
         _auth = authRepository ?? locator<AuthRepository>(),
-        _updateDebounceMs = updateDebounceMs ?? _defaultUpdateDebounceMs,
         super(const EditState(note: null), 'edit') {
     _init();
     add(EditLoadEvent(noteId));
@@ -38,22 +32,11 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
     required NotedPlugin plugin,
     NotesRepository? notesRepository,
     AuthRepository? authRepository,
-    int? updateDebounceMs,
   })  : _notes = notesRepository ?? locator<NotesRepository>(),
         _auth = authRepository ?? locator<AuthRepository>(),
-        _updateDebounceMs = updateDebounceMs ?? _defaultUpdateDebounceMs,
         super(const EditState(note: null), 'edit') {
     _init();
-
-    // coverage:ignore-start
-    NoteModel model = switch (plugin) {
-      NotedPlugin.notebook => NoteModel.empty(NotedPlugin.notebook),
-      NotedPlugin.cookbook => NoteModel.empty(NotedPlugin.cookbook),
-      NotedPlugin.climbing => NoteModel.empty(NotedPlugin.climbing),
-    };
-    // coverage:ignore-end
-
-    add(EditAddEvent(model));
+    add(EditAddEvent(plugin._emptyModel()));
   }
 
   void _init() {
@@ -63,8 +46,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
     on<EditRemoteUpdateEvent>(_onRemoteUpdateNote);
     on<EditRemoteUpdateErrorEvent>(_onRemoteUpdateError);
     on<EditCloseEvent>(_onClose);
-    on<EditUpdateEvent>(_onUpdateNote, transformer: debouncer(_updateDebounceMs));
-    on<EditToggleHiddenEvent>(_onToggleHidden);
+    on<EditUpdateEvent>(_onUpdateNote);
 
     _userSubscription = _auth.userStream.listen((user) {
       if (user.isEmpty) {
@@ -134,21 +116,6 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
 
   Future<void> _onUpdateNote(EditUpdateEvent event, Emitter<EditState> emit) async {
     try {
-      if (_auth.currentUser.isEmpty) {
-        throw NotedError(ErrorCode.notes_update_failed, message: 'missing auth');
-      }
-
-      await _notes.updateNote(
-        userId: _auth.currentUser.id,
-        note: event.note.copyWithField(NoteFieldValue(NoteField.lastUpdatedUtc, DateTime.now().toUtc())),
-      );
-    } catch (e) {
-      emit(EditState(note: state.note, status: state.status, error: NotedError.fromObject(e)));
-    }
-  }
-
-  Future<void> _onToggleHidden(EditToggleHiddenEvent event, Emitter<EditState> emit) async {
-    try {
       final note = state.note;
 
       if (_auth.currentUser.isEmpty) {
@@ -159,10 +126,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
         throw NotedError(ErrorCode.notes_update_failed, message: 'missing note');
       }
 
-      await _notes.updateNote(
-        userId: _auth.currentUser.id,
-        note: note.copyWithField(NoteFieldValue(NoteField.hidden, !note.field(NoteField.hidden))),
-      );
+      await _notes.updateNote(userId: _auth.currentUser.id, note: note.copyWithField(event.update));
     } catch (e) {
       emit(EditState(note: state.note, status: state.status, error: NotedError.fromObject(e)));
     }
@@ -213,3 +177,15 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
     return super.close();
   }
 }
+
+// coverage:ignore-start
+extension on NotedPlugin {
+  NoteModel _emptyModel() {
+    return switch (this) {
+      NotedPlugin.notebook => NoteModel.empty(NotedPlugin.notebook),
+      NotedPlugin.cookbook => NoteModel.empty(NotedPlugin.cookbook),
+      NotedPlugin.climbing => NoteModel.empty(NotedPlugin.climbing),
+    };
+  }
+}
+// coverage:ignore-end

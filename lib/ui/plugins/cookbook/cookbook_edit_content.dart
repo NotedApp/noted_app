@@ -37,11 +37,16 @@ class _CookbookEditContentState extends State<CookbookEditContent> {
     prepTimeController = TextEditingController(text: widget.note.field(NoteField.cookbookPrepTime));
     cookTimeController = TextEditingController(text: widget.note.field(NoteField.cookbookCookTime));
 
-    textSubscription = textController.valueStream.listen((_) => _updateNote());
-    titleController.addListener(_updateNote);
-    linkController.addListener(_updateNote);
-    prepTimeController.addListener(_updateNote);
-    cookTimeController.addListener(_updateNote);
+    textSubscription = textController.valueStream
+        .listen((_) => widget.updateNote(NoteFieldValue(NoteField.document, textController.value)));
+    titleController.addListener(() => widget.updateNote(NoteFieldValue(NoteField.title, titleController.text)));
+    linkController.addListener(() => widget.updateNote(NoteFieldValue(NoteField.link, linkController.text)));
+    prepTimeController.addListener(
+      () => widget.updateNote(NoteFieldValue(NoteField.cookbookPrepTime, prepTimeController.text)),
+    );
+    cookTimeController.addListener(
+      () => widget.updateNote(NoteFieldValue(NoteField.cookbookCookTime, cookTimeController.text)),
+    );
   }
 
   @override
@@ -71,17 +76,6 @@ class _CookbookEditContentState extends State<CookbookEditContent> {
         ),
         NotedEditorToolbar(controller: textController),
       ],
-    );
-  }
-
-  void _updateNote() {
-    widget.updateNote(
-      widget.note
-          .copyWithField(NoteFieldValue(NoteField.title, titleController.text))
-          .copyWithField(NoteFieldValue(NoteField.link, linkController.text))
-          .copyWithField(NoteFieldValue(NoteField.cookbookPrepTime, prepTimeController.text))
-          .copyWithField(NoteFieldValue(NoteField.cookbookCookTime, cookTimeController.text))
-          .copyWithField(NoteFieldValue(NoteField.document, textController.value)),
     );
   }
 

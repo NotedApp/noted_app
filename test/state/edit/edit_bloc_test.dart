@@ -47,23 +47,13 @@ void main() {
     });
 
     test('loads and updates a note', () async {
-      final editBloc = EditBloc.load(noteId: 'test-notebook-0', updateDebounceMs: 0);
+      final editBloc = EditBloc.load(noteId: 'test-notebook-0');
       final original = await editBloc.stream.firstWhere((state) => state.status == EditStatus.loaded);
       expect(original.note?.field(NoteField.title), existing.field(NoteField.title));
 
-      editBloc.add(EditUpdateEvent(updated));
+      editBloc.add(EditUpdateEvent(NoteFieldValue(NoteField.title, updated.field(NoteField.title))));
       final update = await editBloc.stream.first;
       expect(update.note?.field(NoteField.title), updated.field(NoteField.title));
-    });
-
-    test('toggles a note\'s visibility', () async {
-      final editBloc = EditBloc.load(noteId: 'test-notebook-0', updateDebounceMs: 0);
-      final original = await editBloc.stream.firstWhere((state) => state.status == EditStatus.loaded);
-      expect(original.note?.field(NoteField.hidden), existing.field(NoteField.hidden));
-
-      editBloc.add(const EditToggleHiddenEvent());
-      final update = await editBloc.stream.first;
-      expect(update.note?.field(NoteField.hidden), !existing.field(NoteField.hidden));
     });
 
     test('closes a note when auth is lost', () async {
@@ -138,7 +128,7 @@ void main() {
 
       await Future.delayed(const Duration(milliseconds: 5));
       notes().shouldThrow = true;
-      editBloc.add(EditUpdateEvent(updated));
+      editBloc.add(EditUpdateEvent(NoteFieldValue(NoteField.title, updated.field(NoteField.title))));
       final error = await editBloc.stream.first;
       expect(error.error?.code, ErrorCode.notes_update_failed);
     });
@@ -149,28 +139,17 @@ void main() {
       final empty = await editBloc.stream.firstWhere((state) => state.status == EditStatus.empty);
       expect(empty.note, null);
 
-      editBloc.add(EditUpdateEvent(updated));
+      editBloc.add(EditUpdateEvent(NoteFieldValue(NoteField.title, updated.field(NoteField.title))));
       final error = await editBloc.stream.first;
       expect(error.error?.code, ErrorCode.notes_update_failed);
     });
 
-    test('toggle a note\'s visibility fails with no auth', () async {
-      await auth().signOut();
-      final editBloc = EditBloc.load(noteId: 'test-notebook-0', updateDebounceMs: 0);
+    test('update a note fails with no note', () async {
+      final editBloc = EditBloc.load(noteId: 'missing-note');
       final empty = await editBloc.stream.firstWhere((state) => state.status == EditStatus.empty);
       expect(empty.note, null);
 
-      editBloc.add(const EditToggleHiddenEvent());
-      final error = await editBloc.stream.first;
-      expect(error.error?.code, ErrorCode.notes_update_failed);
-    });
-
-    test('toggle a note\'s visibility fails with no note', () async {
-      final editBloc = EditBloc.load(noteId: 'test-note-2', updateDebounceMs: 0);
-      final empty = await editBloc.stream.firstWhere((state) => state.status == EditStatus.empty);
-      expect(empty.note, null);
-
-      editBloc.add(const EditToggleHiddenEvent());
+      editBloc.add(EditUpdateEvent(NoteFieldValue(NoteField.title, updated.field(NoteField.title))));
       final error = await editBloc.stream.first;
       expect(error.error?.code, ErrorCode.notes_update_failed);
     });

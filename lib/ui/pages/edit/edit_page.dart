@@ -11,7 +11,7 @@ import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_app/util/extensions/extensions.dart';
 import 'package:noted_models/noted_models.dart';
 
-typedef NoteUpdateCallback = void Function(NoteModel);
+typedef NoteUpdateCallback = void Function(NoteFieldValue);
 
 // coverage:ignore-file
 class EditPage extends StatelessWidget {
@@ -46,7 +46,7 @@ class EditPage extends StatelessWidget {
                 type: NotedIconButtonType.filled,
                 color: hidden ? NotedWidgetColor.tertiary : NotedWidgetColor.primary,
                 size: NotedWidgetSize.small,
-                onPressed: () => bloc.add(const EditToggleHiddenEvent()),
+                onPressed: () => bloc.add(EditUpdateEvent(NoteFieldValue(NoteField.hidden, !hidden))),
               ),
               NotedIconButton(
                 icon: NotedIcons.trash,

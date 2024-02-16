@@ -23,7 +23,7 @@ class EditContent extends StatelessWidget {
           return _EmptyContent();
         }
 
-        void updateNote(NoteModel updated) => bloc.add(EditUpdateEvent(updated));
+        void updateNote(NoteFieldValue update) => bloc.add(EditUpdateEvent(update));
 
         return switch (note.plugin) {
           NotedPlugin.notebook => NotebookEditContent(note: note, updateNote: updateNote),
