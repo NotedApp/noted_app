@@ -27,7 +27,7 @@ class EditContent extends StatelessWidget {
 
         return switch (note.plugin) {
           NotedPlugin.notebook => NotebookEditContent(note: note, updateNote: updateNote),
-          NotedPlugin.cookbook => CookbookEditContent(note: note, updateNote: updateNote),
+          NotedPlugin.cookbook => const CookbookEditContent(),
           // TODO: Update this to climbing edit content.
           NotedPlugin.climbing => const Center(child: CircularProgressIndicator()),
         };
