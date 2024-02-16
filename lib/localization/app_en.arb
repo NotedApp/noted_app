@@ -112,10 +112,16 @@
   "cookbook_prepTime": "prep time",
   "cookbook_cookTime": "cook time",
   "cookbook_url": "recipe link",
-  "cookbook_imageUrl": "image url",
+
+  "climbing_setting": "setting",
+  "climbing_rating": "rating",
+  "climbing_type": "type",
 
   "edit_titlePlaceholder": "title",
   "edit_textPlaceholder": "enter a note...",
+  "edit_imageUrl": "image url",
+  "edit_location": "location",
+  "edit_difficulty": "difficulty",
   "edit_delete_confirmText": "are you sure you want to delete this note? recently deleted notes can be recovered in the app settings.",
 
   "edit_error_loadNoteFailed": "failed to load note, please try again.",

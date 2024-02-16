@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/state/edit/edit_bloc.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
+import 'package:noted_app/ui/plugins/climbing/climbing_edit_content.dart';
 import 'package:noted_app/ui/plugins/cookbook/cookbook_edit_content.dart';
 import 'package:noted_app/ui/plugins/notebook/notebook_edit_content.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
@@ -24,8 +25,7 @@ class EditContent extends StatelessWidget {
     return switch (plugin) {
       NotedPlugin.notebook => const NotebookEditContent(),
       NotedPlugin.cookbook => const CookbookEditContent(),
-      // TODO: Update this to climbing edit content.
-      NotedPlugin.climbing => const Center(child: CircularProgressIndicator()),
+      NotedPlugin.climbing => const ClimbingEditContent(),
     };
   }
 }
