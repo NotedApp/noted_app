@@ -1,68 +1,58 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:noted_app/state/edit/edit_bloc.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
-import 'package:noted_app/ui/pages/edit/edit_page.dart';
+import 'package:noted_app/ui/pages/edit/fields/edit_document_field.dart';
 import 'package:noted_app/ui/pages/edit/fields/edit_text_field.dart';
 import 'package:noted_app/util/extensions/extensions.dart';
 import 'package:noted_models/noted_models.dart';
 
 // coverage:ignore-file
 class CookbookEditContent extends StatefulWidget {
-  final NoteModel note;
-  final NoteUpdateCallback updateNote;
-
-  const CookbookEditContent({required this.note, required this.updateNote, super.key});
+  const CookbookEditContent({super.key});
 
   @override
   State<StatefulWidget> createState() => _CookbookEditContentState();
 }
 
 class _CookbookEditContentState extends State<CookbookEditContent> {
-  late final NotedEditorController textController;
-  late final StreamSubscription textSubscription;
-  final FocusNode focusNode = FocusNode();
+  late final NotedEditorController documentController;
 
   @override
   void initState() {
     super.initState();
 
-    textController = NotedEditorController.quill(initial: widget.note.field(NoteField.document));
-    textSubscription = textController.valueStream
-        .listen((_) => widget.updateNote(NoteFieldValue(NoteField.document, textController.value)));
+    final bloc = context.read<EditBloc>();
+    documentController = NotedEditorController.quill(
+      initial: bloc.state.note?.field(NoteField.document) ?? NoteField.document.defaultValue,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    Strings strings = context.strings();
-
     return Column(
       children: [
         Expanded(
           child: NotedScrollMask(
             direction: Axis.vertical,
-            size: 8,
-            child: NotedHeaderEditor(
-              controller: textController,
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 36),
-              focusNode: focusNode,
-              placeholder: strings.edit_textPlaceholder,
-              autofocus: true,
-              header: const _CookbookEditHeader(),
+            size: Dimens.spacing_s,
+            child: NestedScrollView(
+              headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                const SliverToBoxAdapter(child: _CookbookEditHeader()),
+              ],
+              body: EditDocumentField(controller: documentController),
             ),
           ),
         ),
-        NotedEditorToolbar(controller: textController),
+        NotedEditorToolbar(controller: documentController),
       ],
     );
   }
 
   @override
   void dispose() {
-    textController.dispose();
-    textSubscription.cancel();
-    focusNode.dispose();
+    documentController.dispose();
     super.dispose();
   }
 }

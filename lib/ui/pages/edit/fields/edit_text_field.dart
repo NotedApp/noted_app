@@ -45,7 +45,7 @@ class _EditTextFieldState extends State<EditTextField> {
   void initState() {
     super.initState();
 
-    bloc = context.read<EditBloc>();
+    bloc = context.read();
     controller = TextEditingController(text: bloc.state.note?.field(widget.field) ?? widget.field.defaultValue);
     controller.addListener(updateNote);
   }
@@ -59,7 +59,8 @@ class _EditTextFieldState extends State<EditTextField> {
       child: NotedTextField(
         type: widget.type._fieldType,
         controller: controller,
-        name: widget.name,
+        name: widget.type != TextFieldType.title ? widget.name : null,
+        hint: widget.type == TextFieldType.title ? widget.name : null,
       ),
     );
   }
