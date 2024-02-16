@@ -47,7 +47,7 @@ void main() {
     });
 
     test('loads and updates a note', () async {
-      final editBloc = EditBloc.load(noteId: 'test-notebook-0');
+      final editBloc = EditBloc.load(noteId: 'test-notebook-0', updateDebounceMs: 0);
       final original = await editBloc.stream.firstWhere((state) => state.status == EditStatus.loaded);
       expect(original.note?.field(NoteField.title), existing.field(NoteField.title));
 
