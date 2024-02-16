@@ -29,8 +29,6 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
   set streamShouldThrow(bool value) => _streamShouldThrow = value;
   set msDelay(int value) => _msDelay = value;
 
-  LocalNotesRepository();
-
   @override
   Future<List<NoteModel>> fetchNotes({required String userId, NotesFilter? filter}) async {
     await Future.delayed(Duration(milliseconds: _msDelay));
