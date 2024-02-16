@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:noted_app/util/environment/dependencies.dart';
+import 'package:noted_app/util/environment/environment.dart';
 import 'package:noted_app/util/logging/noted_logger.dart';
 
 typedef NotedMiddleware<Event> = void Function(Event);

@@ -2,7 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:noted_app/state/noted_bloc.dart';
-import 'package:noted_app/util/environment/dependencies.dart';
+import 'package:noted_app/util/environment/environment.dart';
 import 'package:noted_app/util/logging/noted_logger.dart';
 
 sealed class _TestEvent extends NotedEvent {}

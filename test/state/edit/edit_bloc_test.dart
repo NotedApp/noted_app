@@ -6,7 +6,7 @@ import 'package:noted_app/repository/notes/notes_repository.dart';
 import 'package:noted_app/state/edit/edit_bloc.dart';
 import 'package:noted_app/state/edit/edit_event.dart';
 import 'package:noted_app/state/edit/edit_state.dart';
-import 'package:noted_app/util/environment/dependencies.dart';
+import 'package:noted_app/util/environment/environment.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 

@@ -2,28 +2,15 @@ import 'dart:ui';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:noted_app/repository/auth/auth_repository.dart';
-import 'package:noted_app/repository/auth/firebase_auth_repository.dart';
-import 'package:noted_app/repository/auth/local_auth_repository.dart';
-import 'package:noted_app/repository/notes/firebase_notes_repository.dart';
-import 'package:noted_app/repository/notes/local_notes_repository.dart';
 import 'package:noted_app/repository/notes/notes_repository.dart';
-import 'package:noted_app/repository/settings/firebase_settings_repository.dart';
-import 'package:noted_app/repository/settings/local_settings_repository.dart';
 import 'package:noted_app/repository/settings/settings_repository.dart';
-import 'package:noted_app/util/environment/dependencies.dart';
-import 'package:noted_app/util/environment/test_firebase_options.dart';
-import 'package:noted_app/util/errors/firebase_crash_handler.dart';
-import 'package:noted_app/util/errors/local_crash_handler.dart';
 import 'package:noted_app/util/errors/noted_crash_handler.dart';
-import 'package:noted_app/util/logging/local_logger.dart';
 import 'package:noted_app/util/logging/noted_logger.dart';
-import 'package:noted_app/ui/router/noted_go_router.dart';
 import 'package:noted_app/ui/router/noted_router.dart';
 
-part 'local_environment.dart';
-part 'test_environment.dart';
-part 'prod_environment.dart';
+GetIt locator = GetIt.instance;
 
 // coverage:ignore-file
 abstract class Environment {
