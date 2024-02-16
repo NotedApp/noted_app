@@ -18,10 +18,11 @@ extension on TextFieldType {
 
   EdgeInsetsGeometry get _padding => switch (this) {
         TextFieldType.text => const EdgeInsets.fromLTRB(Dimens.spacing_l, Dimens.spacing_xs, Dimens.spacing_l, 0),
-        TextFieldType.title => const EdgeInsets.fromLTRB(Dimens.spacing_l, 0, Dimens.spacing_l, Dimens.spacing_xs),
+        TextFieldType.title => const EdgeInsets.fromLTRB(Dimens.spacing_l, Dimens.spacing_s, Dimens.spacing_l, 0),
       };
 }
 
+// coverage:ignore-file
 class EditTextField extends StatefulWidget {
   final NoteField<String> field;
   final TextFieldType type;
