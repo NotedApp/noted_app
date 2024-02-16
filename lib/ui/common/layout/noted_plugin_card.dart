@@ -35,18 +35,24 @@ class NotedPluginCard extends StatelessWidget {
         child: Stack(
           alignment: Alignment.centerLeft,
           children: [
-            Positioned(
-              width: config.width * 1.8,
-              height: config.height,
-              child: NotedSvg.asset(
-                source: _getPluginAsset(plugin),
-                fit: BoxFit.fitHeight,
-                color: colors.tertiary,
+            if (size == NotedWidgetSize.large)
+              Positioned(
+                width: config.width * 1.8,
+                height: config.height,
+                child: NotedSvg.asset(
+                  source: _getPluginAsset(plugin),
+                  fit: BoxFit.fitHeight,
+                  color: colors.tertiary,
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Text(text, style: config.textStyle),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: Dimens.spacing_m),
+              child: Text(
+                text,
+                style: config.textStyle,
+                textAlign: size == NotedWidgetSize.large ? TextAlign.left : TextAlign.center,
+              ),
             ),
           ],
         ),

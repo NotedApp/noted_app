@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:noted_app/ui/common/noted_widget_config.dart';
+import 'package:noted_app/ui/common/noted_library.dart';
 
 class NotedCard extends StatelessWidget {
   final NotedWidgetSize size;
@@ -27,14 +27,14 @@ class NotedCard extends StatelessWidget {
 
     BorderRadius borderRadius = BorderRadius.circular(
       switch (size) {
-        NotedWidgetSize.large => 24,
-        NotedWidgetSize.medium => 16,
-        NotedWidgetSize.small => 12,
+        NotedWidgetSize.large => Dimens.radius_xxl,
+        NotedWidgetSize.medium => Dimens.radius_xl,
+        NotedWidgetSize.small => Dimens.radius_l,
       },
     );
 
     ShapeBorder shape = RoundedRectangleBorder(
-      side: BorderSide(color: borderColor ?? colors.onBackground, width: 2),
+      side: BorderSide(color: borderColor ?? colors.onBackground, width: Dimens.size_2),
       borderRadius: borderRadius,
     );
 
@@ -49,7 +49,7 @@ class NotedCard extends StatelessWidget {
 
     return Card(
       color: color ?? colors.background,
-      elevation: 4,
+      elevation: Dimens.size_4,
       shape: shape,
       margin: margin ?? EdgeInsets.zero,
       child: ClipRRect(

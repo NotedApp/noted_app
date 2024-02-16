@@ -37,8 +37,6 @@ class _HomeSearchSliver extends SliverToBoxAdapter {
 }
 
 Widget _pluginsRow(BuildContext context) {
-  const plugins = [NotedPlugin.notebook, NotedPlugin.cookbook];
-
   return SliverToBoxAdapter(
     child: SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -46,7 +44,7 @@ Widget _pluginsRow(BuildContext context) {
       physics: NotedWidgetConfig.scrollPhysics,
       child: Row(
         children: [
-          ...plugins.map(
+          ...NotedPlugin.values.map(
             (plugin) => Padding(
               padding: const EdgeInsets.only(right: 8),
               child: NotedPluginCard(plugin: plugin, onPressed: () => context.push(PluginRoute(plugin: plugin))),

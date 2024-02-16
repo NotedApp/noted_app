@@ -20,11 +20,13 @@ class Dimens {
   static const double size_128 = 128;
   static const double size_256 = 256;
 
+  static const double radius_xxs = size_1;
   static const double radius_xs = size_2;
   static const double radius_s = size_4;
   static const double radius_m = size_8;
   static const double radius_l = size_12;
   static const double radius_xl = size_16;
+  static const double radius_xxl = size_24;
 
   static const double spacing_xxs = size_2;
   static const double spacing_xs = size_4;

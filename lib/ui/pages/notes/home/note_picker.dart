@@ -19,12 +19,12 @@ class NotePicker extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(context.strings().notes_addPicker, style: context.textTheme().displaySmall),
-          const SizedBox(height: 12),
+          const SizedBox(height: Dimens.spacing_m),
           Expanded(
             child: GridView.count(
               crossAxisCount: 2,
-              crossAxisSpacing: 8,
-              mainAxisSpacing: 8,
+              crossAxisSpacing: Dimens.spacing_s,
+              mainAxisSpacing: Dimens.spacing_s,
               childAspectRatio: 2,
               children: plugins
                   .map(

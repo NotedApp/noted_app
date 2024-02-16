@@ -5,13 +5,14 @@ import 'package:noted_app/state/auth/auth_bloc.dart';
 import 'package:noted_app/state/auth/auth_state.dart';
 import 'package:noted_app/state/edit/edit_bloc.dart';
 import 'package:noted_app/ui/pages/edit/edit_page.dart';
-import 'package:noted_app/ui/pages/notes/cookbook/cookbook_page.dart';
+import 'package:noted_app/ui/plugins/climbing/climbing_page.dart';
+import 'package:noted_app/ui/plugins/cookbook/cookbook_page.dart';
 import 'package:noted_app/ui/pages/notes/home/home_page.dart';
 import 'package:noted_app/ui/pages/login/login_page.dart';
 import 'package:noted_app/ui/pages/login/password_reset_page.dart';
 import 'package:noted_app/ui/pages/login/register_page.dart';
 import 'package:noted_app/ui/pages/login/sign_in_page.dart';
-import 'package:noted_app/ui/pages/notes/notebook/notebook_page.dart';
+import 'package:noted_app/ui/plugins/notebook/notebook_page.dart';
 import 'package:noted_app/ui/pages/settings/tags/tags_page.dart';
 import 'package:noted_app/ui/router/route_error_page.dart';
 import 'package:noted_app/ui/pages/settings/account/account_page.dart';
@@ -160,8 +161,7 @@ final GoRoute _plugins = GoRoute(
         return switch (plugin) {
           NotedPlugin.notebook => const NotebookPage(),
           NotedPlugin.cookbook => const CookbookPage(),
-          // TODO: Update this to the climbing page.
-          NotedPlugin.climbing => const CookbookPage(),
+          NotedPlugin.climbing => const ClimbingPage(),
         };
       },
     ),
