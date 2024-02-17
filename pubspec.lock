@@ -197,10 +197,10 @@ packages:
     dependency: transitive
     description:
       name: dart_quill_delta
-      sha256: "56111be3b4de7cce7abb4076ce7c9cf3fd3d27ca7e2b96f64e6ab544fd933f12"
+      sha256: "54c3057ce4f9649e71726bf0d9cc5e22f838586b253810875ecc7ddc21eccf70"
       url: "https://pub.dev"
     source: hosted
-    version: "9.2.14"
+    version: "9.3.1"
   dart_style:
     dependency: transitive
     description:
@@ -479,10 +479,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_quill
-      sha256: "6f547382315f4752379f8aab95e1f5c1cd72e7344c407f86469e922f539b5214"
+      sha256: ef52cbcc9e6169a499c311fae22a5eeb7f22ec23f6becc7cb23bfe8d0f2bc4c9
       url: "https://pub.dev"
     source: hosted
-    version: "9.2.14"
+    version: "9.3.0"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -770,8 +770,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "v0.0.13-alpha"
-      resolved-ref: e7e8e380c6a72d7db1b0ebd504172acba7d683a0
+      ref: "v0.0.14-alpha"
+      resolved-ref: b975e8dbfebc61b2cedd1deee3757d42abbeb4ec
       url: "https://github.com/NotedApp/noted_models.git"
     source: git
     version: "0.0.1"

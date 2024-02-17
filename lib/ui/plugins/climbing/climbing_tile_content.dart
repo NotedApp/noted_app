@@ -23,17 +23,13 @@ class ClimbingTileContent extends StatelessWidget {
 
     final info1 = [
       switch (note.field(NoteField.climbingSetting)) {
-        // TODO: Update this to use an enum (requires model update).
-        'indoors' => strings.climbing_setting_indoors,
-        'outdoors' => strings.climbing_setting_outdoors,
-        _ => strings.climbing_setting_indoors,
+        ClimbingSetting.indoor => strings.climbing_setting_indoors,
+        ClimbingSetting.outdoor => strings.climbing_setting_outdoors,
       },
       switch (note.field(NoteField.climbingType)) {
-        // TODO: Update this to use an enum (requires model update).
-        'bouldering' => strings.climbing_type_boulder,
-        'traditional' => strings.climbing_type_traditional,
-        'sport' => strings.climbing_type_sport,
-        _ => strings.climbing_type_boulder,
+        ClimbingType.boulder => strings.climbing_type_boulder,
+        ClimbingType.traditional => strings.climbing_type_traditional,
+        ClimbingType.sport => strings.climbing_type_sport,
       }
     ].join(' • ');
 
