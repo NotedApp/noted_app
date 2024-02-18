@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/state/edit/edit_bloc.dart';
-import 'package:noted_app/state/edit/edit_event.dart';
-import 'package:noted_app/state/edit/edit_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/plugins/cookbook/cookbook_edit_content.dart';
 import 'package:noted_app/ui/plugins/notebook/notebook_edit_content.dart';
@@ -16,27 +15,22 @@ class EditContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NotedBlocSelector<EditBloc, EditState, NoteModel?>(
-      selector: (state) => state.note,
-      builder: (context, bloc, note) {
-        if (note == null) {
-          return _EmptyContent();
-        }
+    final plugin = context.select<EditBloc, NotedPlugin?>((bloc) => bloc.state.note?.plugin);
 
-        void updateNote(NoteFieldValue update) => bloc.add(EditUpdateEvent(update));
+    if (plugin == null) {
+      return _ErrorContent();
+    }
 
-        return switch (note.plugin) {
-          NotedPlugin.notebook => NotebookEditContent(note: note, updateNote: updateNote),
-          NotedPlugin.cookbook => CookbookEditContent(note: note, updateNote: updateNote),
-          // TODO: Update this to climbing edit content.
-          NotedPlugin.climbing => const Center(child: CircularProgressIndicator()),
-        };
-      },
-    );
+    return switch (plugin) {
+      NotedPlugin.notebook => const NotebookEditContent(),
+      NotedPlugin.cookbook => const CookbookEditContent(),
+      // TODO: Update this to climbing edit content.
+      NotedPlugin.climbing => const Center(child: CircularProgressIndicator()),
+    };
   }
 }
 
-class _EmptyContent extends StatelessWidget {
+class _ErrorContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Strings strings = context.strings();

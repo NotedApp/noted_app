@@ -11,8 +11,6 @@ import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_app/util/extensions/extensions.dart';
 import 'package:noted_models/noted_models.dart';
 
-typedef NoteUpdateCallback = void Function(NoteFieldValue);
-
 // coverage:ignore-file
 class EditPage extends StatelessWidget {
   const EditPage({super.key});
