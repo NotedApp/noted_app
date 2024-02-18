@@ -79,7 +79,7 @@ class FirebaseNotesRepository extends NotesRepository {
   }) async {
     try {
       final fieldUpdates = {for (var update in updates) update.field.name: update.value};
-      await _notes(userId).child(noteId).update(fieldUpdates);
+      await _notes(userId).child(noteId).child('fields').update(fieldUpdates);
     } catch (_) {
       throw NotedError(ErrorCode.notes_update_failed);
     }
