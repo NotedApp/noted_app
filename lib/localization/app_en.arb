@@ -112,6 +112,7 @@
   "cookbook_prepTime": "prep time",
   "cookbook_cookTime": "cook time",
   "cookbook_url": "recipe link",
+  "cookbook_imageUrl": "image url",
 
   "climbing_rating": "rating",
   "climbing_setting": "setting",
