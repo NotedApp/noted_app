@@ -210,7 +210,9 @@ extension on NotedPlugin {
   // coverage:ignore-end
 
   EditUpdateHandler? _updateHandler() {
+    // coverage:ignore-start codecov bug
     return switch (this) {
+      // coverage:ignore-end codecov bug
       NotedPlugin.cookbook => CookbookEditUpdateHandler(),
       _ => null,
     };
