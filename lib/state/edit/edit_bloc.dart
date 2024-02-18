@@ -6,31 +6,33 @@ import 'package:noted_app/repository/auth/auth_repository.dart';
 import 'package:noted_app/repository/notes/notes_repository.dart';
 import 'package:noted_app/state/edit/edit_event.dart';
 import 'package:noted_app/state/edit/edit_state.dart';
+import 'package:noted_app/state/edit/plugins/cookbook/cookbook_edit_bloc.dart';
 import 'package:noted_app/state/noted_bloc.dart';
 import 'package:noted_app/util/debouncer.dart';
 import 'package:noted_app/util/environment/environment.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
-const _defaultUpdateDebounceMs = 250;
+const _updateDebounceMs = 250;
 
 class EditBloc extends NotedBloc<EditEvent, EditState> {
-  final int _updateDebounceMs;
   final NotesRepository _notes;
   final AuthRepository _auth;
   late final StreamSubscription<UserModel> _userSubscription;
   StreamSubscription<NoteModel>? _noteSubscription;
 
+  final _updateMap = <NoteField, NoteFieldValue>{};
+  EditUpdateHandler? _updateHandler;
+
   EditBloc.load({
     required String noteId,
     NotesRepository? notesRepository,
     AuthRepository? authRepository,
-    int? updateDebounceMs,
+    int updateDebounceMs = _updateDebounceMs,
   })  : _notes = notesRepository ?? locator<NotesRepository>(),
         _auth = authRepository ?? locator<AuthRepository>(),
-        _updateDebounceMs = updateDebounceMs ?? _defaultUpdateDebounceMs,
         super(const EditState(note: null), 'edit') {
-    _init();
+    _init(updateDebounceMs);
     add(EditLoadEvent(noteId));
   }
 
@@ -38,33 +40,23 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
     required NotedPlugin plugin,
     NotesRepository? notesRepository,
     AuthRepository? authRepository,
-    int? updateDebounceMs,
+    int updateDebounceMs = _updateDebounceMs,
   })  : _notes = notesRepository ?? locator<NotesRepository>(),
         _auth = authRepository ?? locator<AuthRepository>(),
-        _updateDebounceMs = updateDebounceMs ?? _defaultUpdateDebounceMs,
         super(const EditState(note: null), 'edit') {
-    _init();
-
-    // coverage:ignore-start
-    NoteModel model = switch (plugin) {
-      NotedPlugin.notebook => NoteModel.empty(NotedPlugin.notebook),
-      NotedPlugin.cookbook => NoteModel.empty(NotedPlugin.cookbook),
-      NotedPlugin.climbing => NoteModel.empty(NotedPlugin.climbing),
-    };
-    // coverage:ignore-end
-
-    add(EditAddEvent(model));
+    _init(updateDebounceMs);
+    add(EditAddEvent(plugin._emptyModel()));
   }
 
-  void _init() {
+  void _init(int updateDebounceMs) {
     on<EditAddEvent>(_onAddNote, transformer: restartable());
     on<EditLoadEvent>(_onLoadNote, transformer: restartable());
+    on<EditUpdateEvent>(_onUpdateNote);
+    on<EditCommitUpdatesEvent>(_onCommitUpdates, transformer: debounced(updateDebounceMs));
     on<EditDeleteEvent>(_onDeleteNote, transformer: restartable());
     on<EditRemoteUpdateEvent>(_onRemoteUpdateNote);
     on<EditRemoteUpdateErrorEvent>(_onRemoteUpdateError);
     on<EditCloseEvent>(_onClose);
-    on<EditUpdateEvent>(_onUpdateNote, transformer: debouncer(_updateDebounceMs));
-    on<EditToggleHiddenEvent>(_onToggleHidden);
 
     _userSubscription = _auth.userStream.listen((user) {
       if (user.isEmpty) {
@@ -98,6 +90,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
       emit(EditState(note: state.note, status: EditStatus.loading));
 
       final note = await _notes.fetchNote(userId: _auth.currentUser.id, noteId: event.id);
+      _updateHandler = note.plugin._updateHandler();
       emit(EditState(note: note, status: EditStatus.loaded));
 
       await _subscribeNote(event.id, emit);
@@ -124,6 +117,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
       );
 
       final note = await _notes.fetchNote(userId: _auth.currentUser.id, noteId: id);
+      _updateHandler = note.plugin._updateHandler();
       emit(EditState(note: note, status: EditStatus.loaded));
 
       await _subscribeNote(id, emit);
@@ -132,22 +126,12 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
     }
   }
 
-  Future<void> _onUpdateNote(EditUpdateEvent event, Emitter<EditState> emit) async {
-    try {
-      if (_auth.currentUser.isEmpty) {
-        throw NotedError(ErrorCode.notes_update_failed, message: 'missing auth');
-      }
-
-      await _notes.updateNote(
-        userId: _auth.currentUser.id,
-        note: event.note.copyWithField(NoteFieldValue(NoteField.lastUpdatedUtc, DateTime.now().toUtc())),
-      );
-    } catch (e) {
-      emit(EditState(note: state.note, status: state.status, error: NotedError.fromObject(e)));
-    }
+  void _onUpdateNote(EditUpdateEvent event, Emitter<EditState> emit) {
+    _updateMap[event.update.field] = event.update;
+    add(const EditCommitUpdatesEvent());
   }
 
-  Future<void> _onToggleHidden(EditToggleHiddenEvent event, Emitter<EditState> emit) async {
+  Future<void> _onCommitUpdates(EditCommitUpdatesEvent event, Emitter<EditState> emit) async {
     try {
       final note = state.note;
 
@@ -159,10 +143,9 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
         throw NotedError(ErrorCode.notes_update_failed, message: 'missing note');
       }
 
-      await _notes.updateNote(
-        userId: _auth.currentUser.id,
-        note: note.copyWithField(NoteFieldValue(NoteField.hidden, !note.field(NoteField.hidden))),
-      );
+      final updates = _updateMap.values.toList();
+      _updateMap.clear();
+      await _notes.updateFields(userId: _auth.currentUser.id, noteId: note.id, updates: updates);
     } catch (e) {
       emit(EditState(note: state.note, status: state.status, error: NotedError.fromObject(e)));
     }
@@ -192,6 +175,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
     }
 
     emit(EditState(note: event.note, status: EditStatus.loaded));
+    _updateHandler?.run(event.note, this);
   }
 
   Future<void> _onRemoteUpdateError(EditRemoteUpdateErrorEvent event, Emitter<EditState> emit) async {
@@ -212,4 +196,31 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
     _noteSubscription?.cancel();
     return super.close();
   }
+}
+
+extension on NotedPlugin {
+  // coverage:ignore-start
+  NoteModel _emptyModel() {
+    return switch (this) {
+      NotedPlugin.notebook => NoteModel.empty(NotedPlugin.notebook),
+      NotedPlugin.cookbook => NoteModel.empty(NotedPlugin.cookbook),
+      NotedPlugin.climbing => NoteModel.empty(NotedPlugin.climbing),
+    };
+  }
+  // coverage:ignore-end
+
+  EditUpdateHandler? _updateHandler() {
+    // coverage:ignore-start codecov bug
+    return switch (this) {
+      // coverage:ignore-end codecov bug
+      NotedPlugin.cookbook => CookbookEditUpdateHandler(),
+      _ => null,
+    };
+  }
+}
+
+abstract class EditUpdateHandler {
+  const EditUpdateHandler();
+
+  void run(NoteModel updated, EditBloc bloc);
 }

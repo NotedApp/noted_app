@@ -31,8 +31,9 @@ class _NotebookEditContentState extends State<NotebookEditContent> {
     textController = NotedEditorController.quill(initial: widget.note.field(NoteField.document));
     titleController = TextEditingController(text: widget.note.field(NoteField.title));
 
-    textSubscription = textController.valueStream.listen((_) => _updateNote());
-    titleController.addListener(_updateNote);
+    textSubscription = textController.valueStream
+        .listen((_) => widget.updateNote(NoteFieldValue(NoteField.document, textController.value)));
+    titleController.addListener(() => widget.updateNote(NoteFieldValue(NoteField.title, titleController.text)));
   }
 
   @override
@@ -64,14 +65,6 @@ class _NotebookEditContentState extends State<NotebookEditContent> {
         ),
         NotedEditorToolbar(controller: textController),
       ],
-    );
-  }
-
-  void _updateNote() {
-    widget.updateNote(
-      widget.note
-          .copyWithField(NoteFieldValue<String>(NoteField.title, titleController.text))
-          .copyWithField(NoteFieldValue<DocumentModel>(NoteField.document, textController.value)),
     );
   }
 

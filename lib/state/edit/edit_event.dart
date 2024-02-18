@@ -19,13 +19,13 @@ class EditAddEvent extends EditEvent {
 }
 
 class EditUpdateEvent extends EditEvent {
-  final NoteModel note;
+  final NoteFieldValue update;
 
-  const EditUpdateEvent(this.note);
+  const EditUpdateEvent(this.update);
 }
 
-class EditToggleHiddenEvent extends EditEvent {
-  const EditToggleHiddenEvent();
+class EditCommitUpdatesEvent extends EditEvent {
+  const EditCommitUpdatesEvent();
 }
 
 class EditDeleteEvent extends EditEvent {}

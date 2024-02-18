@@ -18,8 +18,8 @@ abstract class NotesRepository {
   /// Adds a note for the given user, returning the ID of the note that was added.
   Future<String> addNote({required String userId, required NoteModel note});
 
-  /// Updates the given note for the given user.
-  Future<void> updateNote({required String userId, required NoteModel note});
+  /// Updates the given note fields for the given user.
+  Future<void> updateFields({required String userId, required String noteId, required List<NoteFieldValue> updates});
 
   /// Deletes the note with the given ID for the given user.
   Future<void> deleteNote({required String userId, required String noteId});

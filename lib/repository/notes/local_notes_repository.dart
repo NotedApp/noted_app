@@ -95,15 +95,23 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
   }
 
   @override
-  Future<void> updateNote({required String userId, required NoteModel note}) async {
+  Future<void> updateFields({
+    required String userId,
+    required String noteId,
+    required List<NoteFieldValue> updates,
+  }) async {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
-    if (_shouldThrow || userId.isEmpty) {
+    final note = _notes[noteId];
+
+    if (_shouldThrow || userId.isEmpty || note == null) {
       throw NotedError(ErrorCode.notes_update_failed);
     }
 
-    _notes[note.id] = note.copyWith();
-    _controllers[note.id]?.add(note.copyWith());
+    final updated = note.copyWithFields(updates);
+
+    _notes[noteId] = updated;
+    _controllers[note.id]?.add(updated);
     _notesController.add(_notes.values.toList());
   }
 

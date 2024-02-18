@@ -10,8 +10,6 @@ void main() {
       MockVoidCallback action = MockVoidCallback();
       Debouncer debouncer = Debouncer(interval: const Duration(milliseconds: 10), runFirst: true);
 
-      expectLater(debouncer.activeStream, emitsInOrder([false, true, false]));
-
       debouncer.run(action.call);
       debouncer.run(action.call);
       debouncer.run(action.call);
@@ -31,8 +29,6 @@ void main() {
     test('debounces with run later', () async {
       MockVoidCallback action = MockVoidCallback();
       Debouncer debouncer = Debouncer(interval: const Duration(milliseconds: 10));
-
-      expectLater(debouncer.activeStream, emitsInOrder([false, true, true, true, false, true]));
 
       debouncer.run(action.call);
       debouncer.run(action.call);

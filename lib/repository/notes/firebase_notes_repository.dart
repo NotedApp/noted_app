@@ -72,9 +72,14 @@ class FirebaseNotesRepository extends NotesRepository {
   }
 
   @override
-  Future<void> updateNote({required String userId, required NoteModel note}) async {
+  Future<void> updateFields({
+    required String userId,
+    required String noteId,
+    required List<NoteFieldValue> updates,
+  }) async {
     try {
-      await _notes(userId).child(note.id).set(note.toMap());
+      final fieldUpdates = {for (var update in updates) update.field.name: update.value};
+      await _notes(userId).child(noteId).update(fieldUpdates);
     } catch (_) {
       throw NotedError(ErrorCode.notes_update_failed);
     }

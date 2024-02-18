@@ -28,20 +28,23 @@ void main() {
 
       final stream = await repository.subscribeNotes(userId: 'test');
 
-      expectLater(
-        stream,
-        emitsInOrder([
-          [...localNotes.values, testNote],
-          [...localNotes.values, updatedNote],
-          [...localNotes.values],
-          [],
-        ]),
-      );
+      repository.addNote(userId: 'test', note: testNote);
+      expect(await stream.first, [...localNotes.values, testNote]);
 
-      await repository.addNote(userId: 'test', note: testNote);
-      await repository.updateNote(userId: 'test', note: updatedNote);
-      await repository.deleteNote(userId: 'test', noteId: 'test-note-3');
-      await repository.deleteNotes(userId: 'test', noteIds: List.of(localNotes.values.map((note) => note.id)));
+      repository.updateFields(
+        userId: 'test',
+        noteId: 'test-note-3',
+        updates: [const NoteFieldValue(NoteField.title, 'updated note')],
+      );
+      final updated = await stream.first;
+      expect(updated.length, 4);
+      expect(updated.last.field(NoteField.title), 'updated note');
+
+      repository.deleteNote(userId: 'test', noteId: 'test-note-3');
+      expect(await stream.first, List.of(localNotes.values));
+
+      repository.deleteNotes(userId: 'test', noteIds: List.of(localNotes.values.map((note) => note.id)));
+      expect(await stream.first, []);
     });
 
     test('filters notes', () async {
@@ -51,16 +54,17 @@ void main() {
 
       var stream = await repository.subscribeNotes(userId: 'test', filter: filter);
 
-      expectLater(
-        stream,
-        emitsInOrder([
-          [localNotes.values.firstOrNull, testNote],
-          [localNotes.values.firstOrNull, updatedNote],
-        ]),
-      );
+      repository.addNote(userId: 'test', note: testNote);
+      expect(await stream.first, [localNotes.values.first, testNote]);
 
-      await repository.addNote(userId: 'test', note: testNote);
-      await repository.updateNote(userId: 'test', note: updatedNote);
+      repository.updateFields(
+        userId: 'test',
+        noteId: 'test-note-3',
+        updates: [const NoteFieldValue(NoteField.title, 'updated note')],
+      );
+      final updated = await stream.first;
+      expect(updated.length, 2);
+      expect(updated.last.field(NoteField.title), 'updated note');
     });
 
     test('handles fetch error', () async {
@@ -97,9 +101,10 @@ void main() {
       repository.shouldThrow = true;
 
       await expectLater(
-        () => repository.updateNote(
+        () => repository.updateFields(
           userId: 'test',
-          note: testNote,
+          noteId: 'test-note-3',
+          updates: [const NoteFieldValue(NoteField.title, 'updated note')],
         ),
         throwsA(NotedError(ErrorCode.notes_update_failed)),
       );

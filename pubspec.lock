@@ -770,8 +770,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "v0.0.12-alpha"
-      resolved-ref: "4af48792ab52514070f1820af5ba979a95c9b46a"
+      ref: "v0.0.13-alpha"
+      resolved-ref: e7e8e380c6a72d7db1b0ebd504172acba7d683a0
       url: "https://github.com/NotedApp/noted_models.git"
     source: git
     version: "0.0.1"
