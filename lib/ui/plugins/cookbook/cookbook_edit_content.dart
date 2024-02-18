@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_app/state/edit/edit_bloc.dart';
+import 'package:noted_app/state/edit/edit_state.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/ui/pages/edit/fields/edit_document_field.dart';
+import 'package:noted_app/ui/pages/edit/fields/edit_image_field.dart';
 import 'package:noted_app/ui/pages/edit/fields/edit_text_field.dart';
 import 'package:noted_app/util/extensions/extensions.dart';
 import 'package:noted_models/noted_models.dart';
@@ -62,17 +64,35 @@ class _CookbookEditHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Strings strings = context.strings();
+    return BlocSelector<EditBloc, EditState, String>(
+      selector: (state) => state.note?.field(NoteField.imageUrl) ?? '',
+      builder: (context, imageUrl) {
+        Strings strings = context.strings();
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        EditTextField.title(name: strings.edit_titlePlaceholder),
-        EditTextField(field: NoteField.link, name: strings.cookbook_url),
-        EditTextField(field: NoteField.imageUrl, name: strings.edit_imageUrl),
-        EditTextField(field: NoteField.cookbookPrepTime, name: strings.cookbook_prepTime),
-        EditTextField(field: NoteField.cookbookCookTime, name: strings.cookbook_cookTime),
-      ],
+        final column = Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            EditTextField.title(name: strings.edit_titlePlaceholder),
+            EditTextField(field: NoteField.link, name: strings.cookbook_url),
+            EditTextField(field: NoteField.imageUrl, name: strings.edit_imageUrl),
+            EditTextField(field: NoteField.cookbookPrepTime, name: strings.cookbook_prepTime),
+            EditTextField(field: NoteField.cookbookCookTime, name: strings.cookbook_cookTime),
+          ],
+        );
+
+        if (imageUrl.isEmpty) {
+          return column;
+        }
+
+        final width = MediaQuery.of(context).size.width / NotedWidgetConfig.goldenRatio;
+
+        return Stack(
+          children: [
+            EditImageField(imageUrl: imageUrl),
+            Padding(padding: EdgeInsets.only(top: width * 2 / 3), child: column),
+          ],
+        );
+      },
     );
   }
 }
