@@ -7,6 +7,7 @@ class NotedImage extends StatelessWidget {
   final int? imageWidth;
   final int? imageHeight;
   final Alignment? alignment;
+  final Widget? error;
 
   const NotedImage.network({
     super.key,
@@ -15,6 +16,7 @@ class NotedImage extends StatelessWidget {
     this.imageHeight,
     this.imageWidth,
     this.alignment,
+    this.error,
   });
 
   @override
