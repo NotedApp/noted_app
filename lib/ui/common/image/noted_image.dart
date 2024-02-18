@@ -8,6 +8,7 @@ class NotedImage extends StatelessWidget {
   final int? imageHeight;
   final Alignment? alignment;
   final double opacity;
+  final Widget? error;
 
   const NotedImage.network({
     super.key,
@@ -17,10 +18,13 @@ class NotedImage extends StatelessWidget {
     this.imageWidth,
     this.alignment,
     this.opacity = 1,
+    this.error,
   });
 
   @override
   Widget build(BuildContext context) {
+    final errorWidget = error;
+
     return CachedNetworkImage(
       imageUrl: source,
       fit: fit,
@@ -31,6 +35,7 @@ class NotedImage extends StatelessWidget {
       alignment: alignment ?? Alignment.center,
       color: opacity == 1 ? null : Color.fromRGBO(255, 255, 255, opacity),
       colorBlendMode: opacity == 1 ? null : BlendMode.modulate,
+      errorWidget: errorWidget == null ? null : (_, __, ___) => errorWidget,
     );
   }
 }

@@ -11,14 +11,14 @@ import 'package:noted_app/util/extensions/extensions.dart';
 import 'package:noted_models/noted_models.dart';
 
 // coverage:ignore-file
-class CookbookEditContent extends StatefulWidget {
-  const CookbookEditContent({super.key});
+class ClimbingEditContent extends StatefulWidget {
+  const ClimbingEditContent({super.key});
 
   @override
-  State<StatefulWidget> createState() => _CookbookEditContentState();
+  State<StatefulWidget> createState() => _ClimbingEditContentState();
 }
 
-class _CookbookEditContentState extends State<CookbookEditContent> {
+class _ClimbingEditContentState extends State<ClimbingEditContent> {
   late final NotedEditorController documentController;
 
   @override
@@ -36,15 +36,11 @@ class _CookbookEditContentState extends State<CookbookEditContent> {
     return Column(
       children: [
         Expanded(
-          child: NotedScrollMask(
-            direction: Axis.vertical,
-            size: Dimens.spacing_s,
-            child: NestedScrollView(
-              headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                const SliverToBoxAdapter(child: _CookbookEditHeader()),
-              ],
-              body: EditDocumentField(controller: documentController),
-            ),
+          child: NestedScrollView(
+            headerSliverBuilder: (context, innerBoxIsScrolled) => [
+              const SliverToBoxAdapter(child: _ClimbingEditHeader()),
+            ],
+            body: EditDocumentField(controller: documentController),
           ),
         ),
         NotedEditorToolbar(controller: documentController),
@@ -59,8 +55,8 @@ class _CookbookEditContentState extends State<CookbookEditContent> {
   }
 }
 
-class _CookbookEditHeader extends StatelessWidget {
-  const _CookbookEditHeader();
+class _ClimbingEditHeader extends StatelessWidget {
+  const _ClimbingEditHeader();
 
   @override
   Widget build(BuildContext context) {
@@ -73,10 +69,13 @@ class _CookbookEditHeader extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             EditTextField.title(name: strings.edit_titlePlaceholder),
-            EditTextField(field: NoteField.link, name: strings.cookbook_url),
             EditTextField(field: NoteField.imageUrl, name: strings.edit_imageUrl),
-            EditTextField(field: NoteField.cookbookPrepTime, name: strings.cookbook_prepTime),
-            EditTextField(field: NoteField.cookbookCookTime, name: strings.cookbook_cookTime),
+            EditTextField(field: NoteField.climbingRating, name: strings.climbing_rating),
+            EditTextField(field: NoteField.location, name: strings.edit_location),
+            // TODO: Add setting.
+            // TODO: Add type.
+            // TODO: Add attempts.
+            // TODO: Add tops.
           ],
         );
 
