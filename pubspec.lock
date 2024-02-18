@@ -197,10 +197,10 @@ packages:
     dependency: transitive
     description:
       name: dart_quill_delta
-      sha256: "6fcdc659d210e7dd06d41aff13eaea6a5e6c1a0cf022a2e886854881da36ce01"
+      sha256: fdf40d60fa964b93908a4af38e9631d4ce56fce1c700cacda217c86e80ebdcfe
       url: "https://pub.dev"
     source: hosted
-    version: "9.3.21"
+    version: "9.4.0"
   dart_style:
     dependency: transitive
     description:
@@ -479,10 +479,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_quill
-      sha256: "1ecdb81f6fd93691cfa8e6af1f8fe47c53377e0a13137682a18548ddf9d437b6"
+      sha256: "2083a1fe2f560cff6013ed0faf3f69892cb275b867dc7735c16e107211c887f6"
       url: "https://pub.dev"
     source: hosted
-    version: "9.3.21"
+    version: "9.4.0"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -529,10 +529,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: abec47eb8c8c36ebf41d0a4c64dbbe7f956e39a012b3aafc530e951bdc12fe3f
+      sha256: cdae1b9c8bd7efadcef6112e81c903662ef2ce105cbd220a04bbb7c3425b5554
       url: "https://pub.dev"
     source: hosted
-    version: "14.1.4"
+    version: "14.2.0"
   google_identity_services_web:
     dependency: transitive
     description:
@@ -645,22 +645,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
-  irondash_engine_context:
-    dependency: transitive
-    description:
-      name: irondash_engine_context
-      sha256: e8398cca5e28dc280c87b8c35a6ff4e15be844eabec51e713631f83903563681
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.5.3"
-  irondash_message_channel:
-    dependency: transitive
-    description:
-      name: irondash_message_channel
-      sha256: b4101669776509c76133b8917ab8cfc704d3ad92a8c450b92934dd8884a2f060
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.7.0"
   js:
     dependency: transitive
     description:
@@ -911,14 +895,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.2"
-  pixel_snap:
-    dependency: transitive
-    description:
-      name: pixel_snap
-      sha256: "677410ea37b07cd37ecb6d5e6c0d8d7615a7cf3bd92ba406fd1ac57e937d1fb0"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.5"
   platform:
     dependency: transitive
     description:
@@ -1116,22 +1092,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
-  super_clipboard:
-    dependency: transitive
-    description:
-      name: super_clipboard
-      sha256: "17978c3dc7b6ebf588a8007448f668ad6aa64733b60ed2ae18152113cca39fa2"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.8.16"
-  super_native_extensions:
-    dependency: transitive
-    description:
-      name: super_native_extensions
-      sha256: d2d1259c7e43966173c394ef64475e612bd5822095f6cd1008eb978175ce2f0d
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.8.16"
   synchronized:
     dependency: transitive
     description:
