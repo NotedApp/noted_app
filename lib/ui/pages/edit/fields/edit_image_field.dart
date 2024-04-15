@@ -9,7 +9,7 @@ class EditImageField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final background = context.colorScheme().background;
+    final background = context.colorScheme().surface;
 
     return AspectRatio(
       aspectRatio: NotedWidgetConfig.goldenRatio,
@@ -23,6 +23,29 @@ class EditImageField extends StatelessWidget {
         ),
         child: NotedImage.network(source: imageUrl, fit: BoxFit.cover),
       ),
+    );
+  }
+}
+
+class EditImageHeader extends StatelessWidget {
+  final String imageUrl;
+  final Widget child;
+
+  const EditImageHeader({required this.imageUrl, required this.child, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    if (imageUrl.isEmpty) {
+      return child;
+    }
+
+    final width = MediaQuery.of(context).size.width / NotedWidgetConfig.goldenRatio;
+
+    return Stack(
+      children: [
+        EditImageField(imageUrl: imageUrl),
+        Padding(padding: EdgeInsets.only(top: width * 2 / 3), child: child),
+      ],
     );
   }
 }

@@ -36,15 +36,11 @@ class _CookbookEditContentState extends State<CookbookEditContent> {
     return Column(
       children: [
         Expanded(
-          child: NotedScrollMask(
-            direction: Axis.vertical,
-            size: Dimens.spacing_s,
-            child: NestedScrollView(
-              headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                const SliverToBoxAdapter(child: _CookbookEditHeader()),
-              ],
-              body: EditDocumentField(controller: documentController),
-            ),
+          child: NestedScrollView(
+            headerSliverBuilder: (context, innerBoxIsScrolled) => [
+              const SliverToBoxAdapter(child: _CookbookEditHeader()),
+            ],
+            body: EditDocumentField(controller: documentController),
           ),
         ),
         NotedEditorToolbar(controller: documentController),
@@ -69,28 +65,18 @@ class _CookbookEditHeader extends StatelessWidget {
       builder: (context, imageUrl) {
         Strings strings = context.strings();
 
-        final column = Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            EditTextField.title(name: strings.edit_titlePlaceholder),
-            EditTextField(field: NoteField.link, name: strings.cookbook_url),
-            EditTextField(field: NoteField.imageUrl, name: strings.edit_imageUrl),
-            EditTextField(field: NoteField.cookbookPrepTime, name: strings.cookbook_prepTime),
-            EditTextField(field: NoteField.cookbookCookTime, name: strings.cookbook_cookTime),
-          ],
-        );
-
-        if (imageUrl.isEmpty) {
-          return column;
-        }
-
-        final width = MediaQuery.of(context).size.width / NotedWidgetConfig.goldenRatio;
-
-        return Stack(
-          children: [
-            EditImageField(imageUrl: imageUrl),
-            Padding(padding: EdgeInsets.only(top: width * 2 / 3), child: column),
-          ],
+        return EditImageHeader(
+          imageUrl: imageUrl,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              EditTextField.title(name: strings.edit_titlePlaceholder),
+              EditTextField(field: NoteField.link, name: strings.cookbook_url),
+              EditTextField(field: NoteField.imageUrl, name: strings.edit_imageUrl),
+              EditTextField(field: NoteField.cookbookPrepTime, name: strings.cookbook_prepTime),
+              EditTextField(field: NoteField.cookbookCookTime, name: strings.cookbook_cookTime),
+            ],
+          ),
         );
       },
     );

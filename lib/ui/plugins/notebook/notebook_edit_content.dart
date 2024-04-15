@@ -33,15 +33,11 @@ class _NotebookEditContentState extends State<NotebookEditContent> {
     return Column(
       children: [
         Expanded(
-          child: NotedScrollMask(
-            direction: Axis.vertical,
-            size: Dimens.spacing_s,
-            child: NestedScrollView(
-              headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                SliverToBoxAdapter(child: EditTextField.title(name: context.strings().edit_titlePlaceholder)),
-              ],
-              body: EditDocumentField(controller: documentController),
-            ),
+          child: NestedScrollView(
+            headerSliverBuilder: (context, innerBoxIsScrolled) => [
+              SliverToBoxAdapter(child: EditTextField.title(name: context.strings().edit_titlePlaceholder)),
+            ],
+            body: EditDocumentField(controller: documentController),
           ),
         ),
         NotedEditorToolbar(controller: documentController),

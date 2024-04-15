@@ -68,46 +68,36 @@ class _ClimbingEditHeader extends StatelessWidget {
       builder: (context, imageUrl) {
         Strings strings = context.strings();
 
-        final column = Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            EditTextField.title(name: strings.edit_titlePlaceholder),
-            EditTextField(field: NoteField.imageUrl, name: strings.edit_imageUrl),
-            EditTextField(field: NoteField.climbingRating, name: strings.climbing_rating),
-            EditTextField(field: NoteField.location, name: strings.edit_location),
-            // TODO: Add setting.
-            // TODO: Add type.
-            Row(
-              children: [
-                const SizedBox(width: Dimens.spacing_l),
-                _ClimbingAttemptButton(
-                  field: NoteField.climbingAttemptsUtc,
-                  text: (context, count) => strings.climbing_attempts(count),
-                  color: NotedWidgetColor.primary,
-                ),
-                const SizedBox(width: Dimens.spacing_m),
-                _ClimbingAttemptButton(
-                  field: NoteField.climbingTopsUtc,
-                  text: (context, count) => strings.climbing_tops(count),
-                  color: NotedWidgetColor.tertiary,
-                ),
-                const SizedBox(width: Dimens.spacing_l),
-              ],
-            )
-          ],
-        );
-
-        if (imageUrl.isEmpty) {
-          return column;
-        }
-
-        final width = MediaQuery.of(context).size.width / NotedWidgetConfig.goldenRatio;
-
-        return Stack(
-          children: [
-            EditImageField(imageUrl: imageUrl),
-            Padding(padding: EdgeInsets.only(top: width * 2 / 3), child: column),
-          ],
+        return EditImageHeader(
+          imageUrl: imageUrl,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              EditTextField.title(name: strings.edit_titlePlaceholder),
+              EditTextField(field: NoteField.imageUrl, name: strings.edit_imageUrl),
+              EditTextField(field: NoteField.climbingRating, name: strings.climbing_rating),
+              EditTextField(field: NoteField.location, name: strings.edit_location),
+              // TODO: Add setting.
+              // TODO: Add type.
+              Row(
+                children: [
+                  const SizedBox(width: Dimens.spacing_l),
+                  _ClimbingAttemptButton(
+                    field: NoteField.climbingAttemptsUtc,
+                    text: (context, count) => strings.climbing_attempts(count),
+                    color: NotedWidgetColor.primary,
+                  ),
+                  const SizedBox(width: Dimens.spacing_m),
+                  _ClimbingAttemptButton(
+                    field: NoteField.climbingTopsUtc,
+                    text: (context, count) => strings.climbing_tops(count),
+                    color: NotedWidgetColor.tertiary,
+                  ),
+                  const SizedBox(width: Dimens.spacing_l),
+                ],
+              )
+            ],
+          ),
         );
       },
     );

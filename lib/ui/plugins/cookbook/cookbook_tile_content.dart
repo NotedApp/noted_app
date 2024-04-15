@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:noted_app/repository/ogp/ogp_repository.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
-import 'package:noted_app/util/environment/environment.dart';
 import 'package:noted_app/util/extensions/extensions.dart';
 import 'package:noted_models/noted_models.dart';
 
@@ -19,14 +17,12 @@ class CookbookTileContent extends StatefulWidget {
 
 class _CookbookTileContentState extends State<CookbookTileContent> {
   late final NotedEditorController _textController;
-  late final Future<String> _imageUrl;
 
   @override
   void initState() {
     super.initState();
 
     _textController = NotedEditorController.quill(initial: widget.note.field(NoteField.document), readonly: true);
-    _imageUrl = locator<OgpRepository>().fetchImage(widget.note.field(NoteField.link));
   }
 
   @override
@@ -100,78 +96,72 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
     final info = MediaQuery.of(context);
     final imageSize = (info.size.width * info.devicePixelRatio / 4 / NotedWidgetConfig.tileAspectRatio).round();
 
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        FutureBuilder(
-          future: _imageUrl,
-          builder: (context, snapshot) {
-            if (snapshot.hasData && (snapshot.data?.isNotEmpty ?? false)) {
-              // coverage:ignore-start
-              return NotedImage.network(
-                source: snapshot.data!,
-                fit: BoxFit.cover,
-                imageHeight: imageSize,
-                opacity: 0.2,
-              );
-              // coverage:ignore-end
-            } else {
-              return Container();
-            }
-          },
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12),
-          child: Column(
-            children: [
-              const Spacer(),
-              if (widget.note.field(NoteField.title).isNotEmpty)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Text(
-                    widget.note.field(NoteField.title),
-                    style: Theme.of(context).textTheme.titleMedium,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                  ),
-                ),
-              if (widget.note.field(NoteField.title).isNotEmpty) const SizedBox(height: 4),
-              if (widget.note.field(NoteField.cookbookPrepTime).isNotEmpty)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Text(
-                    '$prepTime: ${widget.note.field(NoteField.cookbookPrepTime)}',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                ),
-              if (widget.note.field(NoteField.cookbookCookTime).isNotEmpty)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Text(
-                    '$cookTime: ${widget.note.field(NoteField.cookbookCookTime)}',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                ),
-              const Spacer(),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: NotedLink(url: widget.note.field(NoteField.link)),
+    final content = Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: Column(
+        children: [
+          const Spacer(),
+          if (widget.note.field(NoteField.title).isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Text(
+                widget.note.field(NoteField.title),
+                style: Theme.of(context).textTheme.titleMedium,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
               ),
-              if (widget.note.field(NoteField.tagIds).isNotEmpty) const SizedBox(height: 12),
-              if (widget.note.field(NoteField.tagIds).isNotEmpty)
-                NotedTagRow(tags: widget.note.field(NoteField.tagIds)),
-            ],
+            ),
+          if (widget.note.field(NoteField.title).isNotEmpty) const SizedBox(height: 4),
+          if (widget.note.field(NoteField.cookbookPrepTime).isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Text(
+                '$prepTime: ${widget.note.field(NoteField.cookbookPrepTime)}',
+                style: Theme.of(context).textTheme.bodyMedium,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+              ),
+            ),
+          if (widget.note.field(NoteField.cookbookCookTime).isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Text(
+                '$cookTime: ${widget.note.field(NoteField.cookbookCookTime)}',
+                style: Theme.of(context).textTheme.bodyMedium,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+              ),
+            ),
+          const Spacer(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: NotedLink(url: widget.note.field(NoteField.link)),
           ),
-        ),
-      ],
+          if (widget.note.field(NoteField.tagIds).isNotEmpty) const SizedBox(height: 12),
+          if (widget.note.field(NoteField.tagIds).isNotEmpty) NotedTagRow(tags: widget.note.field(NoteField.tagIds)),
+        ],
+      ),
     );
+
+    if (widget.note.field(NoteField.imageUrl).isNotEmpty) {
+      return Stack(
+        fit: StackFit.expand,
+        children: [
+          NotedImage.network(
+            source: widget.note.field(NoteField.imageUrl),
+            fit: BoxFit.cover,
+            imageHeight: imageSize,
+            opacity: 0.2,
+          ),
+          content,
+        ],
+      );
+    } else {
+      return content;
+    }
   }
 
   // coverage:ignore-start

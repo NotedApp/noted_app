@@ -197,10 +197,10 @@ packages:
     dependency: transitive
     description:
       name: dart_quill_delta
-      sha256: fdf40d60fa964b93908a4af38e9631d4ce56fce1c700cacda217c86e80ebdcfe
+      sha256: d22447015105b0958544eb514d69fa3b5335b7c991405f018777d7911b67c02f
       url: "https://pub.dev"
     source: hosted
-    version: "9.4.0"
+    version: "9.4.3"
   dart_style:
     dependency: transitive
     description:
@@ -479,10 +479,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_quill
-      sha256: "2083a1fe2f560cff6013ed0faf3f69892cb275b867dc7735c16e107211c887f6"
+      sha256: "8d9c81ff68d90686c06b5543bed1461be392f9c470e6d54f6dcba44215f731cd"
       url: "https://pub.dev"
     source: hosted
-    version: "9.4.0"
+    version: "9.4.3"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -553,10 +553,10 @@ packages:
     dependency: transitive
     description:
       name: google_sign_in_android
-      sha256: "8f2606fffd912ff8c23e8d94da106764c116112ce65fb18c78123331ae628eb3"
+      sha256: "60e4f7947fa413cd9f2e23c955e8406afe640a8b2fbd00b46fb2901058047b8f"
       url: "https://pub.dev"
     source: hosted
-    version: "6.1.24"
+    version: "6.1.25"
   google_sign_in_ios:
     dependency: transitive
     description:
@@ -577,10 +577,10 @@ packages:
     dependency: transitive
     description:
       name: google_sign_in_web
-      sha256: fc0f14ed45ea616a6cfb4d1c7534c2221b7092cc4f29a709f0c3053cc3e821bd
+      sha256: d606264c7a1a526a3aa79d938b85a601d8589731a478bd4a3dcbdeb14a572228
       url: "https://pub.dev"
     source: hosted
-    version: "0.12.4"
+    version: "0.12.4+1"
   html:
     dependency: transitive
     description:
@@ -851,10 +851,10 @@ packages:
     dependency: transitive
     description:
       name: path_provider_android
-      sha256: "9c96da072b421e98183f9ea7464898428e764bc0ce5567f27ec8693442e72514"
+      sha256: bca87b0165ffd7cdb9cad8edd22d18d2201e886d9a9f19b4fb3452ea7df3a72a
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.5"
+    version: "2.2.6"
   path_provider_foundation:
     dependency: transitive
     description:

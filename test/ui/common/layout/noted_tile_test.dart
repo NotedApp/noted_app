@@ -4,15 +4,13 @@ import 'package:mocktail/mocktail.dart';
 import 'package:noted_app/repository/ogp/local_ogp_repository.dart';
 import 'package:noted_app/repository/ogp/ogp_repository.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
-// import 'package:noted_app/ui/plugins/cookbook/cookbook_tile_content.dart';
+import 'package:noted_app/ui/plugins/cookbook/cookbook_tile_content.dart';
 import 'package:noted_app/ui/plugins/notebook/notebook_tile_content.dart';
 import 'package:noted_app/util/environment/environment.dart';
 
 import '../../../helpers/environment/unit_test_environment.dart';
 import '../../../helpers/mocks/mock_callbacks.dart';
 import '../../../helpers/test_wrapper.dart';
-
-// TODO: Uncomment tests once merged with #175.
 
 void main() {
   group('Noted Tile', () {
@@ -58,7 +56,7 @@ void main() {
       addTearDown(() => tester.view.resetDevicePixelRatio());
 
       MockVoidCallback notebookCallback = MockVoidCallback();
-      // MockVoidCallback cookbookCallback = MockVoidCallback();
+      MockVoidCallback cookbookCallback = MockVoidCallback();
       MockVoidCallback climbingCallback = MockVoidCallback();
 
       const double width = 300;
@@ -76,22 +74,22 @@ void main() {
                   onPressed: notebookCallback.call,
                 ),
               ),
-              // SizedBox(
-              //   width: width,
-              //   height: height,
-              //   child: NotedTile(
-              //     noteId: 'cookbook0',
-              //     onPressed: cookbookCallback.call,
-              //   ),
-              // ),
-              // SizedBox(
-              //   width: width,
-              //   height: height,
-              //   child: NotedTile(
-              //     noteId: 'cookbook1',
-              //     onPressed: cookbookCallback.call,
-              //   ),
-              // ),
+              SizedBox(
+                width: width,
+                height: height,
+                child: NotedTile(
+                  noteId: 'cookbook0',
+                  onPressed: cookbookCallback.call,
+                ),
+              ),
+              SizedBox(
+                width: width,
+                height: height,
+                child: NotedTile(
+                  noteId: 'cookbook1',
+                  onPressed: cookbookCallback.call,
+                ),
+              ),
               SizedBox(
                 width: width,
                 height: height,
@@ -106,18 +104,18 @@ void main() {
       );
 
       Finder notebookFinder = find.byType(NotebookTileContent);
-      // Finder cookbookFinder = find.byType(CookbookTileContent);
+      Finder cookbookFinder = find.byType(CookbookTileContent);
       Finder climbingFinder = find.byType(CircularProgressIndicator);
 
       await tester.tap(notebookFinder);
-      // await tester.tap(cookbookFinder.first);
+      await tester.tap(cookbookFinder.first);
       await tester.tap(climbingFinder);
 
       expect(notebookFinder, findsOneWidget);
-      // expect(cookbookFinder, findsNWidgets(2));
+      expect(cookbookFinder, findsNWidgets(2));
       expect(notebookFinder, findsOneWidget);
       verify(() => notebookCallback()).called(1);
-      // verify(() => cookbookCallback()).called(1);
+      verify(() => cookbookCallback()).called(1);
       verify(() => climbingCallback()).called(1);
     });
   });
