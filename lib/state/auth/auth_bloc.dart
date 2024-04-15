@@ -58,7 +58,9 @@ class AuthBloc extends NotedBloc<AuthEvent, AuthState> {
     try {
       emit(const AuthState.authenticating(status: AuthStatus.signingIn));
 
+      // coverage:ignore-start coverage bug with switch
       switch (event) {
+        // coverage:ignore-end
         case AuthSignInWithEmailEvent _:
           await _repository.signInWithEmailAndPassword(email: event.email, password: event.password);
         case AuthSignInWithGoogleEvent _:

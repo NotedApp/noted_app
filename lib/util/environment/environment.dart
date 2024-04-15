@@ -39,7 +39,7 @@ abstract class Environment {
     WidgetsFlutterBinding.ensureInitialized();
 
     if (options != null) {
-      await Firebase.initializeApp(options: firebaseOptions);
+      await Firebase.initializeApp(options: options);
     }
 
     // Utilities.
