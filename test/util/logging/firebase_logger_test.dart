@@ -6,27 +6,27 @@ import 'package:noted_app/util/logging/firebase_logger.dart';
 class _MockFirebaseAnalytics extends Mock implements FirebaseAnalytics {}
 
 void main() {
-  final Map<String, Object?> defaults = {
+  final Map<String, Object> defaults = {
     'test-default': 0,
   };
 
-  final Map<String, Object?> uiParams = {
+  final Map<String, Object> uiParams = {
     'test-param-0': 10,
     'test-param-1': 'test',
   };
 
-  final Map<String, Object?> uiResult = {
+  final Map<String, Object> uiResult = {
     'test-param-0': 10,
     'test-param-1': 'test',
     'page': 'test',
   };
 
-  final Map<String, Object?> blocParams = {
+  final Map<String, Object> blocParams = {
     'test-param-0': 10,
     'test-param-1': 'test',
   };
 
-  final Map<String, Object?> blocResult = {
+  final Map<String, Object> blocResult = {
     'test-param-0': 10,
     'test-param-1': 'test',
     'bloc': 'test',

@@ -59,12 +59,12 @@ class NotedIconButton extends StatelessWidget {
     );
 
     ButtonStyle style = builder.styleOf(colorScheme).copyWith(
-          iconColor: iconColor?.materialState(),
-          backgroundColor: backgroundColor?.materialState(),
-          overlayColor: iconColor?.withOpacity(NotedWidgetConfig.buttonOverlayOpacity).materialState(),
-          padding: EdgeInsets.zero.materialState(),
-          minimumSize: Size.zero.materialState(),
-          shape: shape.materialState(),
+          iconColor: iconColor?.widgetState(),
+          backgroundColor: backgroundColor?.widgetState(),
+          overlayColor: iconColor?.withOpacity(NotedWidgetConfig.buttonOverlayOpacity).widgetState(),
+          padding: EdgeInsets.zero.widgetState(),
+          minimumSize: Size.zero.widgetState(),
+          shape: shape.widgetState(),
         );
 
     double widgetSize = builder.sizeOf();
@@ -111,12 +111,12 @@ class _SimpleIconButtonBuilder extends _NotedIconButtonBuilder {
     };
 
     return ButtonStyle(
-      iconColor: buttonColors.$1.materialState(),
-      backgroundColor: buttonColors.$2.materialState(),
-      overlayColor: buttonColors.$1.withOpacity(NotedWidgetConfig.buttonOverlayOpacity).materialState(),
-      iconSize: iconSize.materialState(),
-      fixedSize: Size.square(sizeOf()).materialState(),
-      elevation: 0.toDouble().materialState(),
+      iconColor: buttonColors.$1.widgetState(),
+      backgroundColor: buttonColors.$2.widgetState(),
+      overlayColor: buttonColors.$1.withOpacity(NotedWidgetConfig.buttonOverlayOpacity).widgetState(),
+      iconSize: iconSize.widgetState(),
+      fixedSize: Size.square(sizeOf()).widgetState(),
+      elevation: 0.toDouble().widgetState(),
     );
   }
 
@@ -149,12 +149,12 @@ class _FilledIconButtonBuilder extends _NotedIconButtonBuilder {
     };
 
     return ButtonStyle(
-      iconColor: buttonColors.$1.materialState(),
-      backgroundColor: buttonColors.$2.materialState(),
-      overlayColor: buttonColors.$1.withOpacity(NotedWidgetConfig.buttonOverlayOpacity).materialState(),
-      iconSize: iconSize.materialState(),
-      fixedSize: Size.square(sizeOf()).materialState(),
-      elevation: 2.toDouble().materialState(),
+      iconColor: buttonColors.$1.widgetState(),
+      backgroundColor: buttonColors.$2.widgetState(),
+      overlayColor: buttonColors.$1.withOpacity(NotedWidgetConfig.buttonOverlayOpacity).widgetState(),
+      iconSize: iconSize.widgetState(),
+      fixedSize: Size.square(sizeOf()).widgetState(),
+      elevation: 2.toDouble().widgetState(),
     );
   }
 

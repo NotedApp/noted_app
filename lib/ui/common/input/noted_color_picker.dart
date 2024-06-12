@@ -127,12 +127,12 @@ class NotedColorPickerButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ButtonStyle(
-          iconColor: color.getBW().materialState(),
-          overlayColor: color.getBW().withOpacity(NotedWidgetConfig.buttonOverlayOpacity).materialState(),
-          backgroundColor: color.materialState(),
-          iconSize: 28.toDouble().materialState(),
-          padding: EdgeInsets.zero.materialState(),
-          shape: CircleBorder(side: BorderSide(color: colors.onBackground)).materialState(),
+          iconColor: color.getBW().widgetState(),
+          overlayColor: color.getBW().withOpacity(NotedWidgetConfig.buttonOverlayOpacity).widgetState(),
+          backgroundColor: color.widgetState(),
+          iconSize: 28.toDouble().widgetState(),
+          padding: EdgeInsets.zero.widgetState(),
+          shape: CircleBorder(side: BorderSide(color: colors.onBackground)).widgetState(),
         ),
         child: isSelected ? const Center(child: Icon(NotedIcons.check)) : null,
       ),

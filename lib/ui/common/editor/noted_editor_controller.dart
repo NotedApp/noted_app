@@ -4,10 +4,12 @@ import 'package:noted_app/ui/common/editor/quill/quill_editor_controller.dart';
 import 'package:noted_models/noted_models.dart';
 
 abstract class NotedEditorController extends ChangeNotifier {
-  NotedEditorController();
+  final bool readonly;
 
-  factory NotedEditorController.quill({DocumentModel? initial}) {
-    return QuillEditorController(initial: initial);
+  NotedEditorController({this.readonly = false});
+
+  factory NotedEditorController.quill({DocumentModel? initial, bool readonly = false}) {
+    return QuillEditorController(initial: initial, readonly: readonly);
   }
 
   DocumentModel get value;

@@ -143,11 +143,11 @@ class _StandardTextFieldBuilder extends _NotedTextFieldBuilder {
         (states) {
           var color = scheme.onBackground;
 
-          if (states.contains(MaterialState.error)) {
+          if (states.contains(WidgetState.error)) {
             color = scheme.error;
           }
 
-          if (states.contains(MaterialState.disabled)) {
+          if (states.contains(WidgetState.disabled)) {
             color = color.withAlpha(128);
           }
 

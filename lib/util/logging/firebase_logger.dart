@@ -12,7 +12,7 @@ class FirebaseLogger extends NotedLogger {
   }
 
   @override
-  void log({required String name, Map<String, Object?> params = const {}}) {
+  void log({required String name, Map<String, Object>? params}) {
     _analytics.logEvent(name: name, parameters: params).onError((error, stackTrace) {});
   }
 }

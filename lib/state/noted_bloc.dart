@@ -26,13 +26,13 @@ abstract class NotedBloc<Event extends NotedEvent, State> extends Bloc<Event, St
   void onTransition(Transition<Event, State> transition) {
     super.onTransition(transition);
 
-    Map<String, dynamic> params = {'event': transition.event};
+    Map<String, Object> params = {'event': transition.event};
 
     if (_logVerbose) {
       // coverage:ignore-start
       params.addAll({
-        'from': transition.currentState,
-        'to': transition.nextState,
+        'from': transition.currentState.toString(),
+        'to': transition.nextState.toString(),
       });
       // coverage:ignore-end
     }

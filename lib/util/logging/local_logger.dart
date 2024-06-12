@@ -9,7 +9,7 @@ class LocalLogger extends NotedLogger {
   void setDefaultParams({required Map<String, Object?> params}) => _defaultParams = params;
 
   @override
-  void log({required String name, Map<String, Object?> params = const {}}) {
-    developer.log({..._defaultParams, ...params}.toString(), name: name);
+  void log({required String name, Map<String, Object>? params}) {
+    developer.log({..._defaultParams, ...params ?? {}}.toString(), name: name);
   }
 }

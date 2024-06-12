@@ -4,8 +4,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_models/noted_models.dart' as models;
 
 extension NotedColorExtensions on Color {
-  MaterialStateProperty<Color> materialState() {
-    return MaterialStatePropertyAll(this);
+  WidgetStateProperty<Color> widgetState() {
+    return WidgetStatePropertyAll(this);
   }
 
   /// Returns black or white, depending on the intensity of the color. This value can be used to generate a dynamic on
@@ -73,32 +73,32 @@ extension NotedThemeExtensions on ThemeData {
 }
 
 extension NotedDoubleExtensions on double {
-  MaterialStateProperty<double> materialState() {
-    return MaterialStatePropertyAll(this);
+  WidgetStateProperty<double> widgetState() {
+    return WidgetStatePropertyAll(this);
   }
 }
 
 extension NotedEdgeInsetsExtensions on EdgeInsets {
-  MaterialStateProperty<EdgeInsets> materialState() {
-    return MaterialStatePropertyAll(this);
+  WidgetStateProperty<EdgeInsets> widgetState() {
+    return WidgetStatePropertyAll(this);
   }
 }
 
 extension NotedSizeExtensions on Size {
-  MaterialStateProperty<Size> materialState() {
-    return MaterialStatePropertyAll(this);
+  WidgetStateProperty<Size> widgetState() {
+    return WidgetStatePropertyAll(this);
   }
 }
 
 extension NotedOutlinedBorderExtensions on OutlinedBorder {
-  MaterialStateProperty<OutlinedBorder> materialState() {
-    return MaterialStatePropertyAll(this);
+  WidgetStateProperty<OutlinedBorder> widgetState() {
+    return WidgetStatePropertyAll(this);
   }
 }
 
 extension NotedTextStyleExtensions on TextStyle {
-  MaterialStateProperty<TextStyle> materialState() {
-    return MaterialStatePropertyAll(this);
+  WidgetStateProperty<TextStyle> widgetState() {
+    return WidgetStatePropertyAll(this);
   }
 }
 

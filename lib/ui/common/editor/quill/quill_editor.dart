@@ -35,7 +35,6 @@ class QuillEditor extends NotedEditor {
         controller: quillController,
         padding: padding,
         autoFocus: autofocus,
-        readOnly: readonly,
         expands: true,
         placeholder: placeholder,
         showCursor: !readonly,

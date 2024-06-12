@@ -9,7 +9,7 @@ abstract class NotedLogger {
   void logUi({
     required String name,
     required String page,
-    Map<String, Object?> params = const {},
+    Map<String, Object> params = const {},
   }) {
     params['page'] = page;
     log(name: '$page-page-$name', params: params);
@@ -21,7 +21,7 @@ abstract class NotedLogger {
   void logBloc({
     required String name,
     required String bloc,
-    Map<String, Object?> params = const {},
+    Map<String, Object> params = const {},
   }) {
     params['bloc'] = bloc;
     log(name: '$bloc-bloc-$name', params: params);
@@ -30,6 +30,6 @@ abstract class NotedLogger {
   /// Logs an event with the given [name], and [params].
   void log({
     required String name,
-    Map<String, Object?> params = const {},
+    Map<String, Object>? params,
   });
 }

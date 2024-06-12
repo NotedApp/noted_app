@@ -25,7 +25,7 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
   void initState() {
     super.initState();
 
-    _textController = NotedEditorController.quill(initial: widget.note.field(NoteField.document));
+    _textController = NotedEditorController.quill(initial: widget.note.field(NoteField.document), readonly: true);
     _imageUrl = locator<OgpRepository>().fetchImage(widget.note.field(NoteField.link));
   }
 

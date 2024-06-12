@@ -49,50 +49,50 @@ void main() {
     });
   });
 
-  group('MaterialState Extensions', () {
+  group('WidgetState Extensions', () {
     test('color material state resolves in all cases', () {
-      MaterialStateProperty property = Colors.red.materialState();
-      expect(property.resolve({MaterialState.disabled}), Colors.red);
-      expect(property.resolve({MaterialState.hovered}), Colors.red);
-      expect(property.resolve({MaterialState.dragged, MaterialState.pressed}), Colors.red);
+      WidgetStateProperty property = Colors.red.widgetState();
+      expect(property.resolve({WidgetState.disabled}), Colors.red);
+      expect(property.resolve({WidgetState.hovered}), Colors.red);
+      expect(property.resolve({WidgetState.dragged, WidgetState.pressed}), Colors.red);
     });
 
     test('double material state resolves in all cases', () {
-      MaterialStateProperty property = 7.toDouble().materialState();
-      expect(property.resolve({MaterialState.disabled}), 7);
-      expect(property.resolve({MaterialState.hovered}), 7);
-      expect(property.resolve({MaterialState.dragged, MaterialState.pressed}), 7);
+      WidgetStateProperty property = 7.toDouble().widgetState();
+      expect(property.resolve({WidgetState.disabled}), 7);
+      expect(property.resolve({WidgetState.hovered}), 7);
+      expect(property.resolve({WidgetState.dragged, WidgetState.pressed}), 7);
     });
 
     test('edge insets material state resolves in all cases', () {
-      MaterialStateProperty<EdgeInsets> property = const EdgeInsets.only(top: 7).materialState();
-      expect(property.resolve({MaterialState.disabled}).top, 7);
-      expect(property.resolve({MaterialState.hovered}).top, 7);
-      expect(property.resolve({MaterialState.dragged, MaterialState.pressed}).top, 7);
+      WidgetStateProperty<EdgeInsets> property = const EdgeInsets.only(top: 7).widgetState();
+      expect(property.resolve({WidgetState.disabled}).top, 7);
+      expect(property.resolve({WidgetState.hovered}).top, 7);
+      expect(property.resolve({WidgetState.dragged, WidgetState.pressed}).top, 7);
     });
 
     test('size material state resolves in all cases', () {
-      MaterialStateProperty<Size> property = const Size.square(7).materialState();
-      expect(property.resolve({MaterialState.disabled}).width, 7);
-      expect(property.resolve({MaterialState.hovered}).height, 7);
-      expect(property.resolve({MaterialState.dragged, MaterialState.pressed}).width, 7);
+      WidgetStateProperty<Size> property = const Size.square(7).widgetState();
+      expect(property.resolve({WidgetState.disabled}).width, 7);
+      expect(property.resolve({WidgetState.hovered}).height, 7);
+      expect(property.resolve({WidgetState.dragged, WidgetState.pressed}).width, 7);
     });
 
     test('outlined border material state resolves in all cases', () {
-      MaterialStateProperty<OutlinedBorder> property = const RoundedRectangleBorder(
+      WidgetStateProperty<OutlinedBorder> property = const RoundedRectangleBorder(
         side: BorderSide(width: 7),
-      ).materialState();
+      ).widgetState();
 
-      expect(property.resolve({MaterialState.disabled}).side.width, 7);
-      expect(property.resolve({MaterialState.hovered}).side.width, 7);
-      expect(property.resolve({MaterialState.dragged, MaterialState.pressed}).side.width, 7);
+      expect(property.resolve({WidgetState.disabled}).side.width, 7);
+      expect(property.resolve({WidgetState.hovered}).side.width, 7);
+      expect(property.resolve({WidgetState.dragged, WidgetState.pressed}).side.width, 7);
     });
 
     test('text style material state resolves in all cases', () {
-      MaterialStateProperty<TextStyle> property = const TextStyle(fontSize: 7).materialState();
-      expect(property.resolve({MaterialState.disabled}).fontSize, 7);
-      expect(property.resolve({MaterialState.hovered}).fontSize, 7);
-      expect(property.resolve({MaterialState.dragged, MaterialState.pressed}).fontSize, 7);
+      WidgetStateProperty<TextStyle> property = const TextStyle(fontSize: 7).widgetState();
+      expect(property.resolve({WidgetState.disabled}).fontSize, 7);
+      expect(property.resolve({WidgetState.hovered}).fontSize, 7);
+      expect(property.resolve({WidgetState.dragged, WidgetState.pressed}).fontSize, 7);
     });
   });
 }

@@ -54,10 +54,10 @@ class NotedTextButton extends StatelessWidget {
     };
 
     ButtonStyle style = builder.styleOf(theme.colorScheme, theme.textTheme).copyWith(
-          foregroundColor: foregroundColor?.materialState(),
-          backgroundColor: backgroundColor?.materialState(),
-          overlayColor: foregroundColor?.withOpacity(NotedWidgetConfig.buttonOverlayOpacity).materialState(),
-          iconColor: foregroundColor?.materialState(),
+          foregroundColor: foregroundColor?.widgetState(),
+          backgroundColor: backgroundColor?.widgetState(),
+          overlayColor: foregroundColor?.withOpacity(NotedWidgetConfig.buttonOverlayOpacity).widgetState(),
+          iconColor: foregroundColor?.widgetState(),
         );
 
     if (icon != null) {
@@ -125,15 +125,15 @@ class _FilledTextButtonBuilder extends _NotedTextButtonBuilder {
     OutlinedBorder shape = RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius));
 
     return ButtonStyle(
-      textStyle: textStyle?.materialState(),
-      backgroundColor: buttonColors.$2.materialState(),
-      foregroundColor: buttonColors.$1.materialState(),
-      overlayColor: buttonColors.$1.withOpacity(NotedWidgetConfig.buttonOverlayOpacity).materialState(),
-      elevation: 3.toDouble().materialState(),
-      padding: padding.materialState(),
-      iconColor: buttonColors.$1.materialState(),
-      iconSize: iconSize.materialState(),
-      shape: shape.materialState(),
+      textStyle: textStyle?.widgetState(),
+      backgroundColor: buttonColors.$2.widgetState(),
+      foregroundColor: buttonColors.$1.widgetState(),
+      overlayColor: buttonColors.$1.withOpacity(NotedWidgetConfig.buttonOverlayOpacity).widgetState(),
+      elevation: 3.toDouble().widgetState(),
+      padding: padding.widgetState(),
+      iconColor: buttonColors.$1.widgetState(),
+      iconSize: iconSize.widgetState(),
+      shape: shape.widgetState(),
     );
   }
 }
@@ -179,15 +179,15 @@ class _OutlinedTextButtonBuilder extends _NotedTextButtonBuilder {
     );
 
     return ButtonStyle(
-      textStyle: textStyle?.materialState(),
-      foregroundColor: buttonColors.$1.materialState(),
-      backgroundColor: buttonColors.$2.materialState(),
-      overlayColor: buttonColors.$1.withOpacity(NotedWidgetConfig.buttonOverlayOpacity).materialState(),
-      elevation: 0.toDouble().materialState(),
-      padding: padding.materialState(),
-      iconColor: buttonColors.$1.materialState(),
-      iconSize: iconSize.materialState(),
-      shape: shape.materialState(),
+      textStyle: textStyle?.widgetState(),
+      foregroundColor: buttonColors.$1.widgetState(),
+      backgroundColor: buttonColors.$2.widgetState(),
+      overlayColor: buttonColors.$1.withOpacity(NotedWidgetConfig.buttonOverlayOpacity).widgetState(),
+      elevation: 0.toDouble().widgetState(),
+      padding: padding.widgetState(),
+      iconColor: buttonColors.$1.widgetState(),
+      iconSize: iconSize.widgetState(),
+      shape: shape.widgetState(),
     );
   }
 }
@@ -230,15 +230,15 @@ class _SimpleTextButtonBuilder extends _NotedTextButtonBuilder {
     OutlinedBorder shape = RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius));
 
     return ButtonStyle(
-      textStyle: textStyle?.materialState(),
-      foregroundColor: buttonColors.$1.materialState(),
-      backgroundColor: buttonColors.$2.materialState(),
-      overlayColor: buttonColors.$1.withOpacity(NotedWidgetConfig.buttonOverlayOpacity).materialState(),
-      elevation: 0.toDouble().materialState(),
-      padding: padding.materialState(),
-      iconColor: buttonColors.$1.materialState(),
-      iconSize: iconSize.materialState(),
-      shape: shape.materialState(),
+      textStyle: textStyle?.widgetState(),
+      foregroundColor: buttonColors.$1.widgetState(),
+      backgroundColor: buttonColors.$2.widgetState(),
+      overlayColor: buttonColors.$1.withOpacity(NotedWidgetConfig.buttonOverlayOpacity).widgetState(),
+      elevation: 0.toDouble().widgetState(),
+      padding: padding.widgetState(),
+      iconColor: buttonColors.$1.widgetState(),
+      iconSize: iconSize.widgetState(),
+      shape: shape.widgetState(),
     );
   }
 }
