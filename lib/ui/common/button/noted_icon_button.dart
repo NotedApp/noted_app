@@ -101,7 +101,7 @@ class _SimpleIconButtonBuilder extends _NotedIconButtonBuilder {
       NotedWidgetColor.primary => (colors.primary, Colors.transparent),
       NotedWidgetColor.secondary => (colors.secondary, Colors.transparent),
       NotedWidgetColor.tertiary => (colors.tertiary, Colors.transparent),
-      _ => (colors.onBackground, Colors.transparent),
+      _ => (colors.onSurface, Colors.transparent),
     };
 
     double iconSize = switch (source.size) {

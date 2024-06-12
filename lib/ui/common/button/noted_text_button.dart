@@ -147,7 +147,7 @@ class _OutlinedTextButtonBuilder extends _NotedTextButtonBuilder {
       NotedWidgetColor.primary => (colors.primary, Colors.transparent),
       NotedWidgetColor.secondary => (colors.secondary, Colors.transparent),
       NotedWidgetColor.tertiary => (colors.tertiary, Colors.transparent),
-      _ => (colors.onBackground, Colors.transparent),
+      _ => (colors.onSurface, Colors.transparent),
     };
 
     TextStyle? textStyle;
@@ -201,7 +201,7 @@ class _SimpleTextButtonBuilder extends _NotedTextButtonBuilder {
       NotedWidgetColor.primary => (colors.primary, Colors.transparent),
       NotedWidgetColor.secondary => (colors.secondary, Colors.transparent),
       NotedWidgetColor.tertiary => (colors.tertiary, Colors.transparent),
-      _ => (colors.onBackground, Colors.transparent),
+      _ => (colors.onSurface, Colors.transparent),
     };
 
     TextStyle? textStyle;

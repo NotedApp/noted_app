@@ -132,7 +132,7 @@ class NotedColorPickerButton extends StatelessWidget {
           backgroundColor: color.widgetState(),
           iconSize: 28.toDouble().widgetState(),
           padding: EdgeInsets.zero.widgetState(),
-          shape: CircleBorder(side: BorderSide(color: colors.onBackground)).widgetState(),
+          shape: CircleBorder(side: BorderSide(color: colors.onSurface)).widgetState(),
         ),
         child: isSelected ? const Center(child: Icon(NotedIcons.check)) : null,
       ),

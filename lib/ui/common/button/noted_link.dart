@@ -19,7 +19,7 @@ class NotedLink extends StatelessWidget {
       borderRadius: BorderRadius.circular(Dimens.radius_m),
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: theme.colorScheme.onBackground),
+          border: Border.all(color: theme.colorScheme.onSurface),
           borderRadius: BorderRadius.circular(Dimens.radius_m),
         ),
         padding: const EdgeInsets.all(Dimens.spacing_s),

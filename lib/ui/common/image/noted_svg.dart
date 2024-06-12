@@ -11,7 +11,7 @@ class NotedSvg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ColorFilter filter = ColorFilter.mode(color ?? context.colorScheme().onBackground, BlendMode.srcIn);
+    ColorFilter filter = ColorFilter.mode(color ?? context.colorScheme().onSurface, BlendMode.srcIn);
 
     return SvgPicture.asset(source, colorFilter: filter, fit: fit);
   }

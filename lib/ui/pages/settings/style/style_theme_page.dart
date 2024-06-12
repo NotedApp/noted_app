@@ -72,12 +72,12 @@ class ThemeSwitcherItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-    TextStyle? titleStyle = theme.textTheme.headlineMedium?.copyWith(color: colors.onBackground);
+    TextStyle? titleStyle = theme.textTheme.headlineMedium?.copyWith(color: colors.onSurface);
 
     return NotedCard(
       size: NotedWidgetSize.medium,
       onPressed: onPressed,
-      color: colors.background,
+      color: colors.surface,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16, 12, 16, 20),
         child: Column(
@@ -90,7 +90,7 @@ class ThemeSwitcherItem extends StatelessWidget {
                   Icon(
                     NotedIcons.check,
                     size: 36,
-                    color: colors.onBackground,
+                    color: colors.onSurface,
                   ),
               ],
             ),
@@ -99,29 +99,29 @@ class ThemeSwitcherItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _ColorSwitcherCircle(
-                  outline: colors.onBackground,
+                  outline: colors.onSurface,
                   background: colors.primary,
-                  onBackground: colors.onPrimary,
+                  onSurface: colors.onPrimary,
                 ),
                 _ColorSwitcherCircle(
-                  outline: colors.onBackground,
+                  outline: colors.onSurface,
                   background: colors.secondary,
-                  onBackground: colors.onSecondary,
+                  onSurface: colors.onSecondary,
                 ),
                 _ColorSwitcherCircle(
-                  outline: colors.onBackground,
+                  outline: colors.onSurface,
                   background: colors.tertiary,
-                  onBackground: colors.onTertiary,
+                  onSurface: colors.onTertiary,
                 ),
                 _ColorSwitcherCircle(
-                  outline: colors.onBackground,
-                  background: colors.surface,
-                  onBackground: colors.onSurface,
+                  outline: colors.onSurface,
+                  background: colors.surfaceContainer,
+                  onSurface: colors.onSurface,
                 ),
                 _ColorSwitcherCircle(
-                  outline: colors.onBackground,
+                  outline: colors.onSurface,
                   background: colors.error,
-                  onBackground: colors.onError,
+                  onSurface: colors.onError,
                 ),
               ],
             ),
@@ -135,12 +135,12 @@ class ThemeSwitcherItem extends StatelessWidget {
 class _ColorSwitcherCircle extends StatelessWidget {
   final Color outline;
   final Color background;
-  final Color onBackground;
+  final Color onSurface;
 
   const _ColorSwitcherCircle({
     required this.outline,
     required this.background,
-    required this.onBackground,
+    required this.onSurface,
   });
 
   @override
@@ -156,7 +156,7 @@ class _ColorSwitcherCircle extends StatelessWidget {
       child: Center(
         child: Icon(
           NotedIcons.text,
-          color: onBackground,
+          color: onSurface,
           size: 32,
         ),
       ),

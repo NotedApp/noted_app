@@ -68,8 +68,8 @@ extension NotedColorExtensions on Color {
 }
 
 extension NotedThemeExtensions on ThemeData {
-  Color shimmerBase() => colorScheme.background.addValue(brightness == Brightness.dark ? 0.06 : -0.06);
-  Color shimmerHighlight() => colorScheme.background.addValue(brightness == Brightness.dark ? 0.04 : -0.04);
+  Color shimmerBase() => colorScheme.surface.addValue(brightness == Brightness.dark ? 0.06 : -0.06);
+  Color shimmerHighlight() => colorScheme.surface.addValue(brightness == Brightness.dark ? 0.04 : -0.04);
 }
 
 extension NotedDoubleExtensions on double {
@@ -146,9 +146,8 @@ extension ColorSchemeModelExtensions on models.ColorSchemeModel {
       onTertiary: Color(onTertiary),
       error: Color(error),
       onError: Color(onError),
-      background: Color(background),
-      onBackground: Color(onBackground),
-      surface: Color(surface),
+      surface: Color(background),
+      surfaceContainer: Color(surface),
       onSurface: Color(onSurface),
     );
   }

@@ -42,7 +42,7 @@ void main() {
 
   group('ThemeData Extensions', () {
     test('theme can have shimmer colors', () {
-      ThemeData theme = ThemeData.from(colorScheme: const ColorScheme.dark(background: Colors.red));
+      ThemeData theme = ThemeData.from(colorScheme: const ColorScheme.dark(surface: Colors.red));
 
       expect(theme.shimmerBase(), Colors.red.addValue(0.06));
       expect(theme.shimmerHighlight(), Colors.red.addValue(0.04));

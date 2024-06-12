@@ -72,7 +72,7 @@ class NotedTextField extends StatelessWidget {
 
     TextStyle? style = builder.styleOf(theme.textTheme);
 
-    TextStyle? hintStyle = style?.copyWith(color: theme.colorScheme.onBackground.withOpacity(0.4));
+    TextStyle? hintStyle = style?.copyWith(color: theme.colorScheme.onSurface.withOpacity(0.4));
 
     NotedIconButton? suffix = icon == null
         ? null
@@ -141,7 +141,7 @@ class _StandardTextFieldBuilder extends _NotedTextFieldBuilder {
       contentPadding: EdgeInsets.fromLTRB(16, 10, source.icon == null ? 16 : 48, 10),
       border: MaterialStateOutlineInputBorder.resolveWith(
         (states) {
-          var color = scheme.onBackground;
+          var color = scheme.onSurface;
 
           if (states.contains(WidgetState.error)) {
             color = scheme.error;

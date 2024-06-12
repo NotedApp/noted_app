@@ -7,6 +7,7 @@ class NotedImage extends StatelessWidget {
   final int? imageWidth;
   final int? imageHeight;
   final Alignment? alignment;
+  final double opacity;
 
   const NotedImage.network({
     super.key,
@@ -15,6 +16,7 @@ class NotedImage extends StatelessWidget {
     this.imageHeight,
     this.imageWidth,
     this.alignment,
+    this.opacity = 1,
   });
 
   @override
@@ -27,6 +29,8 @@ class NotedImage extends StatelessWidget {
       memCacheHeight: imageHeight,
       maxHeightDiskCache: imageHeight,
       alignment: alignment ?? Alignment.center,
+      color: opacity == 1 ? null : Color.fromRGBO(255, 255, 255, opacity),
+      colorBlendMode: opacity == 1 ? null : BlendMode.modulate,
     );
   }
 }

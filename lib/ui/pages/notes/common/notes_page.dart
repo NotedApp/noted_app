@@ -62,7 +62,7 @@ class NotesPage extends StatelessWidget {
         return NotedHeaderPage(
           title: isSelecting ? state.toString() : title,
           hasBackButton: hasBackButton,
-          headerBackgroundColor: isSelecting ? colors.secondary : colors.background,
+          headerBackgroundColor: isSelecting ? colors.secondary : colors.surface,
           trailingActions: actions,
           floatingActionButton: NotedIconButton(
             icon: NotedIcons.plus,

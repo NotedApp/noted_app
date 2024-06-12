@@ -17,7 +17,7 @@ class NotedSwitchButton extends StatelessWidget {
     ThemeData theme = Theme.of(context);
     ColorScheme colors = theme.colorScheme;
 
-    Color activeColor = theme.brightness == Brightness.dark ? colors.onBackground : colors.tertiary;
+    Color activeColor = theme.brightness == Brightness.dark ? colors.onSurface : colors.tertiary;
     Color inactiveColor = theme.brightness == Brightness.dark ? colors.primary : colors.secondary;
 
     final WidgetStateProperty<Icon?> thumbIcon = WidgetStateProperty.resolveWith<Icon?>(
@@ -30,7 +30,7 @@ class NotedSwitchButton extends StatelessWidget {
       value: value,
       onChanged: onChanged,
       thumbIcon: thumbIcon,
-      thumbColor: colors.background.widgetState(),
+      thumbColor: colors.surface.widgetState(),
       activeTrackColor: activeColor,
       inactiveTrackColor: inactiveColor,
       trackOutlineColor: Colors.transparent.widgetState(),
