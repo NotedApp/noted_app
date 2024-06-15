@@ -27,14 +27,14 @@ class NotedTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = context.theme();
     final colors = theme.colorScheme;
-    final highlighted = colors.background.brighten(
+    final highlighted = colors.surface.brighten(
       theme.brightness == Brightness.dark ? _selectedBrightness : -_selectedBrightness,
     );
 
     return NotedCard(
       key: ValueKey('note-tile-$noteId'),
       size: NotedWidgetSize.small,
-      color: isSelected ? highlighted : colors.background,
+      color: isSelected ? highlighted : colors.surface,
       borderColor: isSelected ? colors.tertiary : null,
       onPressed: onPressed,
       onLongPressed: onLongPressed,

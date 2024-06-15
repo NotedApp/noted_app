@@ -85,11 +85,11 @@ class NotedDialog extends StatelessWidget {
     }
 
     return Dialog(
-      backgroundColor: theme.colorScheme.surface,
+      backgroundColor: theme.colorScheme.surfaceContainer,
       elevation: 5,
       insetPadding: const EdgeInsets.all(20),
       shape: RoundedRectangleBorder(
-        side: BorderSide(color: theme.colorScheme.onBackground, width: 2),
+        side: BorderSide(color: theme.colorScheme.onSurface, width: 2),
         borderRadius: BorderRadius.circular(24),
       ),
       child: Column(

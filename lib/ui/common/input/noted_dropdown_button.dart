@@ -15,7 +15,7 @@ class NotedDropdownButton extends StatelessWidget {
 
     OutlineInputBorder border = OutlineInputBorder(
       borderRadius: BorderRadius.circular(16),
-      borderSide: BorderSide(color: theme.colorScheme.onBackground),
+      borderSide: BorderSide(color: theme.colorScheme.onSurface),
     );
 
     return SizedBox(
@@ -23,14 +23,14 @@ class NotedDropdownButton extends StatelessWidget {
       height: 32,
       child: DropdownButtonFormField<String>(
         items: items?.map<DropdownMenuItem<String>>(_buildMenuItem).toList(),
-        dropdownColor: theme.colorScheme.surface,
+        dropdownColor: theme.colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(16),
         onChanged: onChanged,
         elevation: 3,
         iconSize: 20,
         value: value,
         style: theme.textTheme.bodyMedium,
-        icon: Icon(NotedIcons.chevronDown, color: theme.colorScheme.onBackground),
+        icon: Icon(NotedIcons.chevronDown, color: theme.colorScheme.onSurface),
         decoration: InputDecoration(
           border: border,
           focusedBorder: border,

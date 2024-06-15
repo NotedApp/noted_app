@@ -25,7 +25,7 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
   void initState() {
     super.initState();
 
-    _textController = NotedEditorController.quill(initial: widget.note.field(NoteField.document));
+    _textController = NotedEditorController.quill(initial: widget.note.field(NoteField.document), readonly: true);
     _imageUrl = locator<OgpRepository>().fetchImage(widget.note.field(NoteField.link));
   }
 
@@ -108,13 +108,11 @@ class _CookbookTileContentState extends State<CookbookTileContent> {
           builder: (context, snapshot) {
             if (snapshot.hasData && (snapshot.data?.isNotEmpty ?? false)) {
               // coverage:ignore-start
-              return Opacity(
+              return NotedImage.network(
+                source: snapshot.data!,
+                fit: BoxFit.cover,
+                imageHeight: imageSize,
                 opacity: 0.2,
-                child: NotedImage.network(
-                  source: snapshot.data!,
-                  fit: BoxFit.cover,
-                  imageHeight: imageSize,
-                ),
               );
               // coverage:ignore-end
             } else {

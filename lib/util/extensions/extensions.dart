@@ -4,8 +4,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:noted_models/noted_models.dart' as models;
 
 extension NotedColorExtensions on Color {
-  MaterialStateProperty<Color> materialState() {
-    return MaterialStatePropertyAll(this);
+  WidgetStateProperty<Color> widgetState() {
+    return WidgetStatePropertyAll(this);
   }
 
   /// Returns black or white, depending on the intensity of the color. This value can be used to generate a dynamic on
@@ -68,37 +68,37 @@ extension NotedColorExtensions on Color {
 }
 
 extension NotedThemeExtensions on ThemeData {
-  Color shimmerBase() => colorScheme.background.addValue(brightness == Brightness.dark ? 0.06 : -0.06);
-  Color shimmerHighlight() => colorScheme.background.addValue(brightness == Brightness.dark ? 0.04 : -0.04);
+  Color shimmerBase() => colorScheme.surface.addValue(brightness == Brightness.dark ? 0.06 : -0.06);
+  Color shimmerHighlight() => colorScheme.surface.addValue(brightness == Brightness.dark ? 0.04 : -0.04);
 }
 
 extension NotedDoubleExtensions on double {
-  MaterialStateProperty<double> materialState() {
-    return MaterialStatePropertyAll(this);
+  WidgetStateProperty<double> widgetState() {
+    return WidgetStatePropertyAll(this);
   }
 }
 
 extension NotedEdgeInsetsExtensions on EdgeInsets {
-  MaterialStateProperty<EdgeInsets> materialState() {
-    return MaterialStatePropertyAll(this);
+  WidgetStateProperty<EdgeInsets> widgetState() {
+    return WidgetStatePropertyAll(this);
   }
 }
 
 extension NotedSizeExtensions on Size {
-  MaterialStateProperty<Size> materialState() {
-    return MaterialStatePropertyAll(this);
+  WidgetStateProperty<Size> widgetState() {
+    return WidgetStatePropertyAll(this);
   }
 }
 
 extension NotedOutlinedBorderExtensions on OutlinedBorder {
-  MaterialStateProperty<OutlinedBorder> materialState() {
-    return MaterialStatePropertyAll(this);
+  WidgetStateProperty<OutlinedBorder> widgetState() {
+    return WidgetStatePropertyAll(this);
   }
 }
 
 extension NotedTextStyleExtensions on TextStyle {
-  MaterialStateProperty<TextStyle> materialState() {
-    return MaterialStatePropertyAll(this);
+  WidgetStateProperty<TextStyle> widgetState() {
+    return WidgetStatePropertyAll(this);
   }
 }
 
@@ -146,9 +146,8 @@ extension ColorSchemeModelExtensions on models.ColorSchemeModel {
       onTertiary: Color(onTertiary),
       error: Color(error),
       onError: Color(onError),
-      background: Color(background),
-      onBackground: Color(onBackground),
-      surface: Color(surface),
+      surface: Color(background),
+      surfaceContainer: Color(surface),
       onSurface: Color(onSurface),
     );
   }

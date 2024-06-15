@@ -27,7 +27,7 @@ class NotedTabBar extends StatelessWidget {
       automaticIndicatorColorAdjustment: false,
       indicator: BoxDecoration(
         color: theme.colorScheme.primary,
-        border: Border.all(color: theme.colorScheme.onBackground),
+        border: Border.all(color: theme.colorScheme.onSurface),
         borderRadius: BorderRadius.circular(18),
       ),
       indicatorPadding: const EdgeInsets.symmetric(horizontal: 5),
@@ -56,7 +56,7 @@ class _NotedTab extends StatelessWidget {
           height: 36,
           padding: const EdgeInsets.symmetric(horizontal: 15),
           decoration: BoxDecoration(
-            border: Border.all(color: theme.colorScheme.onBackground),
+            border: Border.all(color: theme.colorScheme.onSurface),
             borderRadius: BorderRadius.circular(18),
           ),
           child: Center(child: Text(text, style: theme.textTheme.titleSmall)),

@@ -27,15 +27,14 @@ Attribute _getQuillAttribute(NotedEditorAttribute attribute) {
 // coverage:ignore-end
 
 class QuillEditorController extends NotedEditorController {
-  QuillController controller = QuillController.basic();
+  late QuillController controller = QuillController.basic();
 
-  QuillEditorController({noted.DocumentModel? initial}) {
-    if (initial != null) {
-      controller = QuillController(
-        document: Document.fromDelta(Delta.fromJson(initial)),
-        selection: const TextSelection.collapsed(offset: 0),
-      );
-    }
+  QuillEditorController({noted.DocumentModel? initial, bool readonly = false}) {
+    controller = QuillController(
+      document: initial == null ? Document() : Document.fromDelta(Delta.fromJson(initial)),
+      selection: const TextSelection.collapsed(offset: 0),
+      readOnly: readonly,
+    );
 
     controller.addListener(notifyListeners);
   }

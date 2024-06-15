@@ -75,7 +75,7 @@ class _NotedEditorToolbarState extends State<NotedEditorToolbar> {
           borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
           boxShadow: [
             BoxShadow(
-              color: colors.onBackground.withAlpha(64),
+              color: colors.onSurface.withAlpha(64),
               blurRadius: 4,
             ),
           ],
@@ -163,14 +163,14 @@ class _NotedEditorToolbarContent extends StatelessWidget {
           _ToolbarState.textColor => _ToolbarColorPicker(
               controller: controller,
               attribute: NotedEditorAttribute.textColor,
-              defaultColor: colors.onBackground,
+              defaultColor: colors.onSurface,
               setToolbarState: setState,
               key: _textColorKey,
             ),
           _ToolbarState.highlightColor => _ToolbarColorPicker(
               controller: controller,
               attribute: NotedEditorAttribute.textBackground,
-              defaultColor: colors.background,
+              defaultColor: colors.surface,
               setToolbarState: setState,
               key: _highlightColorKey,
             ),

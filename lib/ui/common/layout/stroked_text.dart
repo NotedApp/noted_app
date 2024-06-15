@@ -20,7 +20,7 @@ class StrokedText extends StatelessWidget {
     final paint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth
-      ..color = strokeColor ?? context.colorScheme().onBackground;
+      ..color = strokeColor ?? context.colorScheme().onSurface;
 
     return Stack(
       children: [

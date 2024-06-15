@@ -35,7 +35,6 @@ class QuillEditor extends NotedEditor {
         controller: quillController,
         padding: padding,
         autoFocus: autofocus,
-        readOnly: readonly,
         expands: true,
         placeholder: placeholder,
         showCursor: !readonly,
@@ -115,7 +114,7 @@ quill.DefaultStyles _getStyles(BuildContext context) {
       null,
     ),
     placeHolder: quill.DefaultTextBlockStyle(
-      baseStyle.copyWith(color: scheme.onBackground.withOpacity(0.4)),
+      baseStyle.copyWith(color: scheme.onSurface.withOpacity(0.4)),
       const quill.VerticalSpacing(0, 0),
       const quill.VerticalSpacing(0, 0),
       null,
@@ -134,12 +133,12 @@ quill.DefaultStyles _getStyles(BuildContext context) {
       null,
     ),
     quote: quill.DefaultTextBlockStyle(
-      TextStyle(color: scheme.onBackground.withOpacity(0.6)),
+      TextStyle(color: scheme.onSurface.withOpacity(0.6)),
       baseSpacing,
       const quill.VerticalSpacing(6, 2),
       BoxDecoration(
         border: Border(
-          left: BorderSide(width: 4, color: scheme.onBackground.withOpacity(0.3)),
+          left: BorderSide(width: 4, color: scheme.onSurface.withOpacity(0.3)),
         ),
       ),
     ),
