@@ -12,15 +12,17 @@ import 'package:noted_models/noted_models.dart';
 
 import '../../helpers/environment/unit_test_environment.dart';
 
+const _missingField = NoteTextField(id: CommonField.title, name: 'error');
+
 void main() {
   group('EditBloc', () {
     LocalNotesRepository notes() => locator<NotesRepository>() as LocalNotesRepository;
     LocalAuthRepository auth() => locator<AuthRepository>() as LocalAuthRepository;
 
-    NoteModel addedNote = NoteModel.empty(NotedPlugin.notebook).copyWith(id: 'note-3');
+    NoteModel addedNote = noteTemplate.copyWith(id: 'note-3');
 
     NoteModel existing = localNotes.values.first.copyWith();
-    NoteModel updated = existing.copyWithField(const NoteFieldValue(NoteField.title, 'updated'));
+    NoteModel updated = existing.updateField<String>(CommonField.title, 'updated');
 
     setUpAll(() => UnitTestEnvironment().configure());
 
@@ -35,7 +37,7 @@ void main() {
     });
 
     test('adds and deletes a note', () async {
-      final editBloc = EditBloc.add(plugin: NotedPlugin.notebook, updateDebounceMs: 0);
+      final editBloc = EditBloc.add(template: noteTemplate, updateDebounceMs: 0);
       final added = await editBloc.stream.firstWhere((state) => state.status == EditStatus.loaded);
       expect(added.note?.id, addedNote.id);
 
@@ -49,17 +51,17 @@ void main() {
     test('loads and updates a note', () async {
       final editBloc = EditBloc.load(noteId: 'test-notebook-0', updateDebounceMs: 0);
       final original = await editBloc.stream.firstWhere((state) => state.status == EditStatus.loaded);
-      expect(original.note?.field(NoteField.title), existing.field(NoteField.title));
+      expect(original.note?.getField<String>(CommonField.title), existing.getField<String>(CommonField.title));
 
-      editBloc.add(EditUpdateEvent(NoteFieldValue(NoteField.title, updated.field(NoteField.title))));
+      editBloc.add(EditUpdateEvent(CommonField.title, updated.fields[CommonField.title] ?? _missingField));
       final update = await editBloc.stream.first;
-      expect(update.note?.field(NoteField.title), updated.field(NoteField.title));
+      expect(update.note?.getField<String>(CommonField.title), updated.getField<String>(CommonField.title));
     });
 
     test('closes a note when auth is lost', () async {
       final editBloc = EditBloc.load(noteId: 'test-notebook-0', updateDebounceMs: 0);
       final original = await editBloc.stream.firstWhere((state) => state.status == EditStatus.loaded);
-      expect(original.note?.field(NoteField.title), existing.field(NoteField.title));
+      expect(original.note?.getField<String>(CommonField.title), existing.getField<String>(CommonField.title));
 
       await auth().signOut();
       final update = await editBloc.stream.firstWhere((state) => state.status == EditStatus.empty);
@@ -69,24 +71,24 @@ void main() {
     test('adds a note and handles error', () async {
       notes().shouldThrow = true;
 
-      final editBloc = EditBloc.add(plugin: NotedPlugin.notebook, updateDebounceMs: 0);
+      final editBloc = EditBloc.add(template: noteTemplate, updateDebounceMs: 0);
       final error = await editBloc.stream.firstWhere((state) => state.status == EditStatus.empty);
       expect(error.note, null);
     });
 
     test('add a note fails with no auth', () async {
       await auth().signOut();
-      final editBloc = EditBloc.add(plugin: NotedPlugin.notebook, updateDebounceMs: 0);
+      final editBloc = EditBloc.add(template: noteTemplate, updateDebounceMs: 0);
       final empty = await editBloc.stream.firstWhere((state) => state.status == EditStatus.empty);
       expect(empty.note, null);
     });
 
     test('add a note fails with wrong state', () async {
-      final editBloc = EditBloc.add(plugin: NotedPlugin.notebook, updateDebounceMs: 0);
+      final editBloc = EditBloc.add(template: noteTemplate, updateDebounceMs: 0);
       editBloc.add(EditAddEvent(addedNote));
 
       final loaded = await editBloc.stream.firstWhere((state) => state.status == EditStatus.loaded);
-      expect(loaded.note?.field(NoteField.title), addedNote.field(NoteField.title));
+      expect(loaded.note?.getField<String>(CommonField.title), addedNote.getField<String>(CommonField.title));
     });
 
     test('loads a note and handles error', () async {
@@ -107,13 +109,13 @@ void main() {
     test('load a note fails with wrong state', () async {
       final editBloc = EditBloc.load(noteId: 'test-notebook-0', updateDebounceMs: 0);
       final loaded = await editBloc.stream.firstWhere((state) => state.status == EditStatus.loaded);
-      expect(loaded.note?.field(NoteField.title), existing.field(NoteField.title));
+      expect(loaded.note?.getField<String>(CommonField.title), existing.getField<String>(CommonField.title));
     });
 
     test('load a note and handles stream error', () async {
       final editBloc = EditBloc.load(noteId: 'test-notebook-0', updateDebounceMs: 0);
       final loaded = await editBloc.stream.firstWhere((state) => state.status == EditStatus.loaded);
-      expect(loaded.note?.field(NoteField.title), existing.field(NoteField.title));
+      expect(loaded.note?.getField<String>(CommonField.title), existing.getField<String>(CommonField.title));
 
       await Future.delayed(const Duration(milliseconds: 5));
       notes().addStreamError();
@@ -124,11 +126,11 @@ void main() {
     test('updates a note and handles error', () async {
       final editBloc = EditBloc.load(noteId: 'test-notebook-0', updateDebounceMs: 0);
       final original = await editBloc.stream.firstWhere((state) => state.status == EditStatus.loaded);
-      expect(original.note?.field(NoteField.title), existing.field(NoteField.title));
+      expect(original.note?.getField<String>(CommonField.title), existing.getField<String>(CommonField.title));
 
       await Future.delayed(const Duration(milliseconds: 5));
       notes().shouldThrow = true;
-      editBloc.add(EditUpdateEvent(NoteFieldValue(NoteField.title, updated.field(NoteField.title))));
+      editBloc.add(EditUpdateEvent(CommonField.title, updated.fields[CommonField.title] ?? _missingField));
       final error = await editBloc.stream.first;
       expect(error.error?.code, ErrorCode.notes_update_failed);
     });
@@ -139,7 +141,7 @@ void main() {
       final empty = await editBloc.stream.firstWhere((state) => state.status == EditStatus.empty);
       expect(empty.note, null);
 
-      editBloc.add(EditUpdateEvent(NoteFieldValue(NoteField.title, updated.field(NoteField.title))));
+      editBloc.add(EditUpdateEvent(CommonField.title, updated.fields[CommonField.title] ?? _missingField));
       final error = await editBloc.stream.first;
       expect(error.error?.code, ErrorCode.notes_update_failed);
     });
@@ -149,7 +151,7 @@ void main() {
       final empty = await editBloc.stream.firstWhere((state) => state.status == EditStatus.empty);
       expect(empty.note, null);
 
-      editBloc.add(EditUpdateEvent(NoteFieldValue(NoteField.title, updated.field(NoteField.title))));
+      editBloc.add(EditUpdateEvent(CommonField.title, updated.fields[CommonField.title] ?? _missingField));
       final error = await editBloc.stream.first;
       expect(error.error?.code, ErrorCode.notes_update_failed);
     });
@@ -157,7 +159,7 @@ void main() {
     test('deletes a note and handles error', () async {
       final editBloc = EditBloc.load(noteId: 'test-notebook-0', updateDebounceMs: 0);
       final original = await editBloc.stream.firstWhere((state) => state.status == EditStatus.loaded);
-      expect(original.note?.field(NoteField.title), existing.field(NoteField.title));
+      expect(original.note?.getField<String>(CommonField.title), existing.getField<String>(CommonField.title));
 
       await Future.delayed(const Duration(milliseconds: 5));
       notes().shouldThrow = true;
@@ -174,7 +176,7 @@ void main() {
       editBloc.add(EditDeleteEvent());
 
       final loaded = await editBloc.stream.firstWhere((state) => state.status == EditStatus.loaded);
-      expect(loaded.note?.field(NoteField.title), existing.field(NoteField.title));
+      expect(loaded.note?.getField<String>(CommonField.title), existing.getField<String>(CommonField.title));
     });
   });
 }

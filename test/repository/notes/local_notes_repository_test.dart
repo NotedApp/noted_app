@@ -1,18 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:noted_app/repository/notes/local_notes_repository.dart';
+import 'package:noted_app/repository/notes/mock_notes.dart';
 import 'package:noted_app/state/notes/notes_state.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
-final testNote = NoteModel.value(
-  NotedPlugin.notebook,
-  overrides: [const NoteFieldValue(NoteField.title, 'test note')],
-).copyWith(id: 'test-note-3');
+final testNote = MockNotes.note0.copyWith(id: 'test-note-3');
 
-final updatedNote = NoteModel.value(
-  NotedPlugin.notebook,
-  overrides: [const NoteFieldValue(NoteField.title, 'updated note')],
-).copyWith(id: 'test-note-3');
+final updatedNote = testNote.updateField(CommonField.title, 'Updated Title');
 
 void main() {
   late LocalNotesRepository repository;
@@ -34,11 +29,22 @@ void main() {
       repository.updateFields(
         userId: 'test',
         noteId: 'test-note-3',
-        updates: [const NoteFieldValue(NoteField.title, 'updated note')],
+        fields: [
+          (
+            CommonField.title,
+            const NoteTextField(
+              id: CommonField.title,
+              name: 'title',
+              value: 'updated note',
+              type: NoteTextFieldType.title,
+            ),
+          ),
+        ],
       );
+
       final updated = await stream.first;
       expect(updated.length, 4);
-      expect(updated.last.field(NoteField.title), 'updated note');
+      expect(updated.last.getField<String>(CommonField.title), 'updated note');
 
       repository.deleteNote(userId: 'test', noteId: 'test-note-3');
       expect(await stream.first, List.of(localNotes.values));
@@ -48,7 +54,7 @@ void main() {
     });
 
     test('filters notes', () async {
-      const filter = NotesFilter(plugins: {NotedPlugin.notebook});
+      final filter = NotesFilter(templateIds: {noteTemplate.id});
 
       expect(await repository.fetchNotes(userId: 'test', filter: filter), [localNotes.values.firstOrNull]);
 
@@ -60,11 +66,22 @@ void main() {
       repository.updateFields(
         userId: 'test',
         noteId: 'test-note-3',
-        updates: [const NoteFieldValue(NoteField.title, 'updated note')],
+        fields: [
+          (
+            CommonField.title,
+            const NoteTextField(
+              id: CommonField.title,
+              name: 'title',
+              value: 'updated note',
+              type: NoteTextFieldType.title,
+            ),
+          ),
+        ],
       );
+
       final updated = await stream.first;
       expect(updated.length, 2);
-      expect(updated.last.field(NoteField.title), 'updated note');
+      expect(updated.last.getField<String>(CommonField.title), 'updated note');
     });
 
     test('handles fetch error', () async {
@@ -104,7 +121,17 @@ void main() {
         () => repository.updateFields(
           userId: 'test',
           noteId: 'test-note-3',
-          updates: [const NoteFieldValue(NoteField.title, 'updated note')],
+          fields: [
+            (
+              CommonField.title,
+              const NoteTextField(
+                id: CommonField.title,
+                name: 'title',
+                value: 'updated note',
+                type: NoteTextFieldType.title,
+              ),
+            ),
+          ],
         ),
         throwsA(NotedError(ErrorCode.notes_update_failed)),
       );

@@ -14,13 +14,9 @@ import '../../helpers/environment/unit_test_environment.dart';
 import '../../helpers/mocks/mock_delta.dart';
 
 void main() {
-  final testNote = NoteModel.value(
-    NotedPlugin.notebook,
-    overrides: [
-      const NoteFieldValue(NoteField.title, 'test'),
-      const NoteFieldValue(NoteField.document, testData0),
-    ],
-  ).copyWith(id: 'test');
+  final testNote = noteTemplate
+      .copyWith(id: 'test', defaultFields: const NoteDefaultFields(document: testData0))
+      .updateField(CommonField.title, 'test');
 
   group('NotesBloc', () {
     LocalNotesRepository notes() => locator<NotesRepository>() as LocalNotesRepository;
@@ -41,48 +37,40 @@ void main() {
     test('sorts notes by updated date', () {
       final state = NotesState.success(
         notes: {
-          'zzz-last-1': NoteModel.value(
-            NotedPlugin.notebook,
-            overrides: [
-              const NoteFieldValue(NoteField.title, 'zzz-last-1'),
-              const NoteFieldValue(NoteField.document, testData0),
-            ],
-          ).copyWith(id: 'zzz-last-1'),
-          'zzz-last-0': NoteModel.value(
-            NotedPlugin.notebook,
-            overrides: [
-              const NoteFieldValue(NoteField.title, 'zzz-last-0'),
-              const NoteFieldValue(NoteField.document, testData0),
-            ],
-          ).copyWith(id: 'zzz-last-0'),
-          'third': NoteModel.value(
-            NotedPlugin.notebook,
-            overrides: [
-              const NoteFieldValue(NoteField.title, 'third'),
-              const NoteFieldValue(NoteField.document, testData0),
-              NoteFieldValue(NoteField.lastUpdatedUtc, DateTime.fromMillisecondsSinceEpoch(500)),
-            ],
-          ).copyWith(id: 'third'),
-          'first': NoteModel.value(
-            NotedPlugin.notebook,
-            overrides: [
-              const NoteFieldValue(NoteField.title, 'first'),
-              const NoteFieldValue(NoteField.document, testData0),
-              NoteFieldValue(NoteField.lastUpdatedUtc, DateTime.fromMillisecondsSinceEpoch(1000)),
-            ],
-          ).copyWith(id: 'first'),
-          'second': NoteModel.value(
-            NotedPlugin.notebook,
-            overrides: [
-              const NoteFieldValue(NoteField.title, 'second'),
-              const NoteFieldValue(NoteField.document, testData0),
-              NoteFieldValue(NoteField.lastUpdatedUtc, DateTime.fromMillisecondsSinceEpoch(750)),
-            ],
-          ).copyWith(id: 'second'),
+          'last': noteTemplate
+              .copyWith(id: 'last', defaultFields: const NoteDefaultFields(document: testData0))
+              .updateField(CommonField.title, 'last'),
+          'third': noteTemplate
+              .copyWith(
+                id: 'third',
+                defaultFields: NoteDefaultFields(
+                  document: testData0,
+                  lastUpdatedUtc: DateTime.fromMillisecondsSinceEpoch(500).toUtc(),
+                ),
+              )
+              .updateField(CommonField.title, 'third'),
+          'first': noteTemplate
+              .copyWith(
+                id: 'first',
+                defaultFields: NoteDefaultFields(
+                  document: testData0,
+                  lastUpdatedUtc: DateTime.fromMillisecondsSinceEpoch(1000).toUtc(),
+                ),
+              )
+              .updateField(CommonField.title, 'first'),
+          'second': noteTemplate
+              .copyWith(
+                id: 'second',
+                defaultFields: NoteDefaultFields(
+                  document: testData0,
+                  lastUpdatedUtc: DateTime.fromMillisecondsSinceEpoch(750).toUtc(),
+                ),
+              )
+              .updateField(CommonField.title, 'second'),
         },
       );
 
-      expect(state.sortedNoteIds, const ['first', 'second', 'third', 'zzz-last-0', 'zzz-last-1']);
+      expect(state.sortedNoteIds, const ['first', 'second', 'third', 'last']);
     });
 
     test('loads empty notes for a user', () async {

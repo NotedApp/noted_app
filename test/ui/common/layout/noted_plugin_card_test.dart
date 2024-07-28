@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
-import 'package:noted_models/noted_models.dart';
 
 import '../../../helpers/mocks/mock_callbacks.dart';
 import '../../../helpers/test_wrapper.dart';
@@ -19,18 +18,18 @@ void main() {
         TestWrapper(
           child: Column(
             children: [
-              NotedPluginCard(
-                plugin: NotedPlugin.notebook,
+              NotedTemplateCard(
+                name: 'small',
                 size: NotedWidgetSize.small,
                 onPressed: onPressed.call,
                 key: smallKey,
               ),
-              const NotedPluginCard(
-                plugin: NotedPlugin.cookbook,
+              const NotedTemplateCard(
+                name: 'medium',
                 key: mediumKey,
               ),
-              NotedPluginCard(
-                plugin: NotedPlugin.climbing,
+              NotedTemplateCard(
+                name: 'large',
                 size: NotedWidgetSize.large,
                 onPressed: onPressed.call,
                 key: largeKey,
