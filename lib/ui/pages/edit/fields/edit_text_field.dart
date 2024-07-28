@@ -5,34 +5,23 @@ import 'package:noted_app/state/edit/edit_event.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_models/noted_models.dart';
 
-enum TextFieldType {
-  text,
-  title,
-}
-
-extension on TextFieldType {
+extension on NoteTextFieldType {
   NotedTextFieldType get _fieldType => switch (this) {
-        TextFieldType.text => NotedTextFieldType.plain,
-        TextFieldType.title => NotedTextFieldType.title,
+        NoteTextFieldType.normal => NotedTextFieldType.plain,
+        NoteTextFieldType.title => NotedTextFieldType.title,
       };
 
   EdgeInsetsGeometry get _padding => switch (this) {
-        TextFieldType.text => const EdgeInsets.fromLTRB(Dimens.spacing_l, Dimens.spacing_xs, Dimens.spacing_l, 0),
-        TextFieldType.title => const EdgeInsets.fromLTRB(Dimens.spacing_l, Dimens.spacing_s, Dimens.spacing_l, 0),
+        NoteTextFieldType.normal => const EdgeInsets.fromLTRB(Dimens.spacing_l, Dimens.spacing_xs, Dimens.spacing_l, 0),
+        NoteTextFieldType.title => const EdgeInsets.fromLTRB(Dimens.spacing_l, Dimens.spacing_s, Dimens.spacing_l, 0),
       };
 }
 
 // coverage:ignore-file
 class EditTextField extends StatefulWidget {
-  final NoteField<String> field;
-  final TextFieldType type;
-  final String name;
+  final NoteTextField field;
 
-  const EditTextField({required this.field, required this.name, super.key}) : type = TextFieldType.text;
-
-  const EditTextField.title({required this.name, super.key})
-      : field = NoteField.title,
-        type = TextFieldType.title;
+  const EditTextField({required this.field, super.key});
 
   @override
   State<StatefulWidget> createState() => _EditTextFieldState();
@@ -47,21 +36,21 @@ class _EditTextFieldState extends State<EditTextField> {
     super.initState();
 
     bloc = context.read();
-    controller = TextEditingController(text: bloc.state.note?.field(widget.field) ?? widget.field.defaultValue);
+    controller = TextEditingController(text: widget.field.value);
     controller.addListener(updateNote);
   }
 
-  void updateNote() => bloc.add(EditUpdateEvent(NoteFieldValue(widget.field, controller.text)));
+  void updateNote() => bloc.add(EditUpdateEvent(widget.field.id, widget.field.copyWith(value: controller.text)));
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: widget.type._padding,
+      padding: widget.field.type._padding,
       child: NotedTextField(
-        type: widget.type._fieldType,
+        type: widget.field.type._fieldType,
         controller: controller,
-        name: widget.type != TextFieldType.title ? widget.name : null,
-        hint: widget.type == TextFieldType.title ? widget.name : null,
+        name: widget.field.type != NoteTextFieldType.title ? widget.field.name : null,
+        hint: widget.field.type == NoteTextFieldType.title ? widget.field.name : null,
       ),
     );
   }
