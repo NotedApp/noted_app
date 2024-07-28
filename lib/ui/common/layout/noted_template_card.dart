@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:noted_app/ui/common/noted_library.dart';
 import 'package:noted_app/util/extensions/extensions.dart';
-import 'package:noted_models/noted_models.dart';
 
-class NotedPluginCard extends StatelessWidget {
-  final NotedPlugin plugin;
+class NotedTemplateCard extends StatelessWidget {
+  final String name;
   final NotedWidgetSize size;
   final VoidCallback? onPressed;
   final double? width;
   final double? height;
 
-  const NotedPluginCard({
-    required this.plugin,
+  const NotedTemplateCard({
+    required this.name,
     this.size = NotedWidgetSize.medium,
     this.onPressed,
     this.width,
@@ -22,7 +21,6 @@ class NotedPluginCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colorScheme();
-    final text = _getPluginName(context, plugin);
     final config = _NotedPluginCardConfig.fromSize(context, size);
 
     return SizedBox(
@@ -32,45 +30,16 @@ class NotedPluginCard extends StatelessWidget {
         size: config.cardSize,
         color: colors.secondary,
         onPressed: onPressed,
-        child: Stack(
-          alignment: Alignment.centerLeft,
-          children: [
-            Positioned(
-              width: config.width * 1.8,
-              height: config.height,
-              child: NotedSvg.asset(
-                source: _getPluginAsset(plugin),
-                fit: BoxFit.fitHeight,
-                color: colors.tertiary,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Text(text, style: config.textStyle),
-            ),
-          ],
+        child: Container(
+          alignment: Alignment.center,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: Dimens.spacing_m),
+            child: Text(name, style: config.textStyle),
+          ),
         ),
       ),
     );
   }
-}
-
-String _getPluginName(BuildContext context, NotedPlugin plugin) {
-  final strings = context.strings();
-
-  return switch (plugin) {
-    NotedPlugin.notebook => strings.plugin_notebook_title,
-    NotedPlugin.cookbook => strings.plugin_cookbook_title,
-    NotedPlugin.climbing => strings.plugin_climbing_title,
-  };
-}
-
-String _getPluginAsset(NotedPlugin plugin) {
-  return switch (plugin) {
-    NotedPlugin.notebook => 'assets/svg/man_computer.svg',
-    NotedPlugin.cookbook => 'assets/svg/woman_cooking.svg',
-    NotedPlugin.climbing => 'assets/svg/woman_climbing.svg',
-  };
 }
 
 class _NotedPluginCardConfig {

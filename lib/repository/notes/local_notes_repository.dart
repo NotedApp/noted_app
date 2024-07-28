@@ -10,9 +10,8 @@ import 'package:noted_models/noted_models.dart';
 
 /// Default local notes.
 final localNotes = <String, NoteModel>{
-  MockNotes.notebook0.id: MockNotes.notebook0,
-  MockNotes.cookbook0.id: MockNotes.cookbook0,
-  MockNotes.climbing0.id: MockNotes.climbing0,
+  MockNotes.note0.id: MockNotes.note0,
+  MockNotes.recipe0.id: MockNotes.recipe0,
 };
 
 /// A [NotesRepository] that uses mock data as its source of truth.
@@ -98,7 +97,7 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
   Future<void> updateFields({
     required String userId,
     required String noteId,
-    required List<NoteFieldValue> updates,
+    required List<(String, NoteField)> fields,
   }) async {
     await Future.delayed(Duration(milliseconds: _msDelay));
 
@@ -108,7 +107,9 @@ class LocalNotesRepository extends NotesRepository implements Disposable {
       throw NotedError(ErrorCode.notes_update_failed);
     }
 
-    final updated = note.copyWithFields(updates);
+    final updatedFields = {...note.fields};
+    updatedFields.addAll(Map.fromEntries(fields.map((pair) => MapEntry(pair.$1, pair.$2))));
+    final updated = note.copyWith(fields: updatedFields);
 
     _notes[noteId] = updated;
     _controllers[note.id]?.add(updated);

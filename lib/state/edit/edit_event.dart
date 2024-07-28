@@ -19,9 +19,10 @@ class EditAddEvent extends EditEvent {
 }
 
 class EditUpdateEvent extends EditEvent {
-  final NoteFieldValue update;
+  final String fieldId;
+  final NoteField field;
 
-  const EditUpdateEvent(this.update);
+  const EditUpdateEvent(this.fieldId, this.field);
 }
 
 class EditCommitUpdatesEvent extends EditEvent {

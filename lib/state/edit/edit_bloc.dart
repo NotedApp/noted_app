@@ -6,7 +6,6 @@ import 'package:noted_app/repository/auth/auth_repository.dart';
 import 'package:noted_app/repository/notes/notes_repository.dart';
 import 'package:noted_app/state/edit/edit_event.dart';
 import 'package:noted_app/state/edit/edit_state.dart';
-import 'package:noted_app/state/edit/plugins/cookbook/cookbook_edit_bloc.dart';
 import 'package:noted_app/state/noted_bloc.dart';
 import 'package:noted_app/util/debouncer.dart';
 import 'package:noted_app/util/environment/environment.dart';
@@ -21,8 +20,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
   late final StreamSubscription<UserModel> _userSubscription;
   StreamSubscription<NoteModel>? _noteSubscription;
 
-  final _updateMap = <NoteField, NoteFieldValue>{};
-  EditUpdateHandler? _updateHandler;
+  final _updateMap = <String, NoteField>{};
 
   EditBloc.load({
     required String noteId,
@@ -37,7 +35,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
   }
 
   EditBloc.add({
-    required NotedPlugin plugin,
+    required NoteModel template,
     NotesRepository? notesRepository,
     AuthRepository? authRepository,
     int updateDebounceMs = _updateDebounceMs,
@@ -45,7 +43,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
         _auth = authRepository ?? locator<AuthRepository>(),
         super(const EditState(note: null), 'edit') {
     _init(updateDebounceMs);
-    add(EditAddEvent(plugin._emptyModel()));
+    add(EditAddEvent(template));
   }
 
   void _init(int updateDebounceMs) {
@@ -90,7 +88,6 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
       emit(EditState(note: state.note, status: EditStatus.loading));
 
       final note = await _notes.fetchNote(userId: _auth.currentUser.id, noteId: event.id);
-      _updateHandler = note.plugin._updateHandler();
       emit(EditState(note: note, status: EditStatus.loaded));
 
       await _subscribeNote(event.id, emit);
@@ -113,11 +110,12 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
 
       final id = await _notes.addNote(
         userId: _auth.currentUser.id,
-        note: event.note.copyWithField(NoteFieldValue(NoteField.lastUpdatedUtc, DateTime.now().toUtc())),
+        note: event.note.copyWith(
+          defaultFields: event.note.defaultFields.copyWith(lastUpdatedUtc: DateTime.now().toUtc()),
+        ),
       );
 
       final note = await _notes.fetchNote(userId: _auth.currentUser.id, noteId: id);
-      _updateHandler = note.plugin._updateHandler();
       emit(EditState(note: note, status: EditStatus.loaded));
 
       await _subscribeNote(id, emit);
@@ -127,7 +125,7 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
   }
 
   void _onUpdateNote(EditUpdateEvent event, Emitter<EditState> emit) {
-    _updateMap[event.update.field] = event.update;
+    _updateMap[event.fieldId] = event.field;
     add(const EditCommitUpdatesEvent());
   }
 
@@ -143,9 +141,9 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
         throw NotedError(ErrorCode.notes_update_failed, message: 'missing note');
       }
 
-      final updates = _updateMap.values.toList();
+      final List<(String, NoteField)> updates = List.from(_updateMap.keys.map((id) => (id, _updateMap[id])));
       _updateMap.clear();
-      await _notes.updateFields(userId: _auth.currentUser.id, noteId: note.id, updates: updates);
+      await _notes.updateFields(userId: _auth.currentUser.id, noteId: note.id, fields: updates);
     } catch (e) {
       emit(EditState(note: state.note, status: state.status, error: NotedError.fromObject(e)));
     }
@@ -175,7 +173,6 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
     }
 
     emit(EditState(note: event.note, status: EditStatus.loaded));
-    _updateHandler?.run(event.note, this);
   }
 
   Future<void> _onRemoteUpdateError(EditRemoteUpdateErrorEvent event, Emitter<EditState> emit) async {
@@ -196,31 +193,4 @@ class EditBloc extends NotedBloc<EditEvent, EditState> {
     _noteSubscription?.cancel();
     return super.close();
   }
-}
-
-extension on NotedPlugin {
-  // coverage:ignore-start
-  NoteModel _emptyModel() {
-    return switch (this) {
-      NotedPlugin.notebook => NoteModel.empty(NotedPlugin.notebook),
-      NotedPlugin.cookbook => NoteModel.empty(NotedPlugin.cookbook),
-      NotedPlugin.climbing => NoteModel.empty(NotedPlugin.climbing),
-    };
-  }
-  // coverage:ignore-end
-
-  EditUpdateHandler? _updateHandler() {
-    // coverage:ignore-start codecov bug
-    return switch (this) {
-      // coverage:ignore-end codecov bug
-      NotedPlugin.cookbook => CookbookEditUpdateHandler(),
-      _ => null,
-    };
-  }
-}
-
-abstract class EditUpdateHandler {
-  const EditUpdateHandler();
-
-  void run(NoteModel updated, EditBloc bloc);
 }

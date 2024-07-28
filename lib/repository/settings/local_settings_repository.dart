@@ -53,17 +53,6 @@ class LocalSettingsRepository extends SettingsRepository {
     _settings = _settings.copyWith(tags: tags);
   }
 
-  @override
-  Future<void> updatePluginSettings({required String userId, required PluginSettingsModel plugins}) async {
-    await Future.delayed(Duration(milliseconds: _msDelay));
-
-    if (_shouldThrow || userId.isEmpty) {
-      throw NotedError(ErrorCode.settings_updatePlugins_failed);
-    }
-
-    _settings = _settings.copyWith(plugins: plugins);
-  }
-
   void reset() {
     shouldThrow = false;
     msDelay = LocalRepositoryConfig.mockNetworkDelayMs;

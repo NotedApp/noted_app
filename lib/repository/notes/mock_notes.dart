@@ -2,30 +2,13 @@ import 'package:noted_models/noted_models.dart';
 
 /// A set of mock notes for usage in the local notes repository and testing.
 class MockNotes {
-  static final notebook0 = NoteModel.value(
-    NotedPlugin.notebook,
-    overrides: [
-      const NoteFieldValue(NoteField.title, 'Notebook 0'),
-      const NoteFieldValue(NoteField.document, Document.mock),
-      const NoteFieldValue(NoteField.tagIds, ['test-tag-0']),
-    ],
-  ).copyWith(id: 'test-notebook-0');
+  static final note0 = noteTemplate
+      .copyWith(id: 'test-note-0', defaultFields: const NoteDefaultFields(document: Document.mock))
+      .updateField<String>(CommonField.title, 'Note 0');
 
-  static final cookbook0 = NoteModel.value(
-    NotedPlugin.cookbook,
-    overrides: [
-      const NoteFieldValue(NoteField.title, 'Cookbook 0'),
-      const NoteFieldValue(NoteField.document, Document.mock),
-      const NoteFieldValue(NoteField.tagIds, ['test-tag-0']),
-    ],
-  ).copyWith(id: 'test-cookbook-0');
-
-  static final climbing0 = NoteModel.value(
-    NotedPlugin.climbing,
-    overrides: [
-      const NoteFieldValue(NoteField.title, 'Climbing 0'),
-      const NoteFieldValue(NoteField.document, Document.mock),
-      const NoteFieldValue(NoteField.tagIds, ['test-tag-0']),
-    ],
-  ).copyWith(id: 'test-climbing-0');
+  static final recipe0 = recipeTemplate
+      .copyWith(id: 'test-recipe-0', defaultFields: const NoteDefaultFields(document: Document.mock))
+      .updateField<String>(CommonField.title, 'Recipe 0')
+      .updateField<Duration>(RecipeField.prepTime, const Duration(minutes: 10))
+      .updateField<Duration>(RecipeField.cookTime, const Duration(minutes: 20));
 }

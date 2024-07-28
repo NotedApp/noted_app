@@ -10,7 +10,4 @@ abstract class SettingsRepository {
 
   /// Updates a user's tag settings.
   Future<void> updateTagSettings({required String userId, required TagSettingsModel tags});
-
-  /// Updates a user's tag settings.
-  Future<void> updatePluginSettings({required String userId, required PluginSettingsModel plugins});
 }

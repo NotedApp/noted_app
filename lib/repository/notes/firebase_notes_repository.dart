@@ -4,6 +4,8 @@ import 'package:noted_app/state/notes/notes_state.dart';
 import 'package:noted_app/util/errors/noted_exception.dart';
 import 'package:noted_models/noted_models.dart';
 
+const _noteFieldsPath = 'fields';
+
 // TODO: Test this file.
 // coverage:ignore-file
 class FirebaseNotesRepository extends NotesRepository {
@@ -75,11 +77,12 @@ class FirebaseNotesRepository extends NotesRepository {
   Future<void> updateFields({
     required String userId,
     required String noteId,
-    required List<NoteFieldValue> updates,
+    required List<(String, NoteField)> fields,
   }) async {
     try {
-      final fieldUpdates = {for (var update in updates) update.field.name: update.value};
-      await _notes(userId).child(noteId).update(fieldUpdates);
+      await _notes(userId).child(noteId).child(_noteFieldsPath).update(
+            Map.fromEntries(fields.map((pair) => MapEntry(pair.$1, pair.$2))),
+          );
     } catch (_) {
       throw NotedError(ErrorCode.notes_update_failed);
     }

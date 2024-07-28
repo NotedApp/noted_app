@@ -18,8 +18,12 @@ abstract class NotesRepository {
   /// Adds a note for the given user, returning the ID of the note that was added.
   Future<String> addNote({required String userId, required NoteModel note});
 
-  /// Updates the given note fields for the given user.
-  Future<void> updateFields({required String userId, required String noteId, required List<NoteFieldValue> updates});
+  /// Updates the given note field for the given user.
+  Future<void> updateFields({
+    required String userId,
+    required String noteId,
+    required List<(String, NoteField)> fields,
+  });
 
   /// Deletes the note with the given ID for the given user.
   Future<void> deleteNote({required String userId, required String noteId});
@@ -34,11 +38,7 @@ List<NoteModel> filterModels(NotesFilter? filter, List<NoteModel> models) {
   }
 
   return models.where((model) {
-    if (filter.plugins.isNotEmpty && !filter.plugins.contains(model.plugin)) {
-      return false;
-    }
-
-    if (filter.tagIds.isNotEmpty && !filter.tagIds.containsAll(model.field(NoteField.tagIds))) {
+    if (filter.templateIds.isNotEmpty && !filter.templateIds.contains(model.templateId)) {
       return false;
     }
 
